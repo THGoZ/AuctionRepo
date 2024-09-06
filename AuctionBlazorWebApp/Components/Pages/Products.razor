@@ -1,0 +1,145 @@
+﻿@page "/products/{auction}"
+@page "/products"
+
+@using APIService.Models
+@using APIService
+@using System.Security.Claims
+@using AuctionBlazorWebApp.Models.Helper
+@using AuctionBlazorWebApp.Models.ViewModels
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+@inject APIService apiClient
+@attribute [Authorize]
+
+
+<PageTitle>Home</PageTitle>
+<div class="card">
+    <h1>Hello! @Name</h1>
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (auction is not null)
+                {
+                    <tr>
+                        <th>
+                            <EditForm Model="@addProductModel" OnValidSubmit="AddProduct">
+                                <DataAnnotationsValidator />
+                                <td>
+                                    <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Nombre"></InputText>
+                                    <ValidationMessage For="() => addProductModel.Nombre"></ValidationMessage>
+                                </td>
+                                <td>
+                                    <InputNumber @bind-Value="addProductModel.PrecioBase" class="form-control" placeholder="Precio"></InputNumber>
+                                    <ValidationMessage For="() => addProductModel.PrecioBase"></ValidationMessage>
+                                </td>
+                                <td>
+                                    <InputText @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Descripcion"></InputText>
+                                    <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </td>
+                            </EditForm>
+                        </th>
+                    </tr>
+                }
+                @if (products?.Any() ?? false)
+                {
+                    @foreach (var product in products)
+                    {
+                        <ProductRowItemComponent ProductRowItem="product"
+                                                 OnEdit="EditProduct"
+                                                 OnDelete="DeleteProduct" />
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center" colspan="3">- No Products -</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public string auction { get; set; }
+
+
+    private string Name;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask{ get; set; }
+    private List<ProductoAPI>? products;
+    private ProductoViewModel addProductModel = new();
+
+
+    protected override async Task OnInitializedAsync()
+    { 
+        await base.OnInitializedAsync();
+        var authenticationState = await authenticationStateTask;
+        Name = authenticationState.User.Identity.Name;
+        await LoadProducts();
+    }
+
+    private async Task DisplayGreetingAlert()
+    {
+        var authenticationState = await authenticationStateTask;
+        var message = $"Buenas {authenticationState.User.Identity.Name}";
+        await JSRuntime.InvokeVoidAsync("alert", message);
+    }
+
+    private async Task LoadProducts()
+    {
+        if(auction is not null){
+            products = await apiClient.GetProductsOfAuction(int.Parse(auction));
+        }
+        else
+        {
+            products = await apiClient.GetProducts();
+        }
+    }
+
+    private async Task AddProduct()
+    {
+        int subastaid = int.Parse(auction); //reemplazar por id de subasta correcta
+        var authenticationState = await authenticationStateTask;
+
+        var user = authenticationState.User;
+        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        int userId = int.Parse(userIdClaim.Value);
+
+        var newproducto = new ProductoAPI
+            {
+                Nombre = addProductModel.Nombre,
+                PrecioBase = addProductModel.PrecioBase,
+                Descripcion = addProductModel.Descripcion
+
+            };
+
+        await apiClient.SaveProduct(newproducto, userId, subastaid);
+        await LoadProducts();
+        addProductModel = new();
+    }
+    private async Task EditProduct(EditProductData editData)
+    {
+        await apiClient.UpdateProducto(editData.Producto, editData.Id, int.Parse(auction));
+        await LoadProducts();
+    }
+
+    private async Task DeleteProduct(int id)
+    {
+        await apiClient.DeleteProducto(id);
+        await LoadProducts();
+    }
+}

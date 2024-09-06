@@ -1,0 +1,79 @@
+﻿@page "/login"
+@layout LoginLayout
+
+@using AuctionAPIC.Models.APIModels
+@using AuctionBlazorWebApp.Components.Layout
+@using System.Security.Claims
+@using AuctionBlazorWebApp.Models.ViewModels
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using APIService
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+
+<div>
+    <div class="col-lg-4  offset-lg-4 pt-4 pb-4 border">
+        <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
+            <DataAnnotationsValidator />
+            <div>
+                <h3>Login</h3>
+            </div>
+            <div>
+                <label> Email de usuario</label>
+                <InputText @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
+                <ValidationMessage For="() => model.Email"></ValidationMessage>
+            </div>
+            <div>
+                <label> Contraseña</label>
+                <InputText @bind-Value="model.Contrasena" placeholder="Contraseña" type="password" class="form-control"></InputText>
+                <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
+            </div>
+            <div>
+                <span class="text-danger">@errormessage</span>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+    [SupplyParameterFromForm]
+    public LoginViewModel model { get; set; } = new();
+
+    private LoginDTO login = new LoginDTO();
+
+    private string? errormessage;
+
+    private async Task Authenticate()
+    {
+
+        login.Email = model.Email;
+        login.Contrasena = model.Contrasena;
+
+        var sesionUsuario = await apiClient.ValidateUser(login);
+
+        if (sesionUsuario is null || sesionUsuario.Wrongpassoword)
+        {
+            errormessage = "Nombre o contraseña incorrecta";
+            return;
+        }
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, sesionUsuario.IdUsuario.ToString()),
+            new Claim(ClaimTypes.Name, sesionUsuario.Nombre),
+            new Claim(ClaimTypes.Surname, sesionUsuario.Apellido),
+        };
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new ClaimsPrincipal(identity);
+        await HttpContext.SignInAsync(principal);
+        navManager.NavigateTo("/");
+
+    }
+}

@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace APIService.Models
+{
+    public class ProductoAPI
+    {
+        public int IdProducto { get; set; }
+        public string? Nombre { get; set; }
+        public string? Descripcion { get; set; }
+        public decimal PrecioBase { get; set; }
+        public byte[]? Imagen { get; set; }
+        public DateTime FechaSolicitud { get; set; }
+        public bool EstadoDeSolicitud { get; set; } = false; //aprobado = true
+
+        public int? IdSubasta { get; set; }
+    }
+}

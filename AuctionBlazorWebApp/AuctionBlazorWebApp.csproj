@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.Bootstrap" Version="3.0.0" />
+    <ProjectReference Include="..\APIService\APIService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APIService\APIService.csproj" />
+    <Content Update="Components\Pages\Home.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
   </ItemGroup>
 
 </Project>
