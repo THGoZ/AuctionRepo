@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Core.Entities", "Core.Subasta.Entities\Auction.Core.Entities.csproj", "{1094F8D8-B19B-4FE8-89E1-DA9708C30F3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Entities", "Core.Subasta.Entities\Auction.Core.Entities.csproj", "{1094F8D8-B19B-4FE8-89E1-DA9708C30F3C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{4DB45D15-C433-4FB6-8101-2C5E5385E816}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{91B7107A-E0D5-478E-AE11-B0C8FC51DC27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auction.Core.Data", "Subasta.Core.Data\Auction.Core.Data.csproj", "{CBCACD97-160C-451B-ADA4-159071865FA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Data", "Subasta.Core.Data\Auction.Core.Data.csproj", "{CBCACD97-160C-451B-ADA4-159071865FA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionWebApi", "AuctionWebApi\AuctionWebApi.csproj", "{A7F34B7A-29EF-4B8F-A6B4-4041E0F8DA0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionWebApi", "AuctionWebApi\AuctionWebApi.csproj", "{A7F34B7A-29EF-4B8F-A6B4-4041E0F8DA0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auction.Core.Business", "Auction.Core.Business\Auction.Core.Business.csproj", "{F5055610-0B2C-4CF9-BA90-38A1D5BE30E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C93202BC-20EA-4B16-839B-D1F546DDD5C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionWebApp", "AuctionWebApp\AuctionWebApp.csproj", "{CBE6DFA2-C342-4997-AA9E-FB4ED013E398}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +37,14 @@ Global
 		{A7F34B7A-29EF-4B8F-A6B4-4041E0F8DA0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7F34B7A-29EF-4B8F-A6B4-4041E0F8DA0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7F34B7A-29EF-4B8F-A6B4-4041E0F8DA0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5055610-0B2C-4CF9-BA90-38A1D5BE30E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5055610-0B2C-4CF9-BA90-38A1D5BE30E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5055610-0B2C-4CF9-BA90-38A1D5BE30E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5055610-0B2C-4CF9-BA90-38A1D5BE30E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBE6DFA2-C342-4997-AA9E-FB4ED013E398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBE6DFA2-C342-4997-AA9E-FB4ED013E398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBE6DFA2-C342-4997-AA9E-FB4ED013E398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBE6DFA2-C342-4997-AA9E-FB4ED013E398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +53,8 @@ Global
 		{1094F8D8-B19B-4FE8-89E1-DA9708C30F3C} = {91B7107A-E0D5-478E-AE11-B0C8FC51DC27}
 		{CBCACD97-160C-451B-ADA4-159071865FA3} = {91B7107A-E0D5-478E-AE11-B0C8FC51DC27}
 		{A7F34B7A-29EF-4B8F-A6B4-4041E0F8DA0F} = {4DB45D15-C433-4FB6-8101-2C5E5385E816}
+		{F5055610-0B2C-4CF9-BA90-38A1D5BE30E0} = {91B7107A-E0D5-478E-AE11-B0C8FC51DC27}
+		{CBE6DFA2-C342-4997-AA9E-FB4ED013E398} = {C93202BC-20EA-4B16-839B-D1F546DDD5C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE5BE69A-8368-47E8-B7F8-DC89AD7A10FF}

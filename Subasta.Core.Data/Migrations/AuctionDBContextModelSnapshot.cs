@@ -166,7 +166,7 @@ namespace Auction.Core.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Estado")
+                    b.Property<bool?>("Estado")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaCierre")

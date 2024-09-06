@@ -18,7 +18,7 @@ namespace Auction.Core.Entities
         public DateTime FechaCierre { get; set; }
         public string[] ModoEntrega { get; set; } = null!;
         public string[] FormaDePago { get; set; } = null!;
-        public bool Estado { get; set; }//Activa = true /-Finalizada = false, null = proxima
+        public bool? Estado { get; set; }//Activa = true /-Finalizada = false, null = proxima
         public string Descripcion { get; set; } = null!;
 
         // Relaciones
