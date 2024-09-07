@@ -14,6 +14,8 @@ namespace AuctionBlazorWebApp.Models.ViewModels
         [Range(0.01, double.MaxValue, ErrorMessage = "El precio base debe ser mayor a cero")]
         public decimal PrecioBase { get; set; }
         public byte[]? Imagen { get; set; }
+        public string? ImageExtension { get; set; }
+        public DateTime FechaSolicitud { get; set; }
 
         public int? SubastaId { get; set; }
     }

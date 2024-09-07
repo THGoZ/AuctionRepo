@@ -6,6 +6,7 @@
 @using System.Security.Claims
 @using AuctionBlazorWebApp.Models.Helper
 @using AuctionBlazorWebApp.Models.ViewModels
+@using AuctionBlazorWebApp.Components
 @using Microsoft.AspNetCore.Components.Forms
 @rendermode InteractiveServer
 @inject IJSRuntime JSRuntime
@@ -15,7 +16,14 @@
 
 <PageTitle>Home</PageTitle>
 <div class="card">
-    <h1>Hello! @Name</h1>
+    @if (auction is not null)
+    {
+        <h1>Productos en subasta Nro @auction</h1>
+    }
+    else
+    {
+        <h1>Mostrando todos los productos</h1>
+    }
     <div class="card-body p-0">
         <table class="table table-striped mb-0">
             <thead>
@@ -46,6 +54,9 @@
                                     <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
                                 </td>
                                 <td>
+                                    <InputFile accept="image/*" OnChange="FileUploaded"></InputFile>
+                                </td>
+                                <td>
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </td>
                             </EditForm>
@@ -58,7 +69,8 @@
                     {
                         <ProductRowItemComponent ProductRowItem="product"
                                                  OnEdit="EditProduct"
-                                                 OnDelete="DeleteProduct" />
+                                                 OnDelete="DeleteProduct"
+                                                 ShowOnly="@(auction == null)" />
                     }
                 }
                 else
@@ -72,21 +84,26 @@
     </div>
 </div>
 
-@code{
+@code {
     [Parameter]
     public string auction { get; set; }
-
-
     private string Name;
-
     [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask{ get; set; }
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
     private List<ProductoAPI>? products;
     private ProductoViewModel addProductModel = new();
+    public string FileName { get; set; } = "";
+    public long Filesize { get; set; }
+    public string FileType { get; set; } = "";
+    public DateTimeOffset Lastmodofied { get; set; }
+    const int MAX_FILESIZE = 5000 * 1024;
+    public string ErrorMessage { get; set; } = "";
+    public byte[] imageData { get; set; } = null;
+    private bool showOnly;
 
 
     protected override async Task OnInitializedAsync()
-    { 
+    {
         await base.OnInitializedAsync();
         var authenticationState = await authenticationStateTask;
         Name = authenticationState.User.Identity.Name;
@@ -102,7 +119,8 @@
 
     private async Task LoadProducts()
     {
-        if(auction is not null){
+        if (auction is not null)
+        {
             products = await apiClient.GetProductsOfAuction(int.Parse(auction));
         }
         else
@@ -111,9 +129,32 @@
         }
     }
 
+    public async Task FileUploaded(InputFileChangeEventArgs e)
+    {
+        var browserFile = e.File;
+
+        try
+        {
+            if (browserFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    var fileStream = browserFile.OpenReadStream(MAX_FILESIZE);
+                    await fileStream.CopyToAsync(memoryStream);
+                    imageData = memoryStream.ToArray();
+                    FileType = Path.GetExtension(browserFile.Name);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
     private async Task AddProduct()
     {
-        int subastaid = int.Parse(auction); //reemplazar por id de subasta correcta
+        int subastaid = int.Parse(auction);
         var authenticationState = await authenticationStateTask;
 
         var user = authenticationState.User;
@@ -124,7 +165,12 @@
             {
                 Nombre = addProductModel.Nombre,
                 PrecioBase = addProductModel.PrecioBase,
-                Descripcion = addProductModel.Descripcion
+                Descripcion = addProductModel.Descripcion,
+                Imagen = imageData,
+                ImageExtension = FileType,
+                FechaSolicitud = DateTime.Now,
+                EstadoDeSolicitud = false
+
 
             };
 
@@ -142,5 +188,10 @@
     {
         await apiClient.DeleteProducto(id);
         await LoadProducts();
+    }
+
+    protected override void OnParametersSet()
+    {
+        showOnly = auction != null;
     }
 }

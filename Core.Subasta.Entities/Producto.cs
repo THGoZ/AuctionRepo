@@ -14,6 +14,7 @@ namespace Auction.Core.Entities
         [Column("PrecioBase", TypeName = "decimal(18, 2)")]
         public decimal PrecioBase { get; set; }
         public byte[]? Imagen { get; set; }
+        public string? ImageExtension { get; set; }
 
         public int? IdSubasta { get; set; }
 

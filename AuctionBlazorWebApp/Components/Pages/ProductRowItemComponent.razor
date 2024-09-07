@@ -10,10 +10,23 @@
             <td>@ProductRowItem.Nombre</td>
             <td>@ProductRowItem.PrecioBase</td>
             <td>@ProductRowItem.Descripcion</td>
-            <td>
-                <a @onclick="() => isEditMode = true" href="javascript:void(0)">Edit</a>
-                <a @onclick="async () => await OnDelete.InvokeAsync(ProductRowItem.IdProducto)" href="javascript:void(0)">Delete</a>
+            @if (ProductRowItem.Imagen is not null)
+            {
+                <td>
+                    <img src="@LoadImage()" style="width: 100px" alt="Producto Image" />
+                </td>
+            }
+            else
+            {
+                <td>No image available.                </td>
+            }
+            @if (!ShowOnly)
+            {
+                <td>
+                    <a @onclick="() => isEditMode = true" href="javascript:void(0)">Edit</a>
+                    <a @onclick="async () => await OnDelete.InvokeAsync(ProductRowItem.IdProducto)" href="javascript:void(0)">Delete</a>
             </td>
+            }
         }
         else
         {
@@ -25,6 +38,10 @@
             </td>
             <td>
                 <input @bind="ProductRowItem.Descripcion" class="form-control" />
+            </td>
+            <td>
+                <img src="@GetPreviewImage()" style="width: 100px" alt="Producto Image" />
+                <InputFile OnChange="FileUploaded"></InputFile>
             </td>
             <td>
                 <a @onclick="Update" href="javascript:void(0)">Save</a>
@@ -44,15 +61,75 @@
     [Parameter]
     public EventCallback<int> OnDelete { get; set; }
 
+    [Parameter]
+    public bool ShowOnly { get; set; }
+
     private bool isEditMode = false;
+
+    public byte[] imageData { get; set; } = null;
+    public string FileType { get; set; } = "";
+    const int MAX_FILESIZE = 5000 * 1024;
+    public string ErrorMessage { get; set; } = "";
+
+
+    private string? GetPreviewImage()//para cargar en edicion al subir imagen nueva
+    {
+        if (imageData != null && FileType != null)
+            return $"data:image/{FileType.Trim('.')};base64,{Convert.ToBase64String(imageData)}";
+        else if (ProductRowItem?.Imagen != null && !string.IsNullOrEmpty(ProductRowItem.ImageExtension))
+            return $"data:image/{ProductRowItem.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(ProductRowItem.Imagen)}";
+        else
+            return null;
+    }
+
+    private string? LoadImage()//para cargar en lista
+    {
+
+        if (ProductRowItem?.Imagen != null && !string.IsNullOrEmpty(ProductRowItem.ImageExtension))
+        {
+            return $"data:image/{ProductRowItem.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(ProductRowItem.Imagen)}";
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public async Task FileUploaded(InputFileChangeEventArgs e)
+    {
+        var browserFile = e.File;
+
+        try
+        {
+
+            if (browserFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    var fileStream = browserFile.OpenReadStream(MAX_FILESIZE);
+                    await fileStream.CopyToAsync(memoryStream);
+                    imageData = memoryStream.ToArray();
+                    FileType = Path.GetExtension(browserFile.Name);
+                }
+                GetPreviewImage();
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
 
     private async Task Update()
     {
+        ProductRowItem.ImageExtension = FileType;
+        ProductRowItem.Imagen = imageData;
         var editData = new EditProductData
             {
                 Producto = ProductRowItem,
                 Id = ProductRowItem.IdProducto,
-                SubastaId = 1, // Reemplazar por el id de subasta correcto
+                SubastaId = 1,
             };
 
         await OnEdit.InvokeAsync(editData);

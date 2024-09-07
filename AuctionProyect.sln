@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIService", "APIService\APIService.csproj", "{85178552-AF32-4E4D-8E32-EE82A10CFC66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionBlazorWebApp", "AuctionBlazorWebApp\AuctionBlazorWebApp.csproj", "{138B6519-79FB-4C1F-8DBD-7A4E4303AAF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionBlazorWebApp", "AuctionBlazorWebApp\AuctionBlazorWebApp.csproj", "{138B6519-79FB-4C1F-8DBD-7A4E4303AAF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

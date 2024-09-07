@@ -135,6 +135,9 @@ namespace Auction.Core.Data.Migrations
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageExtension")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("Imagen")
                         .HasColumnType("varbinary(max)");
 
