@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@page "/login/{sesion}"
 @layout LoginLayout
 
 @using AuctionAPIC.Models.APIModels
@@ -8,6 +9,7 @@
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Authentication.Cookies
 @using APIService
+@using Microsoft.AspNetCore.Components.Forms
 
 @inject APIService apiClient
 @inject NavigationManager navManager
@@ -48,6 +50,19 @@
     private LoginDTO login = new LoginDTO();
 
     private string? errormessage;
+
+    [Parameter]
+    public string sesion { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (sesion is not null)
+        {
+            await HttpContext.SignOutAsync();
+            navManager.NavigateTo("/login");
+        }
+    }
 
     private async Task Authenticate()
     {

@@ -5,16 +5,15 @@
 <h3>Logout</h3>
 
 @code {
-    [CascadingParameter]
-    public HttpContext? HttpContext { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        if (HttpContext.User.Identity.IsAuthenticated)
-        {
-            await HttpContext.SignOutAsync();
-            navManager.NavigateTo("/login", true);
-        }
+
+        // if (httpContext != null && httpContext.User.Identity.IsAuthenticated)
+        // {
+        navManager.NavigateTo($"/login/{1}", true);
+        // }
     }
 }
+

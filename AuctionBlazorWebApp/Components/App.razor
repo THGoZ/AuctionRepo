@@ -23,7 +23,8 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
-    private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path.StartsWithSegments("/login")
-        ? null
-        : InteractiveServer;
+    private IComponentRenderMode? RenderModeForPage =>
+        HttpContext.Request.Path.StartsWithSegments("/login")
+            ? null
+            : InteractiveServer;
 }
