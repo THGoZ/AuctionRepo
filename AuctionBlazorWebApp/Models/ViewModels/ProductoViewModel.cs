@@ -6,8 +6,10 @@ namespace AuctionBlazorWebApp.Models.ViewModels
     {
         public int ProductoId { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese un nombre")]
+        [MinLength(8, ErrorMessage = "El nombre debe tener al menos 8 caracteres")]
         public string? Nombre { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese una descripcion")]
+        [MinLength(12, ErrorMessage = "La descripcion debe tener por lo menos 16 caracteres")]
         public string? Descripcion { get; set; }
 
         [Required(ErrorMessage = "Ingrese un precio valido")]
@@ -18,5 +20,6 @@ namespace AuctionBlazorWebApp.Models.ViewModels
         public DateTime FechaSolicitud { get; set; }
 
         public int? SubastaId { get; set; }
+        public int IdUsuario { get; set; }
     }
 }

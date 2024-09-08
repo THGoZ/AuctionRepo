@@ -19,6 +19,7 @@ namespace AuctionWebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Oferta>> GetAll()
         {
+
             return _dbContext.Ofertas;
         }
 
@@ -54,7 +55,6 @@ namespace AuctionWebApi.Controllers
             newOferta.IdOferta = id;
             newOferta.IdProducto = IdProducto;
             newOferta.IdUsuario = IdUser;
-            //newOferta.IdUsuario = await _dbContext.Ofertas.Where(x => x.IdOferta == id).Select(x => x.IdUsuario).FirstOrDefaultAsync();
             _dbContext.Ofertas.Update(newOferta);
             await _dbContext.SaveChangesAsync();
             return Ok();
@@ -71,6 +71,14 @@ namespace AuctionWebApi.Controllers
             _dbContext.Remove(OfertaDelete.Value);
             await _dbContext.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("{id:int}/{IdUser:int}")]
+        public async Task<bool> CheckUserOfertas(int id, int IdUser)
+        {
+            var result = await _dbContext.Ofertas.Where(x => x.IdProducto == id && x.IdUsuario == IdUser).AnyAsync();
+
+            return result;
         }
 
         private Oferta MapOfertaObject(OfertaDTO oferta)

@@ -23,13 +23,6 @@ namespace AuctionWebApi.Controllers
             return _dbContext.Productos;
         }
 
-        //[HttpGet("all/{SubastaId}")]
-        //public ActionResult<IEnumerable<ProductoAPI>> GetAllByAuction(int SubastaId)
-        //{
-        //    var productos = _dbContext.Productos.Where(x => x.SubastaId == SubastaId).ToList();
-        //    return Ok(productos);
-        //}
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Producto?>> GetById(int id)
         {

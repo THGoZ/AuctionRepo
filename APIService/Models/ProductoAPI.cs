@@ -19,5 +19,7 @@ namespace APIService.Models
         public bool EstadoDeSolicitud { get; set; } = false; //aprobado = true
 
         public int? IdSubasta { get; set; }
+
+        public int IdUsuario { get; set; }
     }
 }

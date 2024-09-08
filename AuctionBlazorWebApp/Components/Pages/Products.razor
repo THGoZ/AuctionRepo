@@ -57,7 +57,7 @@
                                     <InputFile accept="image/*" OnChange="FileUploaded"></InputFile>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-loco">Save</button>
                                 </td>
                             </EditForm>
                         </th>
@@ -70,7 +70,11 @@
                         <ProductRowItemComponent ProductRowItem="product"
                                                  OnEdit="EditProduct"
                                                  OnDelete="DeleteProduct"
-                                                 ShowOnly="@(auction == null)" />
+                                                 ShowOnly="@(auction == null)"
+                                                 IdUsuario="UserId"
+                                                 UpdateProduct="LoadProducts" />
+
+
                     }
                 }
                 else
@@ -88,6 +92,7 @@
     [Parameter]
     public string auction { get; set; }
     private string Name;
+    private int UserId;
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private List<ProductoAPI>? products;
@@ -107,14 +112,10 @@
         await base.OnInitializedAsync();
         var authenticationState = await authenticationStateTask;
         Name = authenticationState.User.Identity.Name;
+        var user = authenticationState.User;
+        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        UserId = int.Parse(userIdClaim.Value);
         await LoadProducts();
-    }
-
-    private async Task DisplayGreetingAlert()
-    {
-        var authenticationState = await authenticationStateTask;
-        var message = $"Buenas {authenticationState.User.Identity.Name}";
-        await JSRuntime.InvokeVoidAsync("alert", message);
     }
 
     private async Task LoadProducts()

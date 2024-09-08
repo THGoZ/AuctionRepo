@@ -1,5 +1,8 @@
 ﻿using APIService.Models;
 using AuctionAPIC.Models.APIModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +35,11 @@ namespace APIService
         }
 
         public async Task<ProductoAPI?> GetById(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<ProductoAPI?>($"/api/Producto/{id}");
+        }
+
+        public async Task<ProductoAPI?> CheckOfertas(int id)
         {
             return await _httpClient.GetFromJsonAsync<ProductoAPI?>($"/api/Producto/{id}");
         }
@@ -71,6 +79,20 @@ namespace APIService
         public async Task<List<SubastaAPI>?> GetAuctions()
         {
             return await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta");
+        }
+        #endregion
+
+        #region Oferta
+
+        public async Task AddOferta(OfertaAPI oferta, int UserId, int IdProducto)
+        {
+            await _httpClient.PostAsJsonAsync($"/api/Oferta/{UserId}/{IdProducto}", oferta);
+        }
+
+        public async Task<bool> CheckIfOferta(int IdProducto, int UserId)
+        {
+            return await _httpClient.GetFromJsonAsync<bool>($"/api/Oferta/{IdProducto}/{UserId}");
+
         }
         #endregion
     }

@@ -1,0 +1,69 @@
+﻿@using AuctionBlazorWebApp.Models.ViewModels
+<div class="modal-container" style="position:relative; min-width: 10rem;">
+    <div class="modal-content"  style="display:@(IsVisible ? "block" : "none")" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <EditForm Model="@oferta" OnValidSubmit="Save">
+                    <DataAnnotationsValidator />
+                    <div class="card-header">
+                        <h5 class="modal-title">@Title</h5>
+                    </div>
+                    <div class="card-body">
+                        @ChildContent
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <InputNumber @bind-Value="oferta.Monto" class="form-control" placeholder="Precio"></InputNumber>
+                            <ValidationMessage For="() => oferta.Monto"></ValidationMessage>
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        @if (ShowCloseButton)
+                        {
+                            <button type="button" class="btn btn-secondary" @onclick="Close">Close</button>
+                        }
+                        @if (OnSave.HasDelegate)
+                        {
+                            <Tooltip Class="d-inline-block" Title="La oferta debe superar el monton minimo"role="button">
+                            <button type="submit" class="btn btn-primary" disabled="@(oferta.Monto <= Minimun)">Save changes</button>
+                            </Tooltip>
+                        }
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public bool ShowCloseButton { get; set; } = true;
+    [Parameter] public EventCallback<OfertaViewModel> OnSave { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public decimal Minimun { get; set; }
+    public OfertaViewModel oferta { get; set; } = new();
+    public bool isButtonDisabled { get; set; } = true;
+
+    private string ModalClass => IsVisible ? "show" : "";
+
+    private async Task Close()
+    {
+        IsVisible = false;
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task Save()
+    {
+        await OnSave.InvokeAsync(oferta);
+    }
+
+    private void CheckValue(decimal valor)
+    {
+        if(valor <= Minimun)
+        {
+            isButtonDisabled = false;
+        }
+    }
+        
+}
