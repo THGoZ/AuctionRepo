@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Auction.Core.Data.Migrations
+namespace Auction.Core.Data.Migraciones
 {
     [DbContext(typeof(AuctionDBContext))]
-    [Migration("20240905233806_InitialDBCreate")]
-    partial class InitialDBCreate
+    [Migration("20240909023929_InitialMigrate")]
+    partial class InitialMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,9 @@ namespace Auction.Core.Data.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("IdProducto")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18, 2)")
                         .HasColumnName("Monto");
@@ -49,6 +52,8 @@ namespace Auction.Core.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdFactura");
+
+                    b.HasIndex("IdProducto");
 
                     b.ToTable("Facturas");
                 });
@@ -133,6 +138,9 @@ namespace Auction.Core.Data.Migrations
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageExtension")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("Imagen")
                         .HasColumnType("varbinary(max)");
 
@@ -164,7 +172,7 @@ namespace Auction.Core.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Estado")
+                    b.Property<bool?>("Estado")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaCierre")
@@ -230,6 +238,15 @@ namespace Auction.Core.Data.Migrations
                     b.HasKey("IdUsuario");
 
                     b.ToTable("Usuario");
+                });
+
+            modelBuilder.Entity("Auction.Core.Entities.Factura", b =>
+                {
+                    b.HasOne("Auction.Core.Entities.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("IdProducto");
+
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Auction.Core.Entities.Informe", b =>

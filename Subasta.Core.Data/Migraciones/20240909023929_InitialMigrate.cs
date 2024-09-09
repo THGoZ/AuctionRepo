@@ -3,30 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Auction.Core.Data.Migrations
+namespace Auction.Core.Data.Migraciones
 {
     /// <inheritdoc />
-    public partial class InitialDBCreate : Migration
+    public partial class InitialMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Facturas",
-                columns: table => new
-                {
-                    IdFactura = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Vendedor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Comprador = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Facturas", x => x.IdFactura);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Subastas",
                 columns: table => new
@@ -37,7 +21,7 @@ namespace Auction.Core.Data.Migrations
                     FechaCierre = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModoEntrega = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FormaDePago = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: true),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -94,6 +78,7 @@ namespace Auction.Core.Data.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PrecioBase = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Imagen = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageExtension = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdSubasta = table.Column<int>(type: "int", nullable: true),
                     IdUsuario = table.Column<int>(type: "int", nullable: false),
                     FechaSolicitud = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -113,6 +98,28 @@ namespace Auction.Core.Data.Migrations
                         principalTable: "Usuario",
                         principalColumn: "idUsuario",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Facturas",
+                columns: table => new
+                {
+                    IdFactura = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Vendedor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Comprador = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdProducto = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Facturas", x => x.IdFactura);
+                    table.ForeignKey(
+                        name: "FK_Facturas_Productos_IdProducto",
+                        column: x => x.IdProducto,
+                        principalTable: "Productos",
+                        principalColumn: "IdProducto");
                 });
 
             migrationBuilder.CreateTable(
@@ -140,6 +147,11 @@ namespace Auction.Core.Data.Migrations
                         principalTable: "Usuario",
                         principalColumn: "idUsuario");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Facturas_IdProducto",
+                table: "Facturas",
+                column: "IdProducto");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Informes_IdSubasta",
