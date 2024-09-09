@@ -14,33 +14,34 @@
 @inject APIService apiClient
 @inject NavigationManager navManager
 
+<PageTitle>Ingresar</PageTitle>
 
-<section class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="contenedor shadow-lg p-4" style="max-width: 400px; width: 100%;">
-        <div class="card">
-            <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
-                <DataAnnotationsValidator />
-                <h2 class="text-center">Iniciar sesión</h2>
-                <div class="form-group">
-                    <InputText id="email" @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
-                    <ValidationMessage For="() => model.Email"></ValidationMessage>
+<section class="d-flex justify-content-center align-items-center min-vh-100" style="background-color: #CEA848;">
+    <div class="container" style="max-width: 400px; width: 100%;">
+        <div class="card rounded-3 p-4 p-md-5">
+                    <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
+                        <DataAnnotationsValidator />
+                        <h3 class="text-center mt-5">Iniciar sesión</h3>
+                        <div class="form-group">
+                            <InputText id="email" @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
+                            <ValidationMessage For="() => model.Email"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <InputText id="password" @bind-Value="model.Contrasena" placeholder="Contraseña" type="password" class="form-control"></InputText>
+                            <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
+                        </div>
+                        @*                 <div class="alert alert-danger mt-2" role="alert">
+                        <span class="text-danger">@errormessage</span>
+                        </div> *@
+                        <div class="d-grid gap-2 mb-3 my-4">
+                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                            <div class="registrar text-center">
+                                <p>¿No tiene un usuario? <a href="registrar">Crear usuario</a></p>
+                            </div>
+                        </div>
+                    </EditForm>
                 </div>
-                <div class="form-group">
-                    <InputText id="password" @bind-Value="model.Contrasena" placeholder="Contraseña" type="password" class="form-control"></InputText>
-                    <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
-                </div>
-                <div class="alert alert-danger mt-2" role="alert">
-                    <span class="text-danger">@errormessage</span>
-                </div>
-                <div class="d-grid gap-2 mb-3 my-4">
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
-                    <div class="registrar text-center">
-                        <p>¿No tiene un usuario? <a href="registrar">Crear usuario</a></p>
-                    </div>
-                </div>
-            </EditForm>
-        </div>
-    </div>
+            </div>
 </section>
 
 @code {

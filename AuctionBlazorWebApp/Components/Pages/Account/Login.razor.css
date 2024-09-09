@@ -21,7 +21,7 @@ section {
 
 .contenedor {
     position: relative;
-    width: 400px;
+    width: 600px;
     backdrop-filter: blur(15px);
     border: 2px solid rgba(255, 255, 255, .6);
     border-radius: 20px;
@@ -106,6 +106,15 @@ input:valid ~ label {
 button:hover {
     opacity: .9;
 }*/
+
+.btn-primary{
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
 
 .registrar {
     font-size: 0.8rem;

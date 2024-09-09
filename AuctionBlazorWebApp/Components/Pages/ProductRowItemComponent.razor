@@ -46,6 +46,8 @@
             </div>
     }
     else{
+      @if(ProductRowItem.IdUsuario == IdUsuario)
+      {
         @if (!isEditMode)
         {
             <td>@ProductRowItem.Nombre</td>
@@ -88,7 +90,8 @@
                                 <a @onclick="Update" href="javascript:void(0)">Save</a>
                                 <a @onclick="() => isEditMode = false" href="javascript:void(0)">Cancel</a>
                             </td>
-        }
+                        }
+      }
     }
 }
 

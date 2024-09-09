@@ -183,7 +183,7 @@
         await LoadProducts();
         addProductModel = new();
     }
-    private async Task EditProduct(EditProductData editData)
+    private async Task EditProduct(EditProductData editData)//quitar id subasta
     {
         await apiClient.UpdateProducto(editData.Producto, editData.Id, int.Parse(auction));
         await LoadProducts();
