@@ -1,31 +1,33 @@
 ﻿@using AuctionBlazorWebApp.Models.ViewModels
+
+
 <div class="modal-container" style="position:relative; min-width: 10rem;">
     <div class="modal-content"  style="display:@(IsVisible ? "block" : "none")" role="dialog">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content border-5 border-info">
                 <EditForm Model="@oferta" OnValidSubmit="Save">
                     <DataAnnotationsValidator />
-                    <div class="card-header">
-                        <h5 class="modal-title">@Title</h5>
-                    </div>
-                    <div class="card-body">
+@*                     <div class="card-subtitle mt-3 mb-0 justify-content-center border-dark-subtle">
+                        <h2 class="text-primary-emphasis">Ofertar</h2>
+                    </div> *@
+                    <div class="card-body ">
                         @ChildContent
                         <div class="input-group mb-3">
-                            <span class="input-group-text">$</span>
-                            <InputNumber @bind-Value="oferta.Monto" class="form-control" placeholder="Precio"></InputNumber>
+                            <span class="input-group-text text-bg-success">$</span>
+                            <InputNumber @bind-Value="oferta.Monto" class="form-control text-success strong" placeholder="Cantidad"></InputNumber>
                             <ValidationMessage For="() => oferta.Monto"></ValidationMessage>
-                            <span class="input-group-text">.00</span>
+                            <span class="input-group-text text-success">.00</span>
                         </div>
                     </div>
                     <div class="modal-footer">
                         @if (ShowCloseButton)
                         {
-                            <button type="button" class="btn btn-secondary" @onclick="Close">Close</button>
+                            <button type="button" class="btn btn-secondary mx-3" @onclick="Close">Cancelar</button>
                         }
                         @if (OnSave.HasDelegate)
                         {
-                            <Tooltip Class="d-inline-block" Title="La oferta debe superar el monton minimo"role="button">
-                            <button type="submit" class="btn btn-primary" disabled="@(oferta.Monto <= Minimun)">Save changes</button>
+                            <Tooltip Class="d-inline-block" Title="La oferta debe superar el monto minimo"role="button">
+                                <button type="submit" class="btn btn-primary mx-3" disabled="@(oferta.Monto <= Minimun)">Confirmar</button>
                             </Tooltip>
                         }
                     </div>

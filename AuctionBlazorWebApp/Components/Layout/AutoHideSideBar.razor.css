@@ -1,0 +1,140 @@
+﻿.container {
+    display: flex;
+    flex-direction: column;
+    background: #ffb32e;
+    padding: 1.2rem;
+    border-radius: 10px 0 10px 0;
+}
+
+.expand {
+    width: 18rem;
+    border-radius: 10px 10px 10px 0;
+    transition: all 100ms ease;
+}
+
+.collapse {
+    width: 6rem;
+    transition: all 100ms ease;
+}
+
+.menu-icon {
+    color: #1a1a1a;
+}
+
+.menu-name {
+    color: whitesmoke;
+    opacity: 0;
+    position: absolute;
+    margin-left: 0.9rem;
+    font-size: 14px;
+    font: Roboto;
+}
+
+.expand .menu-name {
+    opacity: 1;
+    transition: opacity 0.7s ease; /* Same transition to ensure smooth animation */
+}
+
+.menu-item:hover .menu-name{
+    color: white;
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover .menu-icon {
+    color: white;
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+.img-margin {
+    margin: 5px 5px 5px 5px;
+    width: 3rem;
+    transition: all 0.2s ease;
+}
+
+.expand .img-margin {
+    margin: 0 auto;
+    width: 6rem;
+    transition: all 0.2s ease;
+}
+
+
+
+
+.navbar-toggler {
+    appearance: none;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 2.5rem;
+    color: white;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+}
+
+    .navbar-toggler:checked {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+.top-row {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.nav-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item ::deep .nav-link {
+        color: #d7d7d7;
+        background: none;
+        border: none;
+        border-radius: 4px;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+        width: 16rem;
+    }
+
+    .nav-item ::deep a.active {
+        background-color: rgba(255,255,255,0.9);
+        color: white;
+    }
+
+    .nav-item ::deep .nav-link:hover {
+    }
+
+.nav-scrollable {
+    display: none;
+}
+
+.navbar-toggler:checked ~ .nav-scrollable {
+    display: block;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler {
+        display: none;
+    }
+
+    .nav-scrollable {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+        /* Allow sidebar to scroll for tall menus */
+        height: calc(100vh - 4.5rem);
+        overflow-y: auto;
+    }
+}

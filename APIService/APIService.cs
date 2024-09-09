@@ -1,4 +1,5 @@
 ﻿using APIService.Models;
+using Auction.Core.Entities;
 using AuctionAPIC.Models.APIModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -27,11 +28,41 @@ namespace APIService
             return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
         }
 
+        public async Task<List<ProductoAPI>?> GetProductsWithOfertas()
+        {
+            var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+            if (productos is not null)
+            {
+                foreach (var producto in productos)
+                {
+                    producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                }
+                return productos;
+            }
+            else return null;
+        }
+
         public async Task<List<ProductoAPI>?> GetProductsOfAuction(int SubastaId)
         {
             var nofilter = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
             return nofilter.Where(x => x.IdSubasta == SubastaId).ToList();
 
+        }
+
+        public async Task<List<ProductoAPI>?> GetProductsOfAuctionWithOferta(int SubastaId)
+        {
+            var nofilter = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+
+            if (nofilter is not null)
+            {
+                var filter = nofilter.Where(x => x.IdSubasta == SubastaId).ToList();
+                foreach (var producto in filter)
+                {
+                    producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                }
+                return filter;
+            }
+            else return null;
         }
 
         public async Task<ProductoAPI?> GetById(int id)
@@ -73,12 +104,30 @@ namespace APIService
                 return null;
             }
         }
+
+        public async Task CreateUsuario(UsuarioAPI user)
+        {
+            await _httpClient.PostAsJsonAsync($"/api/Usuario/", user);
+        }
         #endregion
 
         #region Subasta
         public async Task<List<SubastaAPI>?> GetAuctions()
         {
-            return await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta");
+            var subastas = await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta");
+            if(subastas is not null)
+            {
+                foreach (var subasta in subastas)
+                {
+                    subasta.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/Ofertas/{subasta.IdSubasta}");
+                }
+                return subastas;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
         #endregion
 

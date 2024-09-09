@@ -1,0 +1,195 @@
+﻿* {
+    font-family: --bs-body-font-family: var(--bs-font-sans-serif);
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(30, 30, 30);
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    flex-direction: column;
+}
+
+.contenedor {
+    position: relative;
+    width: 400px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+    .logo img {
+        max-width: 37%;
+        height: auto;
+    }
+
+.contenedor h2 {
+    font-size: 2.3rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    position: relative;
+    margin: 30px 0;
+    width: 100%;
+    border-bottom: 2px solid #fff;
+}
+
+    .form-group label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 1rem;
+        pointer-events: none;
+        transition: .6s;
+    }
+
+input:focus ~ label,
+input:valid ~ label {
+    top: -5px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: -35px 0 5px;
+    color: #d3d3d3;
+}
+
+.form-group i {
+    position: absolute;
+    color: #fff;
+    font-size: 1.6rem;
+    top: 19px;
+    right: 8px;
+}
+
+/*button {
+    width: 100%;
+    height: 45px;
+    border-radius: 40px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    font-size: 1rem;
+    transition: .4s;
+}
+
+button:hover {
+    opacity: .9;
+}*/
+
+.registrar {
+    font-size: 0.8rem;
+    font-family: Poppins;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0 10px;
+}
+
+    .registrar p a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+        transition: .2s;
+    }
+
+        .registrar p a:hover {
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+.bg-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: blur(0.6);
+    filter: brightness(0.3);
+}
+
+.btn-copete {
+    --bs-btn-color: #FAFCFC;
+    --bs-btn-bg: #0000C0;
+    --bs-btn-border-color: #000080;
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-hover-bg: #143CC0;
+    --bs-btn-hover-border-color: #142880;
+    --bs-btn-focus-shadow-rgb: 6, 2, 112;
+    --bs-btn-active-color: #FFFFFF;
+    --bs-btn-active-bg: #000040;
+    --bs-btn-active-border-color: #143CC0;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-bg: #000040;
+    --bs-btn-disabled-border-color: #000040;
+}
+
+.btn {
+    border-radius: 80px;
+}
+
+.btn-secondary {
+    --bs-btn-color: #FAFCFC;
+    --bs-btn-bg: #0000C0;
+    --bs-btn-border-color: #000080;
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-hover-bg: #143CC0;
+    --bs-btn-hover-border-color: #142880;
+    --bs-btn-focus-shadow-rgb: 6, 2, 112;
+    --bs-btn-active-color: #FFFFFF;
+    --bs-btn-active-bg: #000040;
+    --bs-btn-active-border-color: #143CC0;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-bg: #000040;
+    --bs-btn-disabled-border-color: #000040;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: #eeeeee;
+    --bs-btn-border-color: #142880;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #143CC0;
+    --bs-btn-hover-border-color: #143CC0;
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #ffff;
+    --bs-btn-active-bg: #000040;
+    --bs-btn-active-border-color: #143CC0;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #000040;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #000040;
+    --bs-gradient: none;
+}

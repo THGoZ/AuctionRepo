@@ -37,6 +37,14 @@ namespace AuctionWebApi.Controllers
             return producto;
         }
 
+        [HttpGet("ofertas/{id}")]
+        public async Task<int> GetOfertas(int id)
+        {
+            var cantidad = await _dbContext.Productos.Where(p => p.IdProducto == id && p.Ofertas.Any()).SelectMany(p => p.Ofertas).CountAsync();
+
+            return cantidad;
+        }
+
         [HttpPost("{UserId}/{SubastaId}")]
         public async Task<ActionResult> CreateProduct(int UserId, int SubastaId, ProductoDTO producto)
         {

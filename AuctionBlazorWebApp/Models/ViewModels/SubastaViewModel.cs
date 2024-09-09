@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIService.Models
+namespace AuctionBlazorWebApp.Models.ViewModels
 {
-    public class SubastaAPI
+    public class SubastaViewModel
     {
         public int IdSubasta { get; set; }
         [DataType(DataType.Date)]

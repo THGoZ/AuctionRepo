@@ -1,6 +1,5 @@
 ﻿@page "/"
 
-
 @using APIService.Models
 @using APIService
 @using Microsoft.AspNetCore.Components.Authorization;
@@ -17,7 +16,7 @@
 
 <div class="px-1 py-1 my-1 text-center">
     <div class="card-header bg-primary-subtle rounded-pill">
-        <h1 class="display-3 fw-bold text-body-emphasis">Subastas</h1>
+        <h1 class="display-3 fw-bold text-body-emphasis">Subastas disponibles</h1>
     </div>
 </div>
 <div class="container text-center my-3">
@@ -28,7 +27,7 @@
             {
                 <div class="col-md-3 mb-4">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header bg-warning">
                             <h5 class="card-title">Subasta Nro @subasta.IdSubasta: </h5>
                         </div>
                         <div class="card-body">
@@ -49,6 +48,7 @@
                             {
                                 <li class="list-group-item">Actualmente: <p class="text-success my-1">Abierta</p></li>
                             }
+                            <li class="list-group-item">Cantidad de ofertas: <span class="text-success"> @subasta.CantidadDeOfertas </span></li>
                             <li class="list-group-item">
                                 <div class="accordion accordion-flush" id="accordion-@subasta.IdSubasta">
                                     <div class="accordion-item">
@@ -83,7 +83,6 @@
                                     </div>
                                 </div>
                             </li>
-
                         </ul>
                         <div class="card-footer text-body-secondary">
                             <div class="btn-wrapper text-center d-flex justify-content-between">
@@ -108,11 +107,11 @@
         }
         else
         {
-            <div class="px-1 py-1 my-1 text-center">
+@*             <div class="px-1 py-1 my-1 text-center">
                 <div class="card-header">
                     <h1 class="display-3 fw-bold text-body-emphasis">--No hay subastas disponibles--</h1>
                 </div>
-            </div>
+            </div> *@
         }
     </div>
 </div>

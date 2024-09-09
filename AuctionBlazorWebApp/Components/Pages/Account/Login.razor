@@ -14,32 +14,34 @@
 @inject APIService apiClient
 @inject NavigationManager navManager
 
-<div>
-    <div class="col-lg-4  offset-lg-4 pt-4 pb-4 border">
-        <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
-            <DataAnnotationsValidator />
-            <div>
-                <h3>Login</h3>
-            </div>
-            <div>
-                <label> Email de usuario</label>
-                <InputText @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
-                <ValidationMessage For="() => model.Email"></ValidationMessage>
-            </div>
-            <div>
-                <label> Contraseña</label>
-                <InputText @bind-Value="model.Contrasena" placeholder="Contraseña" type="password" class="form-control"></InputText>
-                <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
-            </div>
-            <div>
-                <span class="text-danger">@errormessage</span>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Ingresar</button>
-            </div>
-        </EditForm>
+
+<section class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="contenedor shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <div class="card">
+            <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
+                <DataAnnotationsValidator />
+                <h2 class="text-center">Iniciar sesión</h2>
+                <div class="form-group">
+                    <InputText id="email" @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
+                    <ValidationMessage For="() => model.Email"></ValidationMessage>
+                </div>
+                <div class="form-group">
+                    <InputText id="password" @bind-Value="model.Contrasena" placeholder="Contraseña" type="password" class="form-control"></InputText>
+                    <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
+                </div>
+                <div class="alert alert-danger mt-2" role="alert">
+                    <span class="text-danger">@errormessage</span>
+                </div>
+                <div class="d-grid gap-2 mb-3 my-4">
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <div class="registrar text-center">
+                        <p>¿No tiene un usuario? <a href="registrar">Crear usuario</a></p>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
     </div>
-</div>
+</section>
 
 @code {
     [CascadingParameter]

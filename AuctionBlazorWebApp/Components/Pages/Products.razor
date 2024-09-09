@@ -66,12 +66,13 @@
                 } *@
                 @if (products?.Any() ?? false)
                 {
-                    @foreach (var product in products)
+            @foreach (var product in products)
                     {
                         <ProductRowItemComponent ProductRowItem="product"
                                                  OnEdit="EditProduct"
                                                  OnDelete="DeleteProduct"
                                                  ShowOnly="@(auction == null)"
+                                         ShowUserProducts="@(auction == "65534")"
                                                  IdUsuario="UserId"
                                                  UpdateProduct="LoadProducts" />
 
@@ -80,9 +81,9 @@
                 }
                 else
                 {
-                    <tr>
-                        <td class="text-center" colspan="3">- No Products -</td>
-                    </tr>
+            <div class="px-4 py-5 my-5 text-center">
+                <h1 class="display-6 fw-bold text-nowrap text-body-tertiary">-<span class="text-wrap">No hay productos disponibles para mostrar en esta subasta</span>-</h1>
+                    </div>
                 }
                 </div>
                 </div>
@@ -123,13 +124,13 @@
 
     private async Task LoadProducts()
     {
-        if (auction is not null)
+        if (auction is not null && auction != "65534")
         {
-            products = await apiClient.GetProductsOfAuction(int.Parse(auction));
+            products = await apiClient.GetProductsOfAuctionWithOferta(int.Parse(auction));
         }
         else
         {
-            products = await apiClient.GetProducts();
+            products = await apiClient.GetProductsWithOfertas();
         }
     }
 

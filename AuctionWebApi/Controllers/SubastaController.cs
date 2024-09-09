@@ -39,6 +39,24 @@ namespace AuctionWebApi.Controllers
             return subasta;
         }
 
+        [HttpGet("ofertas/{id:int}")]
+        public async Task<int> GetOfertasSubasta(int id)
+        {
+            var hasproducto = await _dbContext.Subastas.Where(s=> s.IdSubasta == id).Select(subasta => subasta.Productos).AnyAsync();
+            if (hasproducto)
+            {
+                bool hasoferta = await _dbContext.Subastas.Where(s => s.IdSubasta == id).AnyAsync(subasta => subasta.Productos.Any(p => p.Ofertas.Any()));
+
+                if (hasoferta)
+                {
+                    var cantidad = await _dbContext.Subastas.Where(s => s.IdSubasta == id).SelectMany(p => p.Productos.SelectMany(p=> p.Ofertas)).CountAsync();
+                    return cantidad;
+                }
+                else return 0;
+            }
+            else return 0;
+        }
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateAuction(SubastaDTO subasta, int id)
         {

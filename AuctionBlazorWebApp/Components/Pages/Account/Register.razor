@@ -1,0 +1,97 @@
+﻿@page "/registrar"
+@using APIService.Models
+@using AuctionBlazorWebApp.Components.Layout
+@using AuctionBlazorWebApp.Models.ViewModels
+@using AuctionAPIC.Models.APIModels
+@using APIService
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+@layout LoginLayout
+
+<section class="h-100 h-custom" style="background-color: #ffb32e;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card rounded-3">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registrarse</h3>
+                        <EditForm Model="@model" OnValidSubmit="CreateUser" FormName="LoginForm">
+                            <DataAnnotationsValidator />
+                            <div class="row mb-2 pb-2 pb-md-0">
+                                <div class="col-md-6">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <label class="form-label text-primary-emphasis" for="nombre">Coloca tu nombre</label>
+                                        <InputText id="nombre" @bind-Value="model.Nombre" placeholder="Nombre" class="form-control"></InputText>
+                                        <ValidationMessage For="() => model.Nombre"></ValidationMessage>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div data-mdb-input-init class="form-outline">
+                                        <label for="apellido" class="form-label text-primary-emphasis">Coloca tu apellido</label>
+                                        <InputText id="apellido" @bind-Value="model.Apellido" placeholder="Apellido" class="form-control"></InputText>
+                                        <ValidationMessage For="() => model.Apellido"></ValidationMessage>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-mdb-input-init class="form-outline">
+                                <label for="direccion" class="form-label text-primary-emphasis">Coloca tu direccion</label>
+                                <InputText id="direccion" @bind-Value="model.Direccion" placeholder="Direccion" class="form-control"></InputText>
+                                <ValidationMessage For="() => model.Direccion"></ValidationMessage>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mt-2">
+                                <label for="Ciudad" class="form-label text-primary-emphasis">Coloca tu ciudad</label>
+                                <InputText id="Ciudad" @bind-Value="model.Ciudad" placeholder="Ciudad" class="form-control"></InputText>
+                                <ValidationMessage For="() => model.Direccion"></ValidationMessage>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mt-2">
+                                <label for="Email" class="form-label text-primary-emphasis">Coloca tu Email</label>
+                                <InputText id="Email" @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
+                                <ValidationMessage For="() => model.Email"></ValidationMessage>
+                            </div>
+                            <div data-mdb-input-init class="form-outline mt-2">
+                                <label for="Contrasena" class="form-label text-primary-emphasis">Escribe una contraseña</label>
+                                <InputText id="Contrasena" @bind-Value="model.Contrasena" placeholder="Contrasena" class="form-control"></InputText>
+                                <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
+                            </div>
+                            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary mb-1 mt-4">Registrar</button>
+                            <button @onclick="CancelNav" data-mdb-button-init data-mdb-ripple-init class="btn btn-secondary mb-1 mt-4 align-self-end">Cancelar</button>
+                        </EditForm>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    public RegistroViewModel model { get; set; } = new();
+
+    public async Task CreateUser()
+    {
+        var newuser = new UsuarioAPI
+            {
+                Nombre = model.Nombre,
+                Apellido = model.Apellido,
+                Direccion = model.Direccion,
+                Ciudad = model.Ciudad,
+                Email = model.Email,
+                Contrasena = model.Contrasena
+            };
+
+        await apiClient.CreateUsuario(newuser);
+        navManager.NavigateTo("/login", true);
+    }
+
+    public void CancelNav()
+    {
+        navManager.NavigateTo("/login", true);
+    }
+
+}

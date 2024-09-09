@@ -1,0 +1,52 @@
+﻿@inject NavigationManager navManager
+<div class="container @(isExpanded ? "expand" : "collapse")"
+     @onmouseenter="ExpandSideBar"
+     @onmouseleave="CollapseSideBar">
+
+    <img class="navbar-brand img-responsive img-margin" src="tup.png" alt="Logotup"/>
+    <div class="nav-item">
+        <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
+        <span class="menu-icon fa-solid fa-gavel fa-2x">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" href="">
+                    Subastas
+                </a>
+        </span>
+     </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
+        <span class="menu-icon fa-solid fa-boxes-stacked fa-2x">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" href="products">
+                Productos
+            </a>
+        </span>
+    </NavLink>
+    </div>
+        <div class="nav-item">
+    <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
+        <span class="menu-icon fa-solid fa-box fa-2x">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" @onclick="Navaout">
+                Mis productos
+            </a>
+        </span>
+    </NavLink>
+    </div>
+
+ </div>
+
+@code {
+    bool isExpanded;
+    private void ExpandSideBar()
+    {
+        isExpanded = true;
+    }
+    private void CollapseSideBar()
+    {
+        isExpanded = false;
+    }
+
+    public void Navaout()
+    {
+        navManager.NavigateTo($"/products/{65534}", true);
+    }
+}

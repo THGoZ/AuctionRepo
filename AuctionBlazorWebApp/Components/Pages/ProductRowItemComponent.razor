@@ -7,12 +7,13 @@
 
 
 @if (ProductRowItem is not null)
-{
+{ 
+    @if(!ShowUserProducts){
             <div class="col-md-4 col-6 ">
-                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
+                <div class="card bg-body-secondary shadow p-3 mb-5 bg-body-tertiary rounded-3">
                     @if (ProductRowItem.Imagen is not null)
                     {
-                            <img src="@LoadImage()" class="card-img-top img-fit" alt="Producto Image" />
+                    <img src="@LoadImage()" class="border-warning rounded card-img-top img-fit" alt="Producto Image" />
                     }
                     else
                     {
@@ -22,19 +23,20 @@
                         <h5 class="strong card-title">@ProductRowItem.Nombre</h5>
                         <p class="card-subtitle">@ProductRowItem.Descripcion</p>
                         <p class="card-text text-success lead">$@ProductRowItem.PrecioBase</p>
+                <p class="card-text text-primary-emphasis lead">Cantidad de ofertas: <span class=" card-text text-info lead">@ProductRowItem.CantidadDeOfertas</span></p>
                         <div class="text-end">
                                                 @if (!HasMadeOferta)
                     {
-                        <button class="btn btn-primary" @onclick="ShowModal">Make offer</button>
+                        <button class="btn btn-primary" @onclick="ShowModal">Ofertar</button>
                         <OfertaModal IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
-                        <p>La oferta debe superar @ProductRowItem.PrecioBase </p>
+                            <p class="text-body-secondary">La oferta debe ser mayor a <span class="text-success">$@ProductRowItem.PrecioBase</span> </p>
                         </OfertaModal>
                     }
                     else
                     {
-                         <Tooltip Class="d-inline-block" Title="Ya realizo una oferta a este producto"role="button">
-                        <button class="btn btn-primary" type="button" disabled>Make offer</button>
-                        </Tooltip>
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-title="Ya realizo una oferta a este producto">
+                            <button class="btn btn-primary" type="button" disabled>Oferta realizada</button>
+                        </span>
 
                     }
                         </div>
@@ -42,11 +44,8 @@
                 </div>
 
             </div>
-
-
-
-
-@*     <tr>
+    }
+    else{
         @if (!isEditMode)
         {
             <td>@ProductRowItem.Nombre</td>
@@ -67,45 +66,30 @@
                 <td>
                     <a @onclick="() => isEditMode = true" href="javascript:void(0)">Edit</a>
                     <a @onclick="async () => await OnDelete.InvokeAsync(ProductRowItem.IdProducto)" href="javascript:void(0)">Delete</a>
-                    @if (!HasMadeOferta)
-                    {
-                        <button class="btn btn-primary" @onclick="ShowModal">Make offer</button>
-                        <OfertaModal IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
-                        <p>La oferta debe superar @ProductRowItem.PrecioBase </p>
-                        </OfertaModal>
-                    }
-                    else
-                    {
-                         <Tooltip Class="d-inline-block" Title="Ya realizo una oferta a este producto"role="button">
-                        <button class="btn btn-primary" type="button" disabled>Make offer</button>
-                        </Tooltip>
-
-                    }
                 </td>
             }
         }
-        else
-        {
-            <td>
-                <input @bind="ProductRowItem.Nombre" class="form-control" />
-            </td>
-            <td>
-                <input @bind="ProductRowItem.PrecioBase" class="form-control" />
-            </td>
-            <td>
-                <input @bind="ProductRowItem.Descripcion" class="form-control" />
-            </td>
-            <td>
-                <img src="@GetPreviewImage()" style="width: 100px" alt="Producto Image" />
-                <InputFile OnChange="FileUploaded"></InputFile>
-            </td>
-            <td>
-                <a @onclick="Update" href="javascript:void(0)">Save</a>
-                <a @onclick="() => isEditMode = false" href="javascript:void(0)">Cancel</a>
-            </td>
+                        else
+                        {
+                            <td>
+                                <input @bind="ProductRowItem.Nombre" class="form-control" />
+                            </td>
+                            <td>
+                                <input @bind="ProductRowItem.PrecioBase" class="form-control" />
+                            </td>
+                            <td>
+                                <input @bind="ProductRowItem.Descripcion" class="form-control" />
+                            </td>
+                            <td>
+                                <img src="@GetPreviewImage()" style="width: 100px" alt="Producto Image" />
+                                <InputFile OnChange="FileUploaded"></InputFile>
+                            </td>
+                            <td>
+                                <a @onclick="Update" href="javascript:void(0)">Save</a>
+                                <a @onclick="() => isEditMode = false" href="javascript:void(0)">Cancel</a>
+                            </td>
         }
-    </tr>
-} *@
+    }
 }
 
 
@@ -127,6 +111,9 @@
 
     [Parameter]
     public int IdUsuario { get; set; }
+
+    [Parameter]
+    public bool ShowUserProducts{ get; set; }
 
     private bool isEditMode = false;
     private bool isMakeOferta = false;
@@ -235,6 +222,11 @@
 
     private async Task<bool> CheckOfertas()
     {
-        return await apiClient.CheckIfOferta(ProductRowItem.IdProducto, ProductRowItem.IdUsuario);
+        return await apiClient.CheckIfOferta(ProductRowItem.IdProducto, IdUsuario);
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await JS.InvokeVoidAsync("initializeTooltips");
     }
 }

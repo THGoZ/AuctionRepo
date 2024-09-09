@@ -21,5 +21,6 @@ namespace APIService.Models
         public int? IdSubasta { get; set; }
 
         public int IdUsuario { get; set; }
+        public int CantidadDeOfertas { get; set; }
     }
 }
