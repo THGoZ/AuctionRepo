@@ -8,9 +8,9 @@ namespace Core.Auction
     {
         public DateTime FechaInicio { get; set; }
         public DateTime FechaCierre { get; set; }
-        public string[] ModoEntrega { get; set; }
-        public string[] FormaDePago { get; set; }
+        public string[] ModoEntrega { get; set; } = null!;
+        public string[] FormaDePago { get; set; } = null!;
         public bool? Estado { get; set; }//Activa = true /-Finalizada = false, null = proxima
-        public string Descripcion { get; set; }
+        public string Descripcion { get; set; } = null!;
     }
 }
