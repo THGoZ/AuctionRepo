@@ -8,7 +8,45 @@
 
 @if (ProductRowItem is not null)
 {
-    <tr>
+            <div class="col-md-4 col-6 ">
+                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
+                    @if (ProductRowItem.Imagen is not null)
+                    {
+                            <img src="@LoadImage()" class="card-img-top img-fit" alt="Producto Image" />
+                    }
+                    else
+                    {
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img-top img-fit" alt="Producto Image" />
+                    }
+                    <div class="card-body">
+                        <h5 class="strong card-title">@ProductRowItem.Nombre</h5>
+                        <p class="card-subtitle">@ProductRowItem.Descripcion</p>
+                        <p class="card-text text-success lead">$@ProductRowItem.PrecioBase</p>
+                        <div class="text-end">
+                                                @if (!HasMadeOferta)
+                    {
+                        <button class="btn btn-primary" @onclick="ShowModal">Make offer</button>
+                        <OfertaModal IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
+                        <p>La oferta debe superar @ProductRowItem.PrecioBase </p>
+                        </OfertaModal>
+                    }
+                    else
+                    {
+                         <Tooltip Class="d-inline-block" Title="Ya realizo una oferta a este producto"role="button">
+                        <button class="btn btn-primary" type="button" disabled>Make offer</button>
+                        </Tooltip>
+
+                    }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+@*     <tr>
         @if (!isEditMode)
         {
             <td>@ProductRowItem.Nombre</td>
@@ -67,6 +105,7 @@
             </td>
         }
     </tr>
+} *@
 }
 
 

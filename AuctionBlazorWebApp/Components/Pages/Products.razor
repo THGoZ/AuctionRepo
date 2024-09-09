@@ -15,8 +15,9 @@
 
 
 <PageTitle>Home</PageTitle>
-<div class="card">
-    @if (auction is not null)
+<div class="container">
+    <div class="row g-3">
+    @* @if (auction is not null)
     {
         <h1>Productos en subasta Nro @auction</h1>
     }
@@ -62,7 +63,7 @@
                             </EditForm>
                         </th>
                     </tr>
-                }
+                } *@
                 @if (products?.Any() ?? false)
                 {
                     @foreach (var product in products)
@@ -83,10 +84,12 @@
                         <td class="text-center" colspan="3">- No Products -</td>
                     </tr>
                 }
-            </tbody>
+                </div>
+                </div>
+@*             </tbody>
         </table>
     </div>
-</div>
+</div> *@
 
 @code {
     [Parameter]
