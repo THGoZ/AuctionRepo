@@ -1,8 +1,8 @@
-﻿.list-group-horizontal-xl > .list-group-item {
+﻿.list-group-horizontal-xxl > .list-group-item {
     border-width: 0 2px 0 0;
 }
 
-    .list-group-horizontal-xl > .list-group-item:last-child {
+    .list-group-horizontal-xxl > .list-group-item:last-child {
         border-left-width: 0;
         border-right-width: 0;
     }
