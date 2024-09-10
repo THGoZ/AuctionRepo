@@ -15,9 +15,7 @@
 <PageTitle>Subastas</PageTitle>
 
 <div class="px-1 py-1 my-1 text-center">
-    <div class="card-header bg-primary-subtle rounded-pill">
         <h1 class="display-3 fw-bold text-body-emphasis">Subastas disponibles</h1>
-    </div>
 </div>
 <div class="container text-center my-3">
     <div class="row justify-content-evenly">
@@ -26,77 +24,82 @@
             @foreach (var subasta in subastas)
             {
                 <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-header bg-warning">
-                            <h5 class="card-title">Subasta Nro @subasta.IdSubasta: </h5>
+                    <div class="card bg-body-tertiary shadow rounded-4">
+                        <div class="card-header bg-warning rounded-top-4 text-center">
+                            <h5 class="card-title pt-2">Subasta N° @subasta.IdSubasta </h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body border border-0 bg-body-tertiary">
                             <p class="card-text">@subasta.Descripcion</p>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Desde: @subasta.FechaInicio.ToString("dd/MM/yyyy")</li>
-                            <li class="list-group-item">Hasta: @subasta.FechaCierre.ToString("dd/MM/yyyy")</li>
+                        <div class="d-md-flex justify-content-md-evenly mx-auto">
+                            <ul class="list-group list-group-horizontal-xl">
+                                <li class="list-group-item bg-body-tertiary">Desde: <p>@subasta.FechaInicio.ToString("dd/MM/yyyy")</p></li>
+                                <li class="list-group-item bg-body-tertiary">Hasta: <p>@subasta.FechaCierre.ToString("dd/MM/yyyy")</p></li>
+                            </ul>
+                        </div>
                             @if (subasta.Estado is null)
                             {
-                                <li class="list-group-item">Actualmente: <p class="text-info-emphasis my-1">Proxima</p></li>
+                            <p class="my-3">Estado: <span class="my-3 text-info-emphasis">Proxima</span></p>
                             }
                             else if ((bool)!subasta.Estado)
                             {
-                                <li class="list-group-item">Actualmente: <p class="text-danger my-1">Cerrada</p></li>
+                            <p class="my-3">Estado: <span class="my-3 text-danger-emphasis">Cerrada</span></p>
                             }
                             else
                             {
-                                <li class="list-group-item">Actualmente: <p class="text-success my-1">Abierta</p></li>
+                            <p class="my-3">Estado: <span class="my-3 text-success-emphasis">Abierta</span></p>
                             }
-                            <li class="list-group-item">Cantidad de ofertas: <span class="text-success"> @subasta.CantidadDeOfertas </span></li>
-                            <li class="list-group-item">
-                                <div class="accordion accordion-flush" id="accordion-@subasta.IdSubasta">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                Formas de pago
-                                            </button>
-                                        </h2>
-                                        @foreach (var tipo in subasta.FormaDePago)
-                                        {
-                                            <div id="flush-collapse-@subasta.IdSubasta" class="accordion-collapse collapse" data-bs-parent="#accordion-@subasta.IdSubasta">
-                                                <div class="accordion-body">*@tipo.ToString()</div>
-                                            </div>
-                                        }
+                        <div class="row">
+                            <div class="col">
+                                <p>Ofertas: <span class="text-success"> @subasta.CantidadDeOfertas </span></p>
+                            </div>
+                            <div class="col">
+                                <p>Productos: <span class="text-success"> @subasta.CantidadProductos </span></p>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-flush" id="accordion-@subasta.IdSubasta">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Formas de pago
+                                    </button>
+                                </h2>
+                                @foreach (var tipo in subasta.FormaDePago)
+                                {
+                                    <div id="flush-collapse-@subasta.IdSubasta" class="accordion-collapse collapse" data-bs-parent="#accordion-@subasta.IdSubasta">
+                                        <div class="accordion-body">*@tipo.ToString()</div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="accordion accordion-flush" id="accordion1-@subasta.IdSubasta">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta-1" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                Metodos de entrega
-                                            </button>
-                                        </h2>
-                                        @foreach (var tipo in subasta.ModoEntrega)
-                                        {
-                                            <div id="flush-collapse-@subasta.IdSubasta-1" class="accordion-collapse collapse" data-bs-parent="#accordion1-@subasta.IdSubasta">
-                                                <div class="accordion-body">*@tipo.ToString()</div>
-                                            </div>
-                                        }
+                                }
+                            </div>
+                        </div>
+                        <div class="accordion accordion-flush" id="accordion1-@subasta.IdSubasta">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta-1" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Metodos de entrega
+                                    </button>
+                                </h2>
+                                @foreach (var tipo in subasta.ModoEntrega)
+                                {
+                                    <div id="flush-collapse-@subasta.IdSubasta-1" class="accordion-collapse collapse" data-bs-parent="#accordion1-@subasta.IdSubasta">
+                                        <div class="accordion-body">*@tipo.ToString()</div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                }
+                            </div>
+                        </div>
                         <div class="card-footer text-body-secondary">
-                            <div class="btn-wrapper text-center d-flex justify-content-between">
-                                <button @onclick="() => ShowProducts(subasta.IdSubasta)" class="btn btn-primary mx-1 ">Ver productos</button>
+                            <div class="d-grid gap-2 d-md-flex justify-content-center">
+                                <button @onclick="() => ShowProducts(subasta.IdSubasta)" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Ver productos</button>
                                 @if (subasta.Estado is null)
                                 {
-                                    <button @onclick="() => AddNew(subasta.IdSubasta)" class="btn btn-primary mx-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                    <button @onclick="() => AddNew(subasta.IdSubasta)" class="btn  btn-primary mx-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                                         Agregar un producto
                                     </button>
                                 }
                                 else
                                 {
                                     <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-title="Esta subasta ya no acepta solicitudes">
-                                        <button class="btn btn-primary mx-1" disabled style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Agregar un producto</button>
+                                        <button class="btn  btn-primary mx-1" disabled style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Agregar un producto</button>
                                     </span>
                                 }
                             </div>

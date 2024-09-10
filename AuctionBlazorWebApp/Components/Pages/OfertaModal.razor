@@ -10,27 +10,27 @@
 @*                     <div class="card-subtitle mt-3 mb-0 justify-content-center border-dark-subtle">
                         <h2 class="text-primary-emphasis">Ofertar</h2>
                     </div> *@
-                    <div class="card-body ">
+                    <div class="card-body mt-3 text-center">
                         @ChildContent
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 ps-2 pe-2">
                             <span class="input-group-text text-bg-success">$</span>
                             <InputNumber @bind-Value="oferta.Monto" class="form-control text-success strong" placeholder="Cantidad"></InputNumber>
                             <ValidationMessage For="() => oferta.Monto"></ValidationMessage>
                             <span class="input-group-text text-success">.00</span>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                        <div class="grid gap-2 d-lg-flex flex-wrap justify-content-center">
                         @if (ShowCloseButton)
                         {
-                            <button type="button" class="btn btn-secondary mx-3" @onclick="Close">Cancelar</button>
+                            <button type="button" class="btn btn-secondary mb-3" @onclick="Close">Cancelar</button>
                         }
                         @if (OnSave.HasDelegate)
                         {
                             <Tooltip Class="d-inline-block" Title="La oferta debe superar el monto minimo"role="button">
-                                <button type="submit" class="btn btn-primary mx-3" disabled="@(oferta.Monto <= Minimun)">Confirmar</button>
+                                        <button type="submit" class="btn btn-primary mb-3" disabled="@(oferta.Monto <= Minimun)">Confirmar</button>
                             </Tooltip>
                         }
-                    </div>
+                        </div>
                 </EditForm>
             </div>
         </div>

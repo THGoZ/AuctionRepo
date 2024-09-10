@@ -120,6 +120,7 @@ namespace APIService
                 foreach (var subasta in subastas)
                 {
                     subasta.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/Ofertas/{subasta.IdSubasta}");
+                    subasta.CantidadProductos = await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/cantidad/{subasta.IdSubasta}");
                 }
                 return subastas;
             }

@@ -7,74 +7,80 @@
 
 @inject APIService apiClient
 @inject NavigationManager navManager
+@inject IJSRuntime JS
 
-<div class="card">
-    <div class="card-header justify-content-center">
-        Agregar nuevo producto
-    </div>
-    <div class="card-body">
-        <h5 class="card-title m-2">Ingrese los datos del producto</h5>
-        <EditForm Model="@addProductModel" OnValidSubmit="AddProduct">
-            <DataAnnotationsValidator />
-            <div class="row g-3 align-items-center mt-2 mb-1">
-                <div class="row">
-                    <label for="inputPassword6" class="col-form-label">Nombre del producto</label>
-                </div>
-                <div class="col-auto mt-1 mb-2">
-                    <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Nombre"></InputText>
-                    <ValidationMessage For="() => addProductModel.Nombre"></ValidationMessage>
-                </div>
-                <div class="col-auto mt-1 mb-2">
-                    <span id="passwordHelpInline" class="form-text">
-                        Debe tener por lo menos 8 caracteres.
-                    </span>
-                </div>
-                <div class="col-auto mt-1 mb-2">
-                </div>
-            </div>
-            <div class="row g-3 align-items-center mt-2 mb-1">
-                <div class="row">
-                    <label for="inputPassword6" class="col-form-label">Descripcion</label>
-                </div>
-                <div class="mb-2 m-0 row">
-                    <InputText @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Descripcion" rows="3"></InputText>
-                    <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
-                </div>
-                <div id="descriptionHelpBlock" class=" mt-2 mb-2 form-text">
-                    Describe las caracteristicas del producto, debe contener por lo menos 12 caracteres.
-                </div>
-            </div>
-            <div class="row g-3 mt-2 mb-1 align-items-center">
-                <div class="col-auto m-2 mb-2">
-                    <label for="inputPassword6" class="col-form-label">Precio base</label>
-                </div>
-                <div class="col-auto mt-1 mt-2">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text text-success">$</span>
-                        <InputNumber @bind-Value="addProductModel.PrecioBase" class="form-control" placeholder="Precio"></InputNumber>
-                        <span class="input-group-text">.00</span>
+<div class="container py-2">
+    <div class="card">
+        <div class="card-header justify-content-center">
+            Agregar nuevo producto
+        </div>
+        <div class="card-body">
+            <h5 class="card-title m-2">Ingrese los datos del producto</h5>
+            <EditForm Model="@addProductModel" OnValidSubmit="AddProduct">
+                <DataAnnotationsValidator />
+                <div class="row g-3 align-items-center mt-2 mb-1">
+                    <div class="row">
+                        <label for="inputPassword6" class="col-form-label">Nombre del producto</label>
+                    </div>
+                    <div class="col-auto mt-1 mb-2">
+                        <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Nombre"></InputText>
+                        <ValidationMessage For="() => addProductModel.Nombre"></ValidationMessage>
+                    </div>
+                    <div class="col-auto mt-1 mb-2">
+                        <span id="passwordHelpInline" class="form-text">
+                            Debe tener por lo menos 8 caracteres.
+                        </span>
+                    </div>
+                    <div class="col-auto mt-1 mb-2">
                     </div>
                 </div>
-                <div class="col-auto m-2 mt-2 mb-1">
-                    <ValidationMessage For="() => addProductModel.PrecioBase"></ValidationMessage>
+                <div class="row g-3 align-items-center mt-2 mb-1">
+                    <div class="row">
+                        <label for="inputPassword6" class="col-form-label">Descripcion</label>
+                    </div>
+                    <div class="mb-2 m-0 row">
+                        <InputText @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Descripcion" rows="3"></InputText>
+                        <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
+                    </div>
+                    <div id="descriptionHelpBlock" class=" mt-2 mb-2 form-text">
+                        Describe las caracteristicas del producto, debe contener por lo menos 12 caracteres.
+                    </div>
                 </div>
-            </div>
-            <div class="row g-3 align-items-center mt-2 mb-1">
-                <div class="row m-2 mt-1 mb-2">
-                    <img src="@GetPreviewImage()" class="img-thumbnail rounded mx-auto d-block" style="width:300px" alt="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" />
+                <div class="row g-3 mt-2 mb-1 align-items-center">
+                    <div class="col-auto m-2 mb-2">
+                        <label for="inputPassword6" class="col-form-label">Precio base</label>
+                    </div>
+                    <div class="col-auto mt-1 mt-2">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text text-success">$</span>
+                            <InputNumber @bind-Value="addProductModel.PrecioBase" class="form-control" placeholder="Precio"></InputNumber>
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                    <div class="col-auto m-2 mt-2 mb-1">
+                        <ValidationMessage For="() => addProductModel.PrecioBase"></ValidationMessage>
+                    </div>
                 </div>
-                <div class="row m-2 mt-1 mb-2">
-                    <label class="btn btn-outline-secondary">
-                        Subir imagen
-                        <InputFile hidden accept="image/*" OnChange="FileUploaded"></InputFile>
-                    </label>
+                <div class="row g-3 mt-2 mb-1 align-items-center">
+                    <div class="col-sm m-2 mb-2">
+                        <!-- Upload image input-->
+                        <div class="input-group mb-3 px-2 py-2 rounded-pill bg-secondary shadow-sm">
+                            <InputFile id="upload" hidden accept="image/*" OnChange="FileUploaded"></InputFile>
+                            <label id="upload-label" class="font-weight-light text-body-tertiary">Elije un archivo</label>
+                            <div class="input-group-append">
+                                <label for="upload" class="btn btn-outline-secondary m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-primary-emphasis"></i><small class="text-uppercase font-weight-bold text-primary-emphasis">Elije un archivo</small></label>
+                            </div>
+                        </div>
+                        <p class="text-white text-center"><em>La imagen se mostrara abajo.</em></p>
+                        <div class="image-area mt-4"><img id="imageResult" src="@GetPreviewImage()" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-center">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a href="" class="btn btn-primary">Cancel</a>
-            </div>
-        </EditForm>
+                <div class="d-grid gap-2 d-md-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="" class="btn btn-primary">Cancelar</a>
+                </div>
+            </EditForm>
+        </div>
     </div>
 </div>
 
@@ -121,7 +127,7 @@
         else if (addProductModel?.Imagen != null && !string.IsNullOrEmpty(addProductModel.ImageExtension))
             return $"data:image/{addProductModel.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(addProductModel.Imagen)}";
         else
-            return "https://www.svgrepo.com/show/508699/landscape-placeholder.svg";
+            return "";
     }
 
     private async Task AddProduct()

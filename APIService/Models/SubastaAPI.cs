@@ -21,5 +21,6 @@ namespace APIService.Models
         public bool? Estado { get; set; }//Activa = true /-Finalizada = false, null = proxima
         public string Descripcion { get; set; } = null!;
         public int CantidadDeOfertas { get; set; }
+        public int CantidadProductos {  get; set; }
     }
 }

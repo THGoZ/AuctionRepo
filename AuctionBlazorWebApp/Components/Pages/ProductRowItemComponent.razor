@@ -8,42 +8,55 @@
 
 @if (ProductRowItem is not null)
 { 
-    @if(!ShowUserProducts){
-            <div class="col-md-4 col-6 ">
-                <div class="card bg-body-secondary shadow p-3 mb-5 bg-body-tertiary rounded-3">
-                    @if (ProductRowItem.Imagen is not null)
-                    {
-                    <img src="@LoadImage()" class="border-warning rounded card-img-top img-fit" alt="Producto Image" />
-                    }
-                    else
-                    {
-                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img-top img-fit" alt="Producto Image" />
-                    }
-                    <div class="card-body">
-                        <h5 class="strong card-title">@ProductRowItem.Nombre</h5>
-                        <p class="card-subtitle">@ProductRowItem.Descripcion</p>
-                        <p class="card-text text-success lead">$@ProductRowItem.PrecioBase</p>
-                <p class="card-text text-primary-emphasis lead">Cantidad de ofertas: <span class=" card-text text-info lead">@ProductRowItem.CantidadDeOfertas</span></p>
-                        <div class="text-end">
-                                                @if (!HasMadeOferta)
-                    {
-                        <button class="btn btn-primary" @onclick="ShowModal">Ofertar</button>
-                        <OfertaModal IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
-                            <p class="text-body-secondary">La oferta debe ser mayor a <span class="text-success">$@ProductRowItem.PrecioBase</span> </p>
-                        </OfertaModal>
-                    }
-                    else
-                    {
-                        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-title="Ya realizo una oferta a este producto">
-                            <button class="btn btn-primary" type="button" disabled>Oferta realizada</button>
-                        </span>
+    @if (!ShowUserProducts)
+    {
+        <div class="col-md-3 mx-3 mb-3 mt-3 container-lg">
+            <div class="col shadow-lg rounded-top-3">
+            <div class="card-sl">
+                <div class="image-container">
+                    <div class="first">
+                        <div class="d-flex justify-content-end align-items-end">
 
-                    }
+                                <span class="wishlist text-light pull-right" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Cantida de ofertas">@ProductRowItem.CantidadDeOfertas</span>
                         </div>
                     </div>
+                    @if (ProductRowItem.Imagen is not null)
+                    {
+                        <img src="@LoadImage()" class="img-fluid rounded-top-3 card-img-top img-fit" alt="Producto Image" />
+                    }
+                    else
+                    {
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="Producto Image" />
+                    }
                 </div>
-
             </div>
+            <div class="card-heading bg-body-secondary">
+                @ProductRowItem.Nombre
+            </div>
+                <div class="card-text text-body-tertiary bg-body-secondary">
+                @ProductRowItem.Descripcion
+            </div>
+                <div class="card-text text-success bg-body-secondary">
+                $@ProductRowItem.PrecioBase
+            </div>
+            </div>
+            <div class="rounded-bottom-3 text-end bg-body-tertiary shadow">
+                @if (!HasMadeOferta)
+                {
+                    <a class="card-button text-decoration-none fw-bold" @onclick="ShowModal">Ofertar</a>
+                    <OfertaModal  IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
+                        <p class="text-body-secondary">La oferta debe ser mayor a <span class="text-success">$@ProductRowItem.PrecioBase</span> </p>
+                    </OfertaModal>
+                }
+                else
+                {
+
+                    <a class="card-button text-decoration-none bg-warning-subtle text-body-tertiary" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Ya has ofertado">Oferta realizada</a>
+
+                }
+            </div>
+        </div>
+
     }
     else{
       @if(ProductRowItem.IdUsuario == IdUsuario)
