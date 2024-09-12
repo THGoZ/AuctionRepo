@@ -21,7 +21,7 @@ namespace AuctionWebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Subasta>> Get()
         {
-            return _dbContext.Subastas;
+           return _dbContext.Subastas;
         }
 
         [HttpGet("{id:int}")]

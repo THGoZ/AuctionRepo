@@ -1,0 +1,12 @@
+{
+  "ApiBaseAdress": "https://localhost:7199/",
+  "profiles": {
+    "Windows Machine": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": false
+    },
+    "Profile 1": {
+      "commandName": "Executable"
+    }
+  }
+}
