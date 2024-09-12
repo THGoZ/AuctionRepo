@@ -21,7 +21,24 @@ namespace AuctionWebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Subasta>> Get()
         {
-           return _dbContext.Subastas;
+            return _dbContext.Subastas;
+        }
+
+        [HttpGet("Open/")]
+        public ActionResult<IEnumerable<Subasta>> GetOpenSubastas() {
+            return _dbContext.Subastas.Where(p => p.FechaCierre > DateTime.Now).ToList();
+        }
+
+        [HttpGet("Closed/")]
+        public ActionResult<IEnumerable<Subasta>> GetClosedSubastas()
+        {
+            return _dbContext.Subastas.Where(p => p.FechaCierre < DateTime.Now).ToList();
+        }
+
+        [HttpGet("Incoming/")]
+        public ActionResult<IEnumerable<Subasta>> GetInitiatedSubastas()
+        {
+            return _dbContext.Subastas.Where(p => p.FechaInicio > DateTime.Now).ToList();
         }
 
         [HttpGet("{id:int}")]

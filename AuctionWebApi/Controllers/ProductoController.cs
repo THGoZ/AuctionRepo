@@ -44,6 +44,43 @@ namespace AuctionWebApi.Controllers
 
             return cantidad;
         }
+        [HttpGet("winners/{id}")]
+        public async Task<List<ProductoWinner>> GetWinners(int id)
+        {
+            var productos = await _dbContext.Productos
+                .Where(p => p.IdSubasta == id)
+                .Include(p => p.Ofertas.OrderByDescending(o => o.Monto).ThenBy(o => o.Fecha))
+                .ThenInclude(o => o.Usuario)
+                .ToListAsync();
+
+            var Winners = new List<ProductoWinner>();
+
+            foreach (var producto in productos)
+            {
+                var Winner = new ProductoWinner()
+                {
+                    Nombre = producto.Nombre,
+                    Descripcion = producto.Descripcion,
+                    PrecioBase = producto.PrecioBase,
+                    ImageExtension = producto.ImageExtension,
+                    Imagen = producto.Imagen,
+                    HasGanador = producto.Ofertas.Any()
+                };
+
+                if (Winner.HasGanador)
+                {
+                    var bestoferta = producto.Ofertas.First();
+                    Winner.NombreGanador = bestoferta.Usuario.Nombre;
+                    Winner.ApellidoGanador = bestoferta.Usuario.Apellido;
+                    Winner.Monto = bestoferta.Monto;
+                    Winner.TotalDeOfertas = producto.Ofertas.Count;
+                }
+
+                Winners.Add(Winner);
+            }
+
+            return Winners;
+        }
 
         [HttpPost("{UserId}/{SubastaId}")]
         public async Task<ActionResult> CreateProduct(int UserId, int SubastaId, ProductoDTO producto)

@@ -1,0 +1,69 @@
+﻿@page "/closed"
+
+@using APIService.Models
+@using APIService
+@using Auction.Core.Entities
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Authorization;
+
+@rendermode InteractiveServer
+@attribute [Authorize]
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+@inject IJSRuntime js
+
+<PageTitle>Resultados</PageTitle>
+
+<div class="px-1 py-1 mb-5 my-1 text-center container-fluid bg-warning rounded-2">
+    <h1 class="display-3 fw-bold text-body-emphasis">Resultados de subastas</h1>
+</div>
+<div class="container">
+    @{
+        var sbstcntr = 1;
+    }
+        @if (subastas?.Any() ?? false)
+        {
+        @foreach (var subasta in subastas)//considerar si la subasta no tiene items
+            {
+            sbstcntr++;
+            <div class="row">
+                <div class="accordion rounded-4" id="accordion-@subasta.IdSubasta">
+                    <div class="accordion-item border-3 rounded-4 border-warning">
+                        <h1 class=" fw-bolder accordion-header fs-1">
+                            <button class="accordion-button bg-black rounded-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-@subasta.IdSubasta" aria-expanded="false" aria-controls="collapseOne-@subasta.IdSubasta">
+                                Subasta N° @subasta.IdSubasta <span class="badge fw-bold fs-5 position-absolute translate-middle end-0 mx-5 mt-sm-4 text-info-emphasis bg-info-subtle">@subasta.CantidadProductos</span>
+                        </button>
+                    </h1>
+                    <div id="collapseOne-@subasta.IdSubasta" class="accordion-collapse collapse bg-body-tertiary" data-bs-parent="accordion-@subasta.IdSubasta">
+                        <div class="accordion-body">
+                                    <WinnerRowItemComponent IdSubasta="@subasta.IdSubasta" />
+                            </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>"no hay subastas"</p>
+    }
+</div>
+
+
+
+@code {
+    private List<SubastaAPI>? subastas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await LoadAuctions();
+    }
+    private async Task LoadAuctions()
+    {
+        subastas = await apiClient.GetClosedSubastas();
+    }
+
+}

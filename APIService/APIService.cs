@@ -4,11 +4,14 @@ using AuctionAPIC.Models.APIModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace APIService
@@ -19,6 +22,7 @@ namespace APIService
 
         public APIService(APICLientOptions APICLientOptions)
         {
+
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new System.Uri(APICLientOptions.ApiBaseAddress);
         }
@@ -68,6 +72,12 @@ namespace APIService
         public async Task<ProductoAPI?> GetById(int id)
         {
             return await _httpClient.GetFromJsonAsync<ProductoAPI?>($"/api/Producto/{id}");
+        }
+
+        public async Task<List<ProductoWinner>?> GetProductWinners(int SubastaId)
+        {
+            return await _httpClient.GetFromJsonAsync<List<ProductoWinner>?>($"/api/Producto/winners/{SubastaId}");
+
         }
 
         public async Task<ProductoAPI?> CheckOfertas(int id)
@@ -129,6 +139,25 @@ namespace APIService
                 return null;
             }
             
+        }
+
+        public async Task<List<SubastaAPI>?> GetClosedSubastas()
+        {
+            var subastas = await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta");
+            if (subastas is not null)
+            {
+                var newlist = subastas.Where(p => p.FechaCierre < DateTime.Now).ToList();
+                foreach (var subasta in newlist)
+                {
+                    subasta.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/Ofertas/{subasta.IdSubasta}");
+                    subasta.CantidadProductos = await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/cantidad/{subasta.IdSubasta}");
+                }
+                return newlist;
+            }
+            else
+            {
+                return null;
+            }
         }
         #endregion
 

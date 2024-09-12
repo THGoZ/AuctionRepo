@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers().AddJsonOptions(x =>//evita las referencias circulares (padre referencia al hijo y viceversa)
-   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 #region Injeccion de DBcontext
 builder.Services.AddDbContext<AuctionDBContext>(x =>

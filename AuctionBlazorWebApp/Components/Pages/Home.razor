@@ -6,15 +6,16 @@
 @using Microsoft.AspNetCore.Authorization;
 
 @rendermode InteractiveServer
-@attribute [Authorize]
 
 @inject APIService apiClient
 @inject NavigationManager navManager
 @inject IJSRuntime js
+@attribute [Authorize]
+
 
 <PageTitle>Subastas</PageTitle>
 
-<div class="px-1 py-1 my-1 text-center">
+<div class="countainer-fuild px-1 py-1 my-1 text-center">
         <h1 class="display-3 fw-bold text-body-emphasis">Subastas disponibles</h1>
 </div>
 <div class="container text-center my-3">
@@ -119,7 +120,6 @@
     </div>
 </div>
 @code {
-    private string Name = null;
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private List<SubastaAPI>? subastas;
@@ -128,7 +128,6 @@
     {
         await base.OnInitializedAsync();
         var authenticationState = await authenticationStateTask;
-        Name = authenticationState.User.Identity.Name;
         await LoadAuctions();
     }
 
