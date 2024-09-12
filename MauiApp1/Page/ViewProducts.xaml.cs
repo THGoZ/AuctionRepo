@@ -1,10 +1,10 @@
-using MauiApp1.Caller;
-using MauiApp1.Caller.Interfases;
+using AuctionMobileApp.Caller;
+using AuctionMobileApp.Caller.Interfases;
 using System.IO;
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 
-namespace MauiApp1.Page;
+namespace AuctionMobileApp.Page;
 
 public partial class ViewProducts : ContentPage
 {

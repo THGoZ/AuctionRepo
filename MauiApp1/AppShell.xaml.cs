@@ -1,4 +1,4 @@
-﻿namespace MauiApp1
+﻿namespace AuctionMobileApp
 {
     public partial class AppShell : Shell
     {

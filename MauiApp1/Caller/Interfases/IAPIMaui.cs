@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MauiApp1.Caller.Interfases
+namespace AuctionMobileApp.Caller.Interfases
 {
     public interface IAPIMaui
     {

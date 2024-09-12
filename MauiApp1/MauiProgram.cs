@@ -1,11 +1,11 @@
-﻿using MauiApp1.Caller;
-using MauiApp1.Caller.Interfases;
+﻿using AuctionMobileApp.Caller;
+using AuctionMobileApp.Caller.Interfases;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 
-namespace MauiApp1
+namespace AuctionMobileApp
 {
     public static class MauiProgram
     {
@@ -24,7 +24,7 @@ namespace MauiApp1
 
             #region Json de configuracion de api
             var a = Assembly.GetExecutingAssembly();
-            using var stream = a.GetManifestResourceStream("MauiApp1.appsettings.json");
+            using var stream = a.GetManifestResourceStream("AuctionMobileApp.appsettings.json");
 
 
 

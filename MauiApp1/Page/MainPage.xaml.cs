@@ -1,8 +1,8 @@
-﻿using MauiApp1.Caller;
-using MauiApp1.Caller.Interfases;
-using MauiApp1.Page;
+﻿using AuctionMobileApp.Caller;
+using AuctionMobileApp.Caller.Interfases;
+using AuctionMobileApp.Page;
 
-namespace MauiApp1
+namespace AuctionMobileApp
 {
     public partial class MainPage : ContentPage
     {

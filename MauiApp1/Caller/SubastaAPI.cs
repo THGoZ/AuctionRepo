@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MauiApp1.Caller
+namespace AuctionMobileApp.Caller
 {
     public class SubastaAPI
     {

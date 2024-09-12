@@ -1,8 +1,8 @@
-﻿using MauiApp1.Caller.Interfases;
+﻿using AuctionMobileApp.Caller.Interfases;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace MauiApp1.Caller
+namespace AuctionMobileApp.Caller
 {
     public class APIMaui : IAPIMaui
     {
@@ -38,9 +38,6 @@ namespace MauiApp1.Caller
         {
 
             var subastas = await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta");
-
-
-
 
             if (subastas is not null)
             {

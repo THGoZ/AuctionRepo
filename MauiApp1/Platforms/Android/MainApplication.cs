@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace MauiApp1
+namespace AuctionMobileApp
 {
     [Application(UsesCleartextTraffic = true)]
     public class MainApplication : MauiApplication

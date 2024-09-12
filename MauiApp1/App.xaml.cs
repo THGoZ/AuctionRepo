@@ -1,6 +1,6 @@
 ﻿
 
-namespace MauiApp1
+namespace AuctionMobileApp
 {
     public partial class App : Application
     {
