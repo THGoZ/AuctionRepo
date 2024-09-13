@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionBlazorWebApp", "Auct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionMobileApp", "MauiApp1\AuctionMobileApp.csproj", "{AB3200E7-E269-4548-8E96-78987A2DC2D2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DesktopProgram", "DesktopProgram", "{8C2201F4-0E34-4F8C-9D2D-E224F5291B6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionDesktopProgram", "AuctionDesktopProgram\AuctionDesktopProgram.csproj", "{21961A15-7DB8-47FC-B577-A58284FDBB43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,10 @@ Global
 		{AB3200E7-E269-4548-8E96-78987A2DC2D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB3200E7-E269-4548-8E96-78987A2DC2D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB3200E7-E269-4548-8E96-78987A2DC2D2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{21961A15-7DB8-47FC-B577-A58284FDBB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21961A15-7DB8-47FC-B577-A58284FDBB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21961A15-7DB8-47FC-B577-A58284FDBB43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21961A15-7DB8-47FC-B577-A58284FDBB43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +79,7 @@ Global
 		{85178552-AF32-4E4D-8E32-EE82A10CFC66} = {4DB45D15-C433-4FB6-8101-2C5E5385E816}
 		{138B6519-79FB-4C1F-8DBD-7A4E4303AAF8} = {C93202BC-20EA-4B16-839B-D1F546DDD5C6}
 		{AB3200E7-E269-4548-8E96-78987A2DC2D2} = {C93202BC-20EA-4B16-839B-D1F546DDD5C6}
+		{21961A15-7DB8-47FC-B577-A58284FDBB43} = {8C2201F4-0E34-4F8C-9D2D-E224F5291B6B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE5BE69A-8368-47E8-B7F8-DC89AD7A10FF}

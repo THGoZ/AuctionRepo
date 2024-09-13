@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Subasta.Core.Data\Auction.Core.Data.csproj" />
+  </ItemGroup>
+
 </Project>
