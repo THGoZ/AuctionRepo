@@ -1,8 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AuctionMobileApp.MainPage">
+             x:Class="AuctionMobileApp.MainPage"
+             xmlns:page="clr-namespace:AuctionMobileApp.Page"
+             BackgroundColor="Black">
+
     <VerticalStackLayout>
+        <ListView x:Name="productListView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="productListView_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="30" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True">
+                            <VerticalStackLayout>
+                                <!-- Parte superior amarilla con el nombre de la subasta -->
+                                <Grid BackgroundColor="#FFB32E" Padding="10" >
+                                    <!--<Label Text="{Binding IdSubasta}" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>-->
+                                    <HorizontalStackLayout>
+                                        <!-- Imagen del icono -->
+                                        <Image Source="auction.png" WidthRequest="20" HeightRequest="20" />
+
+                                        <!-- Texto Subasta N° {IdSubasta} -->
+                                        <Label Text="{Binding IdSubasta, StringFormat='Subasta N° {0}'}" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+
+                                <!-- Parte inferior con la descripción y otros detalles -->
+                                <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
+                                    <!-- Descripción -->
+                                    <Label Text="{Binding Descripcion}" FontAttributes="Italic" HorizontalOptions="FillAndExpand" TextColor="White"/>
+
+                                    <!-- Fecha de inicio y cierre a la izquierda, Cantidad de productos y ofertas a la derecha -->
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Columna izquierda -->
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding FechaInicio, StringFormat='Fecha Inicio: {0}'}" FontAttributes="Italic" />
+                                            <Label Text="{Binding FechaCierre, StringFormat='Fecha Cierre: {0}'}" FontAttributes="Italic" />
+                                        </VerticalStackLayout>
+
+                                        <!-- Columna derecha -->
+                                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                            <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}" FontAttributes="Italic" HorizontalOptions="End" />
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Ofertas: " />
+                                                        <Span Text="{Binding CantidadDeOfertas}" TextColor="Green" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+
+    <!--<VerticalStackLayout>
         <ListView x:Name="productListView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="productListView_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -64,7 +127,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </VerticalStackLayout>
+    </VerticalStackLayout>-->
 
 
 </ContentPage>

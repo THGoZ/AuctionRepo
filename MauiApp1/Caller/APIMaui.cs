@@ -15,7 +15,10 @@ namespace AuctionMobileApp.Caller
             _httpClient.BaseAddress = new System.Uri(APICLientOptions.ApiBaseAddress);
         }
         #region Producto
-
+        public async Task<List<ProductoAPI>?> GetProducts()
+        {
+            return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+        }
         public async Task<List<ProductoAPI>?> GetProductsOfAuctionWithOferta(int SubastaId)
         {
             var nofilter = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
