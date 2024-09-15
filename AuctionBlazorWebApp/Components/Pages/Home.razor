@@ -4,6 +4,7 @@
 @using APIService
 @using Microsoft.AspNetCore.Components.Authorization;
 @using Microsoft.AspNetCore.Authorization;
+@using System.Security.Claims
 
 @rendermode InteractiveServer
 
@@ -17,15 +18,143 @@
 
 <div class="countainer-fuild px-1 py-1 my-1 text-center">
         <h1 class="display-3 fw-bold text-body-emphasis">Subastas disponibles</h1>
+    <div class="d-flex justify-content-end mx-5">
+        <div class="dropdown m-2 focus-ring-secondary">
+            <button class=" btn dropdown-toggle text-start text-md-start border border-warning rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+                <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
+            </button>
+            <div class="dropdown-menu px-3" style="">
+                <h6 class="dropdown-header text-warning-emphasis">Filtrar subastas</h6>
+                <div class="form-check">
+                    <input class="form-check-input" @onclick='( () =>  Test("abiertas"))' type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Abiertas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" @onclick='( () =>  Test("proximas"))' type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Proximas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" @onclick='( () =>  Test("cerradas"))' type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Cerradas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" @onclick='( () => Test("todos"))' type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Todas
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown m-2">
+            <button class="btn dropdown-toggle text-start text-md-start border border-warning rounded-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-sort fa-2x mx-1" style="color: #FFD43B;"></i> Ordenar
+            </button>
+            <div class="dropdown-menu" style="">
+                <h6 class="dropdown-header">Ordenar por</h6>
+                @if (UnsortedProd)
+                {
+                    <a class="dropdown-item" @onclick="SortbyProd"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Productos</a>
+                }
+                else
+                {
+                    <a class="dropdown-item" @onclick="SortbyProd"><i class="fa-solid fa-sort-@(PrdCant ? "up" : "down") mx-2" style="color: #FFD43B;"></i>Productos</a>
+                }
+                @if(UnsortedOfr)
+                {
+                    <a class="dropdown-item" @onclick="SortbyOfr"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Ofertas</a>
+                }
+                else
+                {
+
+                    <a class="dropdown-item" @onclick="SortbyOfr"><i class="fa-solid fa-sort-@(OfrCant ? "up" : "down") mx-2" style="color: #FFD43B;"></i>Ofertas</a>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 <div class="container text-center my-3">
     <div class="row justify-content-evenly">
-        @if (subastas?.Any() ?? false)
+        @if (subastas == null)
+        {
+            @for (int i = 0; i < auctionCount; i++)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card bg-body-tertiary shadow rounded-4 border-0">
+                        <div class="card-header bg-warning rounded-top-4 text-center">
+                            <h5 class="card-title placeholder-glow">
+                                <span class="placeholder col-6"></span>
+                            </h5>
+                        </div>
+                        <div class="card-body border border-0 bg-body-tertiary">
+                            <p class="card-text placeholder-glow">
+                                <span class="placeholder col-7"></span>
+                            </p>
+                        </div>
+                        <div class="d-md-flex justify-content-md-evenly mx-auto">
+                            <ul class="list-group list-group-horizontal-xxl">
+                                <li class="list-group-item bg-body-tertiary">
+                                    <span class="placeholder col-2"></span>
+                                </li>
+                                <li class="list-group-item bg-body-tertiary">
+                                    <span class="placeholder col-2"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="card-text placeholder-glow">
+                            <span class="placeholder col-4 my-3"></span>
+                        </p>
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text placeholder-glow">
+                                    <span class="placeholder col-5 my-2"></span>
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text placeholder-glow">
+                                    <span class="placeholder col-5 my-2"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-flush" id="accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <span class="placeholder col-6"></span>
+                                    </button>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="accordion accordion-flush" id="accordion1">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <span class="placeholder col-6"></span>
+                                    </button>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="card-footer text-body-secondary">
+                            <div class="d-grid gap-2 d-md-flex justify-content-center">
+                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+                                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else if (subastas?.Any() ?? false)
         {
             @foreach (var subasta in subastas)
             {
                 <div class="col-md-3 mb-4">
-                    <div class="card bg-body-tertiary shadow rounded-4">
+                    <div class="card bg-body-tertiary shadow rounded-4 border-0">
                         <div class="card-header bg-warning rounded-top-4 text-center">
                             <h5 class="card-title pt-2">Subasta N° @subasta.IdSubasta </h5>
                         </div>
@@ -38,18 +167,18 @@
                                 <li class="list-group-item bg-body-tertiary">Hasta: <p>@subasta.FechaCierre.ToString("dd/MM/yyyy")</p></li>
                             </ul>
                         </div>
-                            @if (subasta.Estado is null)
-                            {
-                            <p class="my-3">Estado: <span class="my-3 text-info-emphasis">Proxima</span></p>
-                            }
-                            else if ((bool)!subasta.Estado)
-                            {
+                        @if (subasta.FechaCierre < DateTime.Now)
+                        {
                             <p class="my-3">Estado: <span class="my-3 text-danger-emphasis">Cerrada</span></p>
-                            }
-                            else
-                            {
+                        }
+                        else if (subasta.FechaInicio <= DateTime.Now)
+                        {
                             <p class="my-3">Estado: <span class="my-3 text-success-emphasis">Abierta</span></p>
-                            }
+                        }
+                        else
+                        {
+                            <p class="my-3">Estado: <span class="my-3 text-info-emphasis">Proxima</span></p>
+                        }
                         <div class="row">
                             <div class="col">
                                 <p>Ofertas: <span class="text-success"> @subasta.CantidadDeOfertas </span></p>
@@ -59,9 +188,9 @@
                             </div>
                         </div>
                         <div class="accordion accordion-flush" id="accordion-@subasta.IdSubasta">
-                            <div class="accordion-item">
+                            <div class="accordion-item bg-dark-subtle">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <button class="accordion-button collapsed bg-dark-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta" aria-expanded="false" aria-controls="flush-collapseOne">
                                         Formas de pago
                                     </button>
                                 </h2>
@@ -74,9 +203,9 @@
                             </div>
                         </div>
                         <div class="accordion accordion-flush" id="accordion1-@subasta.IdSubasta">
-                            <div class="accordion-item">
+                            <div class="accordion-item border-2 border-top border-bottom bg-dark-subtle">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta-1" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <button class="accordion-button collapsed bg-dark-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@subasta.IdSubasta-1" aria-expanded="false" aria-controls="flush-collapseOne">
                                         Metodos de entrega
                                     </button>
                                 </h2>
@@ -90,7 +219,7 @@
                         </div>
                         <div class="card-footer text-body-secondary">
                             <div class="d-grid gap-2 d-md-flex justify-content-center">
-                                <button @onclick="() => ShowProducts(subasta.IdSubasta)" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Ver productos</button>
+                                <button @onclick="() => ShowProducts(subasta.IdSubasta, subasta.CantidadProductos)" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Ver productos</button>
                                 @if (subasta.Estado is null)
                                 {
                                     <button @onclick="() => AddNew(subasta.IdSubasta)" class="btn  btn-primary mx-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
@@ -111,11 +240,11 @@
         }
         else
         {
-@*             <div class="px-1 py-1 my-1 text-center">
+            <div class="px-1 py-1 my-1 text-center">
                 <div class="card-header">
                     <h1 class="display-3 fw-bold text-body-emphasis">--No hay subastas disponibles--</h1>
                 </div>
-            </div> *@
+            </div>
         }
     </div>
 </div>
@@ -123,12 +252,102 @@
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private List<SubastaAPI>? subastas;
+    private List<SubastaAPI> unfiltered = new();
+    private int auctionCount = 1;
+    private string filters = "";
+    private bool alreadyfiltered = false;
+    private bool UnsortedOfr = true;
+    private bool UnsortedProd = true;
+    private bool PrdCant = false;
+    private bool OfrCant = false;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+        var postalCodeClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.PostalCode);
+        if (postalCodeClaim != null)
+        {
+            auctionCount = int.Parse(postalCodeClaim.Value);
+        }
         await LoadAuctions();
+    }
+
+    public void Test(string filter)
+    {
+        if(subastas is not null)
+        {
+            if (alreadyfiltered)
+            {
+                subastas = unfiltered;
+
+            }
+            else
+            {
+                unfiltered = subastas;
+            }
+            switch (filter)
+            {
+
+                case "abiertas":
+                    subastas = unfiltered.Where(s => s.FechaCierre > DateTime.Now && s.FechaInicio <= DateTime.Now).ToList();
+                    alreadyfiltered = true;
+                    break;
+                case "cerradas":
+                    subastas = unfiltered.Where(s => s.FechaCierre < DateTime.Now).ToList();
+                    alreadyfiltered = true;
+                    break;
+                case "proximas":
+                    subastas = unfiltered.Where(s => s.FechaInicio > DateTime.Now).ToList();
+                    alreadyfiltered = true;
+                    break;
+                default:
+                    subastas = unfiltered;
+                    alreadyfiltered = false;
+                    break;
+            }
+        }     
+    }
+
+    private void SortbyProd()
+    {
+        if (subastas is not null)
+        {
+            if (PrdCant)
+            {
+                subastas = subastas.OrderBy(s => s.CantidadProductos).ToList();
+                PrdCant = false;
+                UnsortedProd = false;
+            }
+            else
+            {
+                subastas = subastas.OrderByDescending(s => s.CantidadProductos).ToList();
+                PrdCant = true;
+                UnsortedProd = false;
+            }
+        }
+
+    }
+
+    private void SortbyOfr()
+    {
+        if (subastas is not null)
+        {
+            if (OfrCant)
+            {
+                subastas = subastas.OrderBy(s => s.CantidadDeOfertas).ToList();
+                OfrCant = false;
+                UnsortedOfr = false;
+            }
+            else
+            {
+                subastas = subastas.OrderByDescending(s => s.CantidadDeOfertas).ToList();
+                OfrCant = true;
+                UnsortedOfr = false;
+            }
+        }
+
     }
 
     private async Task LoadAuctions()
@@ -136,9 +355,9 @@
         subastas = await apiClient.GetAuctions();
     }
 
-    private void ShowProducts(int auctionid)
+    private void ShowProducts(int auctionid, int productocount)
     {
-        navManager.NavigateTo($"/products/{auctionid}", true);
+        navManager.NavigateTo($"/products/{auctionid}/{productocount}", true);
     }
 
     private void AddNew(int auctionid)

@@ -8,6 +8,7 @@
 @inject APIService apiClient
 @inject NavigationManager navManager
 @inject IJSRuntime JS
+@attribute [Authorize]
 
 <div class="container py-2">
     <div class="card">
@@ -38,8 +39,8 @@
                     <div class="row">
                         <label for="inputPassword6" class="col-form-label">Descripcion</label>
                     </div>
-                    <div class="mb-2 m-0 row">
-                        <InputText @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Descripcion" rows="3"></InputText>
+                    <div class="mb-2 m-0 row text-justify">
+                        <InputTextArea @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Ingrese una descripcion..." rows="3"></InputTextArea>
                         <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
                     </div>
                     <div id="descriptionHelpBlock" class=" mt-2 mb-2 form-text">
@@ -134,9 +135,12 @@
     {
         int subastaid = int.Parse(auction);
         var authenticationState = await authenticationStateTask;
-
         var user = authenticationState.User;
         var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        if (userIdClaim.Value == null)
+        {
+            navManager.NavigateTo("/login", true);
+        }
         int userId = int.Parse(userIdClaim.Value);
 
         var newproducto = new ProductoAPI

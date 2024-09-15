@@ -26,7 +26,7 @@ namespace AuctionWebApi.Controllers
 
         [HttpGet("Open/")]
         public ActionResult<IEnumerable<Subasta>> GetOpenSubastas() {
-            return _dbContext.Subastas.Where(p => p.FechaCierre > DateTime.Now).ToList();
+            return _dbContext.Subastas.Where(p => p.FechaCierre > DateTime.Now && p.FechaInicio <= DateTime.Now).ToList();
         }
 
         [HttpGet("Closed/")]
@@ -56,8 +56,23 @@ namespace AuctionWebApi.Controllers
             return subasta;
         }
 
+        [HttpGet("cantidad/")]
+        public async Task<ActionResult<int?>> GetCantidad()
+        {
+            var subasta = await _dbContext.Subastas.AsNoTracking().CountAsync();
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return subasta;
+            }
+        }
+
         [HttpGet("cantidad/{id:int}")]
-        public async Task<ActionResult<int?>> GetCantidadId(int id)
+        public async Task<ActionResult<int?>> GetCantidadProductos(int id)
         {
             var subasta = await _dbContext.Subastas.Where(s => s.IdSubasta == id && s.Productos.Any()).SelectMany(p => p.Productos).CountAsync();
 

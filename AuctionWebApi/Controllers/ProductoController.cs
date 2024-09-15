@@ -23,6 +23,26 @@ namespace AuctionWebApi.Controllers
             return _dbContext.Productos;
         }
 
+        [HttpGet("User/{UserId}")]
+        public ActionResult<IEnumerable<Producto>> GetAllProductsOfUser(int UserId)
+        {
+            return _dbContext.Productos.Where(p=> p.IdUsuario == UserId).ToList();
+        }
+
+        [HttpGet("bid/{ProdID}")]
+        public async Task <ActionResult<decimal?>> GetHighestBid(int ProdID)
+        {
+            return await _dbContext.Productos
+    .Where(p => p.IdProducto == ProdID)
+    .Include(p => p.Ofertas)
+    .Select(p => p.Ofertas
+        .OrderByDescending(o => o.Monto)
+        .Select(o => o.Monto)
+        .FirstOrDefault()
+    )
+    .FirstOrDefaultAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Producto?>> GetById(int id)
         {
@@ -80,6 +100,12 @@ namespace AuctionWebApi.Controllers
             }
 
             return Winners;
+        }
+
+        [HttpGet("cantidad/")]
+        public async Task<ActionResult<int?>> ProductoCount()
+        {
+            return await _dbContext.Productos.CountAsync();
         }
 
         [HttpPost("{UserId}/{SubastaId}")]

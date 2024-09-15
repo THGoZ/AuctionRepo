@@ -1,5 +1,6 @@
 using APIService.IoC;
 using AuctionBlazorWebApp.Components;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddBlazoredLocalStorage();
 
 
 #region Autenticacion
@@ -24,6 +26,10 @@ builder.Services.AddHttpContextAccessor();
 #endregion
 
 builder.Services.AddApiClientService(x => x.ApiBaseAddress = builder.Configuration.GetValue<string>("ApiBaseAdress"));
+
+#region Cache
+builder.Services.AddMemoryCache();
+#endregion
 
 var app = builder.Build();
 

@@ -1,0 +1,113 @@
+﻿@page "/userProducts"
+@using APIService.Models
+@using APIService
+@using System.Security.Claims
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+@attribute [Authorize]
+
+<h2>Tus productos</h2>
+
+<div class="container-fluid">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Fecha de solicitud</th>
+                <th scope="col">Estado de solicitud</th>
+                <th scope="col">Cantidad de ofertas</th>
+                <th scope="col">Precio base</th>
+                <th scope="col">Maxima oferta</th>
+                <th scope="col">En subasta N°</th>
+            </tr>
+        </thead>
+        @if (products is not null)
+        {
+            foreach (var Product in products)
+            {
+                <tbody class="table-group-divider">
+                    <tr>
+                        @if (Product.Imagen is not null)
+                        {
+                            <th scope="row"><img src="@GetPreviewImage(Product)" class="img-fluid rounded-top-3 card-img-top img-fit" alt="Producto Image" /></th>
+                        }
+                        else
+                        {
+                            <th scope="row"><img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="Producto Image" /></th>
+                        }
+                        <td scope="col">@Product.Nombre</td>
+                        <td scope="col" class="overflow-auto">@Product.Descripcion</td>
+                        <td scope="col">@Product.FechaSolicitud</td>
+                        @if ((bool)Product.EstadoDeSolicitud)
+                        {
+                            <td scope="col" class="text-success-emphasis">Aprovado</td>
+                        }
+                        else if (!(bool)Product.EstadoDeSolicitud)
+                        {
+                            <td scope="col" class="text-danger-emphasis">Rechazado</td>
+                        }
+                        else
+                        {
+                            <td scope="col" class="text-info-emphasis">Pendiente</td>
+                        }
+                        <td scope="col" class="text-success-emphasis">$@Product.PrecioBase</td>
+                        <td scope="col">@Product.CantidadDeOfertas</td>
+                        @if (Product.OfertaMasAlta == 0)
+                        {
+                            <td scope="col" class="text-body-tertiary">Sin ofertas</td>
+                        }
+                        else
+                        {
+                            <td scope="col" class="text-success">$@Product.OfertaMasAlta</td>
+                        }
+                        <td scope="col"><button>@Product.IdSubasta</button></td>
+                    </tr>
+                </tbody>
+            }
+        }
+        else
+        {
+            <tbody class="table-group-divider">
+                <tr>No hay productos</tr>
+            </tbody>
+        }
+    </table>
+</div>
+
+@code {
+    private List<ProductoAPI>? products;
+    private int UserId;
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    public byte[] imageData { get; set; } = null;
+    public string FileType { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        UserId = int.Parse(userIdClaim.Value);
+        await LoadProducts();
+    }
+
+    private string? GetPreviewImage(ProductoAPI product)//para cargar en edicion al subir imagen nueva
+    {
+        if (imageData != null && FileType != null)
+            return $"data:image/{FileType.Trim('.')};base64,{Convert.ToBase64String(imageData)}";
+        else if (product?.Imagen != null && !string.IsNullOrEmpty(product.ImageExtension))
+            return $"data:image/{product.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(product.Imagen)}";
+        else
+            return null;
+    }
+
+    private async Task LoadProducts()
+    {
+            products = await apiClient.GetProductsOfUser(UserId);
+    }
+
+}
