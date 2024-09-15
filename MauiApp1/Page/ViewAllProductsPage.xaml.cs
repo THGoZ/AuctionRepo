@@ -21,12 +21,18 @@ public partial class ViewAllProductsPage : ContentPage
 
     private async void LoadProductos()
     {
-        var productos = await _apicaller.GetProducts();
-        foreach (var producto in productos)
+        ProductoList.Clear();
+        var productos = await _apicaller.GetProductsWithOfertas();
+
+        if (productos != null)
         {
-            producto.Image = ConvertByteArrayToImageSource(producto.Imagen);
-            ProductoList.Add(producto);
+            foreach (var producto in productos)
+            {
+                producto.Image = ConvertByteArrayToImageSource(producto.Imagen);
+                ProductoList.Add(producto);
+            }
         }
+        
     }
     public ImageSource ConvertByteArrayToImageSource(byte[] imageBytes)
     {
@@ -36,4 +42,5 @@ public partial class ViewAllProductsPage : ContentPage
         MemoryStream stream = new MemoryStream(imageBytes);
         return ImageSource.FromStream(() => stream);
     }
+
 }

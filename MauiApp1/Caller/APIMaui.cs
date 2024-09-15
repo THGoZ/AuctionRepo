@@ -19,6 +19,21 @@ namespace AuctionMobileApp.Caller
         {
             return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
         }
+
+        public async Task<List<ProductoAPI>?> GetProductsWithOfertas()
+        {
+            var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+            if (productos is not null)
+            {
+                foreach (var producto in productos)
+                {
+                    producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                }
+                return productos;
+            }
+            else return null;
+        }
+
         public async Task<List<ProductoAPI>?> GetProductsOfAuctionWithOferta(int SubastaId)
         {
             var nofilter = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");

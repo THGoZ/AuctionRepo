@@ -9,6 +9,7 @@ namespace AuctionMobileApp
             InitializeComponent();
             
             Routing.RegisterRoute(nameof(ViewProducts), typeof(ViewProducts));
+            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         }
 
     }

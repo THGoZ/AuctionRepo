@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AuctionMobileApp.Page.ViewProducts"
              Title="{Binding PageTitle}"
-             BackgroundColor="Gray">
+             BackgroundColor="#232323"
+             Shell.TabBarIsVisible="False">
 
     <VerticalStackLayout>
         <CollectionView ItemsSource="{Binding ProductoList}" FlexLayout.Grow="1" SelectionMode="Single">
