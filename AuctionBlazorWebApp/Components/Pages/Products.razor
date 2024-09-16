@@ -118,7 +118,9 @@
         }
         else
         {
-            products = await apiClient.GetProductsWithOfertas();
+            var all = await apiClient.GetProductsWithOfertasSoldstatus();
+            if(all is not null)
+            products = all.Where(p => p.status != "sold" || p.status != "notsold").ToList();
         }
     }
 

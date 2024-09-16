@@ -64,6 +64,42 @@ namespace AuctionWebApi.Controllers
 
             return cantidad;
         }
+
+        [HttpGet("sold/{id}")]
+        public async Task<string> GetSoldStatus(int id)
+        {
+            string status;
+            var isSubastaover = await _dbContext.Subastas.Where(s=> s.Productos.Any(p=> p.IdProducto.Equals(id))&& s.FechaCierre < DateTime.Now).AnyAsync();
+
+            if( await _dbContext.Productos.Where(p=> p.IdProducto == id && p.Ofertas.Any()).AnyAsync())
+            {
+                if (isSubastaover)
+                {
+                    status = "sold";
+                    return status;
+                }
+                else
+                {
+                    status = "ongoing";
+                    return status;
+                }
+            }
+            else
+            {
+                if (isSubastaover) {
+                    status = "notsold";
+                    return status;
+                }
+                else
+                {
+                    status = "ongoingnotsold";
+                    return status;
+                }
+
+            }
+            
+        }
+
         [HttpGet("winners/{id}")]
         public async Task<List<ProductoWinner>> GetWinners(int id)
         {

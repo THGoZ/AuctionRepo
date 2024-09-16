@@ -7,7 +7,6 @@ namespace AuctionMobileApp.Caller
     public class APIMaui : IAPIMaui
     {
         private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _serializerOptions;
 
         public APIMaui(MAUIClientOptions APICLientOptions)
         {

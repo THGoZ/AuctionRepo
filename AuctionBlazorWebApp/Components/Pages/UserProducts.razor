@@ -5,23 +5,24 @@
 
 @inject APIService apiClient
 @inject NavigationManager navManager
+@inject IJSRuntime js
 @attribute [Authorize]
 
 <h2>Tus productos</h2>
 
-<div class="container-fluid">
+<div class="container-fluid table-responsive-xxl clearfix">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col">Imagen</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Descripcion</th>
+                <th scope="col" class="col-sm-1">Descripcion</th>
                 <th scope="col">Fecha de solicitud</th>
                 <th scope="col">Estado de solicitud</th>
                 <th scope="col">Cantidad de ofertas</th>
                 <th scope="col">Precio base</th>
                 <th scope="col">Maxima oferta</th>
-                <th scope="col">En subasta N°</th>
+                <th scope="col">Estado en subasta</th>
             </tr>
         </thead>
         @if (products is not null)
@@ -32,18 +33,22 @@
                     <tr>
                         @if (Product.Imagen is not null)
                         {
-                            <th scope="row"><img src="@GetPreviewImage(Product)" class="img-fluid rounded-top-3 card-img-top img-fit" alt="Producto Image" /></th>
+                            <th scope="row"><img src="@GetPreviewImage(Product)" class="img-fluid rounded-3 card-img-top img-fit" alt="Producto Image" /></th>
                         }
                         else
                         {
                             <th scope="row"><img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="Producto Image" /></th>
                         }
-                        <td scope="col">@Product.Nombre</td>
-                        <td scope="col" class="overflow-auto">@Product.Descripcion</td>
+                        <td scope="col"><p class="fs-4">@Product.Nombre</p></td>
+                        <td scope="col" class="col-sm-1 overflow-auto fs-5 text-body-tertiary">@Product.Descripcion</td>
                         <td scope="col">@Product.FechaSolicitud</td>
-                        @if ((bool)Product.EstadoDeSolicitud)
+                        @if (Product.EstadoDeSolicitud is null)
                         {
-                            <td scope="col" class="text-success-emphasis">Aprovado</td>
+                            <td scope="col"><p class="text-info-emphasis text-center">Pendiente</p>
+                                <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Todavia no fue aceptado en la subasta">
+                                    <button class="btn btn-outline-warning btn-sm" disabled>Ver en subasta N°@Product.IdSubasta</button>
+                                </span>
+                            </td>
                         }
                         else if (!(bool)Product.EstadoDeSolicitud)
                         {
@@ -51,19 +56,35 @@
                         }
                         else
                         {
-                            <td scope="col" class="text-info-emphasis">Pendiente</td>
+                            <td scope="col" class="text-success-emphasis">Aprovado</td>
                         }
-                        <td scope="col" class="text-success-emphasis">$@Product.PrecioBase</td>
-                        <td scope="col">@Product.CantidadDeOfertas</td>
+                        <td scope="col"><p class="text-info-emphasis text-center">@Product.CantidadDeOfertas</p></td>
+                        <td scope="col" class="text-success-emphasis"><p class="text-nowrap">@(Product.PrecioBase.ToString("C"))</p></td>
                         @if (Product.OfertaMasAlta == 0)
                         {
                             <td scope="col" class="text-body-tertiary">Sin ofertas</td>
                         }
                         else
                         {
-                            <td scope="col" class="text-success">$@Product.OfertaMasAlta</td>
+                            <td scope="col" class="text-success"><p class="text-nowrap">@(Product.OfertaMasAlta.ToString("C"))</p></td>
                         }
-                        <td scope="col"><button>@Product.IdSubasta</button></td>
+                        @if(Product.status == "sold")
+                        {
+                            <td scope="col">Vendido<button>Generar factura</button></td>
+                        }
+                        else if (Product.status == "ongoing")
+                        {
+                            <td scope="col">Subasta no terminada</td>
+                        }
+                        else if (Product.status == "notsold")
+                        {
+                            <td scope="col">No vendido, subasta terminada</td>
+                        }
+                        else
+                        {
+                            <td scope="col">No vendido aun</td>
+                        }
+                        
                     </tr>
                 </tbody>
             }
@@ -108,6 +129,12 @@
     private async Task LoadProducts()
     {
             products = await apiClient.GetProductsOfUser(UserId);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await js.InvokeVoidAsync("initializeTooltips");
     }
 
 }

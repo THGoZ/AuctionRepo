@@ -27,7 +27,7 @@
     <div class="nav-item">
         <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
         <span class="menu-icon fa-solid fa-boxes-stacked fa-2x">
-                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" href="#" @onclick="Navatoproducs">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" @onclick="Navatoproducs">
                 Productos
             </a>
         </span>
@@ -54,11 +54,6 @@
     private void CollapseSideBar()
     {
         isExpanded = false;
-    }
-
-    public void Navaout()
-    {
-        navManager.NavigateTo($"/products/{65534}", true);
     }
 
     public async void Navatoproducs()

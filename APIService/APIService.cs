@@ -43,10 +43,13 @@ namespace APIService
                     producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
                     if (producto.CantidadDeOfertas > 0)
                     {
-                        producto.OfertaMasAlta = await _httpClient.GetFromJsonAsync<decimal?>($"/api/Producto/bid/{producto.IdProducto}");
+                        producto.OfertaMasAlta = await _httpClient.GetFromJsonAsync<decimal>($"/api/Producto/bid/{producto.IdProducto}");
+                        var response  = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                        producto.status = response;
                     }
                     else
                     {
+                        producto.status = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
                         producto.OfertaMasAlta = 0;
                     }
                 }
@@ -63,6 +66,22 @@ namespace APIService
                 foreach (var producto in productos)
                 {
                     producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                }
+                return productos;
+            }
+            else return null;
+        }
+
+        public async Task<List<ProductoAPI>?> GetProductsWithOfertasSoldstatus()
+        {
+            var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+            if (productos is not null)
+            {
+                foreach (var producto in productos)
+                {
+                    producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                    var response = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                    producto.status = response;
                 }
                 return productos;
             }
@@ -111,6 +130,11 @@ namespace APIService
         public async Task<int?> GetProductoCount()
         {
             return await _httpClient.GetFromJsonAsync<int?>("/api/Producto/cantidad");
+        }
+
+        public async Task<string?> CheckSoldStatus(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<string>($"/api/Producto/sold/{id}");
         }
 
         public async Task SaveProduct(ProductoAPI product, int UserId, int SubastaId)
