@@ -1,0 +1,205 @@
+﻿@page "/userProducts"
+@using APIService.Models
+@using APIService
+@using System.Security.Claims
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h2>Tus productos</h2>
+
+<div class="container-fluid table-responsive-xxl clearfix">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col" class="col-sm-1">Descripcion</th>
+                <th scope="col">Fecha de solicitud</th>
+                <th scope="col">Estado de solicitud</th>
+                <th scope="col">Cantidad de ofertas</th>
+                <th scope="col">Precio base</th>
+                <th scope="col">Maxima oferta</th>
+                <th scope="col">Estado en subasta</th>
+            </tr>
+        </thead>
+        @if(products == null)
+        {
+            <tbody class="table-group-divider text-center">
+                <tr>
+                    <td colspan="9">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-grow text-primary mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-secondary mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-success mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-danger mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-warning mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-info mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-light mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-dark mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        }
+        else if (products?.Any() ?? false)
+        {
+            foreach (var Product in products)
+            {
+                <tbody class="table-group-divider">
+                    <tr>
+                        @if (Product.Imagen is not null)
+                        {
+                            <th scope="row"><img src="@GetPreviewImage(Product)" class="img-fluid rounded-3 card-img-top img-fit" alt="Producto Image" /></th>
+                        }
+                        else
+                        {
+                            <th scope="row"><img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="Producto Image" /></th>
+                        }
+                        <td scope="col"><p class="fs-4">@Product.Nombre</p></td>
+                        <td scope="col" class="col-sm-1 overflow-auto fs-5 text-body-tertiary">@Product.Descripcion</td>
+                        <td scope="col">@Product.FechaSolicitud</td>
+                        @if (Product.EstadoDeSolicitud is null)
+                        {
+                            <td scope="col"><p class="text-info-emphasis text-center">Pendiente</p>
+                                <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Todavia no fue aceptado en la subasta">
+                                    <button class="btn btn-outline-warning btn-sm" disabled>Ver en subasta N°@Product.IdSubasta</button>
+                                </span>
+                            </td>
+                        }
+                        else if (!(bool)Product.EstadoDeSolicitud)
+                        {
+                            <td scope="col" class="text-danger-emphasis">Rechazado</td>
+
+                        }
+                        else
+                        {
+                            <td scope="col" class="text-success-emphasis text-center">
+                                Aprobado
+                                @if(Product.Status == "sold" || Product.Status == "notsold")
+                                {
+                                    <button class="btn btn-sm btn-warning my-3" @onclick="NavToRestult">Ver resultado de subasta</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-sm btn-warning my-3" @onclick="()=> NavtoSubasta(Product.IdSubasta)">Ver en subasta N°@Product.IdSubasta</button>
+                                }
+                            </td>
+                        }
+                        <td scope="col"><p class="text-info-emphasis text-center">@Product.CantidadDeOfertas</p></td>
+                        <td scope="col" class="text-success-emphasis"><p class="text-nowrap">@(Product.PrecioBase.ToString("C"))</p></td>
+                        @if (Product.OfertaMasAlta == 0)
+                        {
+                            <td scope="col" class="text-body-tertiary">Sin ofertas</td>
+                        }
+                        else
+                        {
+                            <td scope="col" class="text-success"><p class="text-nowrap">@(Product.OfertaMasAlta.ToString("C"))</p></td>
+                        }
+                        @if(Product.Status == "sold")
+                        {
+                            <td scope="col">Vendido<button>Generar factura</button></td>
+                        }
+                        else if (Product.Status == "ongoing")
+                        {
+                            <td scope="col">Subasta no terminada</td>
+                        }
+                        else if (Product.Status == "notsold")
+                        {
+                            <td scope="col">No vendido, subasta terminada</td>
+                        }
+                        else
+                        {
+                            <td scope="col">No vendido aun</td>
+                        }
+                        
+                    </tr>
+                </tbody>
+            }
+        }
+        else
+        {
+            <tbody class="table-group-divider text-center">
+                <tr>
+                    <td colspan="9">
+                        <div class="d-flex justify-content-center">
+                                <h1 class="text-body-tertiary">No hay productos</h1>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
+
+@code {
+    private List<ProductoAPI>? products;
+    private int UserId;
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    public byte[] imageData { get; set; } = null;
+    public string FileType { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        UserId = int.Parse(userIdClaim.Value);
+        await LoadProducts();
+    }
+
+    private string? GetPreviewImage(ProductoAPI product)//para cargar en edicion al subir imagen nueva
+    {
+        if (imageData != null && FileType != null)
+            return $"data:image/{FileType.Trim('.')};base64,{Convert.ToBase64String(imageData)}";
+        else if (product?.Imagen != null && !string.IsNullOrEmpty(product.ImageExtension))
+            return $"data:image/{product.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(product.Imagen)}";
+        else
+            return null;
+    }
+
+    private async Task LoadProducts()
+    {
+        products = await apiClient.GetProductsOfUser(UserId);
+    }
+
+    private void NavToRestult()
+    {
+        navManager.NavigateTo("/closed", true);
+    }
+
+    private async void NavtoSubasta(int? auctionid)
+    {
+        int id = auctionid ?? 1;
+        var productocount = await apiClient.GetProductoCountOfAuction(id);
+        navManager.NavigateTo($"/products/{auctionid}/{productocount}", true);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await js.InvokeVoidAsync("initializeTooltips");
+    }
+
+}

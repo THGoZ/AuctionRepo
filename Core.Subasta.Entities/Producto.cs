@@ -29,9 +29,7 @@ namespace Auction.Core.Entities
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaSolicitud { get; set; }
-
-        public bool? EstadoDeSolicitud { get; set; } //aprobado = true
-
+        public bool? EstadoDeSolicitud { get; set; }//null = pendiente/ false = rechazado / true = aprobado
         public virtual ICollection<Oferta>? Ofertas { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿@page "/products/{auction}"
-@page "/products"
+﻿@page "/products/{auction}/{productcount}"
+@page "/products/{productcount}"
 
 @using APIService.Models
 @using APIService
@@ -8,107 +8,143 @@
 @using AuctionBlazorWebApp.Models.ViewModels
 @using AuctionBlazorWebApp.Components
 @using Microsoft.AspNetCore.Components.Forms
-@rendermode InteractiveServer
 @inject IJSRuntime JSRuntime
 @inject APIService apiClient
 @attribute [Authorize]
 
-
-<PageTitle>Home</PageTitle>
-<div class="container">
-    <div class="row g-3">
-    @* @if (auction is not null)
-    {
-        <h1>Productos en subasta Nro @auction</h1>
-    }
-    else
-    {
-        <h1>Mostrando todos los productos</h1>
-    }
-    <div class="card-body p-0">
-        <table class="table table-striped mb-0">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Description</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (auction is not null)
-                {
-                    <tr>
-                        <th>
-                            <EditForm Model="@addProductModel" OnValidSubmit="AddProduct">
-                                <DataAnnotationsValidator />
-                                <td>
-                                    <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Nombre"></InputText>
-                                    <ValidationMessage For="() => addProductModel.Nombre"></ValidationMessage>
-                                </td>
-                                <td>
-                                    <InputNumber @bind-Value="addProductModel.PrecioBase" class="form-control" placeholder="Precio"></InputNumber>
-                                    <ValidationMessage For="() => addProductModel.PrecioBase"></ValidationMessage>
-                                </td>
-                                <td>
-                                    <InputText @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Descripcion"></InputText>
-                                    <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
-                                </td>
-                                <td>
-                                    <InputFile accept="image/*" OnChange="FileUploaded"></InputFile>
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-loco">Save</button>
-                                </td>
-                            </EditForm>
-                        </th>
-                    </tr>
-                } *@
-                @if (products?.Any() ?? false)
-                {
+<div class="container-fluid justify-content-center">
+@if (auction != null)
+{
+    <PageTitle>Subasta N°@auction</PageTitle>
+        <div class="p-2 rounded bg-body-tertiary my-5 text-center">
+            <h1>Productos de subasta N°@auction</h1>
+            @if (subasta != null){
+            <p class="text-body-tertiary">@subasta.Descripcion</p>
+            }
+        </div>
+}
+else
+{
+    <PageTitle>Productos</PageTitle>
+        <div class="p-3 rounded bg-body-tertiary my-5 text-center">
+            <h1>Productos disponibles</h1>
+        </div>
+}
+    <div class="d-flex justify-content-end mx-5">
+        <div class="dropdown m-2 focus-ring-secondary">
+            <button class=" btn dropdown-toggle text-start text-md-start border border-warning rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+                <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
+            </button>
+            <div class="dropdown-menu px-3" style="">
+                <h6 class="dropdown-header text-warning-emphasis">Filtrar productos</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Con ofertas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Sin ofertas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Todos
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown m-2">
+            <button class="btn dropdown-toggle text-start text-md-start border border-warning rounded-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-sort fa-2x mx-1" style="color: #FFD43B;"></i> Ordenar
+            </button>
+            <div class="dropdown-menu" style="">
+                <h6 class="dropdown-header">Ordenar por</h6>
+                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Precio</a>
+                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Cantidad de ofertas</a>
+                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Nombre</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @if (products == null)
+        {
+            for (int i = 0; i < int.Parse(productcount); i++)
+            {
+                <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
+                    <div class="col shadow-lg rounded-top-3">
+                        <div class="card-sl">
+                            <div class="image-container">
+                                <div class="first">
+                                    <div class="d-flex justify-content-end align-items-end">
+                                        <span class="wishlist text-light pull-right placeholder-glow" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Cantida de ofertas"></span>
+                                    </div>
+                                </div>
+                                <img src="placeholder.jpg" class="img-fluid rounded-top-3 card-img-top img-fit" alt="Producto Image" />
+                            </div>
+                        </div>
+                        <div class="card-heading bg-body-secondary">
+                            <span class="placeholder col-6 mx-2 mt-2 mb-3"></span>
+                        </div>
+                        <div class="card-text text-body-tertiary bg-body-secondary px-2">
+                            <span class="placeholder place col-7"></span>
+                            <span class="placeholder-glow col-4"></span>
+                            <span class="mx-1 placeholder col-4"></span>
+                        </div>
+                        <div class="card-text text-success bg-body-secondary py-2">
+                            <span class="mx-2 placeholder col-6"></span>
+                        </div>
+                    </div>
+                    <div class="rounded-bottom-3 text-center bg-body-tertiary shadow">
+                        <span class="py-3 card-button disabled placeholder placeholder-lg bg-warning col-12 text-decoration-none fw-bold"></span>
+                    </div>
+                </div>
+            }
+        }
+        else if (products?.Any() ?? false)
+        {
             @foreach (var product in products)
-                    {
-                        <ProductRowItemComponent ProductRowItem="product"
-                                                 OnEdit="EditProduct"
-                                                 OnDelete="DeleteProduct"
-                                                 ShowOnly="@(auction == null)"
+            {
+                <ProductRowItemComponent ProductRowItem="product"
+                                         OnEdit="EditProduct"
+                                         OnDelete="DeleteProduct"
+                                         ShowOnly="@(auction == null)"
                                          ShowUserProducts="@(auction == "65534")"
-                                                 IdUsuario="UserId"
-                                                 UpdateProduct="LoadProducts" />
+                                         IdUsuario="UserId"
+                                         UpdateProduct="LoadProducts" />
 
 
-                    }
-                }
-                else
-                {
+            }
+        }
+        else
+        {
             <div class="px-4 py-5 my-5 text-center">
                 <h1 class="display-6 fw-bold text-nowrap text-body-tertiary">-<span class="text-wrap">No hay productos disponibles para mostrar en esta subasta</span>-</h1>
-                    </div>
-                }
-                </div>
-                </div>
-@*             </tbody>
-        </table>
+            </div>
+        }
     </div>
-</div> *@
+</div>
 
 @code {
     [Parameter]
     public string auction { get; set; }
+    [Parameter]
+    public string productcount { get; set; }
     private string Name;
     private int UserId;
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private List<ProductoAPI>? products;
     private ProductoViewModel addProductModel = new();
-    public string FileName { get; set; } = "";
-    public long Filesize { get; set; }
     public string FileType { get; set; } = "";
-    public DateTimeOffset Lastmodofied { get; set; }
     const int MAX_FILESIZE = 5000 * 1024;
     public string ErrorMessage { get; set; } = "";
     public byte[] imageData { get; set; } = null;
     private bool showOnly;
+    private SubastaAPI? subasta = new();
 
 
     protected override async Task OnInitializedAsync()
@@ -119,6 +155,10 @@
         var user = authenticationState.User;
         var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
         UserId = int.Parse(userIdClaim.Value);
+        if (auction != null)
+        {
+            await ObtainSubasta(int.Parse(auction));
+        }
         await LoadProducts();
     }
 
@@ -130,7 +170,9 @@
         }
         else
         {
-            products = await apiClient.GetProductsWithOfertas();
+            var all = await apiClient.GetProducts();
+            if(all is not null)
+                products = all.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
         }
     }
 
@@ -198,5 +240,10 @@
     protected override void OnParametersSet()
     {
         showOnly = auction != null;
+    }
+
+    private async Task ObtainSubasta(int id)
+    {
+        subasta = await apiClient.GetAuction(id);
     }
 }

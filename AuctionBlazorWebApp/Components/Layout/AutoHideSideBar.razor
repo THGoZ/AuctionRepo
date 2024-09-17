@@ -1,5 +1,7 @@
 ﻿@inject NavigationManager navManager
-<div class="container @(isExpanded ? "expand" : "collapse")"
+@using APIService
+@inject APIService apiClient
+<div class="container d-flex flex-column flex-shrink-0 @(isExpanded ? "expand" : "collapse")"
      @onmouseenter="ExpandSideBar"
      @onmouseleave="CollapseSideBar">
 
@@ -15,8 +17,17 @@
     </div>
     <div class="nav-item">
         <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
+            <span class="menu-icon fa-solid fa-clipboard-list fa-2x">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" href="closed">
+                    Resultados
+                </a>
+            </span>
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
         <span class="menu-icon fa-solid fa-boxes-stacked fa-2x">
-                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" href="products">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" @onclick="Navatoproducs">
                 Productos
             </a>
         </span>
@@ -25,7 +36,7 @@
         <div class="nav-item">
     <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
         <span class="menu-icon fa-solid fa-box fa-2x">
-                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" @onclick="Navaout">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" href="userProducts">
                 Mis productos
             </a>
         </span>
@@ -45,8 +56,8 @@
         isExpanded = false;
     }
 
-    public void Navaout()
+    public async void Navatoproducs()
     {
-        navManager.NavigateTo($"/products/{65534}", true);
+        navManager.NavigateTo($"/products/{await apiClient.GetProductoCount()}", true);
     }
 }

@@ -10,13 +10,12 @@
 { 
     @if (!ShowUserProducts)
     {
-        <div class="col-md-3 mx-3 mb-3 mt-3 container-lg">
+        <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
             <div class="col shadow-lg rounded-top-3">
             <div class="card-sl">
                 <div class="image-container">
                     <div class="first">
                         <div class="d-flex justify-content-end align-items-end">
-
                                 <span class="wishlist text-light pull-right" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Cantida de ofertas">@ProductRowItem.CantidadDeOfertas</span>
                         </div>
                     </div>
@@ -37,7 +36,7 @@
                 @ProductRowItem.Descripcion
             </div>
                 <div class="card-text text-success bg-body-secondary">
-                $@ProductRowItem.PrecioBase
+                    @ProductRowItem.PrecioBase.ToString("C")
             </div>
             </div>
             <div class="rounded-bottom-3 text-end bg-body-tertiary shadow">

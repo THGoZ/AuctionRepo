@@ -3,8 +3,18 @@
 @rendermode InteractiveServer
 @inject IJSRuntime JSRuntime
 @inject APIService apiClient
+@attribute [Authorize]
 
-@if (Productos is not null)
+@if(Productos == null)
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-grow fs-2" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+
+else if (Productos is not null)
 {
     @foreach (var producto in Productos){
         <div class="container border border-top-0 border-start-0 border-end-0 border-bottom-5 py-2">
@@ -27,7 +37,7 @@
                     <h6>@producto.Descripcion</h6>
                 </div>
                 <div class="row">
-                    <h4 class="text-success-emphasis">$@producto.PrecioBase</h4>
+                        <h4 class="text-success-emphasis text-nowrap">@producto.PrecioBase.ToString("C")</h4>
                 </div>
             </div>
             <div class="col-md">
@@ -38,7 +48,7 @@
                         <h5 class="fw-semibold">@producto.ApellidoGanador</h5>
                     </div>
                     <div class="row text-center mt-2">
-                        <h3 class="text-success fs-5"><span class="px-3 py-2 badge-pill bg-success-subtle border border-3 border-success">$@producto.Monto</span></h3>
+                        <h3 class="text-success text-nowrap fs-5"><span class="px-3 py-2 badge-pill bg-success-subtle border border-3 border-success">@producto.Monto.Value.ToString("C")</span></h3>
                     </div>
             </div>
         </div>
@@ -47,7 +57,7 @@
 }
 else
 {
-    <p>No Product</p>
+    <h1 class="text-body-tertiary">No hay productos</h1>
 }
 @code {
     [Parameter]

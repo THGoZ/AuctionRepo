@@ -30,9 +30,9 @@
                             <InputText id="password" @bind-Value="model.Contrasena" placeholder="Contraseña" type="password" class="form-control"></InputText>
                             <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
                         </div>
-                        @*                 <div class="alert alert-danger mt-2" role="alert">
-                        <span class="text-danger">@errormessage</span>
-                        </div> *@
+                <div class="alert alert-danger mt-2" role="alert">
+                    <span class="text-danger">@errormessage</span>
+                </div>
                         <div class="d-grid gap-2 mb-3 my-4">
                             <button type="submit" class="btn btn-primary">Ingresar</button>
                             <div class="registrar text-center">
@@ -74,6 +74,7 @@
         login.Contrasena = model.Contrasena;
 
         var sesionUsuario = await apiClient.ValidateUser(login);
+        int subastacount = await apiClient.SubastaCount();
 
         if (sesionUsuario is null || sesionUsuario.Wrongpassoword)
         {
@@ -86,6 +87,7 @@
             new Claim(ClaimTypes.NameIdentifier, sesionUsuario.IdUsuario.ToString()),
             new Claim(ClaimTypes.Name, sesionUsuario.Nombre),
             new Claim(ClaimTypes.Surname, sesionUsuario.Apellido),
+            new Claim(ClaimTypes.PostalCode, subastacount.ToString())
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

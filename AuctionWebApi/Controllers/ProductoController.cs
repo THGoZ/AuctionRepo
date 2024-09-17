@@ -23,6 +23,26 @@ namespace AuctionWebApi.Controllers
             return _dbContext.Productos;
         }
 
+        [HttpGet("User/{UserId}")]
+        public ActionResult<IEnumerable<Producto>> GetAllProductsOfUser(int UserId)
+        {
+            return _dbContext.Productos.Where(p=> p.IdUsuario == UserId).ToList();
+        }
+
+        [HttpGet("bid/{ProdID}")]
+        public async Task <ActionResult<decimal?>> GetHighestBid(int ProdID)
+        {
+            return await _dbContext.Productos
+    .Where(p => p.IdProducto == ProdID)
+    .Include(p => p.Ofertas)
+    .Select(p => p.Ofertas
+        .OrderByDescending(o => o.Monto)
+        .Select(o => o.Monto)
+        .FirstOrDefault()
+    )
+    .FirstOrDefaultAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Producto?>> GetById(int id)
         {
@@ -44,6 +64,42 @@ namespace AuctionWebApi.Controllers
 
             return cantidad;
         }
+
+        [HttpGet("sold/{id}")]
+        public async Task<string> GetSoldStatus(int id)
+        {
+            string status;
+            var isSubastaover = await _dbContext.Subastas.Where(s=> s.Productos.Any(p=> p.IdProducto.Equals(id))&& s.FechaCierre < DateTime.Now).AnyAsync();
+
+            if( await _dbContext.Productos.Where(p=> p.IdProducto == id && p.Ofertas.Any()).AnyAsync())
+            {
+                if (isSubastaover)
+                {
+                    status = "sold";
+                    return status;
+                }
+                else
+                {
+                    status = "ongoing";
+                    return status;
+                }
+            }
+            else
+            {
+                if (isSubastaover) {
+                    status = "notsold";
+                    return status;
+                }
+                else
+                {
+                    status = "ongoingnotsold";
+                    return status;
+                }
+
+            }
+            
+        }
+
         [HttpGet("winners/{id}")]
         public async Task<List<ProductoWinner>> GetWinners(int id)
         {
@@ -80,6 +136,12 @@ namespace AuctionWebApi.Controllers
             }
 
             return Winners;
+        }
+
+        [HttpGet("cantidad/")]
+        public async Task<ActionResult<int?>> ProductoCount()
+        {
+            return await _dbContext.Productos.CountAsync();
         }
 
         [HttpPost("{UserId}/{SubastaId}")]
@@ -140,7 +202,6 @@ namespace AuctionWebApi.Controllers
             result.Descripcion = producto.Descripcion;
             result.PrecioBase = producto.PrecioBase;
             result.FechaSolicitud = producto.FechaSolicitud;
-            result.EstadoDeSolicitud = producto.EstadoDeSolicitud;
             return result;
         }
     }
