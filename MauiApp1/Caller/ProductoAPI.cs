@@ -9,7 +9,7 @@
         public byte[]? Imagen { get; set; }
         public string? ImageExtension { get; set; }
         public DateTime FechaSolicitud { get; set; }
-        public bool EstadoDeSolicitud { get; set; } = false; //aprobado = true
+        public bool? EstadoDeSolicitud { get; set; } //aprobado = true
 
         public int? IdSubasta { get; set; }
 
