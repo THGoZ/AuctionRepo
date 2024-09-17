@@ -45,11 +45,11 @@ namespace APIService
                     {
                         producto.OfertaMasAlta = await _httpClient.GetFromJsonAsync<decimal>($"/api/Producto/bid/{producto.IdProducto}");
                         var response  = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
-                        producto.status = response;
+                        producto.Status = response;
                     }
                     else
                     {
-                        producto.status = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                        producto.Status = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
                         producto.OfertaMasAlta = 0;
                     }
                 }
@@ -81,7 +81,7 @@ namespace APIService
                 {
                     producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
                     var response = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
-                    producto.status = response;
+                    producto.Status = response;
                 }
                 return productos;
             }
@@ -191,6 +191,24 @@ namespace APIService
                 return null;
             }
 
+        }
+
+        public async Task<SubastaAPI?> GetAuction(int id)
+        {
+            var subasta = await _httpClient.GetFromJsonAsync<SubastaAPI>($"/api/Subasta/{id}");
+            if (subasta is not null)
+            {
+                return subasta;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<int?> GetProductoCountOfAuction(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/cantidad/{id}");
         }
 
         public async Task<List<SubastaAPI>?> GetIncomingAuctions()

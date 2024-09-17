@@ -22,7 +22,15 @@
     @{
         var sbstcntr = 1;
     }
-        @if (subastas?.Any() ?? false)
+    @if(subastas == null)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border fs-2 text-warning" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (subastas?.Any() ?? false)
         {
         @foreach (var subasta in subastas)//considerar si la subasta no tiene items
             {
@@ -47,7 +55,7 @@
     }
     else
     {
-        <p>"no hay subastas"</p>
+        <h1 class="text-body-tertiary text-center">No hay subastas terminadas</h1>
     }
 </div>
 

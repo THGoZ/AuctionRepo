@@ -10,7 +10,7 @@
 { 
     @if (!ShowUserProducts)
     {
-        <div class="col-md-3 mx-3 mb-3 mt-3 container-lg">
+        <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
             <div class="col shadow-lg rounded-top-3">
             <div class="card-sl">
                 <div class="image-container">
@@ -36,7 +36,7 @@
                 @ProductRowItem.Descripcion
             </div>
                 <div class="card-text text-success bg-body-secondary">
-                $@ProductRowItem.PrecioBase
+                    @ProductRowItem.PrecioBase.ToString("C")
             </div>
             </div>
             <div class="rounded-bottom-3 text-end bg-body-tertiary shadow">

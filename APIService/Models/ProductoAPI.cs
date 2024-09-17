@@ -27,6 +27,6 @@ namespace APIService.Models
 
         public decimal OfertaMasAlta { get; set; } = 0;
 
-        public string status { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
     }
 }

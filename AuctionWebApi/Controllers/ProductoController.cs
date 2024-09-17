@@ -202,7 +202,6 @@ namespace AuctionWebApi.Controllers
             result.Descripcion = producto.Descripcion;
             result.PrecioBase = producto.PrecioBase;
             result.FechaSolicitud = producto.FechaSolicitud;
-            result.EstadoDeSolicitud = producto.EstadoDeSolicitud;
             return result;
         }
     }

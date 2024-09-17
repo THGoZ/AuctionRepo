@@ -12,7 +12,6 @@ namespace AuctionWebApi.Domain.DTO
         public byte[]? Imagen { get; set; }
         public string? ImageExtension { get; set; }
         public DateTime FechaSolicitud { get; set; }
-        public bool EstadoDeSolicitud { get; set; } = false; //aprobado = true
 
     }
 }

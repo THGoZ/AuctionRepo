@@ -25,7 +25,43 @@
                 <th scope="col">Estado en subasta</th>
             </tr>
         </thead>
-        @if (products is not null)
+        @if(products == null)
+        {
+            <tbody class="table-group-divider text-center">
+                <tr>
+                    <td colspan="9">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-grow text-primary mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-secondary mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-success mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-danger mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-warning mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-info mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-light mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow text-dark mx-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        }
+        else if (products?.Any() ?? false)
         {
             foreach (var Product in products)
             {
@@ -53,10 +89,21 @@
                         else if (!(bool)Product.EstadoDeSolicitud)
                         {
                             <td scope="col" class="text-danger-emphasis">Rechazado</td>
+
                         }
                         else
                         {
-                            <td scope="col" class="text-success-emphasis">Aprovado</td>
+                            <td scope="col" class="text-success-emphasis text-center">
+                                Aprobado
+                                @if(Product.Status == "sold" || Product.Status == "notsold")
+                                {
+                                    <button class="btn btn-sm btn-warning my-3" @onclick="NavToRestult">Ver resultado de subasta</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-sm btn-warning my-3" @onclick="()=> NavtoSubasta(Product.IdSubasta)">Ver en subasta N°@Product.IdSubasta</button>
+                                }
+                            </td>
                         }
                         <td scope="col"><p class="text-info-emphasis text-center">@Product.CantidadDeOfertas</p></td>
                         <td scope="col" class="text-success-emphasis"><p class="text-nowrap">@(Product.PrecioBase.ToString("C"))</p></td>
@@ -68,15 +115,15 @@
                         {
                             <td scope="col" class="text-success"><p class="text-nowrap">@(Product.OfertaMasAlta.ToString("C"))</p></td>
                         }
-                        @if(Product.status == "sold")
+                        @if(Product.Status == "sold")
                         {
                             <td scope="col">Vendido<button>Generar factura</button></td>
                         }
-                        else if (Product.status == "ongoing")
+                        else if (Product.Status == "ongoing")
                         {
                             <td scope="col">Subasta no terminada</td>
                         }
-                        else if (Product.status == "notsold")
+                        else if (Product.Status == "notsold")
                         {
                             <td scope="col">No vendido, subasta terminada</td>
                         }
@@ -91,8 +138,14 @@
         }
         else
         {
-            <tbody class="table-group-divider">
-                <tr>No hay productos</tr>
+            <tbody class="table-group-divider text-center">
+                <tr>
+                    <td colspan="9">
+                        <div class="d-flex justify-content-center">
+                                <h1 class="text-body-tertiary">No hay productos</h1>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         }
     </table>
@@ -128,7 +181,19 @@
 
     private async Task LoadProducts()
     {
-            products = await apiClient.GetProductsOfUser(UserId);
+        products = await apiClient.GetProductsOfUser(UserId);
+    }
+
+    private void NavToRestult()
+    {
+        navManager.NavigateTo("/closed", true);
+    }
+
+    private async void NavtoSubasta(int? auctionid)
+    {
+        int id = auctionid ?? 1;
+        var productocount = await apiClient.GetProductoCountOfAuction(id);
+        navManager.NavigateTo($"/products/{auctionid}/{productocount}", true);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

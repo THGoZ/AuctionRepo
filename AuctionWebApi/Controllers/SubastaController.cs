@@ -45,7 +45,6 @@ namespace AuctionWebApi.Controllers
         public async Task<ActionResult<Subasta?>> GetById(int id)
         {
             var subasta = await _dbContext.Subastas
-                .Include(s => s.Productos) // A reemplazar por lazyloading
                 .SingleOrDefaultAsync(x => x.IdSubasta == id);
 
             if (subasta == null)

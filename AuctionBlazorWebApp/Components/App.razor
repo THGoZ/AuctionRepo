@@ -36,5 +36,5 @@
     private IComponentRenderMode? RenderModeForPage =>
         HttpContext.Request.Path.StartsWithSegments("/login")
             ? null
-            : InteractiveServer;
+            : new InteractiveServerRenderMode(prerender: false);
 }

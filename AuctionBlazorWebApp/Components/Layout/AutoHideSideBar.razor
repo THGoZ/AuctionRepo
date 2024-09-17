@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager navManager
 @using APIService
 @inject APIService apiClient
-<div class="container @(isExpanded ? "expand" : "collapse")"
+<div class="container d-flex flex-column flex-shrink-0 @(isExpanded ? "expand" : "collapse")"
      @onmouseenter="ExpandSideBar"
      @onmouseleave="CollapseSideBar">
 

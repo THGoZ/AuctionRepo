@@ -8,20 +8,73 @@
 @using AuctionBlazorWebApp.Models.ViewModels
 @using AuctionBlazorWebApp.Components
 @using Microsoft.AspNetCore.Components.Forms
-@rendermode InteractiveServer
 @inject IJSRuntime JSRuntime
 @inject APIService apiClient
 @attribute [Authorize]
 
-
-<PageTitle>Home</PageTitle>
-<div class="container">
-    <div class="row g-3">
+<div class="container-fluid justify-content-center">
+@if (auction != null)
+{
+    <PageTitle>Subasta N°@auction</PageTitle>
+        <div class="p-2 rounded bg-body-tertiary my-5 text-center">
+            <h1>Productos de subasta N°@auction</h1>
+            @if (subasta != null){
+            <p class="text-body-tertiary">@subasta.Descripcion</p>
+            }
+        </div>
+}
+else
+{
+    <PageTitle>Productos</PageTitle>
+        <div class="p-3 rounded bg-body-tertiary my-5 text-center">
+            <h1>Productos disponibles</h1>
+        </div>
+}
+    <div class="d-flex justify-content-end mx-5">
+        <div class="dropdown m-2 focus-ring-secondary">
+            <button class=" btn dropdown-toggle text-start text-md-start border border-warning rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+                <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
+            </button>
+            <div class="dropdown-menu px-3" style="">
+                <h6 class="dropdown-header text-warning-emphasis">Filtrar productos</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Con ofertas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Sin ofertas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Todos
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown m-2">
+            <button class="btn dropdown-toggle text-start text-md-start border border-warning rounded-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-sort fa-2x mx-1" style="color: #FFD43B;"></i> Ordenar
+            </button>
+            <div class="dropdown-menu" style="">
+                <h6 class="dropdown-header">Ordenar por</h6>
+                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Precio</a>
+                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Cantidad de ofertas</a>
+                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Nombre</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         @if (products == null)
         {
             for (int i = 0; i < int.Parse(productcount); i++)
             {
-                <div class="col-md-3 mx-3 mb-3 mt-3 container-lg">
+                <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
                     <div class="col shadow-lg rounded-top-3">
                         <div class="card-sl">
                             <div class="image-container">
@@ -37,8 +90,8 @@
                             <span class="placeholder col-6 mx-2 mt-2 mb-3"></span>
                         </div>
                         <div class="card-text text-body-tertiary bg-body-secondary px-2">
-                            <span class="placeholder col-7"></span>
-                            <span class="placeholder col-4"></span>
+                            <span class="placeholder place col-7"></span>
+                            <span class="placeholder-glow col-4"></span>
                             <span class="mx-1 placeholder col-4"></span>
                         </div>
                         <div class="card-text text-success bg-body-secondary py-2">
@@ -74,10 +127,6 @@
         }
     </div>
 </div>
-@*             </tbody>
-        </table>
-    </div>
-</div> *@
 
 @code {
     [Parameter]
@@ -90,13 +139,12 @@
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private List<ProductoAPI>? products;
     private ProductoViewModel addProductModel = new();
-    public string FileName { get; set; } = "";
-    public long Filesize { get; set; }
     public string FileType { get; set; } = "";
     const int MAX_FILESIZE = 5000 * 1024;
     public string ErrorMessage { get; set; } = "";
     public byte[] imageData { get; set; } = null;
     private bool showOnly;
+    private SubastaAPI? subasta = new();
 
 
     protected override async Task OnInitializedAsync()
@@ -107,6 +155,10 @@
         var user = authenticationState.User;
         var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
         UserId = int.Parse(userIdClaim.Value);
+        if (auction != null)
+        {
+            await ObtainSubasta(int.Parse(auction));
+        }
         await LoadProducts();
     }
 
@@ -118,9 +170,9 @@
         }
         else
         {
-            var all = await apiClient.GetProductsWithOfertasSoldstatus();
+            var all = await apiClient.GetProducts();
             if(all is not null)
-            products = all.Where(p => p.status != "sold" || p.status != "notsold").ToList();
+                products = all.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
         }
     }
 
@@ -188,5 +240,10 @@
     protected override void OnParametersSet()
     {
         showOnly = auction != null;
+    }
+
+    private async Task ObtainSubasta(int id)
+    {
+        subasta = await apiClient.GetAuction(id);
     }
 }
