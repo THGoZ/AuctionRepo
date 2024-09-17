@@ -1,8 +1,203 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AuctionMobileApp.MainPage">
-    <VerticalStackLayout>
+             x:Class="AuctionMobileApp.MainPage"
+             xmlns:page="clr-namespace:AuctionMobileApp.Page"
+             BackgroundColor="#232323"
+             Title="Subastas">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="bgtColor">#2C2C2C</Color>
+            <x:Double x:Key="fontSizeTitle">18</x:Double>
+            <x:Double x:Key="fontSizeBody">15</x:Double>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="15">
+
+        <!-- ListView -->
+        <ListView x:Name="productListView"
+                  ItemTapped="productListView_ItemSelected"
+                  SeparatorColor="Transparent"
+                  HasUnevenRows="True"
+                  BackgroundColor="Transparent"
+                  Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Padding="0"
+                               Margin="5"
+                               CornerRadius="30"
+                               HasShadow="False"
+                               BackgroundColor="{StaticResource bgtColor}"
+                               BorderColor="Transparent">
+                            <VerticalStackLayout>
+                                <Grid BackgroundColor="#FFB32E" Padding="10">
+                                    <HorizontalStackLayout>
+                                        <Image Source="auction.png" WidthRequest="25" HeightRequest="25"/>
+
+                                        <Label Text="{Binding IdSubasta, StringFormat='Subasta N° {0}'}"
+                                               VerticalOptions="Center"
+                                               TextColor="Black"
+                                               FontSize="{StaticResource fontSizeTitle}"
+                                               FontAttributes="Bold"/>
+                                    </HorizontalStackLayout>
+                                </Grid>
+
+                                <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
+                                    <Label Text="{Binding Descripcion}"
+                                           FontAttributes="Italic"
+                                           HorizontalOptions="FillAndExpand"
+                                           TextColor="White"
+                                           FontSize="{StaticResource fontSizeBody}"/>
+                                    <Grid ColumnSpacing="0" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding FechaInicio, StringFormat='Fecha Inicio: {0}'}"
+                                                   FontAttributes="Italic"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource fontSizeBody}"/>
+                                            <Label Text="{Binding FechaCierre, StringFormat='Fecha Cierre: {0}'}"
+                                                   FontAttributes="Italic"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource fontSizeBody}"/>
+                                        </VerticalStackLayout>
+                                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                            <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}"
+                                                   FontAttributes="Italic"
+                                                   HorizontalOptions="End"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource fontSizeBody}"/>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Ofertas: " TextColor="White"/>
+                                                        <Span Text="{Binding CantidadDeOfertas}"
+                                                              TextColor="Green"
+                                                              FontSize="{StaticResource fontSizeBody}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+
+    </Grid>
+</ContentPage>
+
+<!--<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AuctionMobileApp.MainPage"
+             xmlns:page="clr-namespace:AuctionMobileApp.Page"
+             BackgroundColor="#232323"
+             Title="Subastas">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="bgtColor">#2C2C2C</Color>
+            <x:Double x:Key="fontSizeTitle">18</x:Double>
+            <x:Double x:Key="fontSizeBody">15</x:Double>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="15" Margin="15">
+
+        <ListView   x:Name="productListView"
+                    ItemTapped="productListView_ItemSelected"
+                    SeparatorColor="Transparent"
+                    HasUnevenRows="True"
+                    BackgroundColor="Transparent">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Padding="0"
+                               Margin="5"
+                               CornerRadius="30"
+                               HasShadow="False"
+                               BackgroundColor="{StaticResource bgtColor}"
+                               BorderColor="Transparent">
+                            
+                                --><!-- Aquí va tu contenido --><!--
+                            <VerticalStackLayout>
+                                <Grid BackgroundColor="#FFB32E" Padding="10">
+                                    <HorizontalStackLayout>
+                                        <Image Source="auction.png" WidthRequest="25" HeightRequest="25"/>
+
+                                        <Label Text="{Binding IdSubasta, StringFormat='Subasta N° {0}'}"
+                                                   VerticalOptions="Center"
+                                                   TextColor="Black"
+                                                   FontSize="{StaticResource fontSizeTitle}"
+                                                   FontAttributes="Bold"/>
+                                    </HorizontalStackLayout>
+                                </Grid>
+
+                                <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
+                                    <Label Text="{Binding Descripcion}"
+                                       FontAttributes="Italic"
+                                       HorizontalOptions="FillAndExpand"
+                                       TextColor="White"
+                                       FontSize="{StaticResource fontSizeBody}"/>
+                                    <Grid ColumnSpacing="0" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding FechaInicio, StringFormat='Fecha Inicio: {0}'}"
+                                               FontAttributes="Italic"
+                                               TextColor="White"
+                                               FontSize="{StaticResource fontSizeBody}"/>
+                                            <Label Text="{Binding FechaCierre, StringFormat='Fecha Cierre: {0}'}"
+                                               FontAttributes="Italic"
+                                               TextColor="White"
+                                               FontSize="{StaticResource fontSizeBody}"/>
+                                        </VerticalStackLayout>
+                                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                            <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}"
+                                               FontAttributes="Italic"
+                                               HorizontalOptions="End"
+                                               TextColor="White"
+                                               FontSize="{StaticResource fontSizeBody}"/>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Ofertas: " TextColor="White"/>
+                                                        <Span Text="{Binding CantidadDeOfertas}"
+                                                          TextColor="Green"
+                                                          FontSize="{StaticResource fontSizeBody}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        --><!-- Espaciador en la parte inferior --><!--
+        <BoxView Grid.Row="2" HeightRequest="50" BackgroundColor="Transparent" />
+
+        
+    </Grid>
+</ContentPage>-->
+
+
+<!--<VerticalStackLayout>
         <ListView x:Name="productListView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="productListView_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -64,7 +259,4 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </VerticalStackLayout>
-
-
-</ContentPage>
+    </VerticalStackLayout>-->

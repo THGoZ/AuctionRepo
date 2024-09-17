@@ -15,19 +15,18 @@ namespace AuctionMobileApp
             LoadSubastas();
         }
 
-        private void btnAdd_Clicked(object sender, EventArgs e)
-        {
-        }
-
-        private async void btnShowProducts_Clicked(object sender, EventArgs e)
+        private void btnShowProducts_Clicked(object sender, EventArgs e)
         {
             LoadSubastas();
         }
 
-        private async void productListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private async void productListView_ItemSelected(object sender, ItemTappedEventArgs e)
         {
             var subasta = (SubastaAPI)e.Item;
-            await Navigation.PushModalAsync(new ViewProducts(_apicaller, subasta.IdSubasta));
+            //await Navigation.PushModalAsync(new ViewProducts(_apicaller, subasta.IdSubasta));
+            //await Shell.Current.GoToAsync($"///ViewProducts?subastaId={subasta.IdSubasta}");
+
+            await Navigation.PushAsync(new ViewProducts(_apicaller, subasta.IdSubasta));
 
         }
 

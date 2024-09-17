@@ -1,5 +1,6 @@
 ﻿using AuctionMobileApp.Caller;
 using AuctionMobileApp.Caller.Interfases;
+using AuctionMobileApp.Page;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
@@ -43,7 +44,10 @@ namespace AuctionMobileApp
 
             builder.Services.AddScoped(p => ApiAdress);
             builder.Services.AddScoped<IAPIMaui, APIMaui>();
-            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<ViewAllProductsPage>();
+            builder.Services.AddTransient<ViewProducts>();
+    
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

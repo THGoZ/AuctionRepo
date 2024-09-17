@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AuctionMobileApp.Page.ViewAllProductsPage"
+             Title="Todos los Productos"
+             BackgroundColor="#232323">
+
+    <FlexLayout Direction="Column">
+        <CollectionView ItemsSource="{Binding ProductoList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.RowSpan="3"
+                   Source="{Binding Image}"
+                   Aspect="AspectFill"
+                   HeightRequest="90"
+                   WidthRequest="90"/>
+                        <Label Grid.Column="1"
+                   Text="{Binding Nombre}"
+                   FontAttributes="Bold"
+                           Padding="5"/>
+                        <Label Grid.Row="1"
+                   Grid.Column="1"
+                   Text="{Binding Descripcion}"
+                           Padding="5"
+                   FontAttributes="Italic"
+                   VerticalOptions="End" />
+                        <Label Grid.Row="2"
+                           Grid.Column="1"
+                           Padding="5"
+                    Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}"
+                    FontAttributes="Bold"
+                    TextColor="red"
+                    VerticalOptions="End" />
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </FlexLayout>
+</ContentPage>
