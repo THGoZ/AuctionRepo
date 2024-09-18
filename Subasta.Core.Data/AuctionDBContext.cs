@@ -15,7 +15,7 @@ namespace Auction.Core.Data
 
         }
 
-        public DbSet<Factura> Facturas { get; set; }
+        public DbSet<DetalleVenta> DetalleVentas { get; set; }
         public DbSet<Informe> Informes { get; set; }
         public DbSet<Oferta> Ofertas { get; set; }
         public DbSet<Producto> Productos { get; set; }
@@ -24,6 +24,10 @@ namespace Auction.Core.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Usuario>()
+    .HasIndex(u => u.Email)
+    .IsUnique();
+
             base.OnModelCreating(modelBuilder);
         }
     }

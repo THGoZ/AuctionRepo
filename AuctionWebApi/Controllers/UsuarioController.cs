@@ -74,15 +74,6 @@ namespace AuctionWebApi.Controllers
                 return Ok();
             }
         }
-        //if (id != usuario.IdUsuario)
-        //{
-        //    return BadRequest("El ID del usuario no coincide con el ID de la URL.");
-        //}
-
-        //if (!ModelState.IsValid)
-        //{
-        //    return BadRequest(ModelState);
-        //}
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)

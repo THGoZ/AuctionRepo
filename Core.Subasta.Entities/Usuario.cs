@@ -27,6 +27,9 @@ namespace Auction.Core.Entities
         [Column("direccion")]
         [MaxLength(50)]
         public string? Direccion { get; set; }
+        [Column("cuil")]
+        [MaxLength(11)]
+        public string? Cuil { get; set; }
 
         [Column("ciudad")]
         [MaxLength(50)]
@@ -44,5 +47,7 @@ namespace Auction.Core.Entities
         public virtual ICollection<Producto>? Productos { get; set; }
 
         public virtual ICollection<Oferta>? Ofertas { get; set; }
+
+        public virtual ICollection<DetalleVenta>? DetalleVentas { get; set; }
     }
 }
