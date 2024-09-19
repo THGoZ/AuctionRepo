@@ -27,7 +27,9 @@
         <Tab Title="Productos" Icon="cubes.png">
             <ShellContent ContentTemplate="{DataTemplate page:ViewAllProductsPage}"/>
         </Tab>
-        
+        <Tab Title="Ganadores" Icon="trophy.png">
+            <ShellContent ContentTemplate="{DataTemplate page:ViewWinnerPage}"/>
+        </Tab>
     </TabBar>
 
     <ShellContent Route="ViewProducts" ContentTemplate="{DataTemplate page:ViewProducts}" />

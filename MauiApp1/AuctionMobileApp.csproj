@@ -83,6 +83,11 @@
 	  <MauiXaml Update="Page\ViewProducts.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Page\ViewWinnerPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadUnhandledDeviceExceptionAuctionMobileAppHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

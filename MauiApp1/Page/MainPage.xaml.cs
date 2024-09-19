@@ -23,8 +23,7 @@ namespace AuctionMobileApp
         private async void productListView_ItemSelected(object sender, ItemTappedEventArgs e)
         {
             var subasta = (SubastaAPI)e.Item;
-            //await Navigation.PushModalAsync(new ViewProducts(_apicaller, subasta.IdSubasta));
-            //await Shell.Current.GoToAsync($"///ViewProducts?subastaId={subasta.IdSubasta}");
+
 
             await Navigation.PushAsync(new ViewProducts(_apicaller, subasta.IdSubasta));
 
@@ -37,3 +36,4 @@ namespace AuctionMobileApp
         }
     }
 }
+
