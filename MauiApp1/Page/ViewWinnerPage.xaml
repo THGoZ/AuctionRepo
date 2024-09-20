@@ -2,11 +2,76 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AuctionMobileApp.Page.ViewWinnerPage"
-             Title="ViewWinnerPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Ganadores"
+             BackgroundColor="#232323">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <!-- CollectionView para mostrar los ganadores -->
+            <CollectionView ItemsSource="{Binding GanadoresList}"  
+                            SelectionMode="None" 
+                            BackgroundColor="Transparent" 
+                            VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Frame con bordes redondeados -->
+                        <Frame CornerRadius="30" Padding="0" Margin="10,10" BorderColor="Transparent" HasShadow="False">
+                            <!-- Contenido del Frame -->
+                            <VerticalStackLayout>
+                                <!-- Título a la izquierda y la imagen a la derecha (si fuera necesario agregar una imagen) -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Nombre del producto a la izquierda -->
+                                    <VerticalStackLayout Padding="10" Grid.Column="0" BackgroundColor="#FFB32E">
+                                        <Label Text="{Binding Nombre}" 
+                                               VerticalOptions="Center" 
+                                               FontAttributes="Bold" 
+                                               FontSize="Medium" 
+                                               TextColor="Black"/>
+                                    </VerticalStackLayout>
+
+                                    <!-- Aquí podrías agregar una imagen si lo deseas -->
+                                </Grid>
+
+                                <!-- Parte inferior con la descripción, nombre del ganador y el monto -->
+                                <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
+                                    <!-- Descripción del producto -->
+                                    <Label Text="{Binding Descripcion}" 
+                                           FontAttributes="Italic" 
+                                           HorizontalOptions="FillAndExpand" 
+                                           TextColor="White"/>
+
+                                    <!-- Detalles del ganador -->
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Nombre del ganador -->
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding NombreGanador, StringFormat='Ganador: {0}'}" 
+                                                   FontAttributes="Bold" 
+                                                   TextColor="White"/>
+                                        </VerticalStackLayout>
+
+                                        <!-- Monto ganado -->
+                                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                            <Label Text="{Binding Monto, StringFormat='Monto: {0:C}'}" 
+                                                   FontAttributes="Bold" 
+                                                   TextColor="White"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

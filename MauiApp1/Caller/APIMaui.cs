@@ -1,6 +1,7 @@
 ﻿using AuctionMobileApp.Caller.Interfases;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AuctionMobileApp.Caller
 {
@@ -17,6 +18,15 @@ namespace AuctionMobileApp.Caller
         public async Task<List<ProductoAPI>?> GetProducts()
         {
             return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+        }
+
+        public async Task<List<ProductoWinner>?> GetWinners(int subastaId)
+        {
+            // Llama al endpoint que devuelve los ganadores de los productos en una subasta
+            var winners = await _httpClient.GetFromJsonAsync<List<ProductoWinner>?>($"/api/Producto/winners/{subastaId}");
+
+            // Comprueba si la lista no es nula y devuelve los ganadores
+            return winners;
         }
 
         public async Task<List<ProductoAPI>?> GetProductsWithOfertas()
@@ -70,6 +80,11 @@ namespace AuctionMobileApp.Caller
                 return null;
             }
 
+        }
+        public async Task<List<SubastaAPI>?> GetClosedSubastas()
+        {
+            // Llamada a la API que obtiene las subastas cerradas
+            return await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta/Closed");
         }
         #endregion
     }
