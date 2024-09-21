@@ -9,16 +9,16 @@
         <VerticalStackLayout>
             <!-- CollectionView para mostrar los ganadores -->
             <CollectionView ItemsSource="{Binding GanadoresList}"  
-                            SelectionMode="None" 
-                            BackgroundColor="Transparent" 
-                            VerticalOptions="FillAndExpand">
+                        SelectionMode="None" 
+                        BackgroundColor="Transparent" 
+                        VerticalOptions="FillAndExpand">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <!-- Frame con bordes redondeados -->
                         <Frame CornerRadius="30" Padding="0" Margin="10,10" BorderColor="Transparent" HasShadow="False">
                             <!-- Contenido del Frame -->
                             <VerticalStackLayout>
-                                <!-- Título a la izquierda y la imagen a la derecha (si fuera necesario agregar una imagen) -->
+                                <!-- Título a la izquierda y la imagen a la derecha -->
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -28,44 +28,57 @@
                                     <!-- Nombre del producto a la izquierda -->
                                     <VerticalStackLayout Padding="10" Grid.Column="0" BackgroundColor="#FFB32E">
                                         <Label Text="{Binding Nombre}" 
-                                               VerticalOptions="Center" 
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
                                                FontAttributes="Bold" 
                                                FontSize="Medium" 
                                                TextColor="Black"/>
+
+                                        <HorizontalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                                            
+                                            
+                                            <!-- Estrella izquierda -->
+                                            <Label Text="🏆" FontSize="Large" TextColor="Gold"/>
+
+                                            <!-- Nombre del ganador -->
+                                            <Label Text="{Binding NombreGanador, StringFormat='{0}'}" 
+                                                   FontAttributes="Bold" 
+                                                   FontSize="Medium"
+                                                   TextColor="Black"/>
+
+                                            <!-- Estrella derecha -->
+                                            <Label Text="🏆" FontSize="Large" TextColor="Gold"/>
+                                        </HorizontalStackLayout>
+
+
+                                        <!-- Monto ganado debajo del ganador -->
+                                        <Label Text="{Binding Monto, StringFormat='Monto ganador: {0:C}'}" 
+                                           FontAttributes="Bold" 
+                                           TextColor="Black"/>
                                     </VerticalStackLayout>
 
-                                    <!-- Aquí podrías agregar una imagen si lo deseas -->
+                                    <!-- Imagen del producto a la derecha con esquinas redondeadas -->
+                                    <Frame Grid.Column="1" Padding="0" CornerRadius="0" IsClippedToBounds="True" BackgroundColor="Transparent" Margin="0">
+                                        <Image Source="{Binding Image}" 
+                                           WidthRequest="120" 
+                                           HeightRequest="120" 
+                                           Aspect="AspectFill" />
+                                    </Frame>
                                 </Grid>
 
-                                <!-- Parte inferior con la descripción, nombre del ganador y el monto -->
+                                <!-- Parte inferior con la subasta a la que pertenece y la descripción -->
                                 <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
+                                    <!-- Subasta a la que pertenece el producto -->
+                                    <Label Text="{Binding NombreSubasta, StringFormat='Subasta: {0}'}" 
+                                       FontAttributes="Bold" 
+                                       HorizontalOptions="FillAndExpand" 
+                                       TextColor="White"/>
+
                                     <!-- Descripción del producto -->
                                     <Label Text="{Binding Descripcion}" 
-                                           FontAttributes="Italic" 
-                                           HorizontalOptions="FillAndExpand" 
-                                           TextColor="White"/>
-
-                                    <!-- Detalles del ganador -->
-                                    <Grid ColumnSpacing="10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <!-- Nombre del ganador -->
-                                        <VerticalStackLayout Grid.Column="0">
-                                            <Label Text="{Binding NombreGanador, StringFormat='Ganador: {0}'}" 
-                                                   FontAttributes="Bold" 
-                                                   TextColor="White"/>
-                                        </VerticalStackLayout>
-
-                                        <!-- Monto ganado -->
-                                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
-                                            <Label Text="{Binding Monto, StringFormat='Monto: {0:C}'}" 
-                                                   FontAttributes="Bold" 
-                                                   TextColor="White"/>
-                                        </VerticalStackLayout>
-                                    </Grid>
+                                       FontAttributes="Italic" 
+                                       HorizontalOptions="FillAndExpand" 
+                                       TextColor="White"/>
                                 </VerticalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
@@ -74,4 +87,5 @@
             </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>

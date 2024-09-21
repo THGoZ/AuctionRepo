@@ -7,7 +7,6 @@ namespace AuctionMobileApp.Page;
 public partial class ViewAllProductsPage : ContentPage
 {
     private readonly IAPIMaui _apicaller;
-    private int _IdSubasta;
 
     public ObservableCollection<ProductoAPI> ProductoList { get; set; }
     public ViewAllProductsPage(IAPIMaui apicaller)

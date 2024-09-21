@@ -11,4 +11,5 @@
     public string ApellidoGanador { get; set; }
     public decimal Monto { get; set; }
     public int TotalDeOfertas { get; set; }
+    public ImageSource Image { get; set; }
 }

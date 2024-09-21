@@ -1,13 +1,15 @@
 ﻿using AuctionMobileApp.Caller;
 using AuctionMobileApp.Caller.Interfases;
 using AuctionMobileApp.Page;
+using System.Globalization;
 
 namespace AuctionMobileApp
 {
     public partial class MainPage : ContentPage
     {
         private readonly IAPIMaui _apicaller;
-        public MainPage(IAPIMaui apicaller, MAUIClientOptions config)
+
+        public MainPage(IAPIMaui apicaller)
         {
             _apicaller = apicaller;
 
@@ -32,8 +34,18 @@ namespace AuctionMobileApp
         private async void LoadSubastas()
         {
             var subastas = await _apicaller.GetAuctions();
+
+            foreach (var subasta in subastas)
+            {
+                subasta.Estado = subasta.FechaCierre >= DateTime.Now ? "Abierto" : "Cerrado";
+
+            }
+
             productListView.ItemsSource = subastas;
+
         }
+
+
     }
 }
 

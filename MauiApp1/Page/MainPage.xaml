@@ -26,6 +26,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        
                         <Frame Padding="0"
                                Margin="5"
                                CornerRadius="30"
@@ -33,6 +34,23 @@
                                BackgroundColor="{StaticResource bgtColor}"
                                BorderColor="Transparent">
                             <VerticalStackLayout>
+                                <Grid>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="Estado">
+                                            <VisualState Name="Abierto">
+                                                <VisualState.Setters>
+                                                    <Setter TargetName="estadoLabel" Property="Label.TextColor" Value="Green" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState Name="Cerrado">
+                                                <VisualState.Setters>
+                                                    <Setter TargetName="estadoLabel" Property="Label.TextColor" Value="Red" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+
+                                </Grid>
                                 <Grid BackgroundColor="#FFB32E" Padding="10">
                                     <HorizontalStackLayout>
                                         <Image Source="auction.png" WidthRequest="25" HeightRequest="25"/>
@@ -71,7 +89,7 @@
                                                    FontAttributes="Italic"
                                                    HorizontalOptions="End"
                                                    TextColor="White"
-                                                   FontSize="{StaticResource fontSizeBody}"/>
+                                                   FontSize="{StaticResource fontSize_body}"/>
                                             <Label>
                                                 <Label.FormattedText>
                                                     <FormattedString>
@@ -82,8 +100,20 @@
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
+                                            <!-- Label para mostrar estado de la subasta -->
+                                            <Label Text="{Binding Estado}"
+                                                   HorizontalOptions="End"
+                                                   FontAttributes="Bold"/>
+                                            
                                         </VerticalStackLayout>
+                                        <Label x:Name="estadoLabel" Text="Abierto"
+                                               HorizontalOptions="End"/>
                                     </Grid>
+
+                                   
+
+                                    
+
                                 </VerticalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
