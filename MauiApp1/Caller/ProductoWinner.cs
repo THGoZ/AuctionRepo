@@ -9,7 +9,7 @@
     public bool HasGanador { get; set; }
     public string NombreGanador { get; set; }
     public string ApellidoGanador { get; set; }
-    public decimal Monto { get; set; }
+    public decimal? Monto { get; set; }
     public int TotalDeOfertas { get; set; }
     public ImageSource Image { get; set; }
 }

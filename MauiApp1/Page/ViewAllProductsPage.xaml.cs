@@ -42,4 +42,19 @@ public partial class ViewAllProductsPage : ContentPage
         return ImageSource.FromStream(() => stream);
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        // Lógica adicional para manejar la limpieza o navegación si es necesario
+
+        ProductoList.Clear();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Volver a cargar los productos de la API cuando la página aparezca
+        LoadProductos();
+    }
 }

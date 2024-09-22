@@ -6,18 +6,18 @@
              BackgroundColor="#232323">
 
     <ScrollView>
-    <VerticalStackLayout>
-        <!-- CollectionView con diseño actualizado -->
-        <CollectionView ItemsSource="{Binding ProductoList}" 
+        <VerticalStackLayout>
+            <!-- CollectionView con diseño actualizado -->
+            <CollectionView ItemsSource="{Binding ProductoList}" 
                         SelectionMode="None"
                         BackgroundColor="Transparent"
                         VerticalOptions="FillAndExpand"
                         ItemsLayout="VerticalList">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <!-- Frame con bordes redondeados -->
-                    <Frame CornerRadius="30" Padding="0" Margin="10" BorderColor="Transparent" HasShadow="False">
-                        <VerticalStackLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Frame con bordes redondeados -->
+                        <Frame CornerRadius="30" Padding="0" Margin="10" BorderColor="Transparent" HasShadow="False">
+                            <VerticalStackLayout>
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -32,6 +32,11 @@
                                                FontAttributes="Bold" 
                                                FontSize="Medium" 
                                                TextColor="Black"/>
+                                        <!-- Descripción del producto -->
+                                        <Label Text="{Binding Descripcion}" 
+                                               FontAttributes="Italic" 
+                                               HorizontalOptions="FillAndExpand" 
+                                               TextColor="Black"/>
                                     </VerticalStackLayout>
 
                                     <Frame Grid.Column="1" Padding="0" CornerRadius="0" IsClippedToBounds="True" BackgroundColor="Transparent" Margin="0">
@@ -41,43 +46,44 @@
                                                Aspect="AspectFill" />
                                     </Frame>
                                 </Grid>
-                                    <!-- Parte inferior con la descripción y otros detalles -->
-                            <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
-                                <!-- Descripción del producto -->
-                                <Label Text="{Binding Descripcion}" 
-                                       FontAttributes="Italic" 
-                                       HorizontalOptions="FillAndExpand" 
-                                       TextColor="White"/>
+                                <!-- Parte inferior con la descripción y otros detalles -->
+                                <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
 
-                                <!-- Detalles de cantidad de ofertas y productos -->
-                                <Grid ColumnSpacing="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                                    <!-- Detalles de cantidad de ofertas y productos -->
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <!-- Cantidad de ofertas -->
-                                    <VerticalStackLayout Grid.Column="0">
-                                        <Label Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}" 
+                                        <!-- Cantidad de ofertas -->
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}" 
                                                FontAttributes="Italic" 
                                                TextColor="White"/>
-                                    </VerticalStackLayout>
+                                        </VerticalStackLayout>
 
-                                    <!-- Cantidad de productos -->
-                                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
-                                        <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}" 
+                                        <!-- Cantidad de productos -->
+                                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                            <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}" 
                                                FontAttributes="Italic" 
                                                HorizontalOptions="End" 
                                                TextColor="White"/>
-                                    </VerticalStackLayout>
-                                </Grid>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                    <!-- Precio base del producto -->
+                                    <HorizontalStackLayout Padding="10,0,0,0" VerticalOptions="EndAndExpand">
+                                        <Label Text="{Binding PrecioBase, StringFormat='Precio base: {0:C}'}" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
-        </ScrollView>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
 

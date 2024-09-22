@@ -63,4 +63,20 @@ public partial class ViewWinnerPage : ContentPage
         MemoryStream stream = new MemoryStream(imageBytes);
         return ImageSource.FromStream(() => stream);
     }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        // Lógica adicional para manejar la limpieza o navegación si es necesario
+
+        GanadoresList.Clear();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Volver a cargar los productos de la API cuando la página aparezca
+        LoadWinners();
+    }
 }
