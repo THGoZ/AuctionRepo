@@ -32,6 +32,13 @@ namespace AuctionWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(UsuarioDTO usuarioDto)
         {
+            var existingUsuario = await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.Email == usuarioDto.Email);
+
+            if(existingUsuario != null)
+            {
+                return BadRequest(new { message = "Email is already in use." });
+            }
+
             var usuario = new Usuario
             {
                 Nombre = usuarioDto.Nombre,
@@ -39,13 +46,9 @@ namespace AuctionWebApi.Controllers
                 Direccion = usuarioDto.Direccion,
                 Ciudad = usuarioDto.Ciudad,
                 Email = usuarioDto.Email,
-                Contrasena = usuarioDto.Contrasena
+                Contrasena = usuarioDto.Contrasena,
+                Cuil = usuarioDto.Cuil
             };
-
-            if (!ModelState.IsValid) //Valida que sean correctas las entradas
-            {
-                return BadRequest(ModelState);
-            }
 
             await _dbContext.Usuarios.AddAsync(usuario);
             await _dbContext.SaveChangesAsync();
