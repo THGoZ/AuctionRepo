@@ -7,6 +7,13 @@
 
     <ScrollView>
         <VerticalStackLayout>
+            <!-- ActivityIndicator para mostrar mientras se cargan los datos -->
+            <ActivityIndicator 
+                IsRunning="{Binding IsBusy}" 
+                IsVisible="{Binding IsBusy}" 
+                Color="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
             <!-- CollectionView con diseño actualizado -->
             <CollectionView ItemsSource="{Binding ProductoList}" 
                         SelectionMode="None"
@@ -63,13 +70,6 @@
                                                TextColor="White"/>
                                         </VerticalStackLayout>
 
-                                        <!-- Cantidad de productos -->
-                                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
-                                            <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}" 
-                                               FontAttributes="Italic" 
-                                               HorizontalOptions="End" 
-                                               TextColor="White"/>
-                                        </VerticalStackLayout>
                                     </Grid>
                                     <!-- Precio base del producto -->
                                     <HorizontalStackLayout Padding="10,0,0,0" VerticalOptions="EndAndExpand">

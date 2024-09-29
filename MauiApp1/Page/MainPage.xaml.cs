@@ -1,17 +1,32 @@
 ﻿using AuctionMobileApp.Caller;
 using AuctionMobileApp.Caller.Interfases;
 using AuctionMobileApp.Page;
+using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace AuctionMobileApp
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
         private readonly IAPIMaui _apicaller;
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged(); // Notificar cambios para que el binding funcione
+            }
+        }
 
         public MainPage(IAPIMaui apicaller)
         {
             _apicaller = apicaller;
+
+            BindingContext = this;
 
             InitializeComponent();
             LoadSubastas();
@@ -33,6 +48,7 @@ namespace AuctionMobileApp
 
         private async void LoadSubastas()
         {
+            IsBusy = true; // Iniciar el indicador de carga
             var subastas = await _apicaller.GetAuctions();
 
             foreach (var subasta in subastas)
@@ -43,8 +59,15 @@ namespace AuctionMobileApp
 
             productListView.ItemsSource = subastas;
 
+            IsBusy = false; // Finalizar el indicador de carga
         }
 
+        // Implementación del INotifyPropertyChanged para actualizar la UI
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
     }
 }

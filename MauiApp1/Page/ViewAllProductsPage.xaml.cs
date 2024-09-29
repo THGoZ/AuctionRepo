@@ -1,14 +1,28 @@
 using AuctionMobileApp.Caller;
 using AuctionMobileApp.Caller.Interfases;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace AuctionMobileApp.Page;
 
-public partial class ViewAllProductsPage : ContentPage
+public partial class ViewAllProductsPage : ContentPage, INotifyPropertyChanged
 {
     private readonly IAPIMaui _apicaller;
 
+    private bool _isBusy;
+    public bool IsBusy
+    {
+        get => _isBusy;
+        set
+        {
+            _isBusy = value;
+            OnPropertyChanged(); // Notificar cambios para que el binding funcione
+        }
+    }
+
     public ObservableCollection<ProductoAPI> ProductoList { get; set; }
+
     public ViewAllProductsPage(IAPIMaui apicaller)
     {
         _apicaller = apicaller;
@@ -20,6 +34,7 @@ public partial class ViewAllProductsPage : ContentPage
 
     private async void LoadProductos()
     {
+        IsBusy = true; // Iniciar el indicador de carga
         ProductoList.Clear();
         var productos = await _apicaller.GetProductsWithOfertas();
 
@@ -29,9 +44,10 @@ public partial class ViewAllProductsPage : ContentPage
             {
                 producto.Image = ConvertByteArrayToImageSource(producto.Imagen);
                 ProductoList.Add(producto);
+                await Task.Delay(50); // Esperar 200 ms antes de cargar el siguiente producto
             }
         }
-        
+        IsBusy = false; // Finalizar el indicador de carga
     }
     public ImageSource ConvertByteArrayToImageSource(byte[] imageBytes)
     {
@@ -56,5 +72,12 @@ public partial class ViewAllProductsPage : ContentPage
 
         // Volver a cargar los productos de la API cuando la página aparezca
         LoadProductos();
+    }
+
+    // Implementación del INotifyPropertyChanged para actualizar la UI
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

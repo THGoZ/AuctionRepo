@@ -1,11 +1,25 @@
 using AuctionMobileApp.Caller.Interfases;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace AuctionMobileApp.Page;
 
-public partial class ViewWinnerPage : ContentPage
+public partial class ViewWinnerPage : ContentPage, INotifyPropertyChanged
 {
     private readonly IAPIMaui _apicaller;
+
+    private bool _isBusy;
+    public bool IsBusy
+    {
+        get => _isBusy;
+        set
+        {
+            _isBusy = value;
+            OnPropertyChanged(); // Notificar cambios para que el binding funcione
+        }
+    }
+
     public ObservableCollection<ProductoWinner> GanadoresList { get; set; }
     // Constructor recibe el apicaller y el Id de la subasta
     public ViewWinnerPage(IAPIMaui apicaller)
@@ -20,6 +34,7 @@ public partial class ViewWinnerPage : ContentPage
 
     private async void LoadWinners()
     {
+        IsBusy = true; // Iniciar el indicador de carga
         // Obtener las subastas cerradas
         var closedSubastas = await _apicaller.GetClosedSubastas();
 
@@ -53,6 +68,7 @@ public partial class ViewWinnerPage : ContentPage
         {
             await DisplayAlert("Error", "No se pudieron cargar las subastas cerradas.", "OK");
         }
+        IsBusy = false; // Finalizar el indicador de carga
     }
 
     public ImageSource ConvertByteArrayToImageSource(byte[] imageBytes)
@@ -78,5 +94,12 @@ public partial class ViewWinnerPage : ContentPage
 
         // Volver a cargar los productos de la API cuando la página aparezca
         LoadWinners();
+    }
+
+    // Implementación del INotifyPropertyChanged para actualizar la UI
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
