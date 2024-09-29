@@ -1,0 +1,164 @@
+﻿@page "/userbiddedProducts"
+@using Auction.Core.Entities
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using APIService.Models
+@using APIService
+@using System.Security.Claims
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h2>Tus ofertas</h2>
+
+<div class="container-fluid table-responsive-xxl clearfix">
+    @if (products == null)
+    {
+        <div class="row px-lg-5 p-5">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-grow text-primary mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-secondary mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-danger mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-warning mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-info mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-light mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-dark mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+    }
+    else if (products.Count() != 0)
+    {
+        <QuickGrid Class="table table-striped table-hover border-bottom bg-body-secondary mb-2"
+                   Items="@products.AsQueryable()"
+                   ItemKey="@(x=> x.IdProducto)">
+            <TemplateColumn Title="Imagen">
+                <img src="@GetPreviewImage(context)" class="img-fluid rounded-3 card-img-top img-fit" style="min-height: 128px" alt="Producto Image" />
+            </TemplateColumn>
+            <PropertyColumn Title="NOMBRE"
+                            Property="@(x=> x.Nombre)"
+                            Sortable="true" />
+            <TemplateColumn Title="Descripcion">
+                <div class="overflow-auto" style="width:16rem; max-height:6rem;"><p class="text-body-tertiary">@context.Descripcion</p></div>
+            </TemplateColumn>
+            <PropertyColumn Title="PRECIO BASE"
+                            Class="text-success-emphasis"
+                            Property="@(x=> x.PrecioBase)"
+                            Format="C"
+                            Sortable="true" />
+            <PropertyColumn Class="text-success"
+                            Title="TU OFERTA"
+                            Property="@(x=> x.Monto)"
+                            Format="C"
+                            Sortable="true" />
+            <PropertyColumn Title="FECHA DE OFERTA"
+                            Property="@(x=> x.Fecha)"
+                            Format="dd-MM-yyyy"
+                            Sortable="true" />
+            <PropertyColumn Title="OFERTAS"
+                            Class="text-md-center"
+                            Property="@(x=> x.TotalDeOfertas)"
+                            Sortable="true" />
+            <TemplateColumn Title="ESTADO"
+                Class="text-md-center">
+                @if (context.Status == "sold" && context.IsGanador == true)
+                {
+                    <p scope="col">Ganaste<button>Generar factura</button></p>
+                }
+                else if (context.Status == "sold")
+                {
+                    <p scope="col">Vendido</p>
+                }
+                else if (context.Status == "ongoing")
+                {
+                    <p scope="col">Subasta no terminada</p>
+                }
+                else if (context.Status == "notsold")
+                {
+                    <p scope="col">No vendido, subasta terminada</p>
+                }
+                else
+                {
+                    <p scope="col">No vendido aun</p>
+                }
+            </TemplateColumn>
+            <TemplateColumn Title="ESTADO EN SUBASTA">
+                <div class="text-md-center text-wrap">
+                @if (context.Status == "sold" || context.Status == "notsold")
+                {
+                    <button scope="col" class="btn btn-sm btn-warning my-3" @onclick="NavToRestult">Ver resultado de subasta N°@context.IdSubasta</button>
+                }
+                else
+                {
+                    <button class="btn btn-sm btn-warning my-3" @onclick="()=> NavtoSubasta(context.IdSubasta)">Ver en subasta N°@context.IdSubasta</button>
+                }
+                </div>
+            </TemplateColumn>
+
+        </QuickGrid>
+    }
+    else
+    {
+        <h1 class="text-body-tertiary text-center">No has ofertado a ningun producto</h1>
+    }
+</div>
+
+@code {
+    private List<ProductoOfertado>? products;
+    private int UserId;
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        UserId = int.Parse(userIdClaim.Value);
+        await LoadProducts();
+    }
+
+    private string? GetPreviewImage(ProductoOfertado product)//para cargar en edicion al subir imagen nueva
+    {
+        if (product?.Imagen != null && !string.IsNullOrEmpty(product.ImageExtension))
+            return $"data:image/{product.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(product.Imagen)}";
+        else
+            return "placeholder.jpg";
+    }
+
+    private async Task LoadProducts()
+    {
+        products = await apiClient.GetBiddedProducts(UserId);
+    }
+
+    private void NavToRestult()
+    {
+        navManager.NavigateTo("/closed", true);
+    }
+
+    private async void NavtoSubasta(int? auctionid)
+    {
+        int id = auctionid ?? 1;
+        var productocount = await apiClient.GetProductoCountOfAuction(id);
+        navManager.NavigateTo($"/products/{auctionid}/{productocount}", true);
+    }
+}

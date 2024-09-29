@@ -37,6 +37,42 @@ namespace AuctionWebApi.Controllers
             return oferta;
         }
 
+        [HttpGet("Producto/Highest/{id}")]
+        public async Task<ActionResult<Oferta?>> GetHighestBid(int id)
+        {
+            var oferta = await _dbContext.Ofertas.Where(o => o.IdProducto == id).OrderByDescending(o => o.Monto).ThenBy(o => o.Fecha)
+                .FirstOrDefaultAsync();
+
+            if (oferta == null)
+            {
+                return NotFound();
+            }
+
+
+            return oferta;
+        }
+
+        [HttpGet("Producto/{ProdID}/{userId}")]
+        public async Task<ActionResult<OfertaDTO?>> GetUserBid(int ProdID, int userId)
+        {
+            var oferta = await _dbContext.Ofertas.Where(o => o.IdProducto == ProdID && o.IdUsuario == userId).FirstOrDefaultAsync();
+
+            if (oferta is not null)
+            {
+                var bidData = new OfertaDTO()
+                {
+                    Fecha = oferta.Fecha,
+                    Monto = oferta.Monto
+                };
+                return Ok(bidData);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
         [HttpPost("{IdUser}/{IdProducto}")]
         public async Task<ActionResult> CreateOferta(int IdUser, int IdProducto, OfertaDTO oferta)
         {

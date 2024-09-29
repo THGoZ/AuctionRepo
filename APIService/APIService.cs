@@ -1,6 +1,7 @@
 ﻿using APIService.Models;
 using Auction.Core.Entities;
 using AuctionAPIC.Models.APIModels;
+using AuctionWebApi.Domain.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -54,6 +55,35 @@ namespace APIService
                     }
                 }
                 return UserProducts;
+            }
+            else return null;
+        }
+
+        public async Task<List<ProductoOfertado>?> GetBiddedProducts(int id)
+        {
+            var UserBiddedProducts = await _httpClient.GetFromJsonAsync<List<ProductoOfertado>?>($"/api/Producto/ofertados/{id}");
+
+            if (UserBiddedProducts is not null)
+            {
+                foreach (var producto in UserBiddedProducts)
+                {
+                    var bid = await _httpClient.GetFromJsonAsync<OfertaDTO>($"/api/Oferta/Producto/{producto.IdProducto}/{id}");
+                    producto.TotalDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+
+                    if (bid is not null)
+                    {
+                        var highest = await _httpClient.GetFromJsonAsync<OfertaAPI>($"/api/Oferta/Producto/Highest/{producto.IdProducto}");
+                        if (highest is not null)
+                        {
+                            producto.IsGanador = highest.IdUsuario == id;
+                        }
+                        producto.Monto = bid.Monto;
+                        producto.Fecha = bid.Fecha;
+                    }
+                    var response = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                    producto.Status = response;
+                }
+                return UserBiddedProducts;
             }
             else return null;
         }

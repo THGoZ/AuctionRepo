@@ -43,18 +43,19 @@ namespace AuctionWebApi.Controllers
         public async Task<ActionResult> Post(int idproducto)
         {
             var productodata = await _dbContext.Productos
-                .Where(p=> p.IdProducto  == idproducto)
-                .Include(p=> p.Ofertas
-                .OrderByDescending(o=> o.Monto)
-                .ThenBy(o=> o.Fecha))
-                .ThenInclude(o=> o.Usuario)
+                .Where(p => p.IdProducto == idproducto)
+                .Include(p => p.Ofertas
+                .OrderByDescending(o => o.Monto)
+                .ThenBy(o => o.Fecha))
+                .ThenInclude(o => o.Usuario)
                 .SingleOrDefaultAsync();
+            var fecha = await _dbContext.Subastas.Where(s=> s.IdSubasta == productodata.IdSubasta).Select(s=> s.FechaCierre).FirstOrDefaultAsync();
 
             var newDetalle = new DetalleVenta()
             {
                 CuilComprador = productodata.Ofertas.Select(o => o.Usuario.Cuil).FirstOrDefault(),
                 idUsuario = productodata.IdUsuario,
-                Fecha = DateTime.Now,
+                Fecha = fecha,
                 Total = productodata.Ofertas.Select(o => o.Monto).FirstOrDefault(),
                 IdProducto = productodata.IdProducto
             };
