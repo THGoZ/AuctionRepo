@@ -28,8 +28,9 @@
     opacity: 0;
     position: absolute;
     margin-left: 0.9rem;
-    font-size: 14px;
-    font: Roboto;
+    font-size: 22px;
+    font-family: Roboto;
+    font-weight: 500;
 }
 
 .expand .menu-name {

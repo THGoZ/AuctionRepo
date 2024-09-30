@@ -10,10 +10,56 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h2>Tus ofertas</h2>
-
-<div class="container-fluid table-responsive-xxl clearfix">
-    @if (products == null)
+<h3 class="p-2 mt-3 mx-2">Tus ofertas</h3>
+<div class="container-fluid table-responsive-xxl clearfix px-1">
+    @if (itemsQueryable != null)
+    {
+        @if (itemsQueryable.Count() != 0)
+        {
+            <div class="d-flex float-end mx-1">
+                    <div class="dropdown mx-4 mt-1 mb-3 shadow">
+                    <button class=" btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+                            <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
+                        </button>
+                        <div class="dropdown-menu px-3" style="">
+                            <h6 class="dropdown-header text-warning-emphasis">Filtrar productos</h6>
+                            <div class="form-check">
+                            <input class="form-check-input" @onchange="@(() => selectedOption = "going")" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    En subasta
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" @onchange="@(() => selectedOption = "won")" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Ganadas
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" @onchange="@(() => selectedOption = "sold")" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Vendidas
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" @onchange="@(() => selectedOption = "defak")" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Todas
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mt-1 mb-3">
+                        <span class="input-group-text border-0 bg-body-tertiary" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <div class="form-floating">
+                            <input type="search" class="form-control rounded-end-2" id="floatingInput" autofocus @bind="search" @bind:event="oninput" placeholder="Buscar..." />
+                            <label for="floatingInput">Buscar</label>
+                        </div>
+                    </div>
+            </div>
+        }
+    }
+    @if (itemsQueryable == null)
     {
         <div class="row px-lg-5 p-5">
             <div class="d-flex justify-content-center">
@@ -43,89 +89,159 @@
                 </div>
             </div>
         </div>
-
     }
-    else if (products.Count() != 0)
+    else if (itemsQueryable.Count() != 0)
     {
-        <QuickGrid Class="table table-striped table-hover border-bottom bg-body-secondary mb-2"
-                   Items="@products.AsQueryable()"
-                   ItemKey="@(x=> x.IdProducto)">
+        <QuickGrid Class="table table-striped table-hover mb-2 shadow border border-2"
+                   Items="@Filteredproductos"
+                   ItemKey="@(x=> x.IdProducto)"
+                   Pagination="@pagination">
             <TemplateColumn Title="Imagen">
                 <img src="@GetPreviewImage(context)" class="img-fluid rounded-3 card-img-top img-fit" style="min-height: 128px" alt="Producto Image" />
             </TemplateColumn>
             <PropertyColumn Title="NOMBRE"
                             Property="@(x=> x.Nombre)"
-                            Sortable="true" />
+                            Class="text-center align-middle"
+                            Sortable="true"/>
             <TemplateColumn Title="Descripcion">
+                <ChildContent>
                 <div class="overflow-auto" style="width:16rem; max-height:6rem;"><p class="text-body-tertiary">@context.Descripcion</p></div>
+                </ChildContent>
             </TemplateColumn>
             <PropertyColumn Title="PRECIO BASE"
-                            Class="text-success-emphasis"
+                            Class="text-success-emphasis text-nowrap text-center align-middle"
                             Property="@(x=> x.PrecioBase)"
                             Format="C"
                             Sortable="true" />
-            <PropertyColumn Class="text-success"
+            <PropertyColumn Class="text-success text-nowrap text-center align-middle"
                             Title="TU OFERTA"
                             Property="@(x=> x.Monto)"
                             Format="C"
                             Sortable="true" />
             <PropertyColumn Title="FECHA DE OFERTA"
+                            Class="text-center align-middle"
                             Property="@(x=> x.Fecha)"
                             Format="dd-MM-yyyy"
                             Sortable="true" />
             <PropertyColumn Title="OFERTAS"
-                            Class="text-md-center"
+                            Class="text-center align-middle"
                             Property="@(x=> x.TotalDeOfertas)"
                             Sortable="true" />
             <TemplateColumn Title="ESTADO"
-                Class="text-md-center">
-                @if (context.Status == "sold" && context.IsGanador == true)
-                {
-                    <p scope="col">Ganaste<button>Generar factura</button></p>
-                }
-                else if (context.Status == "sold")
-                {
-                    <p scope="col">Vendido</p>
-                }
-                else if (context.Status == "ongoing")
-                {
-                    <p scope="col">Subasta no terminada</p>
-                }
-                else if (context.Status == "notsold")
-                {
-                    <p scope="col">No vendido, subasta terminada</p>
-                }
-                else
-                {
-                    <p scope="col">No vendido aun</p>
-                }
+                            Class="text-center align-middle">
+                <ChildContent>
+                    @if (context.Status == "sold" && context.IsGanador == true)
+                    {
+                        <h4><span class="p-2 badge rounded-2 border border-3 border-success text-success">Ganaste</span></h4>
+                        <button class="my-1 btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal@(context.IdProducto)" >ver factura</button>
+                        <!--Modal factura-->
+                        <div class="modal  fade" id="exampleModal@(context.IdProducto)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <Factura
+                                            IdOferta = "context.TotalDeOfertas"
+                                            IdUsuario="context.IdUsuario"
+                                            Monto="(decimal)context.Monto"
+                                            ProductoId="context.IdProducto"
+                                            ProductoNombre="@context.Nombre"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (context.Status == "sold")
+                    {
+                        <h4><span class="p-2 badge rounded-2 border border-3 border-warning text-warning-emphasis">Vendido</span></h4>
+                    }
+                    else if (context.Status == "ongoing")
+                    {
+                        <h4><span class="p-2 badge rounded-2 border border-3 border-info text-info-emphasis">En subasta</span></h4>
+                    }
+                    else if (context.Status == "notsold")
+                    {
+                        <h4><span class="p-2 badge rounded-2 border border-3 border-danger text-danger-emphasis">No se vendio</span></h4>
+                    }
+                    else
+                    {
+                        <h4><span class="p-2 badge rounded-2 border border-3 border-info text-info-emphasis">En subasta</span></h4>
+                    }
+                </ChildContent>
             </TemplateColumn>
             <TemplateColumn Title="ESTADO EN SUBASTA">
-                <div class="text-md-center text-wrap">
+                <div class="text-center align-middle text-wrap">
                 @if (context.Status == "sold" || context.Status == "notsold")
                 {
-                    <button scope="col" class="btn btn-sm btn-warning my-3" @onclick="NavToRestult">Ver resultado de subasta N°@context.IdSubasta</button>
+                        <button scope="col" class="btn btn-sm btn-warning my-3 fs-5 rounded-2" @onclick="NavToRestult">Ver resultado de subasta N° <span class="text-info">@context.IdSubasta</span></button>
                 }
                 else
                 {
-                    <button class="btn btn-sm btn-warning my-3" @onclick="()=> NavtoSubasta(context.IdSubasta)">Ver en subasta N°@context.IdSubasta</button>
+                        <button class="btn btn-sm btn-warning my-3 fs-5 rounded-2" @onclick="()=> NavtoSubasta(context.IdSubasta)">Ver en subasta N° <span class="text-info">@context.IdSubasta</span></button>
                 }
                 </div>
             </TemplateColumn>
 
         </QuickGrid>
+        <Paginator State="@pagination" />
     }
     else
     {
-        <h1 class="text-body-tertiary text-center">No has ofertado a ningun producto</h1>
+        <h1 class="text-body-tertiary text-center p-5">No has ofertado a ningun producto</h1>
     }
 </div>
 
 @code {
-    private List<ProductoOfertado>? products;
+    List<ProductoOfertado>? products;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 4 };
     private int UserId;
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private string? search;
+    private string selectedOption = "Subasta"; // Default option can be set here
+    IQueryable<ProductoOfertado>? itemsQueryable;
+
+
+    IQueryable<ProductoOfertado>? Filteredproductos
+    {
+        get
+        {
+            var result = itemsQueryable;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                result = itemsQueryable.Where(c => c.Nombre.Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+            if (selectedOption != "Subasta")
+            {
+                switch (selectedOption)
+                {
+                    case "going":
+                        result = itemsQueryable.Where(c => c.Status == "ongoing");
+                        break;
+                    case "sold":
+                        result = itemsQueryable.Where(c => c.Status == "sold" && c.IsGanador == false);
+                        break;
+                    case "won":
+                        result = itemsQueryable.Where(c => c.Status == "sold" && c.IsGanador == true);
+                        break;
+                    default :
+                    break;
+
+
+                }
+            }
+
+            return result;
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -147,7 +263,9 @@
 
     private async Task LoadProducts()
     {
+
         products = await apiClient.GetBiddedProducts(UserId);
+        itemsQueryable = products.AsQueryable();
     }
 
     private void NavToRestult()

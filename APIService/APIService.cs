@@ -201,6 +201,12 @@ namespace APIService
         {
             await _httpClient.PostAsJsonAsync($"/api/Usuario/", user);
         }
+
+
+        public async Task<UsuarioDetail?> GetUserDetail(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<UsuarioDetail?>($"api/Usuario/{id}");
+        }
         #endregion
 
         #region Subasta
