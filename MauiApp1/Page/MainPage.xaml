@@ -14,7 +14,12 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto" Margin="10,0">
-
+        <!-- ActivityIndicator para mostrar durante la carga -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                           IsVisible="{Binding IsBusy}" 
+                           Color="White"
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" />
         <!-- ListView -->
         <ListView x:Name="productListView"
                   ItemTapped="productListView_ItemSelected"
