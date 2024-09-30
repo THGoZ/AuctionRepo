@@ -6,18 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Auction.Core.Business
 {
-    public class ProductoBusiness : IProductoBusiness
+    public class SubastaBusiness : ISubastaBusiness
     {
         private readonly IAuctionRepository _repository;
 
-        public ProductoBusiness(IAuctionRepository auctionRepository)
+        public SubastaBusiness(IAuctionRepository auctionRepository)
         {
             _repository = auctionRepository;
         }
 
-        public List<Producto> GetProductos()
+        public List<Subasta> GetAll()
         {
-            return _repository.GetProductos();
+            return _repository.GetSubastas();
         }
 
     }

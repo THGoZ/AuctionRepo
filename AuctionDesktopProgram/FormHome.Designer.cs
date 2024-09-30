@@ -51,7 +51,7 @@
             kryptonCustomPaletteBase1.BaseFontSize = 9F;
             kryptonCustomPaletteBase1.BasePaletteMode = Krypton.Toolkit.PaletteMode.Office2010Blue;
             kryptonCustomPaletteBase1.BasePaletteType = Krypton.Toolkit.BasePaletteType.Office2010;
-            kryptonCustomPaletteBase1.Common.StateCommon.Content.ShortText.Font = new Font("Poppins", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            kryptonCustomPaletteBase1.Common.StateCommon.Content.ShortText.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateActive.Back.Color1 = Color.FromArgb(26, 26, 26);
             kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateActive.Back.Color2 = Color.Gray;
             kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateActive.Border.Draw = Krypton.Toolkit.InheritBool.True;
@@ -112,12 +112,14 @@
             SubastaDataGrid.GridStyles.StyleDataCells = Krypton.Toolkit.GridStyle.Custom1;
             SubastaDataGrid.GridStyles.StyleRow = Krypton.Toolkit.GridStyle.Custom1;
             SubastaDataGrid.HideOuterBorders = true;
-            SubastaDataGrid.Location = new Point(66, 64);
+            SubastaDataGrid.Location = new Point(75, 85);
+            SubastaDataGrid.Margin = new Padding(3, 4, 3, 4);
             SubastaDataGrid.Name = "SubastaDataGrid";
             SubastaDataGrid.Palette = kryptonCustomPaletteBase1;
             SubastaDataGrid.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
             SubastaDataGrid.RowHeadersVisible = false;
-            SubastaDataGrid.Size = new Size(703, 407);
+            SubastaDataGrid.RowHeadersWidth = 51;
+            SubastaDataGrid.Size = new Size(803, 543);
             SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
@@ -126,9 +128,10 @@
             // IdSubasta
             // 
             IdSubasta.DataPropertyName = "IdSubasta";
-            dataGridViewCellStyle1.Font = new Font("Noto Sans", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             IdSubasta.DefaultCellStyle = dataGridViewCellStyle1;
             IdSubasta.HeaderText = "Id";
+            IdSubasta.MinimumWidth = 6;
             IdSubasta.Name = "IdSubasta";
             IdSubasta.ReadOnly = true;
             IdSubasta.ToolTipText = "Id de la subasta";
@@ -140,6 +143,7 @@
             FechaInicio.CustomFormat = "d/M/yyyy";
             FechaInicio.DataPropertyName = "FechaInicio";
             FechaInicio.HeaderText = "Fecha de inicio";
+            FechaInicio.MinimumWidth = 6;
             FechaInicio.Name = "FechaInicio";
             FechaInicio.ReadOnly = true;
             FechaInicio.Resizable = DataGridViewTriState.True;
@@ -152,6 +156,7 @@
             FechaCierre.CustomFormat = "d/M/yyyy";
             FechaCierre.DataPropertyName = "FechaCierre";
             FechaCierre.HeaderText = "Fecha de cierre";
+            FechaCierre.MinimumWidth = 6;
             FechaCierre.Name = "FechaCierre";
             FechaCierre.ReadOnly = true;
             FechaCierre.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -162,6 +167,7 @@
             Descripcion.DataPropertyName = "Descripcion";
             Descripcion.DefaultCellStyle = dataGridViewCellStyle2;
             Descripcion.HeaderText = "Descripcion";
+            Descripcion.MinimumWidth = 6;
             Descripcion.Name = "Descripcion";
             Descripcion.ReadOnly = true;
             Descripcion.Width = 100;
@@ -170,6 +176,7 @@
             // 
             ModoEntrega.DataPropertyName = "ModoEntrega";
             ModoEntrega.HeaderText = "Entrega";
+            ModoEntrega.MinimumWidth = 6;
             ModoEntrega.Name = "ModoEntrega";
             ModoEntrega.ReadOnly = true;
             ModoEntrega.Width = 100;
@@ -178,6 +185,7 @@
             // 
             FormaDePago.DataPropertyName = "FormaDePago";
             FormaDePago.HeaderText = "Pago";
+            FormaDePago.MinimumWidth = 6;
             FormaDePago.Name = "FormaDePago";
             FormaDePago.ReadOnly = true;
             FormaDePago.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -192,21 +200,24 @@
             Estado.FalseValue = "Cerrada";
             Estado.HeaderText = "Estado";
             Estado.IndeterminateValue = "Proxima";
+            Estado.MinimumWidth = 6;
             Estado.Name = "Estado";
             Estado.ReadOnly = true;
             Estado.TrueValue = "Abierta";
+            Estado.Width = 125;
             // 
             // FormHome
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(859, 498);
+            ClientSize = new Size(982, 664);
             Controls.Add(SubastaDataGrid);
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom1;
             HeaderStyle = Krypton.Toolkit.HeaderStyle.Custom1;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormHome";
             Palette = kryptonCustomPaletteBase1;
             PaletteMode = Krypton.Toolkit.PaletteMode.Custom;

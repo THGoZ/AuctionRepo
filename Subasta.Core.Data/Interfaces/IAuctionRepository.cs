@@ -10,5 +10,7 @@ namespace Auction.Core.Data.Interfaces
     public interface IAuctionRepository
     {
         public List<Subasta> GetSubastas();
+
+        public List <Producto> GetProductos();
     }
 }
