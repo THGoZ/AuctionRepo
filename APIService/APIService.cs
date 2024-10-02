@@ -2,6 +2,7 @@
 using Auction.Core.Entities;
 using AuctionAPIC.Models.APIModels;
 using AuctionWebApi.Domain.DTO;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -197,9 +198,29 @@ namespace APIService
             }
         }
 
-        public async Task CreateUsuario(UsuarioAPI user)
+        public async Task<string> CreateUsuario(UsuarioAPI user)
         {
-            await _httpClient.PostAsJsonAsync($"/api/Usuario/", user);
+            var response = await _httpClient.PostAsJsonAsync($"/api/Usuario/", user);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                var errorMessage = JsonSerializer.Deserialize<Dictionary<string, string>>(responseContent);
+
+                if (errorMessage != null && errorMessage.ContainsKey("message"))
+                {
+                    return errorMessage["message"];
+                }
+                else
+                {
+                    return "Error!";
+                }
+            }
+            else
+            {
+                return "Usuario creado exitosamente!";
+            }
         }
 
 
@@ -319,6 +340,23 @@ namespace APIService
         public async Task<bool> CheckIfOferta(int IdProducto, int UserId)
         {
             return await _httpClient.GetFromJsonAsync<bool>($"/api/Oferta/{IdProducto}/{UserId}");
+
+        }
+        #endregion
+
+        #region DetalleVenta
+        public async Task<DetalleVenta> GetProductDetalleVenta(int ProductoId)
+        {
+            var response = await _httpClient.GetAsync($"/api/DetalleVenta/Producto/{ProductoId}");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<DetalleVenta>();
+            }
+            else
+            {
+                await _httpClient.PostAsJsonAsync("/api/DetalleVenta/", ProductoId);
+                return await _httpClient.GetFromJsonAsync<DetalleVenta>($"/api/DetalleVenta/Producto/{ProductoId}");
+            }
 
         }
         #endregion

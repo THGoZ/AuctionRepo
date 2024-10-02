@@ -4,6 +4,8 @@
 @using AuctionBlazorWebApp.Models.ViewModels
 @using System.Security.Claims
 @using APIService
+@using System.Globalization
+@using BlazorBootstrap
 
 @inject APIService apiClient
 @inject NavigationManager navManager
@@ -54,7 +56,7 @@
                     <div class="col-auto mt-1 mt-2">
                         <div class="input-group mb-3">
                             <span class="input-group-text text-success">$</span>
-                            <InputNumber @bind-Value="addProductModel.PrecioBase" class="form-control" placeholder="Precio"></InputNumber>
+                            <CurrencyInput TValue="decimal" @bind-Value="@addProductModel.PrecioBase" Locale="es-ES" HideCurrencySymbol="true" class="form-control" Placeholder="Precio" />
                             <span class="input-group-text">.00</span>
                         </div>
                     </div>
@@ -95,6 +97,7 @@
     public string ErrorMessage { get; set; } = "";
     public byte[] imageData { get; set; } = null;
     public string FileType { get; set; } = "";
+    [Inject] protected ToastService ToastService { get; set; }
 
     public async Task FileUploaded(InputFileChangeEventArgs e)
     {
@@ -155,8 +158,22 @@
 
 
             };
+        var subastachehck = await apiClient.GetAuction(subastaid);
 
-        await apiClient.SaveProduct(newproducto, userId, subastaid);
-        navManager.NavigateTo("/", true);
+        if(subastachehck.Estado is not null)
+        {
+            ToastService.Notify(new(ToastType.Danger, $"Error! la subasta no acepta solicitudes"));
+            await Task.Delay(3000);
+            navManager.NavigateTo("/", true);
+        }
+        else
+        {
+            await apiClient.SaveProduct(newproducto, userId, subastaid);
+            ToastService.Notify(new(ToastType.Success, $"Se creo la solicitud correctamente!."));
+            navManager.NavigateTo("/");
+
+        }
+
+        
     }
 }

@@ -18,7 +18,6 @@ namespace AuctionWebApi.Domain.DTO
         public string Email { get; set; }
 
         public string Contrasena { get; set; }
-        [MaxLength(11)]
         public string? Cuil { get; set; }
 
     }

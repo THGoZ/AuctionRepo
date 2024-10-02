@@ -16,18 +16,18 @@
      </NavLink>
     </div>
     <div class="nav-item">
-        <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
+        <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" href="closed" Match="NavLinkMatch.All">
             <span class="menu-icon fa-solid fa-clipboard-list fa-2x">
-                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" href="closed">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none">
                     Resultados
                 </a>
             </span>
         </NavLink>
     </div>
     <div class="nav-item">
-        <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" Match="NavLinkMatch.All">
+        <NavLink class="nav-link menu-item mx-2 mb-1 mt-1" role="button" @onclick="Navatoproducs" disabled Match="NavLinkMatch.All">
         <span class="menu-icon fa-solid fa-boxes-stacked fa-2x">
-                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none" @onclick="Navatoproducs">
+                <a class="menu-name text-secondary-emphasis mt-2 text-decoration-none">
                 Productos
             </a>
         </span>

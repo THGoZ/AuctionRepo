@@ -170,7 +170,7 @@ else
         }
         else
         {
-            var all = await apiClient.GetProducts();
+            var all = await apiClient.GetProductsWithOfertas();
             if(all is not null)
                 products = all.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
         }

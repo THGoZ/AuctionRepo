@@ -10,6 +10,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddBlazorBootstrap();
 
 
 #region Autenticacion

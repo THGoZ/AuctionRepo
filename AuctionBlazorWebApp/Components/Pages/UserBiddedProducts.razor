@@ -10,6 +10,8 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+<PageTitle>Mis ofertas</PageTitle>
+
 <h3 class="p-2 mt-3 mx-2">Tus ofertas</h3>
 <div class="container-fluid table-responsive-xxl clearfix px-1">
     @if (itemsQueryable != null)
@@ -44,7 +46,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" @onchange="@(() => selectedOption = "defak")" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
-                                    Todas
+                                    Todos
                                 </label>
                             </div>
                         </div>
@@ -143,12 +145,11 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <Factura
-                                            IdOferta = "context.TotalDeOfertas"
-                                            IdUsuario="context.IdUsuario"
-                                            Monto="(decimal)context.Monto"
-                                            ProductoId="context.IdProducto"
-                                            ProductoNombre="@context.Nombre"/>
+                                        <Factura IdOferta="context.TotalDeOfertas"
+                                                 IdUsuario="UserId"
+                                                 Monto="(decimal)context.Monto"
+                                                 ProductoId="context.IdProducto"
+                                                 ProductoNombre="@context.Nombre" />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

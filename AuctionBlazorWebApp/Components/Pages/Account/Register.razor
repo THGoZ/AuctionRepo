@@ -2,79 +2,165 @@
 @using APIService.Models
 @using AuctionBlazorWebApp.Components.Layout
 @using AuctionBlazorWebApp.Models.ViewModels
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
 @using AuctionAPIC.Models.APIModels
 @using APIService
+@using BlazorBootstrap
 @using Microsoft.AspNetCore.Components.Forms
+@using System.Security.Claims
 
 @inject APIService apiClient
 @inject NavigationManager navManager
 @layout LoginLayout
 
-<section class="h-100 h-custom" style="background-color: #ffb32e;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-8 col-xl-6">
-                <div class="card rounded-3">
-                    <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registrarse</h3>
-                        <EditForm Model="@model" OnValidSubmit="CreateUser" FormName="LoginForm">
-                            <DataAnnotationsValidator />
-                            <div class="row mb-2 pb-2 pb-md-0">
-                                <div class="col-md-6">
-                                    <div data-mdb-input-init class="form-outline">
-                                        <label class="form-label text-primary-emphasis" for="nombre">Coloca tu nombre</label>
-                                        <InputText id="nombre" @bind-Value="model.Nombre" placeholder="Nombre" class="form-control"></InputText>
-                                        <ValidationMessage For="() => model.Nombre"></ValidationMessage>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div data-mdb-input-init class="form-outline">
-                                        <label for="apellido" class="form-label text-primary-emphasis">Coloca tu apellido</label>
-                                        <InputText id="apellido" @bind-Value="model.Apellido" placeholder="Apellido" class="form-control"></InputText>
-                                        <ValidationMessage For="() => model.Apellido"></ValidationMessage>
-                                        
-                                    </div>
-                                </div>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="card-body p-4 p-md-5">
+                <h3 class="p-2 mb-3 pb-md-0 px-md-2">Registrarse</h3>
+                <EditForm Model="@model" OnValidSubmit="CreateUser" FormName="LoginForm">
+                    <DataAnnotationsValidator />
+                    <div class="row pb-1 d-flex justify-content-between">
+                        <div class="col-6 pe-2">
+                            <div class="wrap-form-control mt-3 mb-3">
+                                <InputText id="nombre" @bind-Value="model.Nombre" placeholder="Nombre" class="form-control"></InputText>
+                                <span class="symbol-form-control">
+                                    <i class="fa fa-user-pen" aria-hidden="true"></i>
+                                </span>
                             </div>
-                            <div data-mdb-input-init class="form-outline">
-                                <label for="direccion" class="form-label text-primary-emphasis">Coloca tu direccion</label>
-                                <InputText id="direccion" @bind-Value="model.Direccion" placeholder="Direccion" class="form-control"></InputText>
-                                <ValidationMessage For="() => model.Direccion"></ValidationMessage>
+                            <ValidationMessage For="() => model.Nombre"></ValidationMessage>
+                        </div>
+                        <div class="col-6 pe-2">
+                            <div class="wrap-form-control mt-3 mb-3">
+                                <InputText id="apellido" @bind-Value="model.Apellido" placeholder="Apellido" class="form-control"></InputText>
+                                <span class="symbol-form-control">
+                                    <i class="fa fa-user-pen" aria-hidden="true"></i>
+                                </span>
                             </div>
-
-                            <div data-mdb-input-init class="form-outline mt-2">
-                                <label for="Ciudad" class="form-label text-primary-emphasis">Coloca tu ciudad</label>
-                                <InputText id="Ciudad" @bind-Value="model.Ciudad" placeholder="Ciudad" class="form-control"></InputText>
-                                <ValidationMessage For="() => model.Direccion"></ValidationMessage>
-                            </div>
-
-                            <div data-mdb-input-init class="form-outline mt-2">
-                                <label for="Email" class="form-label text-primary-emphasis">Coloca tu Email</label>
-                                <InputText id="Email" @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
-                                <ValidationMessage For="() => model.Email"></ValidationMessage>
-                            </div>
-                            <div data-mdb-input-init class="form-outline mt-2">
-                                <label for="Contrasena" class="form-label text-primary-emphasis">Escribe una contraseña</label>
-                                <InputText id="Contrasena" @bind-Value="model.Contrasena" placeholder="Contrasena" class="form-control"></InputText>
-                                <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
-                            </div>
-                            <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary mb-1 mt-4">Registrar</button>
-                            <button @onclick="CancelNav" data-mdb-button-init data-mdb-ripple-init class="btn btn-secondary mb-1 mt-4 align-self-end">Cancelar</button>
-                        </EditForm>
-
+                            <ValidationMessage For="() => model.Apellido"></ValidationMessage>
+                        </div>
                     </div>
-                </div>
+                    <div class="wrap-form-control pb-1 mb-3">
+                        <InputText id="direccion" @bind-Value="model.Direccion" placeholder="Direccion" class="form-control"></InputText>
+                        <span class="symbol-form-control">
+                            <i class="fa fa-map-location-dot"></i>
+                        </span>
+                    </div>
+                    <ValidationMessage For="() => model.Direccion"></ValidationMessage>
+
+                    <div class="wrap-form-control mt-2 mb-3 pb-1">
+                        <InputText id="Ciudad" @bind-Value="model.Ciudad" placeholder="Ciudad" class="form-control"></InputText>
+                        <span class="symbol-form-control">
+                            <i class="fa fa-map" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <ValidationMessage For="() => model.Ciudad"></ValidationMessage>
+
+                    <div class="wrap-form-control mt-2 mb-3 pb-1">
+                        <InputText id="Email" @bind-Value="model.Email" placeholder="Email" class="@(string.IsNullOrEmpty(emailerror) ? "form-control" : "form-control is-invalid")"></InputText>
+                        <span class="symbol-form-control">
+                            <i class="fa fa-at" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <ValidationMessage For="() => model.Email"></ValidationMessage>
+                    <div class="alert alert-danger mb-3 mt-3 px-2 rounded-5" role="alert" hidden="@string.IsNullOrEmpty(emailerror)">
+                        <span class="text-danger">@emailerror</span>
+                    </div>
+
+                    <div class="wrap-form-control mt-2 mb-3 pb-1">
+                        <InputText id="Contrasena" type="password" @bind-Value="model.Contrasena" placeholder="Contrasena" class="form-control"></InputText>
+                        <span class="symbol-form-control">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
+
+                    <div class="wrap-form-control mt-2 mb-3 pb-1">
+                        <InputText id="ContrasenaConfirm" type="password" @bind-Value="Confirmpass" placeholder="Confirmar contraseña" class="@(string.IsNullOrEmpty(passworderror) ? "form-control" : "form-control is-invalid")"></InputText>
+                        <span class="symbol-form-control">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="alert alert-danger mt-3 mb-2 px-2 rounded-5" role="alert" hidden="@string.IsNullOrEmpty(passworderror)">
+                        <span class="text-danger">@passworderror</span>
+                    </div>
+                    <label>Ingrese su cuil</label>
+                    <div class="row row-cols-5 align-items-center text-center">
+                        <div class="col-2">
+                            <div class="wrap-form-control mt-3 mb-3">
+                                <NumberInput @bind-Value="model.Cuil1" EnableMinMax="true" TValue="int" id="Cuil1" Placeholder="Ej: 20" Max="99" Min="1" class="form-control cuil"></NumberInput>
+                            </div>
+                        </div>
+                        <div class="col-md-auto px-1">
+                            <p class="fs-1">-</p>
+                        </div>
+                        <div class="col-3">
+                            <div class="wrap-form-control mt-3 mb-3">
+                                <NumberInput @bind-Value="model.Cuil2" EnableMinMax="true" TValue="int" id="Cuil2" Placeholder="Ej: 43654983" Max="99999999" Min="1" class="form-control cuil"></NumberInput>
+                            </div>
+                        </div>
+                        <div class="col-md-auto px-1">
+                            <p class="fs-1">-</p>
+                        </div>
+                        <div class="col-2">
+                            <div class="wrap-form-control mt-3 mb-3">
+                                <NumberInput @bind-Value="model.Cuil3" EnableMinMax="true" TValue="int" id="Cuil3" Placeholder="Ej: 7" Max="9" Min="1" class="form-control cuil"></NumberInput>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-5 align-items-center text-center">
+                        <div class="col-2">
+                            <ValidationMessage For="() => model.Cuil1"></ValidationMessage>
+                        </div>
+                        <div class="col-md-auto px-1">
+                        </div>
+                        <div class="col-3">
+                            <ValidationMessage For="() => model.Cuil2"></ValidationMessage>
+                        </div>
+                        <div class="col-md-auto px-1">
+                        </div>
+                        <div class="col-2">
+                            <ValidationMessage For="() => model.Cuil3"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="container gap-3 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary rounded-4 px-4 py-2 mb-1 mt-4">Registrar</button>
+                        <button @onclick="CancelNav" class="btn btn-secondary rounded-4 px-2 py-1 mb-1 mt-4 icon-link-hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+                            </svg>
+                            Cancelar
+                        </button>
+                    </div>
+                </EditForm>
             </div>
         </div>
     </div>
-</section>
+</div>
 
 @code {
+    [SupplyParameterFromForm]
     public RegistroViewModel model { get; set; } = new();
+    public int Cuil1{ get; set; }
+    public int Cuil2 { get; set; }
+    public int Cuil3 { get; set; }
+    private string? Confirmpass { get; set; }
+    private string? passworderror { get; set; }
+    private string? emailerror { get; set; }
+    [Inject] protected ToastService ToastService { get; set; }
 
     public async Task CreateUser()
     {
+
+        emailerror = null;
+        passworderror = null;
+
+        if(Confirmpass != model.Contrasena)
+        {
+            passworderror = "Las contraseñas no coinciden!";
+            return;
+        }
         var newuser = new UsuarioAPI
             {
                 Nombre = model.Nombre,
@@ -82,10 +168,28 @@
                 Direccion = model.Direccion,
                 Ciudad = model.Ciudad,
                 Email = model.Email,
-                Contrasena = model.Contrasena
+                Contrasena = model.Contrasena,
+                Cuil = $"{model.Cuil1}-{model.Cuil2}-{model.Cuil3}"
             };
 
-        await apiClient.CreateUsuario(newuser);
+        var response = await apiClient.CreateUsuario(newuser);
+
+        if (response is not null)
+        {
+            if (response != "Usuario creado exitosamente!")
+            {
+                emailerror = response;
+                ToastService.Notify(new(ToastType.Danger, $"Error! {response}"));
+                return;
+            }
+            ToastService.Notify(new(ToastType.Success, $"Exito! {response}"));
+            await Task.Delay(2000);
+        }
+        else
+        {
+            ToastService.Notify(new(ToastType.Danger, $"Error! {response}"));
+        }
+
         navManager.NavigateTo("/login", true);
     }
 

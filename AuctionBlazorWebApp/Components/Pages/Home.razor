@@ -2,6 +2,7 @@
 
 @using APIService.Models
 @using APIService
+@using BlazorBootstrap
 @using Microsoft.AspNetCore.Components.Authorization;
 @using Microsoft.AspNetCore.Authorization;
 @using System.Security.Claims
@@ -220,8 +221,15 @@
                         </div>
                         <div class="card-footer text-body-secondary">
                             <div class="d-grid gap-2 d-md-flex justify-content-center">
-                                <button @onclick="() => ShowProducts(subasta.IdSubasta, subasta.CantidadProductos)" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Ver productos</button>
-                                @if (subasta.Estado is null)
+                                    @if (subasta.FechaCierre >= DateTime.Now)
+                                    {
+                                        <button @onclick="() => ShowProducts(subasta.IdSubasta, subasta.CantidadProductos)" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Ver productos</button>
+                                    }
+                                    else
+                                    {
+                                        <button @onclick="NavToRestult" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Mostrar resultados</button>
+                                    }
+                                    @if (subasta.Estado is null)
                                 {
                                     <button @onclick="() => AddNew(subasta.IdSubasta)" class="btn  btn-primary mx-1 " style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                                         Agregar un producto
@@ -262,6 +270,7 @@
     private bool UnsortedProd = true;
     private bool PrdCant = false;
     private bool OfrCant = false;
+    [Inject] protected ToastService ToastService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -273,7 +282,7 @@
         {
             auctionCount = int.Parse(postalCodeClaim.Value);
         }
-            await LoadAuctions();
+        await LoadAuctions();
     }
 
     public void Test(string filter)
@@ -362,9 +371,16 @@
         navManager.NavigateTo($"/products/{auctionid}/{productocount}", true);
     }
 
-    private void AddNew(int auctionid)
+    private async void AddNew(int auctionid)
     {
-        navManager.NavigateTo($"/newProducto/{auctionid}", true);
+        var checksubasta = await apiClient.GetAuction(auctionid);
+        if(checksubasta.Estado is null){
+            navManager.NavigateTo($"/newProducto/{auctionid}", true);
+        }
+        else
+        {
+           ToastService.Notify(new(ToastType.Danger, $"Error! La subasta no acepta solicitudes."));
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -372,5 +388,10 @@
         await base.OnAfterRenderAsync(firstRender);
         await js.InvokeVoidAsync("initializeTooltips");
 
+    }
+
+    private void NavToRestult()
+    {
+        navManager.NavigateTo("/closed", true);
     }
 }

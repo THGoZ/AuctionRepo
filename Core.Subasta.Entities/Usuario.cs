@@ -28,7 +28,7 @@ namespace Auction.Core.Entities
         [MaxLength(50)]
         public string? Direccion { get; set; }
         [Column("cuil")]
-        [MaxLength(11)]
+        [MaxLength(14)]
         public string? Cuil { get; set; }
 
         [Column("ciudad")]

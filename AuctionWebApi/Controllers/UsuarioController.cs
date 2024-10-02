@@ -36,7 +36,7 @@ namespace AuctionWebApi.Controllers
 
             if(existingUsuario != null)
             {
-                return BadRequest(new { message = "Email is already in use." });
+                return BadRequest(new { message = "El email ya existe!" });
             }
 
             var usuario = new Usuario
@@ -93,7 +93,7 @@ namespace AuctionWebApi.Controllers
         #region Cosas de login blazor
         [HttpPut]
         [Route("login")]
-        public async Task<SesionDTO> Login([FromBody] LoginDTO login)
+        public async Task<ActionResult<SesionDTO>> Login([FromBody] LoginDTO login)
         {
             SesionDTO session = new SesionDTO();
             var exists = await _dbContext.Usuarios.AnyAsync(x => x.Email == login.Email);
@@ -106,16 +106,16 @@ namespace AuctionWebApi.Controllers
                     session.Apellido = user.Apellido;
                     session.Nombre = user.Nombre;
                     session.Wrongpassoword = false;
-                    return session;
+                    return Ok(session);
                 }
                 else
                 {
-                    return session;
+                    return Ok(session);
                 }
             }
             else
             {
-                return session;
+                return NotFound(session);
             }
         }
         #endregion

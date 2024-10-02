@@ -1,0 +1,66 @@
+﻿
+::deep table {
+    border-radius: 15px;
+    overflow: hidden;
+    border-collapse: collapse;
+    border: none;
+    border-color: white;
+}
+
+::deep tbody {
+    border-top: 0px solid white;
+}
+
+::deep thead th {
+    background-color: #080808;
+    color: white;
+}
+
+::deep td {
+    border-color: none;
+}
+
+::deep thead th:first-child {
+    border-top-left-radius: 10px;
+}
+
+::deep thead th:last-child {
+    border-top-right-radius: 10px;
+}
+
+::deep .quickgrid > tbody > tr > td {
+    padding: 0.5rem calc(0.4rem + var(--col-gap)) 0.5rem 0.4rem;
+}
+
+::deep .quickgrid[theme=default] .sort-indicator {
+    opacity: 1;
+}
+
+::deep th .sort-indicator {
+    opacity: 1;
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="%23ffd43b"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8L32 224c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8l256 0c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>');
+}
+
+::deep .col-sort-asc .sort-indicator {
+    opacity: 1;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="%23ffd43b"><path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8l256 0c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"/></svg>')
+}
+
+::deep .col-sort-desc .sort-indicator {
+    opacity: 1;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" fill="%23ffd43b"><path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8l256 0c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"/></svg>')
+}
+
+::deep th .col-options-button {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffd43b" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M3.9 54.9C10.5 40.9 24.5 32 40 32l432 0c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9 320 448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6l0-79.1L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/></svg>');
+}
+
+::deep .quickgrid[theme=default] .col-options {
+    border-color: #1c1c1c;
+    box-shadow: 0 3px 8px 1px #1c1c1c;
+}
+
+::deep .col-options {
+    background-color: #080808;
+}

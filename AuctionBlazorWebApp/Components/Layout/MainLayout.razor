@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorBootstrap
+@using System.Security.Claims
+@inherits LayoutComponentBase
 
 <div class="page">
     <AutoHideSideBar></AutoHideSideBar>
@@ -32,7 +34,7 @@
                         </NotAuthorized>
                         <Authorized>
                             <li class="nav-item align-content-lg-end">
-                                <a class="nav-link" href="/logout">Cerrar Sesion</a>
+                                    <a class="nav-link" href="/logout">@context.User.Identity.Name @context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname).Value</a>
                             </li>
                         </Authorized>
                     </AuthorizeView>
@@ -41,6 +43,7 @@
             </div>
         </nav>
         <article class="content px-4">
+            <Toasts class="p-5" AutoHide="true" Delay="3000" Placement="ToastsPlacement.TopRight" />
             @Body
         </article>
     </main>
@@ -55,7 +58,6 @@
             </ul>
             <p class="text-center text-muted">© 2024 TUP</p>
 </footer>
-
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>

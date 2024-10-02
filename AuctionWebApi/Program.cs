@@ -1,4 +1,6 @@
 using Auction.Core.Data;
+using AuctionWebApi.Services;
+using AuctionWebApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -20,6 +22,12 @@ builder.Services.AddDbContext<AuctionDBContext>(x =>
     var connectionString = builder.Configuration.GetConnectionString("AuctionDbConnect");
     x.UseSqlServer(connectionString);
 });
+#endregion
+
+#region Servicio para cerrar y abrir subastas
+builder.Services.AddScoped<ISubastaService, SubastaService>();
+builder.Services.AddHostedService<SubastaOpenCloseService>();
+
 #endregion
 
 

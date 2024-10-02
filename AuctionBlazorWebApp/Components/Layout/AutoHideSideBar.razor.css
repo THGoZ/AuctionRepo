@@ -112,9 +112,10 @@
         width: 16rem;
     }
 
-    .nav-item ::deep a.active {
-        background-color: rgba(255,255,255,0.9);
+    .nav-item ::deep a.active .menu-icon {
         color: white;
+        transform: scale(1.25);
+        transition: transform 0.3s ease;
     }
 
     .nav-item ::deep .nav-link:hover {
