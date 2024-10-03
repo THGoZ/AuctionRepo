@@ -10,5 +10,6 @@ namespace Auction.Core.Business.Interfaces
     public interface IProductoBusiness
     {
         public List<Producto> GetProductos();
+
     }
 }

@@ -26,5 +26,11 @@ namespace AuctionDesktopProgram
             var formHome = _serviceProvider.GetRequiredService<FormHome>();
             formHome.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var formProductos = _serviceProvider.GetService<FormProductos>();
+            formProductos.ShowDialog();
+        }
     }
 }

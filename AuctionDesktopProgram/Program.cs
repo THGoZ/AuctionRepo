@@ -38,8 +38,9 @@ namespace AuctionDesktopProgram
             .AddScoped<IAuctionRepository, AuctionRepository>()
             .AddScoped<ISubastaBusiness, SubastaBusiness>()
             .AddScoped<IProductoBusiness, ProductoBusiness>()
-            .AddTransient<Mainpage>()  // Agregamos MainPage como formulario principal
-            .AddTransient<FormHome>();  // También agregamos FormHome
+            .AddTransient<Mainpage>()
+            .AddTransient<FormProductos>()
+            .AddTransient<FormHome>();  
         }
     }
 }

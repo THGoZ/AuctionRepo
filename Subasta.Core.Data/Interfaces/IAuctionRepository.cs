@@ -12,5 +12,9 @@ namespace Auction.Core.Data.Interfaces
         public List<Subasta> GetSubastas();
 
         public List <Producto> GetProductos();
+
+        public List <Oferta> GetOfertas();
+
+        public List <ProductoWinner> GetProductoWinners();
     }
 }

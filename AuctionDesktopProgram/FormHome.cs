@@ -6,18 +6,23 @@ namespace AuctionDesktopProgram
 {
     public partial class FormHome : KryptonForm
     {
-        // private readonly ISubastaBusiness _subastaBusiness;
-        private readonly IProductoBusiness _productoBusiness;
+        private readonly ISubastaBusiness _subastaBusiness;
 
-        public FormHome(IProductoBusiness productoBusiness)
+        public FormHome(ISubastaBusiness subastaBusiness)
         {
-            _productoBusiness = productoBusiness;
+            _subastaBusiness = subastaBusiness;
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            SubastaDataGrid.DataSource = _productoBusiness.GetProductos();
+            SubastaDataGrid.DataSource = _subastaBusiness.GetAll();
+        }
+
+        private void SubastaDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+
         }
     }
 }

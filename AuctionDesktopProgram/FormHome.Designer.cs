@@ -119,11 +119,12 @@
             SubastaDataGrid.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
             SubastaDataGrid.RowHeadersVisible = false;
             SubastaDataGrid.RowHeadersWidth = 51;
-            SubastaDataGrid.Size = new Size(803, 543);
+            SubastaDataGrid.Size = new Size(743, 590);
             SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
             SubastaDataGrid.TabIndex = 0;
+            SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClick;
             // 
             // IdSubasta
             // 
@@ -139,6 +140,7 @@
             // 
             // FechaInicio
             // 
+            FechaInicio.CalendarTodayDate = new DateTime(2024, 10, 2, 0, 0, 0, 0);
             FechaInicio.Checked = false;
             FechaInicio.CustomFormat = "d/M/yyyy";
             FechaInicio.DataPropertyName = "FechaInicio";
@@ -152,6 +154,7 @@
             // 
             // FechaCierre
             // 
+            FechaCierre.CalendarTodayDate = new DateTime(2024, 10, 2, 0, 0, 0, 0);
             FechaCierre.Checked = false;
             FechaCierre.CustomFormat = "d/M/yyyy";
             FechaCierre.DataPropertyName = "FechaCierre";
@@ -211,7 +214,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(982, 664);
+            ClientSize = new Size(1015, 711);
             Controls.Add(SubastaDataGrid);
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom1;

@@ -1,24 +1,28 @@
 ﻿using Auction.Core.Business.Interfaces;
-using Auction.Core.Data;
 using Auction.Core.Data.Interfaces;
 using Auction.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace Auction.Core.Business
 {
-    public class ProductoBusiness : IProductoBusiness
+    public class SubastaBusiness : ISubastaBusiness
     {
         private readonly IAuctionRepository _repository;
 
-        public ProductoBusiness(IAuctionRepository auctionRepository)
+        public SubastaBusiness(IAuctionRepository auctionRepository)
         {
             _repository = auctionRepository;
         }
 
-        public List<Producto> GetProductos()
+        public List<Subasta> GetAll()
         {
-            return _repository.GetProductos();
+            return _repository.GetSubastas();
         }
-
+        public List<Oferta> GetOfertas()
+        {
+            return _repository.GetOfertas();
+        }
+        public List<ProductoWinner> GetProductoWinners()
+        {
+            return _repository.GetProductoWinners();
+        }
     }
 }
