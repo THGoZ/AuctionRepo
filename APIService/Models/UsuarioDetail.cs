@@ -14,7 +14,7 @@ namespace APIService.Models
         public string? Apellido { get; set; }
 
         public string? Direccion { get; set; }
-        [MaxLength(11)]
+        [MaxLength(14)]
         public string? Cuil { get; set; }
     }
 }

@@ -34,8 +34,8 @@
                     </span>
                 </div>
                 <ValidationMessage For="() => model.Email" class="mb-2" style="color:red;"></ValidationMessage>
-                <div class="alert alert-danger mt-2" role="alert" hidden="@string.IsNullOrEmpty(emailerror)">
-                    <span class="text-danger">@emailerror</span>
+                <div class="alert alert-danger my-2 mb-3" role="alert" hidden="@string.IsNullOrEmpty(emailerror)">
+                    <span class="text-danger p-2">@emailerror</span>
                 </div>
                 <div class="wrap-form-control">
                     <InputText id="password" @bind-Value="model.Contrasena" placeholder="Contraseña" type="@(showPass ? "text" : "password")" class="form-control"></InputText>
@@ -45,8 +45,8 @@
                     </span>
                 </div>
                 <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
-                <div class="alert alert-danger mt-3 mb-3" role="alert" hidden="@string.IsNullOrEmpty(passworderror)">
-                    <span class=" text-danger">@passworderror</span>
+                <div class="alert alert-danger mt-3 mb-1" role="alert" hidden="@string.IsNullOrEmpty(passworderror)">
+                    <span class=" text-danger p-2">@passworderror</span>
                 </div>
                         <div class="d-grid gap-2 mb-3 my-4">
                             <button type="submit" class="btn btn-primary py-2">Ingresar</button>

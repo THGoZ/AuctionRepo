@@ -26,7 +26,7 @@ namespace AuctionDesktopProgram.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"Server=tcp:subasta-server.database.windows.net,1433;Initial Catalog=SubastaDb;Persist Security Info=False;User ID=ProjectoAuctionTUP;Password=XT6z4b6aNJvE9s3LTuTR2HuzR9EqYtHh;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=.;Database=Subasta-DB;Trusted_Connection=True;TrustServerCertificate=True")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

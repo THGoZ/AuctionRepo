@@ -1,5 +1,6 @@
 using Auction.Core.Business.Interfaces;
 using Auction.Core.Data.Interfaces;
+using Auction.Core.Entities;
 using Krypton.Toolkit;
 
 namespace AuctionDesktopProgram
@@ -17,6 +18,13 @@ namespace AuctionDesktopProgram
         private void Form1_Load(object sender, EventArgs e)
         {
             SubastaDataGrid.DataSource = _subastaBusiness.GetAll();
+        }
+
+        private void SubastaDataGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(e);
+            Subasta subasta = SubastaDataGrid.CurrentRow.DataBoundItem as Subasta;
+            bigLabel1.Text = subasta.Descripcion.ToString();
         }
     }
 }

@@ -42,6 +42,7 @@
             ModoEntrega = new Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn();
             FormaDePago = new Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn();
             Estado = new Krypton.Toolkit.KryptonDataGridViewCheckBoxColumn();
+            bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
             ((System.ComponentModel.ISupportInitialize)SubastaDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -96,6 +97,10 @@
             kryptonCustomPaletteBase1.GridStyles.GridCustom1.StateNormal.HeaderColumn.Content.Color2 = Color.FromArgb(224, 224, 224);
             kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Back.Color1 = Color.FromArgb(240, 173, 78);
             kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Back.Color2 = Color.FromArgb(255, 180, 85);
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color1 = Color.FromArgb(255, 192, 192);
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color2 = Color.Red;
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorAngle = 90F;
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Dashed;
             kryptonCustomPaletteBase1.ThemeName = "";
             kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
             // 
@@ -117,11 +122,13 @@
             SubastaDataGrid.Palette = kryptonCustomPaletteBase1;
             SubastaDataGrid.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
             SubastaDataGrid.RowHeadersVisible = false;
+            SubastaDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             SubastaDataGrid.Size = new Size(703, 407);
             SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
             SubastaDataGrid.TabIndex = 0;
+            SubastaDataGrid.SelectionChanged += SubastaDataGrid_SelectionChanged;
             // 
             // IdSubasta
             // 
@@ -196,12 +203,25 @@
             Estado.ReadOnly = true;
             Estado.TrueValue = "Abierta";
             // 
+            // bigLabel1
+            // 
+            bigLabel1.AutoSize = true;
+            bigLabel1.BackColor = Color.Transparent;
+            bigLabel1.Font = new Font("Segoe UI", 25F);
+            bigLabel1.ForeColor = Color.White;
+            bigLabel1.Location = new Point(66, 64);
+            bigLabel1.Name = "bigLabel1";
+            bigLabel1.Size = new Size(165, 46);
+            bigLabel1.TabIndex = 1;
+            bigLabel1.Text = "bigLabel1";
+            // 
             // FormHome
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
             ClientSize = new Size(859, 498);
+            Controls.Add(bigLabel1);
             Controls.Add(SubastaDataGrid);
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom1;
@@ -214,6 +234,7 @@
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)SubastaDataGrid).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -227,5 +248,6 @@
         private Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn ModoEntrega;
         private Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn FormaDePago;
         private Krypton.Toolkit.KryptonDataGridViewCheckBoxColumn Estado;
+        private ReaLTaiizor.Controls.BigLabel bigLabel1;
     }
 }

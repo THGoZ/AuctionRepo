@@ -1,0 +1,133 @@
+﻿@using APIService.Models
+@using AuctionBlazorWebApp.Models.ViewModels
+@using BlazorBootstrap
+@using APIService
+@using System.Security.Claims
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+
+<div class="card mb-4">
+    <h3 class="p-2 mb-3 pb-md-0 px-md-2 card-header">
+        Datos de ingreso
+    </h3>
+    <div class="card-body">
+        <div class="row pe-5 ps-3">
+            <div class="wrap-form-control mt-2 mb-3 pb-1">
+                <InputText id="Email" @bind-Value="UserDetail.Email" disabled placeholder="Email" class="form-control"></InputText>
+                <span class="symbol-form-control">
+                    <i class="fa fa-at" aria-hidden="true"></i>
+                </span>
+            </div>
+            @if (!IsEditMode)
+            {
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="input-group wrap-form-control mt-2 mb-3 pb-1">
+                            <InputText id="Contrasena" type="password" disabled @bind-Value="UserDetail.Contrasena" placeholder="Contrasena" class="form-control"></InputText>
+                            <span class="symbol-form-control">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                            </span>
+                            <InputCheckbox @bind-Value="IsEditMode" class="btn-check" id="btn-check-outlined" autocomplete="off" />
+                            <label class="btn btn-warning rounded-end-4" for="btn-check-outlined">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"></path>
+                                </svg>
+                                Editar
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <EditForm Model="@model" OnSubmit="UpdatePassword" FormName="NewPassForm">
+                    <DataAnnotationsValidator />
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="input-group wrap-form-control mt-2 mb-3 pb-1">
+                                <InputText id="Contrasena" type="password" @bind-Value="model.Contrasena" placeholder="Nueva contraseña" class="form-control"></InputText>
+                                <span class="symbol-form-control">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                                <InputCheckbox @bind-Value="IsEditMode" class="btn-check" disabled id="btn-check-outlined" autocomplete="off" />
+                                <label class="btn btn-warning rounded-end-4" for="btn-check-outlined">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"></path>
+                                    </svg>
+                                    Editar
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="wrap-form-control mt-2 mb-3 pb-1">
+                                <InputText id="Contrasena" type="password" @bind-Value="Confirmpass" placeholder="Confirmar nueva contraseña" class="form-control"></InputText>
+                                <span class="symbol-form-control">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="wrap-form-control mt-2 mb-3 pb-1">
+                                <InputText id="Contrasena" type="password" @bind-Value="passworderror" placeholder="Contraseña anterior" class="form-control"></InputText>
+                                <span class="symbol-form-control">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
+                            @if (IsLoading)
+                            {
+                                <button class="btn btn-warning" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                    <span role="status">Confirmar cambios</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-warning" type="submit">Confirmar cambios
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </EditForm>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    public LoginViewModel model { get; set; } = new();
+    public UsuarioAPI UserDetail { get; set; } = new();
+    private bool IsEditMode { get; set; } = false;
+    private bool IsLoading { get; set; } = false;
+    private string? Confirmpass { get; set; }
+    private string? passworderror { get; set; }
+    [Inject] protected ToastService ToastService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        UserDetail = await apiClient.GetUser(int.Parse(userIdClaim.Value));
+
+    }
+
+    private async void UpdatePassword()
+    {
+        IsLoading = true;
+        await Task.Delay(2000);
+        ToastService.Notify(new(ToastType.Success, $"Exito! Correcto"));
+        IsLoading = false;
+        IsEditMode = false;
+        StateHasChanged();
+    }
+}

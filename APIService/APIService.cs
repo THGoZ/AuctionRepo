@@ -230,6 +230,11 @@ namespace APIService
         }
         #endregion
 
+        public async Task<UsuarioAPI> GetUser(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<UsuarioAPI?>($"api/Usuario/{id}");
+        }
+
         #region Subasta
         public async Task<List<SubastaAPI>?> GetAuctions()
         {
