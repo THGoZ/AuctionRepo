@@ -36,17 +36,17 @@ namespace AuctionDesktopProgram
 
         private void Productos_Load(object sender, EventArgs e)
         {
-            // Obtener las ofertas y proyectar las propiedades específicas
+            
             var ofertas = _SubastaBusiness.GetOfertas();
 
             var listaOferentes = ofertas.Select(o => new
             {
-                NombreProducto = o.Producto?.Nombre ?? "Sin Nombre",   // Obtener el nombre del producto
-                NombreOferente = o.Usuario?.Nombre ?? "Anónimo",       // Obtener el nombre del usuario (oferente)
+                NombreProducto = o.Producto?.Nombre ?? "Sin Nombre",   
+                NombreOferente = o.Usuario?.Nombre ?? "Anónimo",      
                 MontoOferta = o.Monto
             }).ToList();
 
-            // Asignar la lista al DataGridView
+           
             ProductosDatagrid.DataSource = listaOferentes;
 
             var ganadores = _SubastaBusiness.GetProductoWinners();

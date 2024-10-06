@@ -54,7 +54,7 @@
             button1.Name = "button1";
             button1.Size = new Size(241, 36);
             button1.TabIndex = 1;
-            button1.Text = "CREAR SUBASTA";
+            button1.Text = "EDITAR SUBASTA";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
@@ -78,7 +78,7 @@
             button3.Name = "button3";
             button3.Size = new Size(222, 36);
             button3.TabIndex = 3;
-            button3.Text = "EDITAR SUBASTA";
+            button3.Text = "CREAR SUBASTA";
             button3.UseVisualStyleBackColor = false;
             // 
             // button4

@@ -16,5 +16,7 @@ namespace Auction.Core.Data.Interfaces
         public List <Oferta> GetOfertas();
 
         public List <ProductoWinner> GetProductoWinners();
+
+        public void UpdateSubasta (Subasta subasta);
     }
 }
