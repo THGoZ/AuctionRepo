@@ -18,7 +18,7 @@ namespace AuctionDesktopProgram
 
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
-                // Inicializa MainPage en lugar de FormHome
+               
                 var mainPage = serviceProvider.GetRequiredService<Mainpage>();
                 Application.Run(mainPage);
             }

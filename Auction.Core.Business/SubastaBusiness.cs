@@ -24,5 +24,10 @@ namespace Auction.Core.Business
         {
             return _repository.GetProductoWinners();
         }
+
+        public void EditarSubasta(Subasta subasta)
+        {
+            _repository.UpdateSubasta(subasta);
+        }
     }
 }

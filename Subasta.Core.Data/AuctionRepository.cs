@@ -47,16 +47,16 @@ namespace Auction.Core.Data
 
         public List<Oferta> GetOfertas()
         {
-            // Obtener subastas, productos, ofertas y usuarios
+           
             var ofertasPorSubasta = _dbContext.Subastas
-                .Include(s => s.Productos)                // Incluir productos
-                    .ThenInclude(p => p.Ofertas)          // Incluir ofertas de cada producto
-                        .ThenInclude(o => o.Usuario)      // Incluir usuario de cada oferta
-                .ToList()                                 // Convertir a lista
-                .SelectMany(s => s.Productos)             // Iterar productos de cada subasta
-                .SelectMany(p => p.Ofertas)               // Iterar ofertas de cada producto
-                .Where(o => o.Usuario != null && o.Producto != null) // Verificar que no sean nulos
-                .ToList();                                // Convertir el resultado final en una lista
+                .Include(s => s.Productos)                
+                    .ThenInclude(p => p.Ofertas)        
+                        .ThenInclude(o => o.Usuario)      
+                .ToList()                              
+                .SelectMany(s => s.Productos)            
+                .SelectMany(p => p.Ofertas)               
+                .Where(o => o.Usuario != null && o.Producto != null) 
+                .ToList();                               
 
             return ofertasPorSubasta;
         }
@@ -65,8 +65,8 @@ namespace Auction.Core.Data
         {
             var productosConGanadores = _dbContext.Productos
            .Include(p => p.Ofertas)
-           .ThenInclude(o => o.Usuario) // Para obtener la información del usuario
-           .Where(p => p.Ofertas.Any()) // Solo productos con al menos una oferta
+           .ThenInclude(o => o.Usuario) 
+           .Where(p => p.Ofertas.Any()) 
            .Select(p => new ProductoWinner
             {
             Nombre = p.Nombre,
@@ -74,7 +74,7 @@ namespace Auction.Core.Data
             PrecioBase = p.PrecioBase,
             Imagen = p.Imagen,
             ImageExtension = p.ImageExtension,
-            HasGanador = p.Ofertas.Any(), // Si tiene ofertas, tiene ganador
+            HasGanador = p.Ofertas.Any(), 
             NombreGanador = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Usuario.Nombre, // Tomar el nombre del usuario de la mejor oferta
             ApellidoGanador = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Usuario.Apellido,
             Monto = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Monto,
@@ -86,12 +86,21 @@ namespace Auction.Core.Data
             return productosConGanadores;
         }
 
+        public void UpdateSubasta(Subasta subasta)
+        {
+
+            _dbContext.Entry(subasta).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+        }
+
         public List<Producto> GetProductosSolicitados()
         {
             // Obtener todos los productos que han sido solicitados
             var productosSolicitados = _dbContext.Productos
                 .Where(p => p.EstadoDeSolicitud != true) // Filtro por productos solicitados
                 .ToList();
+        
+
 
             // Verificar si la lista es vacía
             if (productosSolicitados == null || productosSolicitados.Count == 0)

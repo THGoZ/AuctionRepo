@@ -29,19 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHome));
             kryptonCustomPaletteBase1 = new Krypton.Toolkit.KryptonCustomPaletteBase(components);
-            SubastaDataGrid = new Krypton.Toolkit.KryptonDataGridView();
-            IdSubasta = new Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
-            FechaInicio = new Krypton.Toolkit.KryptonDataGridViewDateTimePickerColumn();
-            FechaCierre = new Krypton.Toolkit.KryptonDataGridViewDateTimePickerColumn();
-            Descripcion = new Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
-            ModoEntrega = new Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn();
-            FormaDePago = new Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn();
-            Estado = new Krypton.Toolkit.KryptonDataGridViewCheckBoxColumn();
+            SubastaDataGrid = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)SubastaDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -101,9 +91,7 @@
             // 
             // SubastaDataGrid
             // 
-            SubastaDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            SubastaDataGrid.AutoGenerateColumns = false;
-            SubastaDataGrid.BorderStyle = BorderStyle.None;
+            SubastaDataGrid.BackgroundColor = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             SubastaDataGrid.Columns.AddRange(new DataGridViewColumn[] { IdSubasta, FechaInicio, FechaCierre, Descripcion, ModoEntrega, FormaDePago, Estado });
             SubastaDataGrid.GridStyles.Style = Krypton.Toolkit.DataGridViewStyle.Custom1;
@@ -114,99 +102,13 @@
             SubastaDataGrid.HideOuterBorders = true;
             SubastaDataGrid.Location = new Point(91, 54);
             SubastaDataGrid.Name = "SubastaDataGrid";
-            SubastaDataGrid.Palette = kryptonCustomPaletteBase1;
-            SubastaDataGrid.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
-            SubastaDataGrid.RowHeadersVisible = false;
             SubastaDataGrid.RowHeadersWidth = 51;
-            SubastaDataGrid.Size = new Size(650, 442);
+            SubastaDataGrid.Size = new Size(840, 510);
             SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
             SubastaDataGrid.TabIndex = 0;
-            SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClick;
-            // 
-            // IdSubasta
-            // 
-            IdSubasta.DataPropertyName = "IdSubasta";
-            dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            IdSubasta.DefaultCellStyle = dataGridViewCellStyle1;
-            IdSubasta.HeaderText = "Id";
-            IdSubasta.MinimumWidth = 6;
-            IdSubasta.Name = "IdSubasta";
-            IdSubasta.ReadOnly = true;
-            IdSubasta.ToolTipText = "Id de la subasta";
-            IdSubasta.Width = 100;
-            // 
-            // FechaInicio
-            // 
-            FechaInicio.CalendarTodayDate = new DateTime(2024, 10, 2, 0, 0, 0, 0);
-            FechaInicio.Checked = false;
-            FechaInicio.CustomFormat = "d/M/yyyy";
-            FechaInicio.DataPropertyName = "FechaInicio";
-            FechaInicio.HeaderText = "Fecha de inicio";
-            FechaInicio.MinimumWidth = 6;
-            FechaInicio.Name = "FechaInicio";
-            FechaInicio.ReadOnly = true;
-            FechaInicio.Resizable = DataGridViewTriState.True;
-            FechaInicio.SortMode = DataGridViewColumnSortMode.Automatic;
-            FechaInicio.Width = 100;
-            // 
-            // FechaCierre
-            // 
-            FechaCierre.CalendarTodayDate = new DateTime(2024, 10, 2, 0, 0, 0, 0);
-            FechaCierre.Checked = false;
-            FechaCierre.CustomFormat = "d/M/yyyy";
-            FechaCierre.DataPropertyName = "FechaCierre";
-            FechaCierre.HeaderText = "Fecha de cierre";
-            FechaCierre.MinimumWidth = 6;
-            FechaCierre.Name = "FechaCierre";
-            FechaCierre.ReadOnly = true;
-            FechaCierre.SortMode = DataGridViewColumnSortMode.Automatic;
-            FechaCierre.Width = 100;
-            // 
-            // Descripcion
-            // 
-            Descripcion.DataPropertyName = "Descripcion";
-            Descripcion.DefaultCellStyle = dataGridViewCellStyle2;
-            Descripcion.HeaderText = "Descripcion";
-            Descripcion.MinimumWidth = 6;
-            Descripcion.Name = "Descripcion";
-            Descripcion.ReadOnly = true;
-            Descripcion.Width = 100;
-            // 
-            // ModoEntrega
-            // 
-            ModoEntrega.DataPropertyName = "ModoEntrega";
-            ModoEntrega.HeaderText = "Entrega";
-            ModoEntrega.MinimumWidth = 6;
-            ModoEntrega.Name = "ModoEntrega";
-            ModoEntrega.ReadOnly = true;
-            ModoEntrega.Width = 100;
-            // 
-            // FormaDePago
-            // 
-            FormaDePago.DataPropertyName = "FormaDePago";
-            FormaDePago.HeaderText = "Pago";
-            FormaDePago.MinimumWidth = 6;
-            FormaDePago.Name = "FormaDePago";
-            FormaDePago.ReadOnly = true;
-            FormaDePago.SortMode = DataGridViewColumnSortMode.Automatic;
-            FormaDePago.Width = 100;
-            // 
-            // Estado
-            // 
-            Estado.DataPropertyName = "Estado";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.NullValue = false;
-            Estado.DefaultCellStyle = dataGridViewCellStyle3;
-            Estado.FalseValue = "Cerrada";
-            Estado.HeaderText = "Estado";
-            Estado.IndeterminateValue = "Proxima";
-            Estado.MinimumWidth = 6;
-            Estado.Name = "Estado";
-            Estado.ReadOnly = true;
-            Estado.TrueValue = "Abierta";
-            Estado.Width = 125;
+            SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClick_1;
             // 
             // FormHome
             // 
@@ -231,13 +133,6 @@
         #endregion
 
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
-        private Krypton.Toolkit.KryptonDataGridView SubastaDataGrid;
-        private Krypton.Toolkit.KryptonDataGridViewTextBoxColumn IdSubasta;
-        private Krypton.Toolkit.KryptonDataGridViewDateTimePickerColumn FechaInicio;
-        private Krypton.Toolkit.KryptonDataGridViewDateTimePickerColumn FechaCierre;
-        private Krypton.Toolkit.KryptonDataGridViewTextBoxColumn Descripcion;
-        private Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn ModoEntrega;
-        private Krypton.Toolkit.KryptonDataGridViewMaskedTextBoxColumn FormaDePago;
-        private Krypton.Toolkit.KryptonDataGridViewCheckBoxColumn Estado;
+        private DataGridView SubastaDataGrid;
     }
 }
