@@ -113,7 +113,7 @@ namespace AuctionWebApi.Controllers
         public async Task<List<ProductoWinner>> GetWinners(int id)
         {
             var productos = await _dbContext.Productos
-                                                    .Where(p => p.IdSubasta == id)
+                                                    .Where(p => p.IdSubasta == id && p.EstadoDeSolicitud == true)
                                                     .Include(p => p.Ofertas.OrderByDescending(o => o.Monto).ThenBy(o => o.Fecha))
                                                     .ThenInclude(o => o.Usuario)
                                                     .ToListAsync();
