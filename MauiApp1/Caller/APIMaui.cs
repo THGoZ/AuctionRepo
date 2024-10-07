@@ -1,4 +1,5 @@
-﻿using AuctionMobileApp.Caller.Interfases;
+﻿using Auction.Core.Entities;
+using AuctionMobileApp.Caller.Interfases;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -34,11 +35,14 @@ namespace AuctionMobileApp.Caller
             var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
             if (productos is not null)
             {
+                productos = productos.Where(x => x.EstadoDeSolicitud == true).ToList();
                 foreach (var producto in productos)
                 {
                     producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                    var response = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                    producto.Status = response;
                 }
-                return productos;
+                return productos.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
             }
             else return null;
         }
