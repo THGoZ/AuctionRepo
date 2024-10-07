@@ -99,14 +99,6 @@ namespace Auction.Core.Data
             var productosSolicitados = _dbContext.Productos
                 .Where(p => p.EstadoDeSolicitud != true) // Filtro por productos solicitados
                 .ToList();
-        
-
-
-            // Verificar si la lista es vacía
-            if (productosSolicitados == null || productosSolicitados.Count == 0)
-            {
-                throw new InvalidOperationException("No se encontraron productos solicitados en la base de datos.");
-            }
 
             return productosSolicitados;
         }

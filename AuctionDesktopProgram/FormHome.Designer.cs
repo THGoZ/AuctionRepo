@@ -1,4 +1,6 @@
-﻿namespace AuctionDesktopProgram
+﻿using Krypton.Toolkit;
+
+namespace AuctionDesktopProgram
 {
     partial class FormHome
     {
@@ -31,7 +33,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHome));
             kryptonCustomPaletteBase1 = new Krypton.Toolkit.KryptonCustomPaletteBase(components);
-            SubastaDataGrid = new DataGridView();
+            SubastaDataGrid = new KryptonDataGridView();
             ((System.ComponentModel.ISupportInitialize)SubastaDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -93,20 +95,10 @@
             // 
             SubastaDataGrid.BackgroundColor = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            SubastaDataGrid.Columns.AddRange(new DataGridViewColumn[] { IdSubasta, FechaInicio, FechaCierre, Descripcion, ModoEntrega, FormaDePago, Estado });
-            SubastaDataGrid.GridStyles.Style = Krypton.Toolkit.DataGridViewStyle.Custom1;
-            SubastaDataGrid.GridStyles.StyleBackground = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
-            SubastaDataGrid.GridStyles.StyleColumn = Krypton.Toolkit.GridStyle.Custom1;
-            SubastaDataGrid.GridStyles.StyleDataCells = Krypton.Toolkit.GridStyle.Custom1;
-            SubastaDataGrid.GridStyles.StyleRow = Krypton.Toolkit.GridStyle.Custom1;
-            SubastaDataGrid.HideOuterBorders = true;
-            SubastaDataGrid.Location = new Point(91, 54);
+            SubastaDataGrid.Location = new Point(74, 42);
             SubastaDataGrid.Name = "SubastaDataGrid";
             SubastaDataGrid.RowHeadersWidth = 51;
             SubastaDataGrid.Size = new Size(840, 510);
-            SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
-            SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
-            SubastaDataGrid.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
             SubastaDataGrid.TabIndex = 0;
             SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClick_1;
             // 
@@ -133,6 +125,6 @@
         #endregion
 
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
-        private DataGridView SubastaDataGrid;
+        private KryptonDataGridView SubastaDataGrid;
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Auction.Core.Business.Interfaces;
+using Krypton.Toolkit;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,14 +13,16 @@ using System.Windows.Forms;
 
 namespace AuctionDesktopProgram
 {
-    public partial class Mainpage : Form
+    public partial class Mainpage : KryptonForm
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IProductoBusiness _productoBusiness;
 
-        public Mainpage(IServiceProvider serviceProvider)
+        public Mainpage(IServiceProvider serviceProvider, IProductoBusiness productoBusiness)
         {
-            InitializeComponent();
+            _productoBusiness = productoBusiness;
             _serviceProvider = serviceProvider;
+            InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,7 +39,7 @@ namespace AuctionDesktopProgram
 
         private void button5_Click(object sender, EventArgs e)
         {
-            var solicitudes = _serviceProvider.GetRequiredService<Solicitudes>();
+            var solicitudes = new Solicitudes(_productoBusiness);
             solicitudes.ShowDialog();
         }
     }

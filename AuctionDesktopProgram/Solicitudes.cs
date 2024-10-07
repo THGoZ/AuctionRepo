@@ -16,14 +16,17 @@ namespace AuctionDesktopProgram
     {
         private readonly IProductoBusiness _productoBusiness;
         private Producto productoSeleccionado;
+        private List<Producto> solicitudes;
 
         public Solicitudes(IProductoBusiness productoBusiness)
         {
             InitializeComponent();
             _productoBusiness = productoBusiness;
+            solicitudes = _productoBusiness.GetProductosSolicitados();
+            
             CargarProductosSolicitados();
         }
-
+        #region boludeces
         private void InitializeComponent()
         {
             crownMenuStrip1 = new ReaLTaiizor.Controls.CrownMenuStrip();
@@ -352,6 +355,7 @@ namespace AuctionDesktopProgram
         private Krypton.Toolkit.KryptonButton kryptonButtonAceptar;
         private Krypton.Toolkit.KryptonButton kryptonButtonRechazar;
         private ToolStripMenuItem iNICIOToolStripMenuItem;
+        #endregion
 
         private void kryptonGroupBox1_Paint(object sender, PaintEventArgs e)
         {
@@ -425,6 +429,7 @@ namespace AuctionDesktopProgram
                 else
                 {
                     MessageBox.Show("No se pudo obtener el producto seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
             }
         }
@@ -435,9 +440,8 @@ namespace AuctionDesktopProgram
             var productosSolicitados = _productoBusiness.GetProductosSolicitados();
 
             // Verificar si hay productos
-            if (productosSolicitados != null && productosSolicitados.Any())
+            if (productosSolicitados.Count() != 0)
             {
-                // Asignar la lista al DataGridView
                 SubastaDataGrid.DataSource = productosSolicitados;
             }
             else
@@ -498,6 +502,7 @@ namespace AuctionDesktopProgram
             else
             {
                 MessageBox.Show("No hay un producto seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
             }
             CargarProductosSolicitados();
         }
