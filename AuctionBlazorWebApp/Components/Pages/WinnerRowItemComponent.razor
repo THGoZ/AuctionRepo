@@ -14,7 +14,7 @@
     </div>
 }
 
-else if (Productos is not null)
+else if (Productos is not null && Productos.Count != 0)
 {
     @foreach (var producto in Productos){
         <div class="container border border-top-0 border-start-0 border-end-0 border-bottom-5 py-2">
@@ -66,7 +66,9 @@ else if (Productos is not null)
 }
 else
 {
-    <h1 class="text-body-tertiary">No hay productos</h1>
+    <div class="text-center">
+        <h1 class="text-body-tertiary"><span class="bg-warning-subtle border border-warning py-2 px-5 rounded rounded-3">Cerró sin productos</span></h1>
+    </div>
 }
 @code {
     [Parameter]

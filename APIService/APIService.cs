@@ -103,6 +103,23 @@ namespace APIService
             else return null;
         }
 
+        public async Task<List<ProductoAPI>?> GetAllowedProductsWithOfertas()
+        {
+            var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+            if (productos is not null)
+            {
+                productos = productos.Where(x=> x.EstadoDeSolicitud == true).ToList();
+                foreach (var producto in productos)
+                {
+                    producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                    var response = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                    producto.Status = response;
+                }
+                return productos;
+            }
+            else return null;
+        }
+
         public async Task<List<ProductoAPI>?> GetProductsWithOfertasSoldstatus()
         {
             var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
@@ -133,6 +150,22 @@ namespace APIService
             if (nofilter is not null)
             {
                 var filter = nofilter.Where(x => x.IdSubasta == SubastaId).ToList();
+                foreach (var producto in filter)
+                {
+                    producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                }
+                return filter;
+            }
+            else return null;
+        }
+
+        public async Task<List<ProductoAPI>?> GetProductsEnabledOfAuctionWithOferta(int SubastaId)
+        {
+            var nofilter = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+
+            if (nofilter is not null)
+            {
+                var filter = nofilter.Where(x => x.IdSubasta == SubastaId && x.EstadoDeSolicitud != null).ToList();
                 foreach (var producto in filter)
                 {
                     producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
@@ -333,6 +366,11 @@ namespace APIService
         {
             return await _httpClient.GetFromJsonAsync<int>("/api/Subasta/cantidad");
         }
+
+        public async Task<bool> CheckIfSubastaOpen(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<bool>($"/api/Subasta/State/{id}");
+        } 
         #endregion
 
         #region Oferta

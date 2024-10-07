@@ -88,14 +88,14 @@ namespace AuctionWebApi.Controllers
         [HttpGet("ofertas/{id:int}")]
         public async Task<int> GetOfertasSubasta(int id)
         {
-            var hasproducto = await _dbContext.Subastas.Where(s=> s.IdSubasta == id).Select(subasta => subasta.Productos).AnyAsync();
+            var hasproducto = await _dbContext.Subastas.Where(s => s.IdSubasta == id).Select(subasta => subasta.Productos).AnyAsync();
             if (hasproducto)
             {
                 bool hasoferta = await _dbContext.Subastas.Where(s => s.IdSubasta == id).AnyAsync(subasta => subasta.Productos.Any(p => p.Ofertas.Any()));
 
                 if (hasoferta)
                 {
-                    var cantidad = await _dbContext.Subastas.Where(s => s.IdSubasta == id).SelectMany(p => p.Productos.SelectMany(p=> p.Ofertas)).CountAsync();
+                    var cantidad = await _dbContext.Subastas.Where(s => s.IdSubasta == id).SelectMany(p => p.Productos.SelectMany(p => p.Ofertas)).CountAsync();
                     return cantidad;
                 }
                 else return 0;
@@ -133,6 +133,14 @@ namespace AuctionWebApi.Controllers
             _dbContext.Remove(AuctiontoDelete.Value);
             await _dbContext.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("State/{id:int}")]
+        public async Task<bool> CheckIfSubastaOpen(int id)
+        {
+            var result = await _dbContext.Subastas.Where(x => x.IdSubasta == id && x.FechaInicio <= DateTime.Now).AnyAsync();
+
+            return result;
         }
 
 

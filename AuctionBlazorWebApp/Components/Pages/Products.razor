@@ -122,7 +122,7 @@ else
         else
         {
             <div class="px-4 py-5 my-5 text-center">
-                <h1 class="display-6 fw-bold text-nowrap text-body-tertiary">-<span class="text-wrap">No hay productos disponibles para mostrar en esta subasta</span>-</h1>
+                <h1 class="display-6 fw-bold text-nowrap text-body-tertiary">-<span class="text-wrap">No hay productos disponibles para mostrar</span>-</h1>
             </div>
         }
     </div>
@@ -166,13 +166,13 @@ else
     {
         if (auction is not null && auction != "65534")
         {
-            products = await apiClient.GetProductsOfAuctionWithOferta(int.Parse(auction));
+            products = await apiClient.GetProductsEnabledOfAuctionWithOferta(int.Parse(auction));
         }
         else
         {
-            var all = await apiClient.GetProductsWithOfertas();
+            var all = await apiClient.GetAllowedProductsWithOfertas();
             if(all is not null)
-                products = all.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
+                products = all.Where(p => p.Status != "sold" && p.Status != "notsold").ToList();
         }
     }
 

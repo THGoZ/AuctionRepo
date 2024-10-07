@@ -40,7 +40,7 @@
             </div>
             </div>
             <div class="rounded-bottom-3 text-end bg-body-tertiary shadow">
-                @if (!HasMadeOferta)
+                @if (!HasMadeOferta && IsSubastaOpen)
                 {
                     <a class="card-button text-decoration-none fw-bold" @onclick="ShowModal">Ofertar</a>
                     <OfertaModal  IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
@@ -84,11 +84,13 @@
     private bool isEditMode = false;
     private bool isMakeOferta = false;
     private bool HasMadeOferta;
+    private bool IsSubastaOpen;
     public string ErrorMessage { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
         HasMadeOferta = await CheckOfertas();
+        IsSubastaOpen = await CheckIfSubastaOpen();
     }
 
     private string? LoadImage()//para cargar en lista
@@ -126,6 +128,7 @@
             };
         await apiClient.AddOferta(newOferta, IdUsuario, ProductRowItem.IdProducto);
         HasMadeOferta = await CheckOfertas();
+        IsSubastaOpen = await CheckIfSubastaOpen();
         CloseModal();
         await UpdateProduct.InvokeAsync();
     }
@@ -134,6 +137,12 @@
     {
         return await apiClient.CheckIfOferta(ProductRowItem.IdProducto, IdUsuario);
     }
+
+    private async Task<bool> CheckIfSubastaOpen()
+    {
+        return await apiClient.CheckIfSubastaOpen((int)ProductRowItem.IdSubasta);
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
