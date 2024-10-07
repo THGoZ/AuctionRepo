@@ -86,7 +86,40 @@ namespace Auction.Core.Data
             return productosConGanadores;
         }
 
+        public List<Producto> GetProductosSolicitados()
+        {
+            // Obtener todos los productos que han sido solicitados
+            var productosSolicitados = _dbContext.Productos
+                .Where(p => p.EstadoDeSolicitud != true) // Filtro por productos solicitados
+                .ToList();
 
+            // Verificar si la lista es vacía
+            if (productosSolicitados == null || productosSolicitados.Count == 0)
+            {
+                throw new InvalidOperationException("No se encontraron productos solicitados en la base de datos.");
+            }
+
+            return productosSolicitados;
+        }
+
+        public void ActualizarEstadoProducto(Producto producto)
+        {
+            // Obtener el producto desde la base de datos
+            var productoExistente = _dbContext.Productos.FirstOrDefault(p => p.IdProducto == producto.IdProducto);
+
+            if (productoExistente != null)
+            {
+                // Actualizar el estado de solicitud del producto
+                productoExistente.EstadoDeSolicitud = producto.EstadoDeSolicitud;
+
+                // Guardar los cambios en la base de datos
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException("No se encontró el producto en la base de datos.");
+            }
+        }
 
     }
 }

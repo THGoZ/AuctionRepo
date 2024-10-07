@@ -9,7 +9,10 @@ namespace Auction.Core.Business.Interfaces
 {
     public interface IProductoBusiness
     {
+        public void ActualizarEstadoProducto(Producto productoSeleccionado);
         public List<Producto> GetProductos();
+
+        public List<Producto> GetProductosSolicitados();
 
     }
 }

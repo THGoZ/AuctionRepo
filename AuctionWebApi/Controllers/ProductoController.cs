@@ -37,6 +37,22 @@ namespace AuctionWebApi.Controllers
             return producto;
         }
 
+        [HttpGet("solicitudes")]
+        public async Task<ActionResult<IEnumerable<Producto>>> GetSolicitudes()
+        {
+            var productosSolicitados = await _dbContext.Productos
+                .Where(p => p.EstadoDeSolicitud == true)
+                .ToListAsync();
+
+            if (productosSolicitados == null || productosSolicitados.Count == 0)
+            {
+                return NotFound(new { Message = "No se encontraron productos solicitados." });
+            }
+
+            return Ok(productosSolicitados);
+        }
+
+
         [HttpGet("ofertas/{id}")]
         public async Task<int> GetOfertas(int id)
         {
@@ -143,5 +159,7 @@ namespace AuctionWebApi.Controllers
             result.EstadoDeSolicitud = producto.EstadoDeSolicitud;
             return result;
         }
+
+
     }
 }

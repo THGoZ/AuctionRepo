@@ -40,7 +40,8 @@ namespace AuctionDesktopProgram
             .AddScoped<IProductoBusiness, ProductoBusiness>()
             .AddTransient<Mainpage>()
             .AddTransient<FormProductos>()
-            .AddTransient<FormHome>();  
+            .AddTransient<FormHome>()  
+            .AddTransient<Solicitudes>();
         }
     }
 }

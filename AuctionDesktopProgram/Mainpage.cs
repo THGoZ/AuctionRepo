@@ -32,5 +32,11 @@ namespace AuctionDesktopProgram
             var formProductos = _serviceProvider.GetService<FormProductos>();
             formProductos.ShowDialog();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var solicitudes = _serviceProvider.GetRequiredService<Solicitudes>();
+            solicitudes.ShowDialog();
+        }
     }
 }

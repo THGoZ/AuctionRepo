@@ -112,14 +112,13 @@
             SubastaDataGrid.GridStyles.StyleDataCells = Krypton.Toolkit.GridStyle.Custom1;
             SubastaDataGrid.GridStyles.StyleRow = Krypton.Toolkit.GridStyle.Custom1;
             SubastaDataGrid.HideOuterBorders = true;
-            SubastaDataGrid.Location = new Point(75, 85);
-            SubastaDataGrid.Margin = new Padding(3, 4, 3, 4);
+            SubastaDataGrid.Location = new Point(91, 54);
             SubastaDataGrid.Name = "SubastaDataGrid";
             SubastaDataGrid.Palette = kryptonCustomPaletteBase1;
             SubastaDataGrid.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
             SubastaDataGrid.RowHeadersVisible = false;
             SubastaDataGrid.RowHeadersWidth = 51;
-            SubastaDataGrid.Size = new Size(743, 590);
+            SubastaDataGrid.Size = new Size(650, 442);
             SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
@@ -211,16 +210,15 @@
             // 
             // FormHome
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(1015, 711);
+            ClientSize = new Size(888, 533);
             Controls.Add(SubastaDataGrid);
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom1;
             HeaderStyle = Krypton.Toolkit.HeaderStyle.Custom1;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             Name = "FormHome";
             Palette = kryptonCustomPaletteBase1;
             PaletteMode = Krypton.Toolkit.PaletteMode.Custom;

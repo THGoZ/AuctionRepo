@@ -32,6 +32,11 @@ namespace APIService
             return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
         }
 
+        public async Task<List<ProductoAPI>?> GetProductosSolicitados()
+        {
+            return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto/solicitudes");
+        }
+
         public async Task<List<ProductoAPI>?> GetProductsWithOfertas()
         {
             var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
