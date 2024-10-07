@@ -16,5 +16,7 @@
         public int CantidadDeOfertas { get; set; }
 
         public ImageSource Image { get; set; }
+
+        public string Status { get; set; } = string.Empty;
     }
 }

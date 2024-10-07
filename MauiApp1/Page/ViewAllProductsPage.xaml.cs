@@ -29,7 +29,7 @@ public partial class ViewAllProductsPage : ContentPage, INotifyPropertyChanged
         InitializeComponent();
         ProductoList = new ObservableCollection<ProductoAPI>();
         BindingContext = this; // Make sure to set BindingContext
-        LoadProductos(); // Load the products when the page is initialized
+        //LoadProductos(); // Load the products when the page is initialized
     }
 
     private async void LoadProductos()
