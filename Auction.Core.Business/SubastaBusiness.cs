@@ -29,5 +29,12 @@ namespace Auction.Core.Business
         {
             _repository.UpdateSubasta(subasta);
         }
+
+        public void CrearSubasta(Subasta subasta)
+        {
+            _repository.AddSubasta(subasta);
+            _repository.SaveChanges(); 
+        }
+
     }
 }

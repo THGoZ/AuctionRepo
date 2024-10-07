@@ -49,5 +49,11 @@ namespace AuctionDesktopProgram
                 MessageBox.Show("No se encontraron productos solicitados pendientes.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var formCrearSubasta = _serviceProvider.GetService<CrearSubastaForm>();
+            formCrearSubasta.ShowDialog();
+        }
     }
 }

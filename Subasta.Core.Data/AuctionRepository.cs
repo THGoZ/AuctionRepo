@@ -122,5 +122,15 @@ namespace Auction.Core.Data
             }
         }
 
+        public void AddSubasta(Subasta subasta)
+        {
+            _dbContext.Subastas.Add(subasta); 
+        }
+
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges(); 
+        }
+
     }
 }

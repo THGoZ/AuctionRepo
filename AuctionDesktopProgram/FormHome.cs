@@ -55,12 +55,30 @@ namespace AuctionDesktopProgram
                         FechaInicio = s.FechaInicio.ToString("dd/MM/yyyy"),
                         FechaCierre = s.FechaCierre.ToString("dd/MM/yyyy"),
                         Descripcion = s.Descripcion,
-                        ModoEntrega = string.Join(", ", s.ModoEntrega), 
-                        FormaDePago = string.Join(", ", s.FormaDePago), 
+                        ModoEntrega = string.Join(", ", s.ModoEntrega),
+                        FormaDePago = string.Join(", ", s.FormaDePago),
                         Estado = s.Estado
                     }).ToList();
                 }
             }
+        }
+
+        private void FormHome_Activated(object sender, EventArgs e)
+        {
+            var subastas = _subastaBusiness.GetAll();
+
+            var listaSubastas = subastas.Select(s => new
+            {
+                IdSubasta = s.IdSubasta,
+                FechaInicio = s.FechaInicio.ToString("dd/MM/yyyy"),
+                FechaCierre = s.FechaCierre.ToString("dd/MM/yyyy"),
+                Descripcion = s.Descripcion,
+                ModoEntrega = string.Join(", ", s.ModoEntrega),
+                FormaDePago = string.Join(", ", s.FormaDePago),
+                Estado = s.Estado.HasValue ? (s.Estado.Value ? "Activa" : "Finalizada") : "Próxima"
+            }).ToList();
+
+            SubastaDataGrid.DataSource = listaSubastas;
         }
     }
 }

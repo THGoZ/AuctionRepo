@@ -19,6 +19,8 @@ namespace Auction.Core.Data.Interfaces
 
         public void UpdateSubasta (Subasta subasta);
         public List<Producto> GetProductosSolicitados();
+        void AddSubasta(Subasta subasta); 
+        void SaveChanges(); 
         public void ActualizarEstadoProducto(Producto productoSeleccionado);
     }
 }

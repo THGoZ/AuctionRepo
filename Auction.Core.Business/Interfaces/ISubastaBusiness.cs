@@ -16,5 +16,7 @@ namespace Auction.Core.Business.Interfaces
         public List<ProductoWinner> GetProductoWinners();
 
         public void EditarSubasta(Subasta subasta);
+
+        public void CrearSubasta(Subasta subasta);
     }
 }
