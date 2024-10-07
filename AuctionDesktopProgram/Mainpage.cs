@@ -39,8 +39,15 @@ namespace AuctionDesktopProgram
 
         private void button5_Click(object sender, EventArgs e)
         {
-            var solicitudes = new Solicitudes(_productoBusiness);
-            solicitudes.ShowDialog();
+            if (_productoBusiness.GetProductosSolicitados().Count() != 0)
+            {
+                var solicitudes = new Solicitudes(_productoBusiness);
+                solicitudes.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron productos solicitados pendientes.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

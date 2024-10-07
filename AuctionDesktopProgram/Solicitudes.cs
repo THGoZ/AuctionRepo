@@ -16,13 +16,11 @@ namespace AuctionDesktopProgram
     {
         private readonly IProductoBusiness _productoBusiness;
         private Producto productoSeleccionado;
-        private List<Producto> solicitudes;
 
         public Solicitudes(IProductoBusiness productoBusiness)
         {
             InitializeComponent();
             _productoBusiness = productoBusiness;
-            solicitudes = _productoBusiness.GetProductosSolicitados();
             
             CargarProductosSolicitados();
         }
@@ -447,6 +445,7 @@ namespace AuctionDesktopProgram
             else
             {
                 MessageBox.Show("No se encontraron productos solicitados pendientes.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
         }
 
