@@ -97,7 +97,7 @@ namespace Auction.Core.Data
         {
             // Obtener todos los productos que han sido solicitados
             var productosSolicitados = _dbContext.Productos
-                .Where(p => p.EstadoDeSolicitud != true) // Filtro por productos solicitados
+                .Where(p => p.EstadoDeSolicitud == null) // Filtro por productos solicitados
                 .ToList();
 
             return productosSolicitados;
