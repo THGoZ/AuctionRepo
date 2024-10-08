@@ -1,6 +1,5 @@
 using Auction.Core.Business;
 using Auction.Core.Business.Interfaces;
-using Auction.Core.Data.Interfaces;
 using Auction.Core.Entities;
 using Krypton.Toolkit;
 
@@ -18,21 +17,12 @@ namespace AuctionDesktopProgram
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            CargarSubastas();
+        }
 
-            var subastas = _subastaBusiness.GetAll();
-
-            var listaSubastas = subastas.Select(s => new
-            {
-                IdSubasta = s.IdSubasta,
-                FechaInicio = s.FechaInicio.ToString("dd/MM/yyyy"),
-                FechaCierre = s.FechaCierre.ToString("dd/MM/yyyy"),
-                Descripcion = s.Descripcion,
-                ModoEntrega = string.Join(", ", s.ModoEntrega),
-                FormaDePago = string.Join(", ", s.FormaDePago),
-                Estado = s.Estado.HasValue ? (s.Estado.Value ? "Activa" : "Finalizada") : "Próxima"
-            }).ToList();
-
-            SubastaDataGrid.DataSource = listaSubastas;
+        private void FormHome_Activated(object sender, EventArgs e)
+        {
+            CargarSubastas();
         }
 
         private void SubastaDataGrid_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
@@ -48,22 +38,11 @@ namespace AuctionDesktopProgram
                     EditarSubastaForm editarForm = new EditarSubastaForm(subastaSeleccionada, _subastaBusiness);
                     editarForm.ShowDialog();
 
-                    var subastasActualizadas = _subastaBusiness.GetAll();
-                    SubastaDataGrid.DataSource = subastasActualizadas.Select(s => new
-                    {
-                        IdSubasta = s.IdSubasta,
-                        FechaInicio = s.FechaInicio.ToString("dd/MM/yyyy"),
-                        FechaCierre = s.FechaCierre.ToString("dd/MM/yyyy"),
-                        Descripcion = s.Descripcion,
-                        ModoEntrega = string.Join(", ", s.ModoEntrega),
-                        FormaDePago = string.Join(", ", s.FormaDePago),
-                        Estado = s.Estado
-                    }).ToList();
+                    CargarSubastas();
                 }
             }
         }
-
-        private void FormHome_Activated(object sender, EventArgs e)
+        private void CargarSubastas()
         {
             var subastas = _subastaBusiness.GetAll();
 

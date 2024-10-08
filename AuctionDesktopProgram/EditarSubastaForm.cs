@@ -27,7 +27,7 @@ namespace AuctionDesktopProgram
             dtpFechaInicio.Text = _subasta.FechaInicio.ToString();
             dtpFechaCierre.Text = _subasta.FechaCierre.ToString();
             txtFormaPago.Text = string.Join(", ", subasta.FormaDePago);
-            txtModoEntrega.Text = string.Join(", ", subasta.ModoEntrega); 
+            txtModoEntrega.Text = string.Join(", ", subasta.ModoEntrega);
             txtDescripcion.Text = _subasta.Descripcion.ToString();
         }
 
@@ -48,7 +48,7 @@ namespace AuctionDesktopProgram
 
         private void Guardar_Click(object sender, EventArgs e)
         {
-           
+
             _subasta.FechaInicio = dtpFechaInicio.Value;
             _subasta.FechaCierre = dtpFechaCierre.Value;
             _subasta.Descripcion = txtDescripcion.Text;
@@ -58,13 +58,33 @@ namespace AuctionDesktopProgram
 
             _subastaBusiness.EditarSubasta(_subasta);
 
-        
+
             this.Close();
         }
 
         private void Cancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FinalizarSubasta_Click(object sender, EventArgs e)
+        {
+            // Confirmar que desea finalizar la subasta
+            var confirmResult = MessageBox.Show("¿Estás seguro de que deseas finalizar esta subasta?",
+                                                 "Confirmar finalización",
+                                                 MessageBoxButtons.YesNo);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                // Marcar la subasta como finalizada
+                _subasta.Estado = false; // Activa = true / Finalizada = false
+
+                // Guardar los cambios en la base de datos
+                _subastaBusiness.EditarSubasta(_subasta); // Método para editar subasta
+                MessageBox.Show("La subasta ha sido finalizada.");
+
+                this.Close(); // Cerrar el formulario
+            }
         }
     }
 }
