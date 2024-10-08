@@ -9,21 +9,18 @@ namespace AuctionDesktopProgram
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             var services = new ServiceCollection();
             ConfigureServices(services);
+
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
-                var subastaprogram = serviceProvider.GetRequiredService<FormHome>();
-                subastaprogram.ShowDialog();
+               
+                var mainPage = serviceProvider.GetRequiredService<Mainpage>();
+                Application.Run(mainPage);
             }
         }
 
@@ -38,10 +35,14 @@ namespace AuctionDesktopProgram
                 optionsBuilder.UseSqlServer(connectionString);
                 return new AuctionDBContext(optionsBuilder.Options);
             })
-                    .AddScoped<IAuctionRepository, AuctionRepository>()
-                    .AddScoped<ISubastaBusiness, SubastaBusiness>()
-            .AddTransient<FormHome> ();
-
+            .AddScoped<IAuctionRepository, AuctionRepository>()
+            .AddScoped<ISubastaBusiness, SubastaBusiness>()
+            .AddScoped<IProductoBusiness, ProductoBusiness>()
+            .AddTransient<Mainpage>()
+            .AddTransient<FormProductos>()
+            .AddTransient<FormHome>()  
+            .AddTransient<Solicitudes>()
+            .AddTransient<CrearSubastaForm>();
         }
     }
 }

@@ -10,5 +10,13 @@ namespace Auction.Core.Business.Interfaces
     public interface ISubastaBusiness
     {
         public List<Subasta> GetAll();
+
+        public List <Oferta> GetOfertas();
+
+        public List<ProductoWinner> GetProductoWinners();
+
+        public void EditarSubasta(Subasta subasta);
+
+        public void CrearSubasta(Subasta subasta);
     }
 }

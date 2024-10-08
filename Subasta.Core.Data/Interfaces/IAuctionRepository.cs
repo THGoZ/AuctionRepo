@@ -10,5 +10,17 @@ namespace Auction.Core.Data.Interfaces
     public interface IAuctionRepository
     {
         public List<Subasta> GetSubastas();
+
+        public List <Producto> GetProductos();
+
+        public List <Oferta> GetOfertas();
+
+        public List <ProductoWinner> GetProductoWinners();
+
+        public void UpdateSubasta (Subasta subasta);
+        public List<Producto> GetProductosSolicitados();
+        void AddSubasta(Subasta subasta); 
+        void SaveChanges(); 
+        public void ActualizarEstadoProducto(Producto productoSeleccionado);
     }
 }
