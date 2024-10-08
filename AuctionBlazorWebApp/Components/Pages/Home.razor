@@ -18,12 +18,12 @@
 
 <PageTitle>Subastas</PageTitle>
 
-<h2>Subastas disponibles</h2>
+<h2 class="mt-2">Subastas disponibles</h2>
 
 <div class="countainer-fuild px-1 py-1 my-1 text-center">
-    <div class="d-flex justify-content-end mx-5">
-        <div class="dropdown m-2 focus-ring-secondary">
-            <button class=" btn dropdown-toggle text-start text-md-start border border-warning rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+    <div class="d-flex justify-content-end mx-3">
+        <div class="dropdown m-2 shadow">
+            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
                 <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
             </button>
             <div class="dropdown-menu px-3" style="">
@@ -54,8 +54,8 @@
                 </div>
             </div>
         </div>
-        <div class="dropdown m-2">
-            <button class="btn dropdown-toggle text-start text-md-start border border-warning rounded-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown m-2 shadow">
+            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-sort fa-2x mx-1" style="color: #FFD43B;"></i> Ordenar
             </button>
             <div class="dropdown-menu" style="">
@@ -80,7 +80,7 @@
             </div>
         </div>
     </div>
-<div class="container text-center my-3">
+<div class="container text-center my-2">
     <div class="row justify-content-evenly">
         @if (subastas == null)
         {
@@ -169,7 +169,7 @@
                                 <li class="list-group-item bg-body-tertiary">Hasta: <p>@subasta.FechaCierre.ToString("dd/MM/yyyy")</p></li>
                             </ul>
                         </div>
-                        @if (subasta.FechaCierre < DateTime.Now)
+                        @if (subasta.FechaCierre < DateTime.Now || subasta.Estado == false)
                         {
                             <p class="my-3">Estado: <span class="my-3 text-danger-emphasis">Cerrada</span></p>
                         }

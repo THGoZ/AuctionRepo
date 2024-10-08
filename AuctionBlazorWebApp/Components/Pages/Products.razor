@@ -16,23 +16,19 @@
 @if (auction != null)
 {
     <PageTitle>Subasta N°@auction</PageTitle>
-        <div class="p-2 rounded bg-body-tertiary my-5 text-center">
             <h1>Productos de subasta N°@auction</h1>
             @if (subasta != null){
-            <p class="text-body-tertiary">@subasta.Descripcion</p>
+            <p class="text-primary-emphasis p-2 fs-4">@subasta.Descripcion</p>
             }
-        </div>
 }
 else
 {
     <PageTitle>Productos</PageTitle>
-        <div class="p-3 rounded bg-body-tertiary my-5 text-center">
-            <h1>Productos disponibles</h1>
-        </div>
+            <h1 class="">Productos disponibles</h1>
 }
     <div class="d-flex justify-content-end mx-5">
-        <div class="dropdown m-2 focus-ring-secondary">
-            <button class=" btn dropdown-toggle text-start text-md-start border border-warning rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+        <div class="dropdown m-2 shadow">
+            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
                 <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
             </button>
             <div class="dropdown-menu px-3" style="">
@@ -57,8 +53,8 @@ else
                 </div>
             </div>
         </div>
-        <div class="dropdown m-2">
-            <button class="btn dropdown-toggle text-start text-md-start border border-warning rounded-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown m-2 shadow">
+            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-sort fa-2x mx-1" style="color: #FFD43B;"></i> Ordenar
             </button>
             <div class="dropdown-menu" style="">

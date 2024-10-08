@@ -73,7 +73,7 @@ namespace AuctionWebApi.Controllers
         [HttpGet("cantidad/{id:int}")]
         public async Task<ActionResult<int?>> GetCantidadProductos(int id)
         {
-            var subasta = await _dbContext.Subastas.Where(s => s.IdSubasta == id && s.Productos.Any()).SelectMany(p => p.Productos).CountAsync();
+            var subasta = await _dbContext.Subastas.Where(s => s.IdSubasta == id && s.Productos.Where(p=> p.EstadoDeSolicitud == true).Any()).SelectMany(p => p.Productos.Where(p=> p.EstadoDeSolicitud==true)).CountAsync();
 
             if (subasta == null)
             {

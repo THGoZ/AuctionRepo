@@ -53,7 +53,7 @@ namespace AuctionMobileApp
 
             foreach (var subasta in subastas)
             {
-                subasta.Estado = subasta.FechaCierre >= DateTime.Now ? "Abierto" : "Cerrado";
+                subasta.EstadoDeSubasta = subasta.FechaCierre >= DateTime.Now ? "Abierto" : "Cerrado";
 
             }
 
