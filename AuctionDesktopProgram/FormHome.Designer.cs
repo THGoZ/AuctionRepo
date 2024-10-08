@@ -108,16 +108,7 @@ namespace AuctionDesktopProgram
             SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClick_1;
             // 
             // bigLabel1
-            // 
-            bigLabel1.AutoSize = true;
-            bigLabel1.BackColor = Color.Transparent;
-            bigLabel1.Font = new Font("Segoe UI", 25F);
-            bigLabel1.ForeColor = Color.White;
-            bigLabel1.Location = new Point(66, 64);
-            bigLabel1.Name = "bigLabel1";
-            bigLabel1.Size = new Size(165, 46);
-            bigLabel1.TabIndex = 1;
-            bigLabel1.Text = "bigLabel1";
+            //
             // 
             // FormHome
             // 

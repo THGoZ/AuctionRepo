@@ -59,12 +59,5 @@ namespace AuctionDesktopProgram
 
             SubastaDataGrid.DataSource = listaSubastas;
         }
-
-        private void SubastaDataGrid_SelectionChanged(object sender, EventArgs e)
-        {
-            Console.WriteLine(e);
-            Subasta subasta = SubastaDataGrid.CurrentRow.DataBoundItem as Subasta;
-            bigLabel1.Text = subasta.Descripcion.ToString();
-        }
     }
 }
