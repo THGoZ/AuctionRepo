@@ -58,7 +58,7 @@ namespace AuctionMobileApp.Caller
                 {
                     producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
                 }
-                return filter;
+                return filter.Where(x=> x.EstadoDeSolicitud == true).ToList();
             }
             else return null;
         }
@@ -72,6 +72,7 @@ namespace AuctionMobileApp.Caller
 
             if (subastas is not null)
             {
+                subastas = subastas.Where(s => s.FechaInicio <= DateTime.Now).ToList();
                 foreach (var subasta in subastas)
                 {
                     subasta.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/Ofertas/{subasta.IdSubasta}");

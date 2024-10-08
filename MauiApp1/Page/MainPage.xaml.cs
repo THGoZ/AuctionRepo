@@ -50,12 +50,16 @@ namespace AuctionMobileApp
         {
             IsBusy = true; // Iniciar el indicador de carga
             var subastas = await _apicaller.GetAuctions();
-
-            foreach (var subasta in subastas)
+            if (subastas != null)
             {
-                subasta.EstadoDeSubasta = subasta.FechaCierre >= DateTime.Now ? "Abierto" : "Cerrado";
 
+                foreach (var subasta in subastas)
+                {
+                    subasta.EstadoDeSubasta = subasta.FechaCierre >= DateTime.Now ? "Abierto" : "Cerrado";
+
+                }
             }
+
 
             productListView.ItemsSource = subastas;
 

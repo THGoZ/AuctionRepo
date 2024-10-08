@@ -91,7 +91,7 @@
                                             </Label>
                                             <!-- Label para mostrar estado de la subasta -->
                                             
-                                            <Label Text="{Binding Estado}"
+                                            <Label Text="{Binding EstadoDeSubasta}"
                                                    HorizontalOptions="End"
                                                    FontAttributes="Bold"
                                                    FontSize="Large"/>

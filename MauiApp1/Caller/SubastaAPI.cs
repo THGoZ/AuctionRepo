@@ -13,7 +13,7 @@ namespace AuctionMobileApp.Caller
         public DateTime FechaCierre { get; set; }
         public string[] ModoEntrega { get; set; } = null!;
         public string[] FormaDePago { get; set; } = null!;
-        public string EstadoDeSubasta { get; set; }//Activa = true /-Finalizada = false, null = proxima
+        public string? EstadoDeSubasta { get; set; }//Activa = true /-Finalizada = false, null = proxima
         public string Descripcion { get; set; } = null!;
         public int CantidadDeOfertas { get; set; }
         public int CantidadProductos { get; set; }
