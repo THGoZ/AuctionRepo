@@ -6,8 +6,14 @@
     xmlns:local="clr-namespace:AuctionMobileApp"
     xmlns:page="clr-namespace:AuctionMobileApp.Page"
     Shell.FlyoutBehavior="Disabled"
-    Title="Bienvenido"
-    BackgroundColor="Black">
+    BackgroundColor="Black"
+    Shell.TitleColor="White"
+    Shell.ForegroundColor="#F8B045"
+    Shell.TabBarBackgroundColor="Gray"
+    Shell.TabBarForegroundColor="#F8B045"
+    Shell.TabBarUnselectedColor="LightGray"
+    Shell.TabBarTitleColor="#F8B045"
+    Shell.TabBarDisabledColor="Gray">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding BackCommand}"
@@ -15,13 +21,15 @@
     </Shell.BackButtonBehavior>
     
     <TabBar>
-        <Tab Title="Subastas" Icon="auction.png">
+        <Tab Title="Subastas" Icon="auction.png" >
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
         </Tab>
         <Tab Title="Productos" Icon="cubes.png">
             <ShellContent ContentTemplate="{DataTemplate page:ViewAllProductsPage}"/>
         </Tab>
-        
+        <Tab Title="Ganadores" Icon="trophy.png">
+            <ShellContent ContentTemplate="{DataTemplate page:ViewWinnerPage}"/>
+        </Tab>
     </TabBar>
 
     <ShellContent Route="ViewProducts" ContentTemplate="{DataTemplate page:ViewProducts}" />

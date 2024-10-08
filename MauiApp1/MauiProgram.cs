@@ -47,6 +47,7 @@ namespace AuctionMobileApp
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<ViewAllProductsPage>();
             builder.Services.AddTransient<ViewProducts>();
+            builder.Services.AddTransient<ViewWinnerPage>();
     
 #if DEBUG
             builder.Logging.AddDebug();

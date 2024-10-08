@@ -4,6 +4,7 @@ using AuctionWebApi.Domain.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AuctionWebApi.Controllers
 {
@@ -23,6 +24,25 @@ namespace AuctionWebApi.Controllers
             return _dbContext.Productos;
         }
 
+        [HttpGet("User/{UserId}")]
+        public ActionResult<IEnumerable<Producto>> GetAllProductsOfUser(int UserId)
+        {
+            return _dbContext.Productos.Where(p => p.IdUsuario == UserId).ToList();
+        }
+
+        [HttpGet("bid/{ProdID}")]
+        public async Task<ActionResult<decimal?>> GetHighestBid(int ProdID)
+        {
+            return await _dbContext.Productos
+                                            .Where(p => p.IdProducto == ProdID)
+                                            .Include(p => p.Ofertas)
+                                            .Select(p => p.Ofertas
+                                            .OrderByDescending(o => o.Monto)
+                                            .Select(o => o.Monto)
+                                            .FirstOrDefault())
+                                            .FirstOrDefaultAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Producto?>> GetById(int id)
         {
@@ -37,21 +57,13 @@ namespace AuctionWebApi.Controllers
             return producto;
         }
 
-        [HttpGet("solicitudes")]
-        public async Task<ActionResult<IEnumerable<Producto>>> GetSolicitudes()
+        [HttpGet("ofertados/{userid}")]
+        public ActionResult<IEnumerable<Producto>> GetAllBidded(int userid)
         {
-            var productosSolicitados = await _dbContext.Productos
-                .Where(p => p.EstadoDeSolicitud == true)
-                .ToListAsync();
-
-            if (productosSolicitados == null || productosSolicitados.Count == 0)
-            {
-                return NotFound(new { Message = "No se encontraron productos solicitados." });
-            }
-
-            return Ok(productosSolicitados);
+            return _dbContext.Productos.Where(p => p.Ofertas.Any(o => o.IdUsuario == userid))
+                                                        .Include(p => p.Ofertas.Where(o => o.IdUsuario == userid))
+                                                        .ToList();
         }
-
 
         [HttpGet("ofertas/{id}")]
         public async Task<int> GetOfertas(int id)
@@ -60,14 +72,51 @@ namespace AuctionWebApi.Controllers
 
             return cantidad;
         }
+
+        [HttpGet("sold/{id}")]
+        public async Task<string> GetSoldStatus(int id)
+        {
+            string status;
+            var isSubastaover = await _dbContext.Subastas.Where(s => s.Productos.Any(p => p.IdProducto.Equals(id)) && s.FechaCierre < DateTime.Now).AnyAsync();
+
+            if (await _dbContext.Productos.Where(p => p.IdProducto == id && p.Ofertas.Any()).AnyAsync())
+            {
+                if (isSubastaover)
+                {
+                    status = "sold";
+                    return status;
+                }
+                else
+                {
+                    status = "ongoing";
+                    return status;
+                }
+            }
+            else
+            {
+                if (isSubastaover)
+                {
+                    status = "notsold";
+                    return status;
+                }
+                else
+                {
+                    status = "ongoingnotsold";
+                    return status;
+                }
+
+            }
+
+        }
+
         [HttpGet("winners/{id}")]
         public async Task<List<ProductoWinner>> GetWinners(int id)
         {
             var productos = await _dbContext.Productos
-                .Where(p => p.IdSubasta == id)
-                .Include(p => p.Ofertas.OrderByDescending(o => o.Monto).ThenBy(o => o.Fecha))
-                .ThenInclude(o => o.Usuario)
-                .ToListAsync();
+                                                    .Where(p => p.IdSubasta == id && p.EstadoDeSolicitud == true)
+                                                    .Include(p => p.Ofertas.OrderByDescending(o => o.Monto).ThenBy(o => o.Fecha))
+                                                    .ThenInclude(o => o.Usuario)
+                                                    .ToListAsync();
 
             var Winners = new List<ProductoWinner>();
 
@@ -98,6 +147,12 @@ namespace AuctionWebApi.Controllers
             return Winners;
         }
 
+        [HttpGet("cantidad/")]
+        public async Task<ActionResult<int?>> ProductoCount()
+        {
+            return await _dbContext.Productos.CountAsync();
+        }
+
         [HttpPost("{UserId}/{SubastaId}")]
         public async Task<ActionResult> CreateProduct(int UserId, int SubastaId, ProductoDTO producto)
         {
@@ -122,7 +177,7 @@ namespace AuctionWebApi.Controllers
             }
         }
 
-            [HttpPut("{id}/{subastaId}")]
+        [HttpPut("{id}/{subastaId}")]
         public async Task<ActionResult> UpdateProduct(ProductoDTO producto, int id, int subastaId)
         {
             var newProducto = MapProductoObject(producto);
@@ -156,7 +211,6 @@ namespace AuctionWebApi.Controllers
             result.Descripcion = producto.Descripcion;
             result.PrecioBase = producto.PrecioBase;
             result.FechaSolicitud = producto.FechaSolicitud;
-            result.EstadoDeSolicitud = producto.EstadoDeSolicitud;
             return result;
         }
 

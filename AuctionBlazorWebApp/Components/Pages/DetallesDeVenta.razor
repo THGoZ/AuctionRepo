@@ -1,0 +1,95 @@
+﻿@using APIService
+@using Auction.Core.Entities
+@inject APIService apiClient
+
+
+@if (isLoading)
+{
+    <h3>Cargando Datos...</h3>
+    <div class="spinner-grow" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else
+{
+    <div class="container px-2">
+        <div class="row rounded-top-3 py-2 bg-body-secondary my-1">
+            <div class="col px-2 align-content-start">
+                <h5 class="fw-bold">Estado:</h5>
+            </div>
+            <div class="col px-2 align-content-end">
+                <h5 class="text-info">Completada</h5>
+            </div>
+        </div>
+        <div class="row py-2 bg-body-secondary my-1">
+            <div class="col px-2">
+                <h5 class="fw-bold">Codigo de producto:</h5>
+            </div>
+            <div class="col px-2 align-content-start">
+                <h5 class="">@($"000-{Detalle.IdProducto}")</h5>
+            </div>
+        </div>
+        <div class="row py-2 bg-body-secondary my-1">
+            <div class="col px-2">
+                <h5 class="fw-bold">Nombre del producto:</h5>
+            </div>
+            <div class="col px-2 align-content-start">
+                <h5 class="">@Detalle.Producto.Nombre</h5>
+            </div>
+        </div>
+        <div class="row py-2 bg-body-secondary my-1">
+            <div class="col px-2">
+                <h5 class="fw-bold">Fecha de venta:</h5>
+            </div>
+            <div class="col px-2 align-content-start">
+                <h5 class="">@Detalle.Fecha</h5>
+            </div>
+        </div>
+        <div class="row py-2 bg-body-secondary my-1">
+            <div class="col px-2">
+                <h5 class="fw-bold">Cuil de comprador:</h5>
+            </div>
+            <div class="col px-2 align-content-start">
+                <h5 class="">@Detalle.CuilComprador</h5>
+            </div>
+        </div>
+        <div class="row py-2 bg-body-secondary my-1">
+            <div class="col px-2">
+                <h5 class="fw-bold">Sub-total:</h5>
+            </div>
+            <div class="col px-2 align-content-start">
+                <h5 class="text-success-emphasis">@Detalle.Total.ToString("C")</h5>
+            </div>
+        </div>
+        <div class="row py-2 bg-body-secondary my-1">
+            <div class="col px-2">
+                <h5 class="fw-bold">Comisiones<span class="fs-5 text-body-tertiary">(10%)</span>:</h5>
+            </div>
+            <div class="col px-2 align-content-start">
+                <h5 class="text-success-emphasis">@(((double)Detalle.Total * 0.10).ToString("C"))</h5>
+            </div>
+        </div>
+        <div class="row rounded-bottom-3 py-2 bg-body-secondary my-1">
+            <div class="col p-3">
+                <h3 class="fw-bold">Total:</h3>
+            </div>
+            <div class="col p-3 align-content-start">
+                <h3 class="text-success">@(((double)Detalle.Total - (double)Detalle.Total * 0.10).ToString("C"))</h3>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int IdProducto { get; set; }
+    private DetalleVenta Detalle { get; set; } = new();
+    public bool isLoading { get; set; } = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Detalle = await apiClient.GetProductDetalleVenta(IdProducto);
+        isLoading = false;
+    }
+}

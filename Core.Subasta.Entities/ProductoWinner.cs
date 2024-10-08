@@ -16,7 +16,7 @@ namespace Auction.Core.Entities
         public decimal PrecioBase { get; set; }
         public byte[]? Imagen { get; set; }
         public string? ImageExtension { get; set; }
-        public bool HasGanador { get; set; }
+        public bool HasGanador { get; set; } = false;
         public string? NombreGanador { get; set; }
         public string? ApellidoGanador { get; set; }
         [Column("Monto", TypeName = "decimal(18, 2)")]

@@ -1,0 +1,19 @@
+﻿@page "/profiledetails"
+@using APIService.Models
+@using AuctionBlazorWebApp.Models.ViewModels
+@using BlazorBootstrap
+@using APIService
+
+@inject APIService apiClient
+@inject NavigationManager navManager
+
+
+<h1>Perfil</h1>
+<div class="container-md p-2 ms-3">
+    <ProfileAccountDetails/>
+    <ProfileBasicDetails/>
+</div>
+
+@code {
+    [Inject] protected ToastService ToastService { get; set; }
+}

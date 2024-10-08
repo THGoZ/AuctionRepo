@@ -32,6 +32,13 @@ namespace AuctionWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(UsuarioDTO usuarioDto)
         {
+            var existingUsuario = await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.Email == usuarioDto.Email);
+
+            if(existingUsuario != null)
+            {
+                return BadRequest(new { message = "El email ya existe!" });
+            }
+
             var usuario = new Usuario
             {
                 Nombre = usuarioDto.Nombre,
@@ -39,13 +46,9 @@ namespace AuctionWebApi.Controllers
                 Direccion = usuarioDto.Direccion,
                 Ciudad = usuarioDto.Ciudad,
                 Email = usuarioDto.Email,
-                Contrasena = usuarioDto.Contrasena
+                Contrasena = usuarioDto.Contrasena,
+                Cuil = usuarioDto.Cuil
             };
-
-            if (!ModelState.IsValid) //Valida que sean correctas las entradas
-            {
-                return BadRequest(ModelState);
-            }
 
             await _dbContext.Usuarios.AddAsync(usuario);
             await _dbContext.SaveChangesAsync();
@@ -74,15 +77,6 @@ namespace AuctionWebApi.Controllers
                 return Ok();
             }
         }
-        //if (id != usuario.IdUsuario)
-        //{
-        //    return BadRequest("El ID del usuario no coincide con el ID de la URL.");
-        //}
-
-        //if (!ModelState.IsValid)
-        //{
-        //    return BadRequest(ModelState);
-        //}
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
@@ -99,7 +93,7 @@ namespace AuctionWebApi.Controllers
         #region Cosas de login blazor
         [HttpPut]
         [Route("login")]
-        public async Task<SesionDTO> Login([FromBody] LoginDTO login)
+        public async Task<ActionResult<SesionDTO>> Login([FromBody] LoginDTO login)
         {
             SesionDTO session = new SesionDTO();
             var exists = await _dbContext.Usuarios.AnyAsync(x => x.Email == login.Email);
@@ -112,16 +106,16 @@ namespace AuctionWebApi.Controllers
                     session.Apellido = user.Apellido;
                     session.Nombre = user.Nombre;
                     session.Wrongpassoword = false;
-                    return session;
+                    return Ok(session);
                 }
                 else
                 {
-                    return session;
+                    return Ok(session);
                 }
             }
             else
             {
-                return session;
+                return NotFound(session);
             }
         }
         #endregion

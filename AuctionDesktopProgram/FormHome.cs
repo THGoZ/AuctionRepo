@@ -54,10 +54,17 @@ namespace AuctionDesktopProgram
                 Descripcion = s.Descripcion,
                 ModoEntrega = string.Join(", ", s.ModoEntrega),
                 FormaDePago = string.Join(", ", s.FormaDePago),
-                Estado = s.Estado.HasValue ? (s.Estado.Value ? "Activa" : "Finalizada") : "Próxima"
+                Estado = s.Estado.HasValue ? (s.Estado.Value ? "Activa" : "Finalizada") : "PrÃ³xima"
             }).ToList();
 
             SubastaDataGrid.DataSource = listaSubastas;
+        }
+
+        private void SubastaDataGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(e);
+            Subasta subasta = SubastaDataGrid.CurrentRow.DataBoundItem as Subasta;
+            bigLabel1.Text = subasta.Descripcion.ToString();
         }
     }
 }

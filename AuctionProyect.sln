@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionMobileApp", "MauiApp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DesktopProgram", "DesktopProgram", "{8C2201F4-0E34-4F8C-9D2D-E224F5291B6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionDesktopProgram", "AuctionDesktopProgram\AuctionDesktopProgram.csproj", "{21961A15-7DB8-47FC-B577-A58284FDBB43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionDesktopProgram", "AuctionDesktopProgram\AuctionDesktopProgram.csproj", "{21961A15-7DB8-47FC-B577-A58284FDBB43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

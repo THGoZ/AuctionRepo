@@ -88,6 +88,10 @@ namespace AuctionDesktopProgram
             kryptonCustomPaletteBase1.GridStyles.GridCustom1.StateNormal.HeaderColumn.Content.Color2 = Color.FromArgb(224, 224, 224);
             kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Back.Color1 = Color.FromArgb(240, 173, 78);
             kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Back.Color2 = Color.FromArgb(255, 180, 85);
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color1 = Color.FromArgb(255, 192, 192);
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color2 = Color.Red;
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorAngle = 90F;
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Dashed;
             kryptonCustomPaletteBase1.ThemeName = "";
             kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
             // 
@@ -102,6 +106,18 @@ namespace AuctionDesktopProgram
             SubastaDataGrid.Size = new Size(960, 680);
             SubastaDataGrid.TabIndex = 0;
             SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClick_1;
+            // 
+            // bigLabel1
+            // 
+            bigLabel1.AutoSize = true;
+            bigLabel1.BackColor = Color.Transparent;
+            bigLabel1.Font = new Font("Segoe UI", 25F);
+            bigLabel1.ForeColor = Color.White;
+            bigLabel1.Location = new Point(66, 64);
+            bigLabel1.Name = "bigLabel1";
+            bigLabel1.Size = new Size(165, 46);
+            bigLabel1.TabIndex = 1;
+            bigLabel1.Text = "bigLabel1";
             // 
             // FormHome
             // 
@@ -123,6 +139,7 @@ namespace AuctionDesktopProgram
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)SubastaDataGrid).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

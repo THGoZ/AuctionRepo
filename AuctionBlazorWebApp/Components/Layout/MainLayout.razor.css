@@ -1,7 +1,8 @@
 .page {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto 1fr; /* Two columns that fill the page equally */
+    gap: 0; /* Removes any gap between the columns */
 }
 
 main {

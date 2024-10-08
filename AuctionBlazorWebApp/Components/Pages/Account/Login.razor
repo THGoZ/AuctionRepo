@@ -6,6 +6,7 @@
 @using AuctionBlazorWebApp.Components.Layout
 @using System.Security.Claims
 @using AuctionBlazorWebApp.Models.ViewModels
+@using BlazorBootstrap
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Authentication.Cookies
 @using APIService
@@ -16,25 +17,39 @@
 
 <PageTitle>Ingresar</PageTitle>
 
-<section class="d-flex justify-content-center align-items-center min-vh-100" style="background-color: #CEA848;">
-    <div class="container" style="max-width: 400px; width: 100%;">
-        <div class="card rounded-3 p-4 p-md-5">
-                    <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
+	<div class="limiter">
+		<div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-pic js-tilt" data-tilt>
+                <img src="img-02.png" alt="IMG">
+            </div>
+            <EditForm class="login100-form" Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
                         <DataAnnotationsValidator />
-                        <h3 class="text-center mt-5">Iniciar sesión</h3>
-                        <div class="form-group">
-                            <InputText id="email" @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
-                            <ValidationMessage For="() => model.Email"></ValidationMessage>
-                        </div>
-                        <div class="form-group">
-                            <InputText id="password" @bind-Value="model.Contrasena" placeholder="Contraseña" type="password" class="form-control"></InputText>
-                            <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
-                        </div>
-                        @*                 <div class="alert alert-danger mt-2" role="alert">
-                        <span class="text-danger">@errormessage</span>
-                        </div> *@
+                        <h3 class="text-center mt-2 py-3">Iniciar sesión</h3>
+                <div class="wrap-form-control mt-3 mb-3">
+                    <InputText id="email" @bind-Value="model.Email" placeholder="Email" class="form-control"></InputText>
+                    <span class="focus-form-control"></span>
+                    <span class="symbol-form-control">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <ValidationMessage For="() => model.Email" class="mb-2" style="color:red;"></ValidationMessage>
+                <div class="alert alert-danger my-2 mb-3" role="alert" hidden="@string.IsNullOrEmpty(emailerror)">
+                    <span class="text-danger p-2">@emailerror</span>
+                </div>
+                <div class="wrap-form-control">
+                    <InputText id="password" @bind-Value="model.Contrasena" placeholder="Contraseña" type="@(showPass ? "text" : "password")" class="form-control"></InputText>
+                    <span class="focus-form-control"></span>
+                    <span class="symbol-form-control">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
+                <div class="alert alert-danger mt-3 mb-1" role="alert" hidden="@string.IsNullOrEmpty(passworderror)">
+                    <span class=" text-danger p-2">@passworderror</span>
+                </div>
                         <div class="d-grid gap-2 mb-3 my-4">
-                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                            <button type="submit" class="btn btn-primary py-2">Ingresar</button>
                             <div class="registrar text-center">
                                 <p>¿No tiene un usuario? <a href="registrar">Crear usuario</a></p>
                             </div>
@@ -42,17 +57,26 @@
                     </EditForm>
                 </div>
             </div>
-</section>
+</div>
+
+<script src="/Tilt/jquery-3.2.1.min.js"></script>
+<script src="/Tilt/tilt.jquery.min.js"></script>
+<script>
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
 
 @code {
     [CascadingParameter]
     public HttpContext? HttpContext { get; set; }
     [SupplyParameterFromForm]
     public LoginViewModel model { get; set; } = new();
-
     private LoginDTO login = new LoginDTO();
-
-    private string? errormessage;
+    private string? emailerror;
+    private string? passworderror;
+    private bool showPass = false;
+    [Inject] protected ToastService ToastService { get; set; }
 
     [Parameter]
     public string sesion { get; set; }
@@ -67,31 +91,47 @@
         }
     }
 
+    private void ToggleShowPassword()
+    {
+        if (!showPass)
+            showPass = true;
+        else
+            showPass = false;
+    }
+
     private async Task Authenticate()
     {
 
         login.Email = model.Email;
         login.Contrasena = model.Contrasena;
 
-        var sesionUsuario = await apiClient.ValidateUser(login);
+            var sesionUsuario = await apiClient.ValidateUser(login);
+            int subastacount = await apiClient.SubastaCount();
 
-        if (sesionUsuario is null || sesionUsuario.Wrongpassoword)
-        {
-            errormessage = "Nombre o contraseña incorrecta";
-            return;
-        }
+            if (sesionUsuario is null)
+            {
+                emailerror = "Cuenta no encontrada!";
+                return;
+            }
 
-        var claims = new List<Claim>
+            if (sesionUsuario.Wrongpassoword)
+            {
+                passworderror = "Contraseña incorrecta!";
+                return;
+            }
+
+            var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, sesionUsuario.IdUsuario.ToString()),
             new Claim(ClaimTypes.Name, sesionUsuario.Nombre),
             new Claim(ClaimTypes.Surname, sesionUsuario.Apellido),
+            new Claim(ClaimTypes.PostalCode, subastacount.ToString())
         };
 
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
-        await HttpContext.SignInAsync(principal);
-        navManager.NavigateTo("/");
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(principal);
+            navManager.NavigateTo("/");
 
     }
 }

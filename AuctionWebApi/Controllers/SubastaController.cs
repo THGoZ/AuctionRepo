@@ -26,7 +26,7 @@ namespace AuctionWebApi.Controllers
 
         [HttpGet("Open/")]
         public ActionResult<IEnumerable<Subasta>> GetOpenSubastas() {
-            return _dbContext.Subastas.Where(p => p.FechaCierre > DateTime.Now).ToList();
+            return _dbContext.Subastas.Where(p => p.FechaCierre > DateTime.Now && p.FechaInicio <= DateTime.Now).ToList();
         }
 
         [HttpGet("Closed/")]
@@ -45,7 +45,6 @@ namespace AuctionWebApi.Controllers
         public async Task<ActionResult<Subasta?>> GetById(int id)
         {
             var subasta = await _dbContext.Subastas
-                .Include(s => s.Productos) // A reemplazar por lazyloading
                 .SingleOrDefaultAsync(x => x.IdSubasta == id);
 
             if (subasta == null)
@@ -56,10 +55,25 @@ namespace AuctionWebApi.Controllers
             return subasta;
         }
 
-        [HttpGet("cantidad/{id:int}")]
-        public async Task<ActionResult<int?>> GetCantidadId(int id)
+        [HttpGet("cantidad/")]
+        public async Task<ActionResult<int?>> GetCantidad()
         {
-            var subasta = await _dbContext.Subastas.Where(s => s.IdSubasta == id && s.Productos.Any()).SelectMany(p => p.Productos).CountAsync();
+            var subasta = await _dbContext.Subastas.AsNoTracking().CountAsync();
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return subasta;
+            }
+        }
+
+        [HttpGet("cantidad/{id:int}")]
+        public async Task<ActionResult<int?>> GetCantidadProductos(int id)
+        {
+            var subasta = await _dbContext.Subastas.Where(s => s.IdSubasta == id && s.Productos.Where(p=> p.EstadoDeSolicitud == true).Any()).SelectMany(p => p.Productos.Where(p=> p.EstadoDeSolicitud==true)).CountAsync();
 
             if (subasta == null)
             {
@@ -74,14 +88,14 @@ namespace AuctionWebApi.Controllers
         [HttpGet("ofertas/{id:int}")]
         public async Task<int> GetOfertasSubasta(int id)
         {
-            var hasproducto = await _dbContext.Subastas.Where(s=> s.IdSubasta == id).Select(subasta => subasta.Productos).AnyAsync();
+            var hasproducto = await _dbContext.Subastas.Where(s => s.IdSubasta == id).Select(subasta => subasta.Productos).AnyAsync();
             if (hasproducto)
             {
                 bool hasoferta = await _dbContext.Subastas.Where(s => s.IdSubasta == id).AnyAsync(subasta => subasta.Productos.Any(p => p.Ofertas.Any()));
 
                 if (hasoferta)
                 {
-                    var cantidad = await _dbContext.Subastas.Where(s => s.IdSubasta == id).SelectMany(p => p.Productos.SelectMany(p=> p.Ofertas)).CountAsync();
+                    var cantidad = await _dbContext.Subastas.Where(s => s.IdSubasta == id).SelectMany(p => p.Productos.SelectMany(p => p.Ofertas)).CountAsync();
                     return cantidad;
                 }
                 else return 0;
@@ -119,6 +133,14 @@ namespace AuctionWebApi.Controllers
             _dbContext.Remove(AuctiontoDelete.Value);
             await _dbContext.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("State/{id:int}")]
+        public async Task<bool> CheckIfSubastaOpen(int id)
+        {
+            var result = await _dbContext.Subastas.Where(x => x.IdSubasta == id && x.FechaInicio <= DateTime.Now).AnyAsync();
+
+            return result;
         }
 
 

@@ -1,61 +1,108 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AuctionMobileApp.MainPage"
              xmlns:page="clr-namespace:AuctionMobileApp.Page"
-             BackgroundColor="Black">
+             BackgroundColor="#232323"
+             Title="Subastas">
 
-    <VerticalStackLayout>
-        <ListView x:Name="productListView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="productListView_ItemTapped">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="bgtColor">#2C2C2C</Color>
+            <x:Double x:Key="fontSizeTitle">18</x:Double>
+            <x:Double x:Key="fontSizeBody">15</x:Double>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="10,0">
+        <!-- ActivityIndicator para mostrar durante la carga -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                           IsVisible="{Binding IsBusy}" 
+                           Color="White"
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" />
+        <!-- ListView -->
+        <ListView x:Name="productListView"
+                  ItemTapped="productListView_ItemSelected"
+                  SeparatorColor="Transparent"
+                  HasUnevenRows="True"
+                  BackgroundColor="Transparent"
+                  Grid.Row="1"
+                  SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame CornerRadius="30" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True">
+                        
+                        <Frame Padding="0"
+                               Margin="5"
+                               CornerRadius="30"
+                               HasShadow="False"
+                               BackgroundColor="{StaticResource bgtColor}"
+                               BorderColor="Transparent">
                             <VerticalStackLayout>
-                                <!-- Parte superior amarilla con el nombre de la subasta -->
-                                <Grid BackgroundColor="#FFB32E" Padding="10" >
-                                    <!--<Label Text="{Binding IdSubasta}" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>-->
+
+                                <Grid BackgroundColor="#FFB32E" Padding="10">
                                     <HorizontalStackLayout>
-                                        <!-- Imagen del icono -->
-                                        <Image Source="auction.png" WidthRequest="20" HeightRequest="20" />
+                                        <Image Source="auction.png" WidthRequest="25" HeightRequest="25"/>
 
-                                        <!-- Texto Subasta N° {IdSubasta} -->
-                                        <Label Text="{Binding IdSubasta, StringFormat='Subasta N° {0}'}" VerticalOptions="Center" />
+                                        <Label Text="{Binding IdSubasta, StringFormat='Subasta N° {0}'}"
+                                               VerticalOptions="Center"
+                                               TextColor="Black"
+                                               FontSize="{StaticResource fontSizeTitle}"
+                                               FontAttributes="Bold"/>
                                     </HorizontalStackLayout>
-
                                 </Grid>
 
-                                <!-- Parte inferior con la descripción y otros detalles -->
                                 <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
-                                    <!-- Descripción -->
-                                    <Label Text="{Binding Descripcion}" FontAttributes="Italic" HorizontalOptions="FillAndExpand" TextColor="White"/>
-
-                                    <!-- Fecha de inicio y cierre a la izquierda, Cantidad de productos y ofertas a la derecha -->
-                                    <Grid ColumnSpacing="10">
+                                    <Label Text="{Binding Descripcion}"
+                                           FontAttributes="Italic"
+                                           HorizontalOptions="FillAndExpand"
+                                           TextColor="White"
+                                           FontSize="{StaticResource fontSizeBody}"/>
+                                    <Grid ColumnSpacing="0" RowSpacing="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-
-                                        <!-- Columna izquierda -->
                                         <VerticalStackLayout Grid.Column="0">
-                                            <Label Text="{Binding FechaInicio, StringFormat='Fecha Inicio: {0}'}" FontAttributes="Italic" />
-                                            <Label Text="{Binding FechaCierre, StringFormat='Fecha Cierre: {0}'}" FontAttributes="Italic" />
+                                            <Label Text="{Binding FechaInicio, StringFormat='Fecha Inicio: {0}'}"
+                                                   FontAttributes="Italic"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource fontSizeBody}"/>
+                                            <Label Text="{Binding FechaCierre, StringFormat='Fecha Cierre: {0}'}"
+                                                   FontAttributes="Italic"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource fontSizeBody}"/>
                                         </VerticalStackLayout>
-
-                                        <!-- Columna derecha -->
                                         <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
-                                            <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}" FontAttributes="Italic" HorizontalOptions="End" />
+                                            <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}"
+                                                   FontAttributes="Italic"
+                                                   HorizontalOptions="End"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource fontSize_body}"/>
                                             <Label>
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="Ofertas: " />
-                                                        <Span Text="{Binding CantidadDeOfertas}" TextColor="Green" />
+                                                        <Span Text="Ofertas: " TextColor="White"/>
+                                                        <Span Text="{Binding CantidadDeOfertas}"
+                                                              TextColor="Green"
+                                                              FontSize="{StaticResource fontSizeBody}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
+                                            <!-- Label para mostrar estado de la subasta -->
+                                            
+                                            <Label Text="{Binding Estado}"
+                                                   HorizontalOptions="End"
+                                                   FontAttributes="Bold"
+                                                   FontSize="Large"/>
+
                                         </VerticalStackLayout>
                                     </Grid>
+
+                                   
+
+                                    
+
                                 </VerticalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
@@ -63,71 +110,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </VerticalStackLayout>
-
-    <!--<VerticalStackLayout>
-        <ListView x:Name="productListView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="productListView_ItemTapped">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="1"
-                                   Margin="0, 10, 0, 5"
-                                   FontAttributes="Bold"
-                                   TextColor="Red"
-                                   Text="{Binding IdSubasta}"
-                                   />
-                            <Label Grid.Row="1"
-                                   Grid.Column="1"
-                                   FontAttributes="Italic"
-                                   HorizontalOptions="Fill"
-                                   Text="{Binding Descripcion}"/>
-                            <Label Grid.Row="2"
-                                   Grid.Column="1"
-                                   FontAttributes="Italic"
-                                   HorizontalOptions="Fill"
-                                   Text="{Binding FechaInicio}"/>
-                            <Label Grid.Row="3"
-                                   Grid.Column="1"
-                                   FontAttributes="Italic"
-                                   HorizontalOptions="Fill"
-                                   Text="{Binding FechaInicio}"/>
-                            <Label Grid.Row="4"
-                                   Grid.Column="1"
-                                   HorizontalOptions="Fill"
-                                   Text="{Binding CantidadProductos, StringFormat='Cantidad de Productos: {0}'}"/>
-                            <Label Grid.Row="5"
-                                   Grid.Column="1"
-                                >
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Cantidad de Ofertas: " />
-                                        <Span Text="{Binding CantidadDeOfertas}"
-                                        TextColor="Green" />
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-
-
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>-->
-
-
+    </Grid>
 </ContentPage>

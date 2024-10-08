@@ -3,106 +3,84 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AuctionMobileApp.Page.ViewProducts"
              Title="{Binding PageTitle}"
-             BackgroundColor="Gray">
+             BackgroundColor="#232323"
+             Shell.TabBarIsVisible="False">
 
-    <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding ProductoList}" FlexLayout.Grow="1" SelectionMode="Single">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <!-- Elimina ViewCell y simplifica el contenido -->
-                    <Frame CornerRadius="30" Padding="0" Margin="10" BorderColor="Gray" HasShadow="True">
-                        <VerticalStackLayout>
-                            <!-- Parte superior amarilla con el nombre del producto -->
-                            <Grid BackgroundColor="#FFB32E" Padding="10">
-                                <HorizontalStackLayout>
-                                    <!-- Imagen del producto -->
-                                    <Image Source="{Binding Image}" WidthRequest="90" HeightRequest="90" Aspect="AspectFill" />
-
-                                    <!-- Nombre del producto -->
-                                    <Label Text="{Binding Nombre}" VerticalOptions="Center" FontAttributes="Bold" FontSize="Medium" TextColor="Black"/>
-                                </HorizontalStackLayout>
-                            </Grid>
-
-                            <!-- Parte inferior con la descripción y otros detalles -->
-                            <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
-                                <!-- Descripción del producto -->
-                                <Label Text="{Binding Descripcion}" FontAttributes="Italic" HorizontalOptions="FillAndExpand" TextColor="White"/>
-
-                                <!-- Detalles de cantidad de ofertas -->
-                                <Grid ColumnSpacing="10">
+    <ScrollView>
+        <VerticalStackLayout>
+            <!-- CollectionView con imagen en la esquina superior derecha -->
+            <CollectionView ItemsSource="{Binding ProductoList}"  
+                            SelectionMode="None" 
+                            BackgroundColor="Transparent" 
+                            VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Frame con bordes redondeados -->
+                        <Frame CornerRadius="30" Padding="0" Margin="10,10" BorderColor="Transparent" HasShadow="False">
+                            <!-- Contenido del Frame -->
+                            <VerticalStackLayout>
+                                <!-- Título a la izquierda y la imagen a la derecha -->
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- Columna izquierda -->
-                                    <VerticalStackLayout Grid.Column="0">
-                                        <Label Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}" FontAttributes="Italic" TextColor="White" />
+                                    <!-- Título del producto a la izquierda -->
+                                    <VerticalStackLayout Padding="10" Grid.Column="0" BackgroundColor="#FFB32E">
+                                        <Label Text="{Binding Nombre}" 
+                                               VerticalOptions="Center" 
+                                               FontAttributes="Bold" 
+                                               FontSize="Medium" 
+                                               TextColor="Black"/>
+
+                                        <!-- Descripción del producto -->
+                                        <Label Text="{Binding Descripcion}" 
+                                           FontAttributes="Italic" 
+                                           HorizontalOptions="FillAndExpand" 
+                                           TextColor="Black"/>
                                     </VerticalStackLayout>
 
-                                    <!-- Columna derecha -->
-                                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
-                                        <Label Text="{Binding CantidadProductos, StringFormat='Productos: {0}'}" FontAttributes="Italic" HorizontalOptions="End" TextColor="White"/>
-                                    </VerticalStackLayout>
+                                    <!-- Imagen del producto a la derecha con esquinas redondeadas -->
+                                    <Frame Grid.Column="1" Padding="0" CornerRadius="0" IsClippedToBounds="True" BackgroundColor="Transparent" Margin="0">
+                                        <Image Source="{Binding Image}" 
+                                               WidthRequest="120" 
+                                               HeightRequest="120" 
+                                               Aspect="AspectFill" />
+                                    </Frame>
                                 </Grid>
+
+                                <!-- Parte inferior con otros detalles -->
+                                <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
+
+                                    <!-- Detalles de cantidad de ofertas y productos -->
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Cantidad de ofertas -->
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}" 
+                                                   FontAttributes="Italic" 
+                                                   TextColor="White"/>
+                                        </VerticalStackLayout>
+
+                                    </Grid>
+                                    
+                                    <!-- Precio base del producto -->
+                                    <HorizontalStackLayout Padding="10,0,0,0" VerticalOptions="EndAndExpand">
+                                        <Label Text="{Binding PrecioBase, StringFormat='Precio base: {0:C}'}" 
+                                               FontAttributes="Bold" 
+                                               TextColor="White" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
                             </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
-
-
-<!--<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AuctionMobileApp.Page.ViewProducts"
-             Title="{Binding PageTitle}"
-             BackgroundColor="Gray">
-    
-    <FlexLayout Direction="Column">
-        <CollectionView ItemsSource="{Binding ProductoList}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="12">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.RowSpan="3"
-                       Source="{Binding Image}"
-                       Aspect="AspectFill"
-                       HeightRequest="90"
-                       WidthRequest="90"/>
-                        <Label Grid.Column="1"
-                       Text="{Binding Nombre}"
-                       FontAttributes="Bold"
-                               Padding="5"/>
-                        <Label Grid.Row="1"
-                       Grid.Column="1"
-                       Text="{Binding Descripcion}"
-                               Padding="5"
-                       FontAttributes="Italic"
-                       VerticalOptions="End" />
-                        <Label Grid.Row="2"
-                               Grid.Column="1"
-                               Padding="5"
-                        Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}"
-                        FontAttributes="Bold"
-                        TextColor="red"
-                        VerticalOptions="End" />        
-
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </FlexLayout>
-</ContentPage>-->

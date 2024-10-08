@@ -22,5 +22,14 @@ namespace AuctionBlazorWebApp.Models.ViewModels
         [MinLength(3, ErrorMessage = "El nombre debe tener al menos 8 caracteres")]
 
         public string Contrasena { get; set; }
+        [Required]
+        [Range(1, 99, ErrorMessage = "El valor es incorrecto!")]
+        public int Cuil1 { get; set; }
+        [Required]
+        [Range(1, 99999999, ErrorMessage = "El valor es incorrecto!")]
+        public int Cuil2 { get; set; }
+        [Required]
+        [Range(1, 9, ErrorMessage = "El valor es incorrecto!")]
+        public int Cuil3 { get; set; }
     }
 }

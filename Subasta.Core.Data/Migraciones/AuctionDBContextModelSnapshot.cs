@@ -22,37 +22,38 @@ namespace Auction.Core.Data.Migraciones
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Auction.Core.Entities.Factura", b =>
+            modelBuilder.Entity("Auction.Core.Entities.DetalleVenta", b =>
                 {
-                    b.Property<int>("IdFactura")
+                    b.Property<int>("IdDetalleVenta")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFactura"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetalleVenta"));
 
-                    b.Property<string>("Comprador")
+                    b.Property<string>("CuilComprador")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdProducto")
+                    b.Property<int>("IdProducto")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Monto")
+                    b.Property<decimal>("Total")
                         .HasColumnType("decimal(18, 2)")
-                        .HasColumnName("Monto");
+                        .HasColumnName("Total");
 
-                    b.Property<string>("Vendedor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("idUsuario")
+                        .HasColumnType("int");
 
-                    b.HasKey("IdFactura");
+                    b.HasKey("IdDetalleVenta");
 
                     b.HasIndex("IdProducto");
 
-                    b.ToTable("Facturas");
+                    b.HasIndex("idUsuario");
+
+                    b.ToTable("DetalleVentas");
                 });
 
             modelBuilder.Entity("Auction.Core.Entities.Informe", b =>
@@ -123,7 +124,7 @@ namespace Auction.Core.Data.Migraciones
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EstadoDeSolicitud")
+                    b.Property<bool?>("EstadoDeSolicitud")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaSolicitud")
@@ -216,6 +217,11 @@ namespace Auction.Core.Data.Migraciones
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("contrasena");
 
+                    b.Property<string>("Cuil")
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)")
+                        .HasColumnName("cuil");
+
                     b.Property<string>("Direccion")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
@@ -234,16 +240,27 @@ namespace Auction.Core.Data.Migraciones
 
                     b.HasKey("IdUsuario");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("Auction.Core.Entities.Factura", b =>
+            modelBuilder.Entity("Auction.Core.Entities.DetalleVenta", b =>
                 {
                     b.HasOne("Auction.Core.Entities.Producto", "Producto")
                         .WithMany()
-                        .HasForeignKey("IdProducto");
+                        .HasForeignKey("IdProducto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Auction.Core.Entities.Usuario", "Usuario")
+                        .WithMany("DetalleVentas")
+                        .HasForeignKey("idUsuario");
 
                     b.Navigation("Producto");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Auction.Core.Entities.Informe", b =>
@@ -303,6 +320,8 @@ namespace Auction.Core.Data.Migraciones
 
             modelBuilder.Entity("Auction.Core.Entities.Usuario", b =>
                 {
+                    b.Navigation("DetalleVentas");
+
                     b.Navigation("Ofertas");
 
                     b.Navigation("Productos");

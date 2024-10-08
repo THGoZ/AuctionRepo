@@ -4,10 +4,13 @@
 @using AuctionBlazorWebApp.Models.ViewModels
 @using System.Security.Claims
 @using APIService
+@using System.Globalization
+@using BlazorBootstrap
 
 @inject APIService apiClient
 @inject NavigationManager navManager
 @inject IJSRuntime JS
+@attribute [Authorize]
 
 <div class="container py-2">
     <div class="card">
@@ -38,8 +41,8 @@
                     <div class="row">
                         <label for="inputPassword6" class="col-form-label">Descripcion</label>
                     </div>
-                    <div class="mb-2 m-0 row">
-                        <InputText @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Descripcion" rows="3"></InputText>
+                    <div class="mb-2 m-0 row text-justify">
+                        <InputTextArea @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Ingrese una descripcion..." rows="3"></InputTextArea>
                         <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
                     </div>
                     <div id="descriptionHelpBlock" class=" mt-2 mb-2 form-text">
@@ -53,7 +56,7 @@
                     <div class="col-auto mt-1 mt-2">
                         <div class="input-group mb-3">
                             <span class="input-group-text text-success">$</span>
-                            <InputNumber @bind-Value="addProductModel.PrecioBase" class="form-control" placeholder="Precio"></InputNumber>
+                            <CurrencyInput TValue="decimal" @bind-Value="@addProductModel.PrecioBase" Locale="es-ES" HideCurrencySymbol="true" class="form-control" Placeholder="Precio" />
                             <span class="input-group-text">.00</span>
                         </div>
                     </div>
@@ -63,9 +66,8 @@
                 </div>
                 <div class="row g-3 mt-2 mb-1 align-items-center">
                     <div class="col-sm m-2 mb-2">
-                        <!-- Upload image input-->
                         <div class="input-group mb-3 px-2 py-2 rounded-pill bg-secondary shadow-sm">
-                            <InputFile id="upload" hidden accept="image/*" OnChange="FileUploaded"></InputFile>
+                            <InputFile id="upload" hidden accept=".jpeg, .jpg, .png" OnChange="FileUploaded"></InputFile>
                             <label id="upload-label" class="font-weight-light text-body-tertiary">Elige un archivo</label>
                             <div class="input-group-append">
                                 <label for="upload" class="btn btn-outline-secondary m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-primary-emphasis"></i><small class="text-uppercase font-weight-bold text-primary-emphasis">Elige un archivo</small></label>
@@ -94,6 +96,7 @@
     public string ErrorMessage { get; set; } = "";
     public byte[] imageData { get; set; } = null;
     public string FileType { get; set; } = "";
+    [Inject] protected ToastService ToastService { get; set; }
 
     public async Task FileUploaded(InputFileChangeEventArgs e)
     {
@@ -134,9 +137,12 @@
     {
         int subastaid = int.Parse(auction);
         var authenticationState = await authenticationStateTask;
-
         var user = authenticationState.User;
         var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        if (userIdClaim.Value == null)
+        {
+            navManager.NavigateTo("/login", true);
+        }
         int userId = int.Parse(userIdClaim.Value);
 
         var newproducto = new ProductoAPI
@@ -151,8 +157,22 @@
 
 
             };
+        var subastachehck = await apiClient.GetAuction(subastaid);
 
-        await apiClient.SaveProduct(newproducto, userId, subastaid);
-        navManager.NavigateTo("/", true);
+        if(subastachehck.Estado is not null)
+        {
+            ToastService.Notify(new(ToastType.Danger, $"Error! la subasta no acepta solicitudes"));
+            await Task.Delay(3000);
+            navManager.NavigateTo("/", true);
+        }
+        else
+        {
+            await apiClient.SaveProduct(newproducto, userId, subastaid);
+            ToastService.Notify(new(ToastType.Success, $"Se creo la solicitud correctamente!."));
+            navManager.NavigateTo("/");
+
+        }
+
+        
     }
 }

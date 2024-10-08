@@ -7,12 +7,15 @@
     <base href="/" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="bootstrap/bootstrap.css" rel="stylesheet" />
-    <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="AuctionBlazorWebApp.styles.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="icon" type="image/png" href="tup.png" />
+    <link rel="icon" type="image/png" href="placeholder.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="/app.css" rel="stylesheet" />
+    <link href="_content/Blazor.Bootstrap/blazor.bootstrap.css" rel="stylesheet" />
     <HeadOutlet @rendermode="@RenderModeForPage" />
 </head>
 
@@ -24,6 +27,90 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.js"></script>
     <script src="/app.js"></script>
+    <script src="_content/Blazor.Bootstrap/blazor.bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+    <script>
+        window.GenerarPDF = async (idoferta, idproducto, monto, NombreProducto, UsuarioNombre, UsuarioApellido, UsuarioCuit, UsuarioDireccion, Fecha) => {
+
+            var doc = new jsPDF();
+                            const pageHeight =
+      doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+
+                const pageWidth =
+      doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+    doc.setFontSize(16);
+    doc.setTextColor(255, 255, 255);
+    doc.setFillColor(240, 173, 78);
+    doc.rect(10, 10, 190, 25, 'F');
+    doc.rect(10, 35, 190, 20, 'S');
+    doc.setDrawColor(0, 0, 0);
+    doc.line(pageWidth / 2, 35, pageWidth / 2, 55,);
+            doc.text("SUBASTAS TUP", 32, 25);
+    doc.setFontSize(24);
+    doc.text("B",pageWidth / 2, 22, {align: 'center'});
+    doc.setFontSize(8);
+    doc.text("COD. 006",pageWidth / 2, 30, {align: 'center'});
+    doc.setFontSize(16);
+    doc.text("FACTURA", 150, 25);
+
+    // Company Info
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Razón Social: Subastas TUP", 15, 40);
+    doc.text("Distrito comercial: Calle falsa 2023", 15, 45);
+    doc.text("Condicion frente al IVA: IVA responsable inscripto", 15, 50);
+    doc.text("Fecha de emision: " + Fecha, 110, 40);
+    doc.text("Nro de factura: 000-" + idproducto + "1" + idoferta, 110, 45);
+    doc.text("CUIT: 30-33598234-8", 110, 50);
+
+    // Section 1: Información de Facturación
+    doc.setFillColor(240, 173, 78); // Light blue background
+    doc.rect(12, 60, 188, 10, 'F');
+    doc.rect(10, 58, 190, 28, 'S');
+    doc.setTextColor(255, 255, 255);
+    doc.text("INFORMACION DE FACTURACION:", 15, 65);
+
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text("CUIL: " + UsuarioCuit, 15, 75);
+    doc.text("Nombre y apellido:" + UsuarioNombre +" " + UsuarioApellido, 15, 80);
+    doc.text("Condicion frente al IVA: IVA consumidor final", pageWidth / 2, 75);
+    doc.text("Domicilio: " + UsuarioDireccion, pageWidth / 2, 80);
+
+    // Section 2: Información de Envío
+    doc.setDrawColor(0, 0, 0);
+    doc.rect(11, 89, 188, 10, 'F');
+    doc.rect(10, 88, 190, 20, 'S');
+    doc.setDrawColor(255, 255, 255);
+    doc.line(110, 89, 110, 100)
+    doc.setTextColor(255, 255, 255);
+    doc.text("Articulo", 14, 95);
+    doc.text("Codigo de articulo", 112, 95);
+    doc.text("Cantidad", 147, 95);
+    doc.text("Subtotal", 172, 95);
+    doc.line(110, 89, 110, 100);
+    doc.line(145, 89, 145, 100);
+    doc.line(170, 89, 170, 100);
+    //lineas de cuadro abajo
+    doc.setDrawColor(0, 0, 0);
+    doc.line(110, 99, 110, 108);
+    doc.line(145, 99, 145, 108);
+    doc.line(170, 99, 170, 108);
+
+    doc.setTextColor(0, 0, 0);
+    doc.text(NombreProducto, 14, 105);
+    doc.text("00-0" + idproducto, 112, 105);
+    doc.text("1", 147, 105);
+    doc.text(monto, 172, 105);
+
+    doc.text("Otro costo financiero:$0", 146, 115);
+    doc.text("Subtotal:" + monto, 166, 120);
+
+            // Save the PDF
+            doc.save("factura"+ idproducto + ".pdf");
+        }
+    </script>
 </body>
 
 </html>
@@ -35,5 +122,5 @@
     private IComponentRenderMode? RenderModeForPage =>
         HttpContext.Request.Path.StartsWithSegments("/login")
             ? null
-            : InteractiveServer;
+            : new InteractiveServerRenderMode(prerender: false);
 }

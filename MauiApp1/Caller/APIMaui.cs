@@ -1,13 +1,14 @@
-﻿using AuctionMobileApp.Caller.Interfases;
+﻿using Auction.Core.Entities;
+using AuctionMobileApp.Caller.Interfases;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AuctionMobileApp.Caller
 {
     public class APIMaui : IAPIMaui
     {
         private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _serializerOptions;
 
         public APIMaui(MAUIClientOptions APICLientOptions)
         {
@@ -19,6 +20,33 @@ namespace AuctionMobileApp.Caller
         {
             return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
         }
+
+        public async Task<List<ProductoWinner>?> GetWinners(int subastaId)
+        {
+            // Llama al endpoint que devuelve los ganadores de los productos en una subasta
+            var winners = await _httpClient.GetFromJsonAsync<List<ProductoWinner>?>($"/api/Producto/winners/{subastaId}");
+
+            // Comprueba si la lista no es nula y devuelve los ganadores
+            return winners;
+        }
+
+        public async Task<List<ProductoAPI>?> GetProductsWithOfertas()
+        {
+            var productos = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
+            if (productos is not null)
+            {
+                productos = productos.Where(x => x.EstadoDeSolicitud == true).ToList();
+                foreach (var producto in productos)
+                {
+                    producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                    var response = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                    producto.Status = response;
+                }
+                return productos.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
+            }
+            else return null;
+        }
+
         public async Task<List<ProductoAPI>?> GetProductsOfAuctionWithOferta(int SubastaId)
         {
             var nofilter = await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");
@@ -56,6 +84,11 @@ namespace AuctionMobileApp.Caller
                 return null;
             }
 
+        }
+        public async Task<List<SubastaAPI>?> GetClosedSubastas()
+        {
+            // Llamada a la API que obtiene las subastas cerradas
+            return await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta/Closed");
         }
         #endregion
     }

@@ -25,11 +25,6 @@ public partial class ViewProducts : ContentPage
         LoadProductos(); // Load the products when the page is initialized
     }
 
-    //public void ApplyQueryAttributes(IDictionary<string, object> query)
-    //{
-    //    _IdSubasta = int.Parse(query["subastaId"].ToString());
-    //    LoadProductos();
-    //}
     private async void LoadProductos()
     {
         ProductoList.Clear();

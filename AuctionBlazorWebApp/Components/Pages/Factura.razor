@@ -1,0 +1,121 @@
+﻿@using APIService.Models
+@using Auction.Core.Entities
+@using APIService
+@inject IJSRuntime JS
+@inject APIService apiClient
+
+<div class="d-flex flex-column">
+    <div class="container border border-2 border-warning">
+        <div class="row bg-warning">
+            <div class="col p-2 text-center">
+                <img class="rounded float-start" src="tup.png" style="max-width:64px; max-height:64px;" /><h4 class="align-content-center">Subastas TUP</h4>
+            </div>
+            <div class="col-sm-3 d-flex flex-column justify-content-center align-items-center">
+                <h2>B</h2>
+                <p class="fs-6">COD-006</p>
+            </div>
+            <div class="col p-2 text-center align-middle d-flex justify-content-center align-items-center">
+                <h4>Factura</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col border-end border-3 ">
+                <p>Razon social: Subastas TUP</p>
+                <p>Distrito comercial: Calle falsa 2023</p>
+                <p>Condicion frente al IVA: IVA responsable inscripto</p>
+            </div>
+            <div class="col">
+                <p>Fecha de emision:@DateTime.Now.ToShortDateString()</p>
+                <p>Nro factura:000-@($"{ProductoId}1{IdOferta}")</p>
+                <p>CUIT:30-33598234-8 </p>
+            </div>
+        </div>
+    </div>
+    <div class="container border border-2 my-2">
+        <div class="row bg-warning mx-1 my-2"><h5 class="text-start p-2">Informacion de facturacion:</h5></div>
+        <div class="row text-start">
+            <div class="col py-2">
+                <p>CUIL: @Usuario.Cuil</p>
+                <p>Nombre y apellido: @Usuario.Nombre @Usuario.Apellido</p>
+            </div>
+            <div class="col py-2">
+                <p>Condicion frente al IVA: IVA consumidor final</p>
+                <p>Domicilio: @Usuario.Direccion </p>
+            </div>
+        </div>
+    </div>
+    <div class="container border border-2 my-2">
+        <div class="row">
+            <table class="table table-borderless">
+                <thead>
+                    <tr class="bg-warning">
+                        <th>
+                            Articulo
+                        </th>
+                        <th>
+                            Codigo de articulo
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th>
+                            Subtotal
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="flex-grow-1">
+                            @ProductoNombre
+                        </td>
+                        <td>
+                            00-0@($"{ProductoId}")
+                        </td>
+                        <td>
+                            1
+                        </td>
+                                                <td>
+                            @Monto.ToString("C")
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row text-end">
+            <p>Otro costo financiero: $0</p>
+            <p>Suma total: @Monto.ToString("C")</p>
+        </div>
+    </div>
+    <button class="btn btn-outline-success" data-toggle="tooltip" title="Exportar" @onclick="(()=> export())" disabled="@isLoading">Generar PDF</button>
+</div>
+
+
+@code {
+    [Parameter]
+    public int IdOferta { get; set; }
+    [Parameter]
+    public int IdUsuario{ get; set; }
+    [Parameter]
+    public decimal Monto{ get; set; }
+    [Parameter]
+    public int ProductoId{ get; set; }
+    [Parameter]
+    public string ProductoNombre { get; set; } = string.Empty;
+    private UsuarioDetail Usuario { get; set; } = new();
+    private bool isLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Usuario = await apiClient.GetUserDetail(IdUsuario);
+        isLoading = false;
+    }
+
+    private async Task export()
+    {
+
+        await JS.InvokeVoidAsync("GenerarPDF", IdOferta.ToString(), ProductoId.ToString(), Monto.ToString("C"), ProductoNombre, Usuario.Nombre, Usuario.Apellido, Usuario.Cuil, Usuario.Direccion, DateTime.Now.ToShortDateString());
+
+    }
+
+}
+

@@ -9,13 +9,14 @@
         public byte[]? Imagen { get; set; }
         public string? ImageExtension { get; set; }
         public DateTime FechaSolicitud { get; set; }
-        public bool EstadoDeSolicitud { get; set; } = false; //aprobado = true
-
+        public bool? EstadoDeSolicitud { get; set; }//null = pendiente/ false = rechazado / true = aprobado
         public int? IdSubasta { get; set; }
 
         public int IdUsuario { get; set; }
         public int CantidadDeOfertas { get; set; }
 
         public ImageSource Image { get; set; }
+
+        public string Status { get; set; } = string.Empty;
     }
 }

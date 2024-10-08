@@ -10,13 +10,12 @@
 { 
     @if (!ShowUserProducts)
     {
-        <div class="col-md-3 mx-3 mb-3 mt-3 container-lg">
+        <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
             <div class="col shadow-lg rounded-top-3">
             <div class="card-sl">
                 <div class="image-container">
                     <div class="first">
                         <div class="d-flex justify-content-end align-items-end">
-
                                 <span class="wishlist text-light pull-right" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Cantida de ofertas">@ProductRowItem.CantidadDeOfertas</span>
                         </div>
                     </div>
@@ -37,11 +36,11 @@
                 @ProductRowItem.Descripcion
             </div>
                 <div class="card-text text-success bg-body-secondary">
-                $@ProductRowItem.PrecioBase
+                    @ProductRowItem.PrecioBase.ToString("C")
             </div>
             </div>
             <div class="rounded-bottom-3 text-end bg-body-tertiary shadow">
-                @if (!HasMadeOferta)
+                @if (!HasMadeOferta && IsSubastaOpen)
                 {
                     <a class="card-button text-decoration-none fw-bold" @onclick="ShowModal">Ofertar</a>
                     <OfertaModal  IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
@@ -51,60 +50,11 @@
                 else
                 {
 
-                    <a class="card-button text-decoration-none bg-warning-subtle text-body-tertiary" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Ya has ofertado">Oferta realizada</a>
+                    <a class="card-button text-decoration-none bg-warning-subtle text-body-tertiary" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="@(@IsSubastaOpen ? "Ya has ofertado" : "No se puede ofertar en subastas proximas")">No se puede ofertar</a>
 
                 }
             </div>
         </div>
-
-    }
-    else{
-      @if(ProductRowItem.IdUsuario == IdUsuario)
-      {
-        @if (!isEditMode)
-        {
-            <td>@ProductRowItem.Nombre</td>
-            <td>@ProductRowItem.PrecioBase</td>
-            <td>@ProductRowItem.Descripcion</td>
-            @if (ProductRowItem.Imagen is not null)
-            {
-                <td>
-                    <img src="@LoadImage()" style="width: 100px" alt="Producto Image" />
-                </td>
-            }
-            else
-            {
-                <td>No image available.                </td>
-            }
-            @if (!ShowOnly)
-            {
-                <td>
-                    <a @onclick="() => isEditMode = true" href="javascript:void(0)">Edit</a>
-                    <a @onclick="async () => await OnDelete.InvokeAsync(ProductRowItem.IdProducto)" href="javascript:void(0)">Delete</a>
-                </td>
-            }
-        }
-                        else
-                        {
-                            <td>
-                                <input @bind="ProductRowItem.Nombre" class="form-control" />
-                            </td>
-                            <td>
-                                <input @bind="ProductRowItem.PrecioBase" class="form-control" />
-                            </td>
-                            <td>
-                                <input @bind="ProductRowItem.Descripcion" class="form-control" />
-                            </td>
-                            <td>
-                                <img src="@GetPreviewImage()" style="width: 100px" alt="Producto Image" />
-                                <InputFile OnChange="FileUploaded"></InputFile>
-                            </td>
-                            <td>
-                                <a @onclick="Update" href="javascript:void(0)">Save</a>
-                                <a @onclick="() => isEditMode = false" href="javascript:void(0)">Cancel</a>
-                            </td>
-                        }
-      }
     }
 }
 
@@ -134,26 +84,13 @@
     private bool isEditMode = false;
     private bool isMakeOferta = false;
     private bool HasMadeOferta;
-
-    public byte[] imageData { get; set; } = null;
-    public string FileType { get; set; } = "";
-    const int MAX_FILESIZE = 5000 * 1024;
+    private bool IsSubastaOpen;
     public string ErrorMessage { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
         HasMadeOferta = await CheckOfertas();
-    }
-
-
-    private string? GetPreviewImage()//para cargar en edicion al subir imagen nueva
-    {
-        if (imageData != null && FileType != null)
-            return $"data:image/{FileType.Trim('.')};base64,{Convert.ToBase64String(imageData)}";
-        else if (ProductRowItem?.Imagen != null && !string.IsNullOrEmpty(ProductRowItem.ImageExtension))
-            return $"data:image/{ProductRowItem.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(ProductRowItem.Imagen)}";
-        else
-            return null;
+        IsSubastaOpen = await CheckIfSubastaOpen();
     }
 
     private string? LoadImage()//para cargar en lista
@@ -167,47 +104,6 @@
         {
             return null;
         }
-    }
-
-    public async Task FileUploaded(InputFileChangeEventArgs e)
-    {
-        var browserFile = e.File;
-
-        try
-        {
-
-            if (browserFile != null)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    var fileStream = browserFile.OpenReadStream(MAX_FILESIZE);
-                    await fileStream.CopyToAsync(memoryStream);
-                    imageData = memoryStream.ToArray();
-                    FileType = Path.GetExtension(browserFile.Name);
-                }
-                GetPreviewImage();
-            }
-        }
-        catch (Exception ex)
-        {
-            ErrorMessage = ex.Message;
-        }
-    }
-
-
-    private async Task Update()
-    {
-        ProductRowItem.ImageExtension = FileType;
-        ProductRowItem.Imagen = imageData;
-        var editData = new EditProductData
-            {
-                Producto = ProductRowItem,
-                Id = ProductRowItem.IdProducto,
-                SubastaId = 1,
-            };
-
-        await OnEdit.InvokeAsync(editData);
-        isEditMode = false;
     }
 
     private bool isModalVisible = false;
@@ -232,6 +128,7 @@
             };
         await apiClient.AddOferta(newOferta, IdUsuario, ProductRowItem.IdProducto);
         HasMadeOferta = await CheckOfertas();
+        IsSubastaOpen = await CheckIfSubastaOpen();
         CloseModal();
         await UpdateProduct.InvokeAsync();
     }
@@ -240,6 +137,12 @@
     {
         return await apiClient.CheckIfOferta(ProductRowItem.IdProducto, IdUsuario);
     }
+
+    private async Task<bool> CheckIfSubastaOpen()
+    {
+        return await apiClient.CheckIfSubastaOpen((int)ProductRowItem.IdSubasta);
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);

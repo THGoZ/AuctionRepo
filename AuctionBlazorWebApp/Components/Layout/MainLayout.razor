@@ -1,9 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorBootstrap
+@using System.Security.Claims
+@inherits LayoutComponentBase
 
 <div class="page">
-@*     <div class="sidebar">
-        <NavMenu />
-    </div> *@
     <AutoHideSideBar></AutoHideSideBar>
 
     <main>
@@ -34,9 +33,17 @@
                             </li>
                         </NotAuthorized>
                         <Authorized>
-                            <li class="nav-item align-content-lg-end">
-                                <a class="nav-link" href="/logout">Cerrar Sesion</a>
-                            </li>
+@*                             <li class="nav-item align-content-lg-end">
+                                    <a class="nav-link" href="/logout">@context.User.Identity.Name @context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname).Value</a>
+                            </li> *@
+                                <li class="nav-item dropdown align-content-end">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@context.User.Identity.Name @context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname).Value</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="profiledetails">Configuracion de perfil</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout">Cerrar sesion</a>
+                                    </div>
+                                </li>
                         </Authorized>
                     </AuthorizeView>
                     </ul>
@@ -44,6 +51,7 @@
             </div>
         </nav>
         <article class="content px-4">
+            <Toasts class="p-5" AutoHide="true" Delay="3000" Placement="ToastsPlacement.TopRight" />
             @Body
         </article>
     </main>
@@ -58,7 +66,6 @@
             </ul>
             <p class="text-center text-muted">© 2024 TUP</p>
 </footer>
-
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
