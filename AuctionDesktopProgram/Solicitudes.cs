@@ -32,7 +32,7 @@ namespace AuctionDesktopProgram
         #region boludeces
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             crownMenuStrip1 = new ReaLTaiizor.Controls.CrownMenuStrip();
             iNICIOToolStripMenuItem = new ToolStripMenuItem();
             cREARSUBASTAToolStripMenuItem = new ToolStripMenuItem();
@@ -65,7 +65,7 @@ namespace AuctionDesktopProgram
             // 
             // crownMenuStrip1
             // 
-            crownMenuStrip1.BackColor = Color.Transparent;
+            crownMenuStrip1.BackColor = Color.Orange;
             crownMenuStrip1.ForeColor = Color.FromArgb(220, 220, 220);
             crownMenuStrip1.ImageScalingSize = new Size(20, 20);
             crownMenuStrip1.Items.AddRange(new ToolStripItem[] { iNICIOToolStripMenuItem, cREARSUBASTAToolStripMenuItem, sOLICITUDESToolStripMenuItem, iNFORMESToolStripMenuItem });
@@ -129,7 +129,7 @@ namespace AuctionDesktopProgram
             groupBox1.Controls.Add(label1);
             groupBox1.Font = new Font("Tahoma", 9F);
             groupBox1.ForeColor = Color.FromArgb(53, 53, 53);
-            groupBox1.HeaderColor = Color.SlateGray;
+            groupBox1.HeaderColor = Color.Orange;
             groupBox1.Location = new Point(651, 99);
             groupBox1.MinimumSize = new Size(136, 50);
             groupBox1.Name = "groupBox1";
@@ -258,7 +258,7 @@ namespace AuctionDesktopProgram
             groupBox2.Controls.Add(SubastaDataGrid);
             groupBox2.Font = new Font("Tahoma", 9F);
             groupBox2.ForeColor = Color.FromArgb(53, 53, 53);
-            groupBox2.HeaderColor = Color.SlateGray;
+            groupBox2.HeaderColor = Color.Orange;
             groupBox2.Location = new Point(12, 99);
             groupBox2.MinimumSize = new Size(136, 50);
             groupBox2.Name = "groupBox2";
@@ -284,6 +284,9 @@ namespace AuctionDesktopProgram
             SubastaDataGrid.Name = "SubastaDataGrid";
             SubastaDataGrid.RowHeadersVisible = false;
             SubastaDataGrid.RowHeadersWidth = 51;
+            SubastaDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            SubastaDataGrid.DefaultCellStyle.SelectionBackColor = Color.Orange;
+            SubastaDataGrid.DefaultCellStyle.SelectionForeColor = Color.White;
             SubastaDataGrid.Size = new Size(530, 313);
             SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
@@ -295,11 +298,12 @@ namespace AuctionDesktopProgram
             // 
             // ColumnIdProducto
             // 
+            ColumnIdProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             ColumnIdProducto.DataPropertyName = "IdProducto";
-            ColumnIdProducto.HeaderText = "IdProducto";
+            ColumnIdProducto.HeaderText = "Id";
             ColumnIdProducto.MinimumWidth = 6;
             ColumnIdProducto.Name = "ColumnIdProducto";
-            ColumnIdProducto.Width = 125;
+            ColumnIdProducto.Width = 55;
             // 
             // ColumnName
             // 
@@ -328,9 +332,9 @@ namespace AuctionDesktopProgram
             // ColumnApplicationStatus
             // 
             ColumnApplicationStatus.DataPropertyName = "EstadoDeSolicitud";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = false;
-            ColumnApplicationStatus.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.NullValue = false;
+            ColumnApplicationStatus.DefaultCellStyle = dataGridViewCellStyle2;
             ColumnApplicationStatus.FalseValue = "Rechazado";
             ColumnApplicationStatus.HeaderText = "Estado de Solicitud";
             ColumnApplicationStatus.IndeterminateValue = "Pendiente";
@@ -447,8 +451,10 @@ namespace AuctionDesktopProgram
                         kryptonPictureBoxImagen.Image = null;
                     }
 
+                    SubastaDataGrid.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.Orange;
+
                     // Mostrar un mensaje opcional
-                    MessageBox.Show($"Producto seleccionado: {productoSeleccionado.Nombre} (ID: {productoSeleccionado.IdProducto})", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show($"Producto seleccionado: {productoSeleccionado.Nombre} (ID: {productoSeleccionado.IdProducto})", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
