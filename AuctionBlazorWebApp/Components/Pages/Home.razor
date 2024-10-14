@@ -173,7 +173,7 @@
                         {
                             <p class="my-3">Estado: <span class="my-3 text-danger-emphasis">Cerrada</span></p>
                         }
-                        else if (subasta.FechaInicio <= DateTime.Now)
+                        else if (subasta.FechaInicio <= DateTime.Now || subasta.Estado == true)
                         {
                             <p class="my-3">Estado: <span class="my-3 text-success-emphasis">Abierta</span></p>
                         }
