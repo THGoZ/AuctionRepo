@@ -448,7 +448,7 @@ namespace AuctionDesktopProgram
                     }
 
                     // Mostrar un mensaje opcional
-                    MessageBox.Show($"Producto seleccionado: {productoSeleccionado.Nombre} (ID: {productoSeleccionado.IdProducto})", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show($"Producto seleccionado: {productoSeleccionado.Nombre} (ID: {productoSeleccionado.IdProducto})", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
