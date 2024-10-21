@@ -1,0 +1,107 @@
+﻿@using Auction.Core.Entities
+@using APIService
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+@inject APIService apiClient
+@attribute [Authorize]
+
+@if (Productos == null)
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-grow fs-2" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+
+else if (Productos is not null && Productos.Count != 0)
+{
+    @foreach (var producto in Productos)
+    {
+        <div class="mx-5 rounded-3 bg-body-secondary my-3 px-2 shadow-lg py-2">
+            <div class="row">
+                <div class="col-sm">
+                    @if (producto.Imagen is not null)
+                    {
+                        <img src="@GetPreviewImage(producto)" class="rounded-4 float-start object-fit-scale  img-thumbnail" style="max-height: 128px" alt="Producto Image" />
+                    }
+                    else
+                    {
+                        <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" alt="Producto Image" />
+                    }
+                </div>
+                <div class="col-8">
+                    <div class="row-4">
+                        <h2>@producto.Nombre</h2>
+                    </div>
+                    <div class="row-1">
+                        <h6>@producto.Descripcion</h6>
+                    </div>
+                    <div class="row">
+                        <h4 class="text-success-emphasis text-nowrap">@producto.PrecioBase.ToString("C")</h4>
+                    </div>
+                </div>
+                @if (producto.HasGanador)
+                {
+                    <div class="col-md">
+                        <div class="row text-center py-1">
+                            <h5 class="fw-semibold">@producto.NombreGanador</h5>
+                        </div>
+                        <div class="row text-center py-1">
+                            <h5 class="fw-semibold">@producto.ApellidoGanador</h5>
+                        </div>
+                        <div class="row text-center mt-2">
+                            <h3 class="text-success text-nowrap fs-5"><span class="px-3 py-2 badge-pill bg-success-subtle border border-3 border-success">@producto.Monto.Value.ToString("C")</span></h3>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md align-content-center">
+                        <h3 class="text-danger text-nowrap fs-5"><span class="px-3 py-2 badge-pill bg-danger-subtle border border-3 border-danger">No fue vendido</span></h3>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center">
+        <h1 class="text-body-tertiary"><span class="bg-warning-subtle border border-warning py-2 px-5 rounded rounded-3">Cerró sin productos</span></h1>
+    </div>
+}
+@code {
+    [Parameter]
+    public int IdSubasta { get; set; }
+    [Parameter]
+    public int productcount { get; set; }
+
+    public List<ProductoWinner>? Productos;
+    public byte[] imageData { get; set; } = null;
+    public string FileType { get; set; } = "";
+    public string ErrorMessage { get; set; } = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await GetProducto();
+    }
+
+    private string? GetPreviewImage(ProductoWinner producto)//para cargar en edicion al subir imagen nueva
+    {
+        if (imageData != null && FileType != null)
+            return $"data:image/{FileType.Trim('.')};base64,{Convert.ToBase64String(imageData)}";
+        else if (producto.Imagen != null && !string.IsNullOrEmpty(producto.ImageExtension))
+            return $"data:image/{producto.ImageExtension.Trim('.')};base64,{Convert.ToBase64String(producto.Imagen)}";
+        else
+            return "placeholder.jpg";
+    }
+
+    private async Task GetProducto()
+    {
+        Productos = await apiClient.GetProductWinners(IdSubasta);
+    }
+
+}

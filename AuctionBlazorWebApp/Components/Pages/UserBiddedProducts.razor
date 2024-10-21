@@ -181,7 +181,7 @@
                 <div class="text-center align-middle text-wrap">
                 @if (context.Status == "sold" || context.Status == "notsold")
                 {
-                        <button scope="col" class="btn btn-sm btn-warning my-3 fs-5 rounded-2" @onclick="NavToRestult">Ver resultado de subasta N° <span class="text-info">@context.IdSubasta</span></button>
+                        <button scope="col" class="btn btn-sm btn-warning my-3 fs-5 rounded-2" @onclick="() => NavToRestult(context.IdSubasta)">Ver resultado de subasta N° <span class="text-info">@context.IdSubasta</span></button>
                 }
                 else
                 {
@@ -269,9 +269,9 @@
         itemsQueryable = products.AsQueryable();
     }
 
-    private void NavToRestult()
+    private void NavToRestult(int? auctionid)
     {
-        navManager.NavigateTo("/closed", true);
+        navManager.NavigateTo($"/results/{auctionid}", true);
     }
 
     private async void NavtoSubasta(int? auctionid)

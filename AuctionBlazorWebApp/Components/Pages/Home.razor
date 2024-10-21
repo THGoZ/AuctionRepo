@@ -227,7 +227,7 @@
                                     }
                                     else
                                     {
-                                        <button @onclick="NavToRestult" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Mostrar resultados</button>
+                                        <button @onclick="() => NavToRestult(subasta.IdSubasta)" class="btn btn-primary mx-1" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Ver resultados</button>
                                     }
                                     @if (subasta.Estado is null && subasta.FechaInicio > DateTime.Now)
                                     {
@@ -391,8 +391,8 @@
 
     }
 
-    private void NavToRestult()
+    private void NavToRestult(int auctionid)
     {
-        navManager.NavigateTo("/closed", true);
+        navManager.NavigateTo($"/results/{auctionid}", true);
     }
 }
