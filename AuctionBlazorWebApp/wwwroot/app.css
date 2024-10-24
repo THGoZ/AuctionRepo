@@ -93,3 +93,8 @@ h1:focus {
 [data-bs-theme=dark] .form-control::placeholder {
     color: #949494;
 }
+
+.form-control:disabled {
+    background-color: #292929;
+    opacity: 1;
+}

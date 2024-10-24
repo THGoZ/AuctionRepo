@@ -17,9 +17,9 @@ namespace APIService.Models
 
         public string? Ciudad { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
-        public string Contrasena { get; set; }
+        public string? Contrasena { get; set; }
         public string? Cuil { get; set; }
     }
 }

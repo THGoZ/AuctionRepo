@@ -3,6 +3,7 @@
 @using AuctionBlazorWebApp.Models.ViewModels
 @using BlazorBootstrap
 @using APIService
+@using System.Security.Claims
 
 @inject APIService apiClient
 @inject NavigationManager navManager
@@ -10,10 +11,44 @@
 
 <h1>Perfil</h1>
 <div class="container-md p-2 ms-3">
-    <ProfileAccountDetails/>
-    <ProfileBasicDetails/>
+    @if (!isLoading)
+    {
+        <ProfileAccountDetails UserDetail="UserDetail"/>
+        <ProfileBasicDetails UserDetail="UserDetail"/>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center">
+            <Spinner Type="SpinnerType.Grow" Class="me-3" Color="SpinnerColor.Warning" Size="SpinnerSize.Large" />
+            <Spinner Type="SpinnerType.Grow" Class="me-3" Color="SpinnerColor.Warning" Size="SpinnerSize.Large" />
+            <Spinner Type="SpinnerType.Grow" Class="me-3" Color="SpinnerColor.Warning" Size="SpinnerSize.Large" />
+            <Spinner Type="SpinnerType.Grow" Class="me-3" Color="SpinnerColor.Warning" Size="SpinnerSize.Large" />
+        </div>
+    }
+    <button class="btn btn-primary rounded-3 px-5" type="button" @onclick="RedirectToHome">
+        <i class="fa-solid fa-arrow-left fa-2xl"></i>
+    </button>
 </div>
 
 @code {
     [Inject] protected ToastService ToastService { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    public UsuarioAPI UserDetail { get; set; } = new();
+    private bool isLoading { get; set; } = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
+        UserDetail = await apiClient.GetUser(int.Parse(userIdClaim.Value));
+        isLoading = false;
+    }
+    private void RedirectToHome()
+    {
+        navManager.NavigateTo("/");
+    }
 }

@@ -40,10 +40,12 @@ namespace Auction.Core.Entities
         public string Email { get; set; }
 
         [Column("contrasena")]
-        [Required, MaxLength(50)]
+        [Required]
         public string Contrasena { get; set; }
 
         // Propiedad de navegación para representar la relación con Productos
+
+        public byte[] Salt { get; set; }
         public virtual ICollection<Producto>? Productos { get; set; }
 
         public virtual ICollection<Oferta>? Ofertas { get; set; }
