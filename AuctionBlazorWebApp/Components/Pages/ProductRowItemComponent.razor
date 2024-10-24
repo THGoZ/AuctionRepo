@@ -7,9 +7,7 @@
 
 
 @if (ProductRowItem is not null)
-{ 
-    @if (!ShowUserProducts)
-    {
+{
         <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
             <div class="col shadow-lg rounded-top-3">
             <div class="card-sl">
@@ -55,7 +53,6 @@
                 }
             </div>
         </div>
-    }
 }
 
 
@@ -63,29 +60,15 @@
 @code {
     [Parameter]
     public ProductoAPI? ProductRowItem { get; set; }
-
-    [Parameter]
-    public EventCallback<EditProductData> OnEdit { get; set; }
-
-    [Parameter]
-    public EventCallback<int> OnDelete { get; set; }
     [Parameter]
     public EventCallback UpdateProduct{ get; set; }
-
     [Parameter]
     public bool ShowOnly { get; set; }
-
     [Parameter]
     public int IdUsuario { get; set; }
-
-    [Parameter]
-    public bool ShowUserProducts{ get; set; }
-
-    private bool isEditMode = false;
     private bool isMakeOferta = false;
     private bool HasMadeOferta;
     private bool IsSubastaOpen;
-    public string ErrorMessage { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {

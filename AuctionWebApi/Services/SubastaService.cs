@@ -42,6 +42,7 @@ namespace AuctionWebApi.Services
                                                     .ToListAsync();
             if(productos is not null)
             {
+
                 await GenerateFacturas(productos, subasta.FechaCierre);
             }
 
