@@ -1,0 +1,63 @@
+﻿@page "/results/{auction}"
+@using APIService
+@using APIService.Models
+@inject IJSRuntime JSRuntime
+@inject APIService apiClient
+@attribute [Authorize]
+
+@if (isValid)
+{
+    <PageTitle>Subasta N°@auction</PageTitle>
+    <h1>Resultados de subasta N°@auction</h1>
+    <p class="text-primary-emphasis p-2 fs-4">@subasta.Descripcion</p>
+    <div class="container-fluid">
+    @if (isLoading)
+    {
+        <h2>Cargando...</h2>
+    }
+    else
+    {
+        <SubastaWinnerRowItem IdSubasta="@subasta.IdSubasta" />
+    }
+    </div>
+}
+else
+{
+    <h2>Subasta invalida!</h2>
+}
+
+@code {
+
+    [Parameter]
+    public string auction { get; set; }
+    public bool isLoading { get; set; } = true;
+    public bool isValid { get; set; } = true;
+    private SubastaAPI? subasta = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (auction is not null)
+        {
+            subasta = await apiClient.GetAuction(int.Parse(auction));
+            isLoading = false;
+            if (subasta != null)
+            {
+                if (subasta.Estado != false || subasta.FechaCierre > DateTime.Now)
+                {
+                    isValid = false;
+                }
+            }
+            else
+            {
+                isValid = false;
+            }
+        }
+        else
+        {
+            isValid = false;
+        }
+    }
+
+}

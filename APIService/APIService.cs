@@ -260,12 +260,27 @@ namespace APIService
         {
             return await _httpClient.GetFromJsonAsync<UsuarioDetail?>($"api/Usuario/{id}");
         }
-        #endregion
 
         public async Task<UsuarioAPI> GetUser(int id)
         {
             return await _httpClient.GetFromJsonAsync<UsuarioAPI?>($"api/Usuario/{id}");
         }
+
+        public async Task<HttpResponseMessage> ChangePassword(UserPassChangeDTO user)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"/api/Usuario/changepassword", user);
+
+            return response;
+        }
+
+        public async Task<HttpResponseMessage> UpdateUserData(UsuarioAPI user)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"/api/Usuario/updateuser", user);
+
+            return response;
+        }
+
+        #endregion
 
         #region Subasta
         public async Task<List<SubastaAPI>?> GetAuctions()

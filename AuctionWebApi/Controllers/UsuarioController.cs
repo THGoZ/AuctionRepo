@@ -2,6 +2,7 @@
 using Auction.Core.Entities;
 using AuctionAPIC.Models.APIModels;
 using AuctionWebApi.Domain.DTO;
+using AuctionWebApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,8 @@ namespace AuctionWebApi.Controllers
                 return BadRequest(new { message = "El email ya existe!" });
             }
 
+            byte[] salt = null;
+
             var usuario = new Usuario
             {
                 Nombre = usuarioDto.Nombre,
@@ -46,7 +49,8 @@ namespace AuctionWebApi.Controllers
                 Direccion = usuarioDto.Direccion,
                 Ciudad = usuarioDto.Ciudad,
                 Email = usuarioDto.Email,
-                Contrasena = usuarioDto.Contrasena,
+                Contrasena = PasswordHashing.HashPasword(usuarioDto.Contrasena, out salt),
+                Salt = salt,
                 Cuil = usuarioDto.Cuil
             };
 
@@ -66,12 +70,14 @@ namespace AuctionWebApi.Controllers
             }
             else
             {
+                byte[] salt = null;
                 usuario.Nombre = editedUser.Nombre;
                 usuario.Apellido = editedUser.Apellido;
                 usuario.Direccion = editedUser.Direccion;
                 usuario.Email = editedUser.Email;
                 usuario.Ciudad = editedUser.Ciudad;
-                usuario.Contrasena = editedUser.Contrasena;
+                usuario.Contrasena = PasswordHashing.HashPasword(editedUser.Contrasena, out salt);
+                usuario.Salt = salt;
                 _dbContext.Usuarios.Update(usuario);
                 await _dbContext.SaveChangesAsync();
                 return Ok();
@@ -90,7 +96,7 @@ namespace AuctionWebApi.Controllers
             return Ok();
         }
 
-        #region Cosas de login blazor
+        #region Cosas de cuentas blazor
         [HttpPut]
         [Route("login")]
         public async Task<ActionResult<SesionDTO>> Login([FromBody] LoginDTO login)
@@ -99,8 +105,8 @@ namespace AuctionWebApi.Controllers
             var exists = await _dbContext.Usuarios.AnyAsync(x => x.Email == login.Email);
             if (exists)
             {
-                var user = await _dbContext.Usuarios.Where(x => x.Email == login.Email).SingleOrDefaultAsync();
-                if (user.Contrasena == login.Contrasena)
+                var user = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email == login.Email);
+                if (PasswordHashing.VerifyPassword(login.Contrasena, user.Contrasena, user.Salt))
                 {
                     session.IdUsuario = user.IdUsuario;
                     session.Apellido = user.Apellido;
@@ -118,6 +124,80 @@ namespace AuctionWebApi.Controllers
                 return NotFound(session);
             }
         }
+        [HttpPut]
+        [Route("changepassword")]
+        public async Task<ActionResult<string>> ChangePassWord(UserPassChangeDTO user)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Datos invalidos.");
+
+            var oldUser = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email == user.Email);
+
+            if (oldUser == null)
+            {
+                return NotFound("Usuario no encontrado");
+            }
+
+            if (!PasswordHashing.VerifyPassword(user.Contrasena, oldUser.Contrasena, oldUser.Salt))
+            {
+                return Unauthorized("Contraseña incorrecta!");
+            }
+
+            try
+            {
+                byte[] salt;
+                oldUser.Contrasena = PasswordHashing.HashPasword(user.NewPassword, out salt);
+                oldUser.Salt = salt;
+
+                _dbContext.Usuarios.Update(oldUser);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok("Contraseña actualizada correctamente");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar la contraseña.{ex.Message}");
+            }
+        }
+
+        [HttpPut]
+        [Route("updateuser")]
+        public async Task<ActionResult<string>> UpdateUser(UsuarioDTO user)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Datos invalidos.");
+
+            var oldUser = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email == user.Email);
+
+            if (oldUser == null)
+            {
+                return NotFound("Usuario no encontrado");
+            }
+
+            if (!PasswordHashing.VerifyPassword(user.Contrasena, oldUser.Contrasena, oldUser.Salt))
+            {
+                return Unauthorized("Contraseña incorrecta!");
+            }
+
+            try
+            {
+                oldUser.Nombre = user.Nombre;
+                oldUser.Apellido = user.Apellido;
+                oldUser.Direccion = user.Direccion;
+                oldUser.Ciudad = user.Ciudad;
+                oldUser.Cuil = user.Cuil;
+
+                _dbContext.Usuarios.Update(oldUser);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok("Datos de usuario actualizados correctamente");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al actualizar usuario.{ex.Message}");
+            }
+        }
+
         #endregion
     }
 }

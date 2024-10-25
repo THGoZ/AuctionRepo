@@ -150,10 +150,11 @@ namespace AuctionWebApi.Controllers
         [HttpGet("cantidad/")]
         public async Task<ActionResult<int?>> ProductoCount()
         {
-            return await _dbContext.Productos.CountAsync();
+            var count = await _dbContext.Productos.Where(p=> p.EstadoDeSolicitud == true).CountAsync();
+            return count;
         }
 
-        [HttpPost("{UserId}/{SubastaId}")]
+        [HttpPost("{UserId}/{Subasta}")]
         public async Task<ActionResult> CreateProduct(int UserId, int SubastaId, ProductoDTO producto)
         {
             try

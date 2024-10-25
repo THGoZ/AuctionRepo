@@ -135,7 +135,7 @@
                                 <h4><span class="p-2 badge rounded-2 border border-3 border-warning text-warning-emphasis">Aprobado</span></h4>
                                 @if (context.Status == "sold" || context.Status == "notsold")
                                 {
-                                    <button class="btn btn-sm btn-warning my-3" @onclick="NavToRestult">Ver resultado de subasta</button>
+                            <button class="btn btn-sm btn-warning my-3" @onclick="() => NavToRestult(context.IdSubasta)">Ver resultado de subasta</button>
                                 }
                                 else
                                 {
@@ -279,9 +279,9 @@
     
     }
 
-    private void NavToRestult()
+    private void NavToRestult(int? auctionid)
     {
-        navManager.NavigateTo("/closed", true);
+        navManager.NavigateTo($"/results/{auctionid}", true);
     }
 
     private async void NavtoSubasta(int? auctionid)

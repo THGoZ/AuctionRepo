@@ -6,150 +6,257 @@
 @inject APIService apiClient
 @inject NavigationManager navManager
 
-    <div class="card my-4">
-        <h3 class="p-2 mb-3 pb-md-0 px-md-2 card-header">Datos de usuario</h3>
-        <div class="card-body">
-                <EditForm Model="@model" OnValidSubmit="CreateUser" FormName="LoginForm">
-                    <DataAnnotationsValidator />
-                    <div class="row pb-1 d-flex justify-content-between">
-                        <div class="col-6 pe-2">
-                            <div class="wrap-form-control mt-3 mb-3">
-                                <InputText id="nombre" @bind-Value="model.Nombre" disabled placeholder="Nombre" class="form-control"></InputText>
-                                <span class="symbol-form-control">
-                                    <i class="fa fa-user-pen" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                            <ValidationMessage For="() => model.Nombre"></ValidationMessage>
-                        </div>
-                        <div class="col-6 pe-2">
-                            <div class="wrap-form-control mt-3 mb-3">
-                            <InputText id="apellido" @bind-Value="model.Apellido" disabled placeholder="Apellido" class="form-control"></InputText>
-                                <span class="symbol-form-control">
-                                    <i class="fa fa-user-pen" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                            <ValidationMessage For="() => model.Apellido"></ValidationMessage>
-                        </div>
-                    </div>
-                    <div class="wrap-form-control pb-1 mb-3">
-                    <InputText id="direccion" @bind-Value="model.Direccion" disabled placeholder="Direccion" class="form-control"></InputText>
-                        <span class="symbol-form-control">
-                            <i class="fa fa-map-location-dot"></i>
-                        </span>
-                    </div>
-                    <ValidationMessage For="() => model.Direccion"></ValidationMessage>
+@implements IDisposable
 
-                    <div class="wrap-form-control mt-2 mb-3 pb-1">
-                    <InputText id="Ciudad" @bind-Value="model.Ciudad" disabled placeholder="Ciudad" class="form-control"></InputText>
-                        <span class="symbol-form-control">
-                            <i class="fa fa-map" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <ValidationMessage For="() => model.Ciudad"></ValidationMessage>
-
-                    <div class="alert alert-danger mb-3 mt-3 px-2 rounded-5" role="alert" hidden="@string.IsNullOrEmpty(emailerror)">
-                        <span class="text-danger">@emailerror</span>
-                    </div>
-
-                    <label>Ingrese su cuil</label>
-                    <div class="row row-cols-5 align-items-center text-center">
-                        <div class="col-2">
-                            <div class="wrap-form-control mt-3 mb-3">
-                            <NumberInput @bind-Value="model.Cuil1" disabled EnableMinMax="true" TValue="int" id="Cuil1" Placeholder="Ej: 20" Max="99" Min="1" class="form-control cuil"></NumberInput>
-                            </div>
-                        </div>
-                        <div class="col-md-auto px-1">
-                            <p class="fs-1">-</p>
-                        </div>
-                        <div class="col-3">
-                            <div class="wrap-form-control mt-3 mb-3">
-                            <NumberInput @bind-Value="model.Cuil2" disabled EnableMinMax="true" TValue="int" id="Cuil2" Placeholder="Ej: 43654983" Max="99999999" Min="1" class="form-control cuil"></NumberInput>
-                            </div>
-                        </div>
-                        <div class="col-md-auto px-1">
-                            <p class="fs-1">-</p>
-                        </div>
-                        <div class="col-2">
-                            <div class="wrap-form-control mt-3 mb-3">
-                            <NumberInput @bind-Value="model.Cuil3" disabled EnableMinMax="true" TValue="int" id="Cuil3" Placeholder="Ej: 7" Max="9" Min="1" class="form-control cuil"></NumberInput>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-cols-5 align-items-center text-center">
-                        <div class="col-2">
-                            <ValidationMessage For="() => model.Cuil1"></ValidationMessage>
-                        </div>
-                        <div class="col-md-auto px-1">
-                        </div>
-                        <div class="col-3">
-                            <ValidationMessage For="() => model.Cuil2"></ValidationMessage>
-                        </div>
-                        <div class="col-md-auto px-1">
-                        </div>
-                        <div class="col-2">
-                            <ValidationMessage For="() => model.Cuil3"></ValidationMessage>
-                        </div>
-                    </div>
-                    <div class="container gap-3 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary rounded-4 px-4 py-2 mb-1 mt-4">Registrar</button>
-                    </div>
-                    </EditForm>
+<div class="card my-4">
+    <div class="d-flex p-0 card-header justify-content-between">
+        <h3 class="p-2 mb-3 pb-md-0 px-md-2">Datos de usuario</h3>
+        <div class="d-grid gap-2">
+            @if (!IsEditMod)
+            {
+                <InputCheckbox @bind-Value="IsEditMod" class="btn-check" id="btn-check-details" autocomplete="off" />
+                <label class="btn btn-warning rounded-start-0 rounded-bottom-0" for="btn-check-details">
+                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                </label>
+            }
+            else
+            {
+                <InputCheckbox @bind-Value="IsEditMod" class="btn-check" disabled id="btn-check-details" autocomplete="off" />
+                <label class="btn btn-warning rounded-start-0 rounded-bottom-0" for="btn-check-details">
+                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                </label>
+            }
         </div>
     </div>
-@code {
+    <div class="card-body px-5">
+        <EditForm EditContext="editContext" OnValidSubmit="UpdateUser" FormName="CreateForm">
+            <DataAnnotationsValidator />
+            <div class="row pb-1 d-flex justify-content-between">
+                <div class="col-6 pe-2">
+                    <div class="wrap-form-control mt-3 mb-3">
+                        <InputText id="nombre" @bind-Value="model.Nombre" disabled="@(!IsEditMod)" placeholder="Nombre" class="form-control"></InputText>
+                        <span class="symbol-form-control">
+                            <i class="fa fa-user-pen" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <ValidationMessage For="() => model.Nombre"></ValidationMessage>
+                </div>
+                <div class="col-6 pe-2">
+                    <div class="wrap-form-control mt-3 mb-3">
+                        <InputText id="apellido" @bind-Value="model.Apellido" disabled="@(!IsEditMod)" placeholder="Apellido" class="form-control"></InputText>
+                        <span class="symbol-form-control">
+                            <i class="fa fa-user-pen" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <ValidationMessage For="() => model.Apellido"></ValidationMessage>
+                </div>
+            </div>
+            <div class="wrap-form-control pb-1 mb-3">
+                <InputText id="direccion" @bind-Value="model.Direccion" disabled="@(!IsEditMod)" placeholder="Direccion" class="form-control"></InputText>
+                <span class="symbol-form-control">
+                    <i class="fa fa-map-location-dot"></i>
+                </span>
+            </div>
+            <ValidationMessage For="() => model.Direccion"></ValidationMessage>
 
+            <div class="wrap-form-control mt-2 mb-3 pb-1">
+                <InputText id="Ciudad" @bind-Value="model.Ciudad" disabled="@(!IsEditMod)" placeholder="Ciudad" class="form-control"></InputText>
+                <span class="symbol-form-control">
+                    <i class="fa fa-map" aria-hidden="true"></i>
+                </span>
+            </div>
+            <ValidationMessage For="() => model.Ciudad"></ValidationMessage>
+
+            <div class="d-flex justify-content-start text-center">
+                <div class="flex align-self-center mt-3 mb-3">
+                <label class="text-body-tertiary ms-4 mx-2"><i class="fa-regular fa-id-card"></i> Cuil</label>
+                </div>
+                <div class="col-2">
+                    <div class="wrap-form-control mt-3 mb-3">
+                        <NumberInput @bind-Value="model.Cuil1" disabled="@(!IsEditMod)" EnableMinMax="true" TValue="int" id="Cuil1" Placeholder="Ej: 20" Max="99" Min="1" class="form-control cuil"></NumberInput>
+                    </div>
+                </div>
+                <div class="col-sm-auto align-self-center px-1">
+                    <p class="fs-1 pt-2">-</p>
+                </div>
+                <div class="col-3">
+                    <div class="wrap-form-control mt-3 mb-3">
+                        <NumberInput @bind-Value="model.Cuil2" disabled="@(!IsEditMod)" EnableMinMax="true" TValue="int" id="Cuil2" Placeholder="Ej: 43654983" Max="99999999" Min="1" class="form-control cuil"></NumberInput>
+                    </div>
+                </div>
+                <div class="col-sm-auto align-self-center px-1">
+                    <p class="fs-1 pt-2">-</p>
+                </div>
+                <div class="col-2">
+                    <div class="wrap-form-control mt-3 mb-3">
+                        <NumberInput @bind-Value="model.Cuil3" disabled="@(!IsEditMod)" EnableMinMax="true" TValue="int" id="Cuil3" Placeholder="Ej: 7" Max="9" Min="1" class="form-control cuil"></NumberInput>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-5 align-items-center text-center">
+                <div class="col-2">
+                    <ValidationMessage For="() => model.Cuil1"></ValidationMessage>
+                </div>
+                <div class="col-md-auto px-1">
+                </div>
+                <div class="col-3">
+                    <ValidationMessage For="() => model.Cuil2"></ValidationMessage>
+                </div>
+                <div class="col-md-auto px-1">
+                </div>
+                <div class="col-2">
+                    <ValidationMessage For="() => model.Cuil3"></ValidationMessage>
+                </div>
+            </div>
+            @if (IsEditMod)
+            {
+                <div class="wrap-form-control mt-2 mb-3 pb-1">
+                    <InputText id="Contrasena" type="password" @bind-Value="model.Contrasena" placeholder="Ingrese su contraseña" class="form-control"></InputText>
+                    <span class="symbol-form-control">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <ValidationMessage For="() => model.Contrasena"></ValidationMessage>
+                <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-2">
+                    @if (isLoading)
+                    {
+                        <button class="btn btn-success rounded-pill" type="button" disabled="">
+                            <span class="spinner-border fs-4 spinner-border-sm" style="width: 1.5rem; height: 1.5rem;" aria-hidden="true"></span>
+                            <span role="status"></span>
+                        </button>
+
+                        <button class="btn btn-danger rounded-pill" type="button" disabled="">
+                            <span role="status"><i class="fa-solid fa-ban fa-2xl"></i></span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success rounded-pill" type="submit">
+                            <i class="fa-regular fa-circle-check fa-2xl"></i>
+                        </button>
+                        <button class="btn btn-danger rounded-pill" type="button" @onclick="() => ClearForm(false)">
+                            <span role="status"><i class="fa-solid fa-ban fa-2xl"></i></span>
+                        </button>
+                    }
+
+                </div>
+            }
+        </EditForm>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public UsuarioAPI? UserDetail { get; set; }
     [SupplyParameterFromForm]
-    public RegistroViewModel model { get; set; } = new();
-    public int Cuil1 { get; set; }
-    public int Cuil2 { get; set; }
-    public int Cuil3 { get; set; }
-    private string? Confirmpass { get; set; }
-    private string? passworderror { get; set; }
-    private string? emailerror { get; set; }
+    public UpdateUserDataViewModel model { get; set; } = new();
+    public bool isLoading { get; set; } = false;
+    public bool IsEditMod { get; set; } = false;
+    private ValidationMessageStore? messageStore;
+    private EditContext? editContext;
     [Inject] protected ToastService ToastService { get; set; }
 
-
-    public async Task CreateUser()
+    protected override async Task OnInitializedAsync()
     {
-
-        emailerror = null;
-        passworderror = null;
-
-        if (Confirmpass != model.Contrasena)
+        await base.OnInitializedAsync();
+        if (UserDetail != null)
         {
-            passworderror = "Las contraseñas no coinciden!";
-            return;
+            MapUserDetail();
         }
-        var newuser = new UsuarioAPI
+        editContext = new(model);
+        editContext.OnValidationRequested += HandleValidationRequested;
+        messageStore = new(editContext);
+
+    }
+
+    private void HandleValidationRequested(object? sender,
+    ValidationRequestedEventArgs args)
+    {
+        messageStore?.Clear();
+    }
+
+    public async void UpdateUser()
+    {
+        isLoading = true;
+
+        var updatedUser = new UsuarioAPI
             {
                 Nombre = model.Nombre,
                 Apellido = model.Apellido,
                 Direccion = model.Direccion,
                 Ciudad = model.Ciudad,
-                Email = model.Email,
+                Cuil = $"{model.Cuil1}-{model.Cuil2}-{model.Cuil3}",
                 Contrasena = model.Contrasena,
-                Cuil = $"{model.Cuil1}-{model.Cuil2}-{model.Cuil3}"
+                Email = UserDetail.Email
             };
 
-        var response = await apiClient.CreateUsuario(newuser);
-
-        if (response is not null)
+        var response = await apiClient.UpdateUserData(updatedUser);
+        if (!response.IsSuccessStatusCode)
         {
-            if (response != "Usuario creado exitosamente!")
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                emailerror = response;
-                ToastService.Notify(new(ToastType.Danger, $"Error! {response}"));
-                return;
+                messageStore?.Add(() => model.Contrasena, "Contraseña incorrecta!");
+                isLoading = false;
+                StateHasChanged();
             }
-            ToastService.Notify(new(ToastType.Success, $"Exito! {response}"));
-            await Task.Delay(2000);
+            else
+            {
+                ToastService.Notify(new(ToastType.Danger, $"Error! {await response.Content.ReadAsStringAsync()}"));
+                isLoading = false;
+                StateHasChanged();
+            }
         }
         else
         {
-            ToastService.Notify(new(ToastType.Danger, $"Error! {response}"));
+            ToastService.Notify(new(ToastType.Success, $"Exito! {await response.Content.ReadAsStringAsync()}"));
+            isLoading = false;
+            ClearForm(true);
+            StateHasChanged();
         }
+    }
 
-        navManager.NavigateTo("/login", true);
+    public void MapUserDetail()
+    {
+        model.Nombre = UserDetail.Nombre;
+        model.Apellido = UserDetail.Apellido;
+        model.Direccion = UserDetail.Direccion;
+        model.Ciudad = UserDetail.Ciudad;
+        string[] parts = UserDetail.Cuil.Split('-');
+        model.Cuil1 = int.Parse(parts[0]);
+        model.Cuil2 = int.Parse(parts[1]);
+        model.Cuil3 = int.Parse(parts[2]);
+        model.Contrasena = "";
+    }
+
+    public void ClearForm(bool isUpdated)
+    {
+        IsEditMod = false;
+        if (!isUpdated)
+        {
+            MapUserDetail();
+        }
+        else
+        {
+            MapUpdatedUserDetail();
+        }
+    }
+
+    public void MapUpdatedUserDetail()
+    {
+        UserDetail.Nombre = model.Nombre;
+        UserDetail.Apellido = model.Apellido;
+        UserDetail.Direccion = model.Direccion;
+        UserDetail.Ciudad = model.Ciudad;
+        UserDetail.Cuil = $"{model.Cuil1}-{model.Cuil2}-{model.Cuil3}";
+        UserDetail.Email = UserDetail.Email;
+        model.Contrasena = "";
+    }
+
+    public void Dispose()
+    {
+        if (editContext is not null)
+        {
+            editContext.OnValidationRequested -= HandleValidationRequested;
+        }
     }
 
 }

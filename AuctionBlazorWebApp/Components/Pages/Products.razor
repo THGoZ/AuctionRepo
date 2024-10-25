@@ -27,6 +27,13 @@ else
             <h1 class="">Productos disponibles</h1>
 }
     <div class="d-flex justify-content-end mx-5">
+        <div class="input-group mt-1 mb-3">
+            <span class="input-group-text border-0 bg-body-tertiary" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <div class="form-floating">
+                <input type="search" class="form-control rounded-end-2" id="floatingInput" autofocus @bind="search" @bind:event="oninput" placeholder="Buscar..." />
+                <label for="floatingInput">Buscar</label>
+            </div>
+        </div>
         <div class="dropdown m-2 shadow">
             <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
                 <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
@@ -100,15 +107,12 @@ else
                 </div>
             }
         }
-        else if (products?.Any() ?? false)
+        else if (Filteredproductos?.Any() ?? false)
         {
-            @foreach (var product in products)
+            @foreach (var product in Filteredproductos)
             {
                 <ProductRowItemComponent ProductRowItem="product"
-                                         OnEdit="EditProduct"
-                                         OnDelete="DeleteProduct"
                                          ShowOnly="@(auction == null)"
-                                         ShowUserProducts="@(auction == "65534")"
                                          IdUsuario="UserId"
                                          UpdateProduct="LoadProducts" />
 
@@ -134,13 +138,26 @@ else
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private List<ProductoAPI>? products;
-    private ProductoViewModel addProductModel = new();
-    public string FileType { get; set; } = "";
-    const int MAX_FILESIZE = 5000 * 1024;
-    public string ErrorMessage { get; set; } = "";
-    public byte[] imageData { get; set; } = null;
+    private IQueryable<ProductoAPI>? itemsqueriable;
     private bool showOnly;
     private SubastaAPI? subasta = new();
+    private string? search;
+
+    IQueryable<ProductoAPI>? Filteredproductos
+    {
+        get
+        {
+            var result = itemsqueriable;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                result = itemsqueriable.Where(c => c.Nombre.Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return result;
+        }
+    }
+
 
 
     protected override async Task OnInitializedAsync()
@@ -163,74 +180,17 @@ else
         if (auction is not null && auction != "65534")
         {
             products = await apiClient.GetProductsEnabledOfAuctionWithOferta(int.Parse(auction));
+            itemsqueriable = products.AsQueryable();
         }
         else
         {
             var all = await apiClient.GetAllowedProductsWithOfertas();
-            if(all is not null)
-                products = all.Where(p => p.Status != "sold" && p.Status != "notsold").ToList();
-        }
-    }
-
-    public async Task FileUploaded(InputFileChangeEventArgs e)
-    {
-        var browserFile = e.File;
-
-        try
-        {
-            if (browserFile != null)
+            if (all is not null)
             {
-                using (var memoryStream = new MemoryStream())
-                {
-                    var fileStream = browserFile.OpenReadStream(MAX_FILESIZE);
-                    await fileStream.CopyToAsync(memoryStream);
-                    imageData = memoryStream.ToArray();
-                    FileType = Path.GetExtension(browserFile.Name);
-                }
+                products = all.Where(p => p.Status != "sold" && p.Status != "notsold").ToList();
+                itemsqueriable = products.AsQueryable();
             }
         }
-        catch (Exception ex)
-        {
-            ErrorMessage = ex.Message;
-        }
-    }
-
-    private async Task AddProduct()
-    {
-        int subastaid = int.Parse(auction);
-        var authenticationState = await authenticationStateTask;
-
-        var user = authenticationState.User;
-        var userIdClaim = user.FindFirst(c => c.Type == "nameid" || c.Type == ClaimTypes.NameIdentifier);
-        int userId = int.Parse(userIdClaim.Value);
-
-        var newproducto = new ProductoAPI
-            {
-                Nombre = addProductModel.Nombre,
-                PrecioBase = addProductModel.PrecioBase,
-                Descripcion = addProductModel.Descripcion,
-                Imagen = imageData,
-                ImageExtension = FileType,
-                FechaSolicitud = DateTime.Now,
-                EstadoDeSolicitud = false
-
-
-            };
-
-        await apiClient.SaveProduct(newproducto, userId, subastaid);
-        await LoadProducts();
-        addProductModel = new();
-    }
-    private async Task EditProduct(EditProductData editData)//quitar id subasta
-    {
-        await apiClient.UpdateProducto(editData.Producto, editData.Id, int.Parse(auction));
-        await LoadProducts();
-    }
-
-    private async Task DeleteProduct(int id)
-    {
-        await apiClient.DeleteProducto(id);
-        await LoadProducts();
     }
 
     protected override void OnParametersSet()
