@@ -17,32 +17,37 @@ namespace AuctionDesktopProgram
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IProductoBusiness _productoBusiness;
+        private Form activeForm = null;
 
         public Mainpage(IServiceProvider serviceProvider, IProductoBusiness productoBusiness)
         {
             _productoBusiness = productoBusiness;
             _serviceProvider = serviceProvider;
             InitializeComponent();
+
+            // Muestra formHome en panel2 al iniciar el formulario Mainpage
+            var formHome = _serviceProvider.GetRequiredService<FormHome>();
+            openPanel2(formHome);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             var formHome = _serviceProvider.GetRequiredService<FormHome>();
-            formHome.ShowDialog();
+            openPanel2(formHome);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             var formProductos = _serviceProvider.GetService<FormProductos>();
-            formProductos.ShowDialog();
+            openPanel2(formProductos);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (_productoBusiness.GetProductosSolicitados().Count() != 0)
+            if (_productoBusiness.GetProductosSolicitados().Any())
             {
                 var solicitudes = new Solicitudes(_productoBusiness);
-                solicitudes.ShowDialog();
+                openPanel2(solicitudes);
             }
             else
             {
@@ -53,7 +58,24 @@ namespace AuctionDesktopProgram
         private void button3_Click(object sender, EventArgs e)
         {
             var formCrearSubasta = _serviceProvider.GetService<CrearSubastaForm>();
-            formCrearSubasta.ShowDialog();
+            openPanel2(formCrearSubasta);
+        }
+
+        private void openPanel2(Form form)
+        {
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+            activeForm = form;
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            panel2.Controls.Add(form);
+            panel2.Tag = form;
+            form.Show();
         }
     }
+
 }
+

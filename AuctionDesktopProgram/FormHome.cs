@@ -13,6 +13,7 @@ namespace AuctionDesktopProgram
         {
             _subastaBusiness = subastaBusiness;
             InitializeComponent();
+            btnBuscar.Click += btnBuscar_Click;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,9 +43,17 @@ namespace AuctionDesktopProgram
                 }
             }
         }
-        private void CargarSubastas()
+        private void CargarSubastas(string filtroDescripcion = "")
         {
+
             var subastas = _subastaBusiness.GetAll();
+
+
+            if (!string.IsNullOrEmpty(filtroDescripcion))
+            {
+                subastas = subastas.Where(s => s.Descripcion.Contains(filtroDescripcion, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
 
             var listaSubastas = subastas.Select(s => new
             {
@@ -58,6 +67,19 @@ namespace AuctionDesktopProgram
             }).ToList();
 
             SubastaDataGrid.DataSource = listaSubastas;
+        }
+
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+            string filtroDescripcion = txtFiltroDescripcion.Text.Trim();
+            CargarSubastas(filtroDescripcion);
+        }
+
+        private void btnBuscar_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

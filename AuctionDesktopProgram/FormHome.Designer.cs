@@ -34,6 +34,8 @@ namespace AuctionDesktopProgram
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHome));
             kryptonCustomPaletteBase1 = new KryptonCustomPaletteBase(components);
             SubastaDataGrid = new KryptonDataGridView();
+            btnBuscar = new Button();
+            txtFiltroDescripcion = new TextBox();
             ((System.ComponentModel.ISupportInitialize)SubastaDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -91,7 +93,7 @@ namespace AuctionDesktopProgram
             kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color1 = Color.FromArgb(255, 192, 192);
             kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color2 = Color.Red;
             kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorAngle = 90F;
-            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Dashed;
+            kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorStyle = PaletteColorStyle.Dashed;
             kryptonCustomPaletteBase1.ThemeName = "";
             kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
             // 
@@ -99,23 +101,39 @@ namespace AuctionDesktopProgram
             // 
             SubastaDataGrid.BorderStyle = BorderStyle.None;
             SubastaDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            SubastaDataGrid.Location = new Point(85, 56);
+            SubastaDataGrid.Location = new Point(100, 67);
             SubastaDataGrid.Margin = new Padding(3, 4, 3, 4);
             SubastaDataGrid.Name = "SubastaDataGrid";
             SubastaDataGrid.RowHeadersWidth = 51;
-            SubastaDataGrid.Size = new Size(960, 680);
+            SubastaDataGrid.Size = new Size(928, 590);
             SubastaDataGrid.TabIndex = 0;
             SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClick_1;
             // 
-            // bigLabel1
-            //
+            // btnBuscar
+            // 
+            btnBuscar.Location = new Point(834, 33);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(100, 29);
+            btnBuscar.TabIndex = 1;
+            btnBuscar.Text = "Buscar";
+            btnBuscar.UseVisualStyleBackColor = true;
+            btnBuscar.Click += btnBuscar_Click_1;
+            // 
+            // txtFiltroDescripcion
+            // 
+            txtFiltroDescripcion.Location = new Point(302, 33);
+            txtFiltroDescripcion.Name = "txtFiltroDescripcion";
+            txtFiltroDescripcion.Size = new Size(507, 27);
+            txtFiltroDescripcion.TabIndex = 2;
             // 
             // FormHome
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(1015, 711);
+            BackColor = Color.FromArgb(255, 128, 0);
+            ClientSize = new Size(1126, 681);
+            Controls.Add(txtFiltroDescripcion);
+            Controls.Add(btnBuscar);
             Controls.Add(SubastaDataGrid);
             GroupBackStyle = PaletteBackStyle.FormCustom1;
             GroupBorderStyle = PaletteBorderStyle.FormCustom1;
@@ -127,7 +145,7 @@ namespace AuctionDesktopProgram
             PaletteMode = PaletteMode.Custom;
             Text = "Form1";
             Activated += FormHome_Activated;
-            Load += Form1_Load;
+            Load += btnBuscar_Click;
             ((System.ComponentModel.ISupportInitialize)SubastaDataGrid).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -137,5 +155,7 @@ namespace AuctionDesktopProgram
 
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
         private KryptonDataGridView SubastaDataGrid;
+        private Button btnBuscar;
+        private TextBox txtFiltroDescripcion;
     }
 }

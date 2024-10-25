@@ -103,13 +103,14 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 128, 0);
-            ClientSize = new Size(1343, 556);
+            ClientSize = new Size(1370, 700);
             Controls.Add(label3);
             Controls.Add(ProductosSOdatagrid);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(GanadoresdataGrid);
             Controls.Add(ProductosDatagrid);
+            MinimumSize = new Size(775, 747);
             Name = "FormProductos";
             Text = "Productos";
             Load += Productos_Load;

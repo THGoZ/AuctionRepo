@@ -131,10 +131,10 @@ namespace AuctionDesktopProgram
             groupBox1.ForeColor = Color.FromArgb(53, 53, 53);
             groupBox1.HeaderColor = Color.Orange;
             groupBox1.Location = new Point(651, 99);
-            groupBox1.MinimumSize = new Size(136, 50);
+            groupBox1.MinimumSize = new Size(775, 747);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(5, 28, 5, 5);
-            groupBox1.Size = new Size(604, 401);
+            groupBox1.Size = new Size(775, 747);
             groupBox1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             groupBox1.TabIndex = 2;
             groupBox1.Text = "Cargar Producto";
@@ -285,8 +285,6 @@ namespace AuctionDesktopProgram
             SubastaDataGrid.RowHeadersVisible = false;
             SubastaDataGrid.RowHeadersWidth = 51;
             SubastaDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            SubastaDataGrid.DefaultCellStyle.SelectionBackColor = Color.Orange;
-            SubastaDataGrid.DefaultCellStyle.SelectionForeColor = Color.White;
             SubastaDataGrid.Size = new Size(530, 313);
             SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
             SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
@@ -354,6 +352,7 @@ namespace AuctionDesktopProgram
             MainMenuStrip = crownMenuStrip1;
             Name = "Solicitudes";
             Text = "Jopara Ndeve";
+            Load += Solicitudes_Load;
             crownMenuStrip1.ResumeLayout(false);
             crownMenuStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);
@@ -539,6 +538,11 @@ namespace AuctionDesktopProgram
         }
 
         private void crownMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void Solicitudes_Load(object sender, EventArgs e)
         {
 
         }
