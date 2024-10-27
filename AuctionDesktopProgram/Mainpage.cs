@@ -75,6 +75,12 @@ namespace AuctionDesktopProgram
             panel2.Tag = form;
             form.Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var formInformes = _serviceProvider.GetService<Informes>();
+            openPanel2(formInformes);
+        }
     }
 
 }

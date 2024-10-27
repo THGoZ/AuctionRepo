@@ -21,17 +21,17 @@ namespace Auction.Core.Data
         public List<Producto> GetProductos()
         {
             var subastasConProductos = _dbContext.Subastas
-                .Include(s => s.Productos) 
+                .Include(s => s.Productos)
                 .ToList();
 
-          
+
             if (subastasConProductos == null || subastasConProductos.Count == 0)
             {
                 throw new InvalidOperationException("No se encontraron subastas con productos en la base de datos.");
             }
 
             var productos = subastasConProductos.SelectMany(s => s.Productos).ToList();
-       
+
             if (productos == null || productos.Count == 0)
             {
                 throw new InvalidOperationException("No se encontraron productos en la base de datos.");
@@ -47,16 +47,16 @@ namespace Auction.Core.Data
 
         public List<Oferta> GetOfertas()
         {
-           
+
             var ofertasPorSubasta = _dbContext.Subastas
-                .Include(s => s.Productos)                
-                    .ThenInclude(p => p.Ofertas)        
-                        .ThenInclude(o => o.Usuario)      
-                .ToList()                              
-                .SelectMany(s => s.Productos)            
-                .SelectMany(p => p.Ofertas)               
-                .Where(o => o.Usuario != null && o.Producto != null) 
-                .ToList();                               
+                .Include(s => s.Productos)
+                    .ThenInclude(p => p.Ofertas)
+                        .ThenInclude(o => o.Usuario)
+                .ToList()
+                .SelectMany(s => s.Productos)
+                .SelectMany(p => p.Ofertas)
+                .Where(o => o.Usuario != null && o.Producto != null)
+                .ToList();
 
             return ofertasPorSubasta;
         }
@@ -65,22 +65,22 @@ namespace Auction.Core.Data
         {
             var productosConGanadores = _dbContext.Productos
            .Include(p => p.Ofertas)
-           .ThenInclude(o => o.Usuario) 
-           .Where(p => p.Ofertas.Any()) 
+           .ThenInclude(o => o.Usuario)
+           .Where(p => p.Ofertas.Any())
            .Select(p => new ProductoWinner
-            {
-            Nombre = p.Nombre,
-            Descripcion = p.Descripcion,
-            PrecioBase = p.PrecioBase,
-            Imagen = p.Imagen,
-            ImageExtension = p.ImageExtension,
-            HasGanador = p.Ofertas.Any(), 
-            NombreGanador = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Usuario.Nombre, // Tomar el nombre del usuario de la mejor oferta
-            ApellidoGanador = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Usuario.Apellido,
-            Monto = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Monto,
-            Fecha = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Fecha,
-            TotalDeOfertas = p.Ofertas.Count
-            })
+           {
+               Nombre = p.Nombre,
+               Descripcion = p.Descripcion,
+               PrecioBase = p.PrecioBase,
+               Imagen = p.Imagen,
+               ImageExtension = p.ImageExtension,
+               HasGanador = p.Ofertas.Any(),
+               NombreGanador = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Usuario.Nombre, // Tomar el nombre del usuario de la mejor oferta
+               ApellidoGanador = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Usuario.Apellido,
+               Monto = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Monto,
+               Fecha = p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Fecha,
+               TotalDeOfertas = p.Ofertas.Count
+           })
         .ToList();
 
             return productosConGanadores;
@@ -124,12 +124,56 @@ namespace Auction.Core.Data
 
         public void AddSubasta(Subasta subasta)
         {
-            _dbContext.Subastas.Add(subasta); 
+            _dbContext.Subastas.Add(subasta);
         }
 
         public void SaveChanges()
         {
-            _dbContext.SaveChanges(); 
+            _dbContext.SaveChanges();
+        }
+
+        public Subasta GetSubastaById(int id)
+        {
+            try
+            {
+                var subasta = _dbContext.Subastas.Where(x => x.IdSubasta == id).Include(x => x.Productos).ThenInclude(p => p.Ofertas).SingleOrDefault();
+
+                return subasta ?? throw new KeyNotFoundException($"Subasta con el Id {id} no se encontró.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al traer la subasta: {ex.Message}", ex);
+            }
+        }
+
+        public List<Subasta> GetSuccessfulSubastas()
+        {
+            try
+            {
+                var subasta = _dbContext.Subastas
+                                                .Include(s => s.Productos)
+                                                .Where(s => s.FechaCierre < DateTime.Now &&
+                                                                                            s.Productos != null &&
+                                                                                            s.Productos.Any(p => p != null &&
+                                                                                            p.Ofertas != null &&
+                                                                                            p.Ofertas.Count != 0))
+                                                                                            .ToList();
+
+                return subasta;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new Exception("Error accessing related data", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving subastas", ex);
+            }
         }
 
     }

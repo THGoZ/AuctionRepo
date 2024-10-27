@@ -1,0 +1,68 @@
+﻿using Auction.Core.Business.Interfaces;
+using Krypton.Toolkit;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace AuctionDesktopProgram
+{
+    public partial class Informes : KryptonForm
+    {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IProductoBusiness _productoBusiness;
+        private Form? activeForm;
+        public Informes(IServiceProvider serviceProvider, IProductoBusiness productoBusiness)
+        {
+            _serviceProvider = serviceProvider;
+            _productoBusiness = productoBusiness;
+            InitializeComponent();
+            var formGanacias = _serviceProvider.GetService<Ganancias>();
+            openPanel2(formGanacias);
+            kryptonCheckButton1.Checked = true;
+        }
+
+        private void kryptonCheckButton1_Click(object sender, EventArgs e)
+        {
+            kryptonCheckButton2.Checked = false;
+            kryptonCheckButton3.Checked = false;
+            var formGanacias = _serviceProvider.GetService<Ganancias>();
+            openPanel2(formGanacias);
+        }
+
+        private void kryptonCheckButton2_Click(object sender, EventArgs e)
+        {
+            kryptonCheckButton1.Checked = false;
+            kryptonCheckButton3.Checked = false;
+            var formCrearSubasta = _serviceProvider.GetService<FormProductos>();
+            openPanel2(formCrearSubasta);
+        }
+
+        private void kryptonCheckButton3_Click(object sender, EventArgs e)
+        {
+            kryptonCheckButton1.Checked = false;
+            kryptonCheckButton2.Checked = false;
+        }
+
+        private void openPanel2(Form form)
+        {
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+            activeForm = form;
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            panel2.Controls.Add(form);
+            panel2.Tag = form;
+            form.Show();
+        }
+    }
+}

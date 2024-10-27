@@ -1,6 +1,7 @@
 ﻿using Auction.Core.Business.Interfaces;
 using Auction.Core.Data.Interfaces;
 using Auction.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace Auction.Core.Business
 {
     public class SubastaBusiness : ISubastaBusiness
@@ -34,6 +35,18 @@ namespace Auction.Core.Business
         {
             _repository.AddSubasta(subasta);
             _repository.SaveChanges(); 
+        }
+
+        public Subasta GetById(int id)
+        {
+            if (id <= 0)
+                throw new Exception("El Id debe ser un numero positivo");
+            return _repository.GetSubastaById(id);
+        }
+
+        public List<Subasta> GetSuccessful()
+        {
+            return _repository.GetSuccessfulSubastas();
         }
 
     }

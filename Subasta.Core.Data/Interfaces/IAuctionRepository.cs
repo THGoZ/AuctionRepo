@@ -22,5 +22,8 @@ namespace Auction.Core.Data.Interfaces
         void AddSubasta(Subasta subasta); 
         void SaveChanges(); 
         public void ActualizarEstadoProducto(Producto productoSeleccionado);
+
+        public Subasta GetSubastaById(int id);
+        public List<Subasta> GetSuccessfulSubastas();
     }
 }

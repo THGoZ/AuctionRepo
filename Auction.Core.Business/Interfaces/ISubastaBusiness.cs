@@ -18,5 +18,8 @@ namespace Auction.Core.Business.Interfaces
         public void EditarSubasta(Subasta subasta);
 
         public void CrearSubasta(Subasta subasta);
+
+        public Subasta GetById(int id);
+        public List<Subasta> GetSuccessful();
     }
 }
