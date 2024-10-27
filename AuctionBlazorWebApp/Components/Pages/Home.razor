@@ -20,10 +20,19 @@
 
 <h2 class="mt-2">Subastas disponibles</h2>
 
-<div class="countainer-fuild px-1 py-1 my-1 text-center">
-    <div class="d-flex justify-content-end mx-3">
+<div class="countainer-fuild px-1 py-1 my-1 text-center overflow-auto">
+    <div class="d-flex mx-1 mb-3 align-items-center flex-wrap flex-md-nowrap flex-lg-nowrap">
+        <div class="input-group my-2 me-2 pb-1">
+            <span class="input-group-text border-0 bg-body-tertiary" id="basic-addon1">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <div class="form-floating">
+                <input type="search" class="form-control rounded-end-2" id="floatingInput" autofocus @bind="search" @bind:event="oninput" placeholder="Buscar..." />
+                <label for="floatingInput">Buscar</label>
+            </div>
+        </div>
         <div class="dropdown m-2 shadow">
-            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
                 <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
             </button>
             <div class="dropdown-menu px-3" style="">
@@ -261,16 +270,31 @@
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
-    private List<SubastaAPI>? subastas;
+    private IQueryable<SubastaAPI>? itemsqueriable;
     private List<SubastaAPI> unfiltered = new();
     private int auctionCount = 1;
-    private string filters = "";
     private bool alreadyfiltered = false;
     private bool UnsortedOfr = true;
     private bool UnsortedProd = true;
     private bool PrdCant = false;
     private bool OfrCant = false;
+    private string? search;
     [Inject] protected ToastService ToastService { get; set; }
+
+    IQueryable<SubastaAPI>? subastas
+    {
+        get
+        {
+            var result = itemsqueriable;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                result = itemsqueriable.Where(c => c.Descripcion.Contains(search, StringComparison.OrdinalIgnoreCase) || c.IdSubasta.ToString().Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return result;
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -291,30 +315,30 @@
         {
             if (alreadyfiltered)
             {
-                subastas = unfiltered;
+                itemsqueriable = unfiltered.AsQueryable();
 
             }
             else
             {
-                unfiltered = subastas;
+                unfiltered = subastas.ToList();
             }
             switch (filter)
             {
 
                 case "abiertas":
-                    subastas = unfiltered.Where(s => s.FechaCierre > DateTime.Now && s.FechaInicio <= DateTime.Now).ToList();
+                    itemsqueriable = unfiltered.Where(s => s.FechaCierre > DateTime.Now && s.FechaInicio <= DateTime.Now).AsQueryable();
                     alreadyfiltered = true;
                     break;
                 case "cerradas":
-                    subastas = unfiltered.Where(s => s.FechaCierre < DateTime.Now).ToList();
+                    itemsqueriable = unfiltered.Where(s => s.FechaCierre < DateTime.Now).AsQueryable();
                     alreadyfiltered = true;
                     break;
                 case "proximas":
-                    subastas = unfiltered.Where(s => s.FechaInicio > DateTime.Now).ToList();
+                    itemsqueriable = unfiltered.Where(s => s.FechaInicio > DateTime.Now).AsQueryable();
                     alreadyfiltered = true;
                     break;
                 default:
-                    subastas = unfiltered;
+                    itemsqueriable = unfiltered.AsQueryable();
                     alreadyfiltered = false;
                     break;
             }
@@ -327,13 +351,13 @@
         {
             if (PrdCant)
             {
-                subastas = subastas.OrderBy(s => s.CantidadProductos).ToList();
+                itemsqueriable = subastas.OrderBy(s => s.CantidadProductos).AsQueryable();
                 PrdCant = false;
                 UnsortedProd = false;
             }
             else
             {
-                subastas = subastas.OrderByDescending(s => s.CantidadProductos).ToList();
+                itemsqueriable = subastas.OrderByDescending(s => s.CantidadProductos).AsQueryable();
                 PrdCant = true;
                 UnsortedProd = false;
             }
@@ -347,13 +371,13 @@
         {
             if (OfrCant)
             {
-                subastas = subastas.OrderBy(s => s.CantidadDeOfertas).ToList();
+                itemsqueriable = subastas.OrderBy(s => s.CantidadDeOfertas).AsQueryable();
                 OfrCant = false;
                 UnsortedOfr = false;
             }
             else
             {
-                subastas = subastas.OrderByDescending(s => s.CantidadDeOfertas).ToList();
+                itemsqueriable = subastas.OrderByDescending(s => s.CantidadDeOfertas).AsQueryable();
                 OfrCant = true;
                 UnsortedOfr = false;
             }
@@ -363,7 +387,8 @@
 
     private async Task LoadAuctions()
     {
-        subastas = await apiClient.GetAuctions();
+        var subs = await apiClient.GetAuctions();
+        itemsqueriable = subs.AsQueryable();
     }
 
     private void ShowProducts(int auctionid, int productocount)

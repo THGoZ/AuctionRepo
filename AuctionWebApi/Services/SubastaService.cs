@@ -64,8 +64,15 @@ namespace AuctionWebApi.Services
             {
                 foreach (var producto in productos)
                 {
-                    if(!_dbContext.DetalleVentas.Where(d=> d.IdProducto.Equals(producto.IdProducto)).Any())
+
+                    if (!_dbContext.DetalleVentas.Where(d=> d.IdProducto.Equals(producto.IdProducto)).Any())
                     {
+                        if (!producto.Vendido)
+                        {
+                            producto.Vendido = true;
+                            _dbContext.Productos.Update(producto);
+                        }
+
                         var newDetalle = new DetalleVenta()
                         {
                             CuilComprador = producto.Ofertas.Select(o => o.Usuario.Cuil).FirstOrDefault(),

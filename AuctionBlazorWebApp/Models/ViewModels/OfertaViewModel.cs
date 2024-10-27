@@ -14,5 +14,7 @@ namespace AuctionBlazorWebApp.Models.ViewModels
         [Range(0.01, double.MaxValue, ErrorMessage = "El precio base debe ser mayor a cero")]
         public decimal Monto { get; set; }
         public DateTime Fecha { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Seleccione una forma de pago")]
+        public string FormaDePago {  get; set; } = string.Empty;
     }
 }

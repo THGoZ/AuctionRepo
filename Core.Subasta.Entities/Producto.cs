@@ -31,5 +31,7 @@ namespace Auction.Core.Entities
         public DateTime FechaSolicitud { get; set; }
         public bool? EstadoDeSolicitud { get; set; }//null = pendiente/ false = rechazado / true = aprobado
         public virtual ICollection<Oferta>? Ofertas { get; set; }
+
+        public bool Vendido { get; set; } = false;
     }
 }

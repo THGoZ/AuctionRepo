@@ -85,6 +85,21 @@ namespace AuctionWebApi.Controllers
             }
         }
 
+        [HttpGet("formaspagos/{id:int}")]
+        public async Task<ActionResult<string[]?>> GetFormasDePago(int id)
+        {
+            var subasta = await _dbContext.Subastas.Where(s => s.IdSubasta == id).Select(s => s.FormaDePago).FirstOrDefaultAsync();
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return subasta;
+            }
+        }
+
         [HttpGet("ofertas/{id:int}")]
         public async Task<int> GetOfertasSubasta(int id)
         {

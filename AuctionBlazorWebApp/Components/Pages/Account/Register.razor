@@ -85,26 +85,29 @@
                     <div class="alert alert-danger mt-3 mb-2 px-2 rounded-5" role="alert" hidden="@string.IsNullOrEmpty(passworderror)">
                         <span class="text-danger">@passworderror</span>
                     </div>
-                    <label>Ingrese su cuil</label>
-                    <div class="row row-cols-5 align-items-center text-center">
-                        <div class="col-2">
+                    <label class="ms-2 text-body-tertiary">Ingrese su cuil</label>
+                    <div class="row row-cols-5 align-items-center d-flex justify-content-md-start text-center">
+                        <div class="col-lg-2 flex-shrink-0" style="min-width: 95px;">
                             <div class="wrap-form-control mt-3 mb-3">
-                                <NumberInput @bind-Value="model.Cuil1" EnableMinMax="true" TValue="int" id="Cuil1" Placeholder="Ej: 20" Max="99" Min="1" class="form-control cuil"></NumberInput>
+                                <NumberInput @bind-Value="model.Cuil1" EnableMinMax="true" TValue="int" id="Cuil1" Placeholder="Ej: 20" Max="99" Min="1" class="form-control"></NumberInput>
+                                <span class="symbol-form-control">
+                                    <i class="fa-regular fa-id-card" aria-hidden="true"></i>
+                                </span>
                             </div>
                         </div>
-                        <div class="col-md-auto px-1">
+                        <div class="col-1 mx-0 px-1 flex-shrink-1">
                             <p class="fs-1">-</p>
                         </div>
                         <div class="col-3">
-                            <div class="wrap-form-control mt-3 mb-3">
+                            <div class="wrap-form-control mt-3 mb-3 flex-shrink-0">
                                 <NumberInput @bind-Value="model.Cuil2" EnableMinMax="true" TValue="int" id="Cuil2" Placeholder="Ej: 43654983" Max="99999999" Min="1" class="form-control cuil"></NumberInput>
                             </div>
                         </div>
-                        <div class="col-md-auto px-1">
+                        <div class="col-1 mx-0 px-1 flex-shrink-1">
                             <p class="fs-1">-</p>
                         </div>
-                        <div class="col-2">
-                            <div class="wrap-form-control mt-3 mb-3">
+                        <div class="col-2 flex-shrink-0 " style="min-width: 95px;">
+                            <div class="wrap-form-control mt-3 mb-3 ">
                                 <NumberInput @bind-Value="model.Cuil3" EnableMinMax="true" TValue="int" id="Cuil3" Placeholder="Ej: 7" Max="9" Min="1" class="form-control cuil"></NumberInput>
                             </div>
                         </div>
@@ -125,13 +128,29 @@
                         </div>
                     </div>
                     <div class="container gap-3 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary rounded-4 px-4 py-2 mb-1 mt-4">Registrar</button>
-                        <button @onclick="CancelNav" class="btn btn-secondary rounded-4 px-2 py-1 mb-1 mt-4 icon-link-hover">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
-                            </svg>
-                            Cancelar
-                        </button>
+                        @if (!isLoading)
+                        {
+                            <button type="submit" class="btn btn-primary rounded-4 px-4 py-2 mb-1 mt-4">Registrar</button>
+                            <button @onclick="CancelNav" type="button" class="btn btn-secondary rounded-4 px-2 py-1 mb-1 mt-4 icon-link-hover">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+                                </svg>
+                                Cancelar
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" disabled class="btn btn-primary rounded-4 px-4 py-2 mb-1 mt-4">
+                                <span class="spinner-border fs-4 spinner-border-sm" style="width: 1.5rem; height: 1.5rem;" aria-hidden="true"></span>
+                                <span role="status">Registrar</span>
+                            </button>
+                            <button disabled type="button" class="btn btn-secondary rounded-4 px-2 py-1 mb-1 mt-4 icon-link-hover">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"></path>
+                                </svg>
+                                Cancelar
+                            </button>
+                        }
                     </div>
                 </EditForm>
             </div>
@@ -148,10 +167,12 @@
     private string? Confirmpass { get; set; }
     private string? passworderror { get; set; }
     private string? emailerror { get; set; }
+    private bool isLoading { get; set; } = false;
     [Inject] protected ToastService ToastService { get; set; }
 
     public async Task CreateUser()
     {
+        isLoading = true;
 
         emailerror = null;
         passworderror = null;
@@ -159,6 +180,7 @@
         if(Confirmpass != model.Contrasena)
         {
             passworderror = "Las contraseñas no coinciden!";
+            isLoading = false;
             return;
         }
         var newuser = new UsuarioAPI
@@ -173,6 +195,7 @@
             };
 
         var response = await apiClient.CreateUsuario(newuser);
+        isLoading = false;
 
         if (response is not null)
         {
@@ -180,6 +203,7 @@
             {
                 emailerror = response;
                 ToastService.Notify(new(ToastType.Danger, $"Error! {response}"));
+                isLoading = false;
                 return;
             }
             ToastService.Notify(new(ToastType.Success, $"Exito! {response}"));
@@ -188,6 +212,7 @@
         else
         {
             ToastService.Notify(new(ToastType.Danger, $"Error! {response}"));
+            isLoading = false;
         }
 
         navManager.NavigateTo("/login", true);

@@ -1,0 +1,29 @@
+﻿<button type="button" class="p-2 btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <i class="fa-regular fa-circle-check fa-xl mx-1"></i>
+    @ButtonText
+</button>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">@Title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@Body</p>
+            </div>
+            <div class="modal-footer">
+                @ChildContent
+                <button type="button" class="p-2 btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-ban fa-xl mx-1"></i>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Body { get; set; } = "";
+    [Parameter] public string ButtonText { get; set; } = "";
+
+}

@@ -1,38 +1,82 @@
-﻿@using AuctionBlazorWebApp.Models.ViewModels
+﻿@using AuctionBlazorWebApp.Components.Pages.Components
+@using AuctionBlazorWebApp.Models.ViewModels
+@using BlazorBootstrap
 
-
-<div class="modal-container" style="position:relative; min-width: 10rem;">
-    <div class="modal-content"  style="display:@(IsVisible ? "block" : "none")" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content border-5 border-info">
-                <EditForm Model="@oferta" OnValidSubmit="Save">
+<EditForm Model="@oferta" OnValidSubmit="Save">
+    <div class="modal-container" style="position:relative; min-width: 10rem;">
+        <div class="modal-content" style="display:@(IsVisible ? "block" : "none")" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content border-5 border-info">
                     <DataAnnotationsValidator />
                     <div class="card-body mt-3 text-center">
                         @ChildContent
                         <div class="input-group mb-3 ps-2 pe-2">
                             <span class="input-group-text text-bg-success">$</span>
-                            <InputNumber @bind-Value="oferta.Monto" class="form-control text-success strong" placeholder="Cantidad"></InputNumber>
+                            <CurrencyInput TValue="decimal" @bind-Value="@oferta.Monto" Locale="es-ES" HideCurrencySymbol="true" class="form-control text-success" Placeholder="Precio" />
                             <ValidationMessage For="() => oferta.Monto"></ValidationMessage>
                             <span class="input-group-text text-success">.00</span>
                         </div>
+                        <div class="input-group d-flex flex-wrap mb-3 ps-2 pe-2">
+                            <ValidationMessage For="() => oferta.FormaDePago"></ValidationMessage>
+                            @foreach (var formadepago in FormasDePago)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input m-2" @onclick='(() => oferta.FormaDePago = formadepago)' type="radio" name="@($"radio{IdProducto}")" id="@($"radio{IdProducto}")">
+                                    <label class="form-check-label m-2" for="@($"radio{IdProducto}")">@formadepago</label>
+                                </div>
+                            }
+                        </div>
                     </div>
-                        <div class="grid gap-2 d-lg-flex flex-wrap justify-content-center">
-                        @if (ShowCloseButton)
-                        {
-                            <button type="button" class="btn btn-secondary mb-3" @onclick="Close">Cancelar</button>
-                        }
+                    <div class="grid gap-4 d-lg-flex flex-wrap justify-content-center">
                         @if (OnSave.HasDelegate)
                         {
-                            <Tooltip Class="d-inline-block" Title="La oferta debe superar el monto minimo"role="button">
-                                        <button type="submit" class="btn btn-primary mb-3" disabled="@(oferta.Monto <= Minimun)">Confirmar</button>
-                            </Tooltip>
+                            if (!isLoading)
+                            {
+                                <Tooltip Class="d-inline-block" Title="La oferta debe superar el monto minimo" role="button">
+                                    <button type="button" class="btn btn-warning p-2 mb-3 mx-1" data-bs-toggle="modal" data-bs-target="#@($"modal{IdProducto}")" disabled="@(oferta.Monto <= Minimun)"><i class="fa-regular fa-circle-check fa-xl mx-1"></i> Ofertar</button>
+                                </Tooltip>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-warning p-2 mb-3" disabled><span class="spinner-border fs-4 spinner-border-sm" style="width: 1.1rem; height: 1.5rem;" aria-hidden="true"></span>Cargando</button>
+                            }
                         }
-                        </div>
-                </EditForm>
+                        @if (ShowCloseButton)
+                        {
+                            if (!isLoading)
+                            {
+                                <button type="button" class="btn btn-secondary p-2 mb-3" @onclick="Close"><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-secondary p-2 mb-3" disabled><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</button>
+                            }
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="modal fade" id="@($"modal{IdProducto}")" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="@($"modal{IdProducto}")" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="@($"modalLabel{IdProducto}")">Confirmar oferta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta seguro que quiere ofertar @(oferta.Monto.ToString("C"))?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning p-2" data-bs-dismiss="modal"><i class="fa-regular fa-circle-check fa-xl mx-1"></i> Confirmar</button>
+                    <button type="button" class="p-2 btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-ban fa-xl mx-1"></i>Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
 @code {
     [Parameter] public bool IsVisible { get; set; }
     [Parameter] public string Title { get; set; }
@@ -41,8 +85,11 @@
     [Parameter] public EventCallback OnClose { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public decimal Minimun { get; set; }
+    [Parameter] public string[] FormasDePago { get; set; }
+    [Parameter] public int IdProducto { get; set; }
     public OfertaViewModel oferta { get; set; } = new();
     public bool isButtonDisabled { get; set; } = true;
+    public bool isLoading { get; set; } = false;
 
     private string ModalClass => IsVisible ? "show" : "";
 
@@ -54,6 +101,7 @@
 
     private async Task Save()
     {
+        isLoading = true;
         await OnSave.InvokeAsync(oferta);
     }
 

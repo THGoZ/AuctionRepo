@@ -8,6 +8,8 @@
 @using AuctionBlazorWebApp.Models.ViewModels
 @using AuctionBlazorWebApp.Components
 @using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@using System.Linq.Expressions
 @inject IJSRuntime JSRuntime
 @inject APIService apiClient
 @attribute [Authorize]
@@ -26,49 +28,68 @@ else
     <PageTitle>Productos</PageTitle>
             <h1 class="">Productos disponibles</h1>
 }
-    <div class="d-flex justify-content-end mx-5">
-        <div class="input-group mt-1 mb-3">
-            <span class="input-group-text border-0 bg-body-tertiary" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+    <div class="d-flex mx-1 mb-3 align-items-center flex-wrap flex-md-nowrap flex-lg-nowrap">
+        <div class="input-group my-2 me-2 pb-1">
+            <span class="input-group-text border-0 bg-body-tertiary" id="basic-addon1">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
             <div class="form-floating">
                 <input type="search" class="form-control rounded-end-2" id="floatingInput" autofocus @bind="search" @bind:event="oninput" placeholder="Buscar..." />
-                <label for="floatingInput">Buscar</label>
+                <label for="floatingInput" >Buscar</label>
             </div>
         </div>
-        <div class="dropdown m-2 shadow">
-            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
-                <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
-            </button>
-            <div class="dropdown-menu px-3" style="">
-                <h6 class="dropdown-header text-warning-emphasis">Filtrar productos</h6>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Con ofertas
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Sin ofertas
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Todos
-                    </label>
+        <div class="align-self-center d-flex flex-row">
+            <div class="dropdown me-2">
+                <button class="btn dropdown-toggle text-start bg-body-tertiary shadow rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+                    <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
+                </button>
+                <div class="dropdown-menu px-3">
+                    <h6 class="dropdown-header text-warning-emphasis">Filtrar productos</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" @onclick='(() => SelectedFilter = "Con ofertas")' type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">Con ofertas</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" @onclick='(() => SelectedFilter = "Sin ofertas")' type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">Sin ofertas</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" @onclick='(() => SelectedFilter = "")' type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
+                        <label class="form-check-label" for="flexRadioDefault3">Todos</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="dropdown m-2 shadow">
-            <button class="btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-sort fa-2x mx-1" style="color: #FFD43B;"></i> Ordenar
-            </button>
-            <div class="dropdown-menu" style="">
-                <h6 class="dropdown-header">Ordenar por</h6>
-                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Precio</a>
-                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Cantidad de ofertas</a>
-                <a class="dropdown-item"><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Nombre</a>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle text-start bg-body-tertiary shadow rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-sort fa-2x mx-1" style="color: #FFD43B;"></i> Ordenar
+                </button>
+                <div class="dropdown-menu">
+                    <h6 class="dropdown-header">Ordenar por</h6>
+                    @if (SortField != "PrecioBase")
+                    {
+                        <button class="dropdown-item" @onclick='(() => SetSort("PrecioBase", "desc"))'><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Precio</button>
+                    }
+                    else
+                    {
+                        <button class="dropdown-item" @onclick='(() => SetSort("PrecioBase", "asc"))'><i class="fa-solid fa-sort-@(SortOrder == "asc" ? "up" : "down") mx-2" style="color: #FFD43B;"></i>Precio</button>
+                    }
+                    @if (SortField != "CantidadDeOfertas")
+                    {
+                        <button class="dropdown-item" @onclick='(() => SetSort("CantidadDeOfertas", "desc"))'><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Cantidad de ofertas</button>
+                    }
+                    else
+                    {
+                        <button class="dropdown-item" @onclick='(() => SetSort("CantidadDeOfertas", "asc"))'><i class="fa-solid fa-sort-@(SortOrder == "asc" ? "up" : "down") mx-2" style="color: #FFD43B;"></i>Cantidad de ofertas</button>
+                    }
+                    @if (SortField != "Nombre")
+                    {
+                        <button class="dropdown-item" @onclick='(() => SetSort("Nombre", "desc"))'><i class="fa-solid fa-sort mx-2" style="color: #FFD43B;"></i>Nombre</button>
+                    }
+                    else
+                    {
+                        <button class="dropdown-item" @onclick='(() => SetSort("Nombre", "asc"))'><i class="fa-solid fa-sort-@(SortOrder == "asc" ? "up" : "down") mx-2" style="color: #FFD43B;"></i>Nombre</button>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -77,7 +98,7 @@ else
         {
             for (int i = 0; i < int.Parse(productcount); i++)
             {
-                <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
+                <div class="col-md-3 gap-5 mb-3 mt-3">
                     <div class="col shadow-lg rounded-top-3">
                         <div class="card-sl">
                             <div class="image-container">
@@ -142,6 +163,9 @@ else
     private bool showOnly;
     private SubastaAPI? subasta = new();
     private string? search;
+    public string SelectedFilter { get; set; } = "Todos";
+    public string SortField { get; set; } = "";
+    public string SortOrder { get; set; } = "none";
 
     IQueryable<ProductoAPI>? Filteredproductos
     {
@@ -151,7 +175,34 @@ else
 
             if (!string.IsNullOrEmpty(search))
             {
-                result = itemsqueriable.Where(c => c.Nombre.Contains(search, StringComparison.OrdinalIgnoreCase));
+                result = itemsqueriable.Where(c => c.Nombre.Contains(search, StringComparison.OrdinalIgnoreCase) || c.Descripcion.Contains(search, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (SelectedFilter == "Con ofertas")
+            {
+                result = result.Where(c => c.CantidadDeOfertas > 0);
+            }
+            else if (SelectedFilter == "Sin ofertas")
+            {
+                result = result.Where(c => c.CantidadDeOfertas == 0);
+            }
+
+            if (!string.IsNullOrEmpty(SortField))
+            {
+                {
+                    var parameter = Expression.Parameter(typeof(ProductoAPI), "c");
+                    var property = Expression.Property(parameter, SortField);
+                    var orderByExpression = Expression.Lambda(property, parameter);
+
+
+                    var methodName = SortOrder == "asc" ? "OrderBy" : "OrderByDescending";
+                    var resultMethod = typeof(Queryable).GetMethods()
+                        .First(m => m.Name == methodName && m.GetParameters().Length == 2)
+                        .MakeGenericMethod(typeof(ProductoAPI), property.Type);
+
+
+                    result = (IQueryable<ProductoAPI>)resultMethod.Invoke(null, new object[] { result, orderByExpression });
+                }
             }
 
             return result;
@@ -177,7 +228,7 @@ else
 
     private async Task LoadProducts()
     {
-        if (auction is not null && auction != "65534")
+        if (auction is not null)
         {
             products = await apiClient.GetProductsEnabledOfAuctionWithOferta(int.Parse(auction));
             itemsqueriable = products.AsQueryable();
@@ -201,5 +252,12 @@ else
     private async Task ObtainSubasta(int id)
     {
         subasta = await apiClient.GetAuction(id);
+    }
+
+    public void SetSort(string field, string order)
+    {
+        SortField = field;
+        SortOrder = SortOrder == "asc" ? "desc" : "asc";
+        StateHasChanged();
     }
 }

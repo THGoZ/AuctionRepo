@@ -90,6 +90,20 @@ h1:focus {
         box-shadow: 0 0 0 0.25rem rgba(26, 26, 26, 0.25);
     }
 
+.form-floating > input:not(:focus):placeholder-shown + label {
+    color: #878787;
+    background: none;
+}
+
+.form-floating > input + label:after {
+    color: white;
+    background: none !important;
+}
+
+[data-bs-theme=dark] .form-floating > label, [data-bs-theme=dark] .form-floating > .form-control:focus ~ label, [data-bs-theme=dark] .form-floating > .form-control:not(:placeholder-shown) ~ label, [data-bs-theme=dark] .form-floating > .form-control-plaintext ~ label, [data-bs-theme=dark] .form-floating > .form-select ~ label {
+    color: #9fa0a1;
+}
+
 [data-bs-theme=dark] .form-control::placeholder {
     color: #949494;
 }

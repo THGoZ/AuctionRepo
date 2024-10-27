@@ -1,6 +1,7 @@
 ﻿@page "/newProducto/{auction}"
 
 @using APIService.Models
+@using AuctionBlazorWebApp.Components.Pages.Components
 @using AuctionBlazorWebApp.Models.ViewModels
 @using System.Security.Claims
 @using APIService
@@ -13,25 +14,29 @@
 @attribute [Authorize]
 
 <div class="container py-2">
-    <div class="card">
-        <div class="card-header justify-content-center">
-            Agregar nuevo producto
+    <div class="card shadow">
+        <div class="d-flex p-0 card-header">
+            <h3 class="p-3 mb-3 pb-md-0 px-md-2">
+                Agregar nuevo producto
+            </h3>
         </div>
         <div class="card-body">
-            <h5 class="card-title m-2">Ingrese los datos del producto</h5>
+            <p class="card-title fs-4 my-2 text-primary-emphasis fw-bold">Datos del producto:</p>
             <EditForm Model="@addProductModel" OnValidSubmit="AddProduct">
                 <DataAnnotationsValidator />
                 <div class="row g-3 align-items-center mt-2 mb-1">
                     <div class="row">
-                        <label for="inputPassword6" class="col-form-label">Nombre del producto</label>
+                        <label for="inputPassword6" class="col-form-label">Nombre</label>
                     </div>
                     <div class="col-auto mt-1 mb-2">
-                        <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Nombre"></InputText>
+                        <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Ingrese el nombre..."></InputText>
+                        <div class="mt-2 mx-2">
                         <ValidationMessage For="() => addProductModel.Nombre"></ValidationMessage>
+                        </div>
                     </div>
                     <div class="col-auto mt-1 mb-2">
                         <span id="passwordHelpInline" class="form-text">
-                            Debe tener por lo menos 8 caracteres.
+                            Debe tener por lo menos 3 caracteres.
                         </span>
                     </div>
                     <div class="col-auto mt-1 mb-2">
@@ -41,12 +46,14 @@
                     <div class="row">
                         <label for="inputPassword6" class="col-form-label">Descripcion</label>
                     </div>
-                    <div class="mb-2 m-0 row text-justify">
+                    <div class="m-0 row text-justify">
                         <InputTextArea @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Ingrese una descripcion..." rows="3"></InputTextArea>
-                        <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
                     </div>
-                    <div id="descriptionHelpBlock" class=" mt-2 mb-2 form-text">
-                        Describe las caracteristicas del producto, debe contener por lo menos 12 caracteres.
+                    <div class="ms-2 mt-2">
+                    <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
+                    <div id="descriptionHelpBlock" class="mb-2 form-text">
+                        Describe las caracteristicas del producto, debe contener por lo menos 6 caracteres.
+                    </div>
                     </div>
                 </div>
                 <div class="row g-3 mt-2 mb-1 align-items-center">
@@ -55,9 +62,9 @@
                     </div>
                     <div class="col-auto mt-1 mt-2">
                         <div class="input-group mb-3">
-                            <span class="input-group-text text-success">$</span>
+                            <span class="input-group-text bg-success">$</span>
                             <CurrencyInput TValue="decimal" @bind-Value="@addProductModel.PrecioBase" Locale="es-ES" HideCurrencySymbol="true" class="form-control" Placeholder="Precio" />
-                            <span class="input-group-text">.00</span>
+                            <span class="input-group-text bg-success">.00</span>
                         </div>
                     </div>
                     <div class="col-auto m-2 mt-2 mb-1">
@@ -66,20 +73,40 @@
                 </div>
                 <div class="row g-3 mt-2 mb-1 align-items-center">
                     <div class="col-sm m-2 mb-2">
-                        <div class="input-group mb-3 px-2 py-2 rounded-pill bg-secondary shadow-sm">
+                        @if(ErrorMessage != null)
+                        {
+                            <div class="fw-semibold my-2 mx-2" style="color:red;">@ErrorMessage</div>
+                        }
+                        <div class="my-2 mx-2">
+                        <ValidationMessage For="() => addProductModel.Imagen"></ValidationMessage>
+                        </div>
+                        <div class="input-group mb-3 px-2 py-2 rounded-pill shadow-sm" style="background:#404040;">
                             <InputFile id="upload" hidden accept=".jpeg, .jpg, .png" OnChange="FileUploaded"></InputFile>
-                            <label id="upload-label" class="font-weight-light text-body-tertiary">Elige un archivo</label>
                             <div class="input-group-append">
-                                <label for="upload" class="btn btn-outline-secondary m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-primary-emphasis"></i><small class="text-uppercase font-weight-bold text-primary-emphasis">Elige un archivo</small></label>
+                                <label for="upload" class="btn btn-outline-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2"></i><small class="text-uppercase font-weight-bold ms-1">Elige un archivo</small></label>
+                                <label class="px-2"><small class="text-uppercase font-weight-bold text-body-tertiary fst-italic">@FileName</small></label>
                             </div>
                         </div>
                         <p class="text-white text-center"><em>La imagen se mostrara abajo.</em></p>
                         <div class="image-area mt-4"><img id="imageResult" src="@GetPreviewImage()" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
                     </div>
                 </div>
-                <div class="d-grid gap-2 d-md-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="" class="btn btn-primary">Cancelar</a>
+                <div class="d-grid gap-4 d-md-flex justify-content-center my-3">
+                    @if (!isLoading)
+                    {
+                        <Confirmation Title="Agregar producto" Body="Esta seguro que quiere agregar este producto?" ButtonText="Confirmar">
+                            <button type="submit" class="p-2 btn btn-warning" data-bs-dismiss="modal"><i class="fa-regular fa-circle-check fa-xl mx-1"></i> Guardar</button>
+                        </Confirmation>
+                        <a href="" class="p-2 btn btn-secondary"><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</a>
+                    }
+                    else
+                    {
+                        <button type="submit" disabled class="p-2 btn btn-warning">
+                            <span class="spinner-border fs-4 spinner-border-sm mx-1" style="width: 1.2rem; height: 1.2rem;" aria-hidden="true"></span>
+                            <span role="status"> Cargando</span>
+                        </button>
+                        <button disabled class="p-2 btn btn-secondary"><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</button>
+                    }
                 </div>
             </EditForm>
         </div>
@@ -92,10 +119,12 @@
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private ProductoViewModel addProductModel = new();
-    const int MAX_FILESIZE = 5000 * 1024;
-    public string ErrorMessage { get; set; } = "";
+    const int MAX_FILESIZE = 1000 * 1024;
+    public string FileName { get; set; } = "Ninguna imagen seleccionada";
+    public string ErrorMessage { get; set; }
     public byte[] imageData { get; set; } = null;
     public string FileType { get; set; } = "";
+    public bool isLoading { get; set; } = false;
     [Inject] protected ToastService ToastService { get; set; }
 
     public async Task FileUploaded(InputFileChangeEventArgs e)
@@ -109,10 +138,21 @@
             {
                 using (var memoryStream = new MemoryStream())
                 {
+                    if (Path.GetExtension(browserFile.Name) != ".jpeg" &&
+                        Path.GetExtension(browserFile.Name) != ".jpg" &&
+                        Path.GetExtension(browserFile.Name) != ".png")
+                    {
+                        var ex = new Exception("Tipo de archivo invalido");
+                        ErrorMessage = ex.Message;
+                        throw ex;
+                    }
+
                     var fileStream = browserFile.OpenReadStream(MAX_FILESIZE);
                     await fileStream.CopyToAsync(memoryStream);
                     imageData = memoryStream.ToArray();
+                    addProductModel.Imagen = imageData;
                     FileType = Path.GetExtension(browserFile.Name);
+                    FileName = browserFile.Name;
                 }
                 GetPreviewImage();
             }
@@ -135,6 +175,7 @@
 
     private async Task AddProduct()
     {
+        isLoading = true;
         int subastaid = int.Parse(auction);
         var authenticationState = await authenticationStateTask;
         var user = authenticationState.User;
@@ -158,6 +199,7 @@
 
             };
         var subastachehck = await apiClient.GetAuction(subastaid);
+        isLoading = false;
 
         if(subastachehck.Estado is not null)
         {
@@ -172,7 +214,6 @@
             navManager.NavigateTo("/");
 
         }
-
-        
+    
     }
 }

@@ -1,5 +1,8 @@
 ﻿@using BlazorBootstrap
 @using System.Security.Claims
+@inject NavigationManager navManager
+@using APIService
+@inject APIService apiClient
 @inherits LayoutComponentBase
 
 <div class="page">
@@ -25,6 +28,31 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="d-sm-none">
+                        <ul class="navbar-nav me-auto d-flex">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Acciones</a>
+                                <div class="dropdown-menu ps-2 fs-5">
+                                    <a class="nav-link" href="closed">
+                                        <i class="fa-solid fa-clipboard-list"></i>
+                                        Resultados
+                                    </a>
+                                    <a class="nav-link" @onclick="Navatoproducs">
+                                        <i class="fa-solid fa-boxes-stacked"></i>
+                                        Productos
+                                    </a>
+                                    <a class="nav-link" href="userProducts">
+                                        <i class="fa-solid fa-box"></i>
+                                        Mis productos
+                                    </a>
+                                    <a class="nav-link" href="userbiddedProducts">
+                                        <i class="fa-solid fa-tags"></i>
+                                        Mis ofertas
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                     <ul class="navbar-nav d-flex">
                     <AuthorizeView>
                         <NotAuthorized>
@@ -68,3 +96,10 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+@code {
+
+    public async void Navatoproducs()
+    {
+        navManager.NavigateTo($"/products/{await apiClient.GetProductoCount()}", true);
+    }
+}

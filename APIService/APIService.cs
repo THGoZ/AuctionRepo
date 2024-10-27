@@ -2,19 +2,9 @@
 using Auction.Core.Entities;
 using AuctionAPIC.Models.APIModels;
 using AuctionWebApi.Domain.DTO;
-using Azure;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace APIService
 {
@@ -164,7 +154,7 @@ namespace APIService
 
             if (nofilter is not null)
             {
-                var filter = nofilter.Where(x => x.IdSubasta == SubastaId && x.EstadoDeSolicitud != null).ToList();
+                var filter = nofilter.Where(x => x.IdSubasta == SubastaId && x.EstadoDeSolicitud == true).ToList();
                 foreach (var producto in filter)
                 {
                     producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
@@ -318,6 +308,11 @@ namespace APIService
         public async Task<int?> GetProductoCountOfAuction(int id)
         {
             return await _httpClient.GetFromJsonAsync<int>($"/api/Subasta/cantidad/{id}");
+        }
+
+        public async Task<string[]?> GetFormasDePagoOfAuction(int id)
+        {
+            return await _httpClient.GetFromJsonAsync <string[]>($"/api/Subasta/formaspagos/{id}");
         }
 
         public async Task<List<SubastaAPI>?> GetIncomingAuctions()

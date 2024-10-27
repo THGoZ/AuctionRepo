@@ -88,6 +88,10 @@
     border-radius: 10px !important;
 }
 
+.carta:hover {
+    height: 270px;
+}
+
 @media (max-width: 767.98px) {
     .card .img-fit {
     }

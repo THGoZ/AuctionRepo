@@ -2,14 +2,15 @@
 @using APIService
 @using AuctionBlazorWebApp.Models.Helper
 @using AuctionBlazorWebApp.Models.ViewModels
+@using BlazorBootstrap
 @inject APIService apiClient
 @inject IJSRuntime JS
 
 
 @if (ProductRowItem is not null)
 {
-        <div class="col-md-3 gap-5 mb-3 mt-3 container-lg">
-            <div class="col shadow-lg rounded-top-3">
+    <div class="col-md-3 gap-5 mb-3 mt-3">
+        <div class="col shadow-lg rounded-top-3" style="cursor:pointer;">
             <div class="card-sl">
                 <div class="image-container">
                     <div class="first">
@@ -30,8 +31,10 @@
             <div class="card-heading bg-body-secondary">
                 @ProductRowItem.Nombre
             </div>
-                <div class="card-text text-body-tertiary bg-body-secondary">
-                @ProductRowItem.Descripcion
+            <div class="card-text text-body-tertiary bg-body-secondary text-truncate" style="white-space: pre-wrap;">
+                <span class="d-inline-block text-truncate" style="max-height: 42px; max-width: 370px;">
+                    @ProductRowItem.Descripcion
+                </span>
             </div>
                 <div class="card-text text-success bg-body-secondary">
                     @ProductRowItem.PrecioBase.ToString("C")
@@ -41,8 +44,8 @@
                 @if (!HasMadeOferta && IsSubastaOpen)
                 {
                     <a class="card-button text-decoration-none fw-bold" @onclick="ShowModal">Ofertar</a>
-                    <OfertaModal  IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase">
-                        <p class="text-body-secondary">La oferta debe ser mayor a <span class="text-success">$@ProductRowItem.PrecioBase</span> </p>
+                    <OfertaModal  IsVisible="@isModalVisible" Title="@ProductRowItem.Nombre" OnSave="SaveChanges" OnClose="CloseModal" Minimun="@ProductRowItem.PrecioBase" FormasDePago="@FormasDePago" IdProducto="@ProductRowItem.IdProducto">
+                    <p class="text-body-secondary">La oferta debe ser mayor a <span class="text-success">@ProductRowItem.PrecioBase.ToString("C")</span> </p>
                     </OfertaModal>
                 }
                 else
@@ -69,11 +72,14 @@
     private bool isMakeOferta = false;
     private bool HasMadeOferta;
     private bool IsSubastaOpen;
+    public string[]? FormasDePago;
+    [Inject] protected ToastService ToastService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         HasMadeOferta = await CheckOfertas();
         IsSubastaOpen = await CheckIfSubastaOpen();
+        FormasDePago = await apiClient.GetFormasDePagoOfAuction((int)ProductRowItem.IdSubasta);
     }
 
     private string? LoadImage()//para cargar en lista
@@ -113,7 +119,9 @@
         HasMadeOferta = await CheckOfertas();
         IsSubastaOpen = await CheckIfSubastaOpen();
         CloseModal();
+        ToastService.Notify(new(ToastType.Success, $"Exito! se realizo la oferta correctamente"));
         await UpdateProduct.InvokeAsync();
+        StateHasChanged();
     }
 
     private async Task<bool> CheckOfertas()
