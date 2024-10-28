@@ -25,7 +25,6 @@ namespace AuctionDesktopProgram
             _serviceProvider = serviceProvider;
             InitializeComponent();
 
-            // Muestra formHome en panel2 al iniciar el formulario Mainpage
             var formHome = _serviceProvider.GetRequiredService<FormHome>();
             openPanel2(formHome);
         }
@@ -80,6 +79,12 @@ namespace AuctionDesktopProgram
         {
             var formInformes = _serviceProvider.GetService<Informes>();
             openPanel2(formInformes);
+        }
+
+        private void inicioButton_Click(object sender, EventArgs e)
+        {
+            var formHome = _serviceProvider.GetRequiredService<FormHome>();
+            openPanel2(formHome);
         }
     }
 

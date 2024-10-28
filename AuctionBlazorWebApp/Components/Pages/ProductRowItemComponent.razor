@@ -2,6 +2,7 @@
 @using APIService
 @using AuctionBlazorWebApp.Models.Helper
 @using AuctionBlazorWebApp.Models.ViewModels
+@using AuctionBlazorWebApp.Components.Pages.Components
 @using BlazorBootstrap
 @inject APIService apiClient
 @inject IJSRuntime JS
@@ -10,7 +11,7 @@
 @if (ProductRowItem is not null)
 {
     <div class="col-md-3 gap-5 mb-3 mt-3">
-        <div class="col shadow-lg rounded-top-3" style="cursor:pointer;">
+        <div class="col shadow-lg rounded-top-3" data-bs-toggle="modal" data-bs-target="@($"#details{ProductRowItem.IdProducto}")" style="cursor:pointer;">
             <div class="card-sl">
                 <div class="image-container">
                     <div class="first">
@@ -56,6 +57,16 @@
                 }
             </div>
         </div>
+    <ProductoModal 
+        id=@($"details{ProductRowItem.IdProducto}") 
+        IdProducto="@ProductRowItem.IdProducto"
+        Nombre="@ProductRowItem.Nombre" 
+        Descripcion="@ProductRowItem.Descripcion"
+        Fecha="@ProductRowItem.FechaSolicitud.ToString()"
+        Imagen="@LoadImage()"
+        IdSubasta="(int)ProductRowItem.IdSubasta"
+        Ofertas="ProductRowItem.CantidadDeOfertas"
+        />
 }
 
 

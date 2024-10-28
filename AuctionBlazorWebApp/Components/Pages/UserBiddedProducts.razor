@@ -13,20 +13,28 @@
 <PageTitle>Mis ofertas</PageTitle>
 
 <h3 class="p-2 mt-3 mx-2">Tus ofertas</h3>
-<div class="container-fluid table-responsive-xxl clearfix px-1">
+<div class="container-fluid clearfix px-1">
     @if (itemsQueryable != null)
     {
         @if (itemsQueryable.Count() != 0)
         {
-            <div class="d-flex float-end mx-1">
-                    <div class="dropdown mx-4 mt-1 mb-3 shadow">
-                    <button class=" btn dropdown-toggle text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
+            <div class="row d-flex mx-1">
+                <div class="d-flex flex-md-nowrap flex-wrap align-items-center">
+                    <div class="input-group mt-1 mb-3 flex-grow-1" style="min-width: 200px;">
+                        <span class="input-group-text border-0 bg-body-tertiary" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <div class="form-floating">
+                            <input type="search" class="form-control rounded-end-2" id="floatingInput" autofocus @bind="search" @bind:event="oninput" placeholder="Buscar..." />
+                            <label for="floatingInput">Buscar</label>
+                        </div>
+                    </div>
+                    <div class="dropdown mx-2 mt-1 mb-3">
+                        <button class=" btn dropdown-toggle shadow text-start text-md-start bg-body-tertiary  rounded-2 focus-ring-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-x:1rem;">
                             <i class="fa-solid fa-filter fa-2x mx-1" style="color: #FFD43B;"></i> Filtrar
                         </button>
                         <div class="dropdown-menu px-3" style="">
                             <h6 class="dropdown-header text-warning-emphasis">Filtrar productos</h6>
                             <div class="form-check">
-                            <input class="form-check-input" @onchange="@(() => selectedOption = "going")" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <input class="form-check-input" @onchange="@(() => selectedOption = "going")" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     En subasta
                                 </label>
@@ -51,13 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mt-1 mb-3">
-                        <span class="input-group-text border-0 bg-body-tertiary" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <div class="form-floating">
-                            <input type="search" class="form-control rounded-end-2" id="floatingInput" autofocus @bind="search" @bind:event="oninput" placeholder="Buscar..." />
-                            <label for="floatingInput">Buscar</label>
-                        </div>
-                    </div>
+                </div>
             </div>
         }
     }
@@ -94,6 +96,7 @@
     }
     else if (itemsQueryable.Count() != 0)
     {
+        <div class="row table-responsive">
         <QuickGrid Class="table table-striped table-hover mb-2 shadow border border-2"
                    Items="@Filteredproductos"
                    ItemKey="@(x=> x.IdProducto)"
@@ -141,7 +144,7 @@
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Factura</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -152,8 +155,9 @@
                                                  ProductoNombre="@context.Nombre" />
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-warning">Ok</button>
+                                            <div class="vr"></div>
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     </div>
                                 </div>
                             </div>
@@ -177,7 +181,8 @@
                     }
                 </ChildContent>
             </TemplateColumn>
-            <TemplateColumn Title="ESTADO EN SUBASTA">
+            <TemplateColumn Title="ESTADO EN SUBASTA"
+                                Class="text-center align-middle">
                 <div class="text-center align-middle text-wrap">
                 @if (context.Status == "sold" || context.Status == "notsold")
                 {
@@ -191,6 +196,7 @@
             </TemplateColumn>
 
         </QuickGrid>
+        </div>
         <Paginator State="@pagination" />
     }
     else

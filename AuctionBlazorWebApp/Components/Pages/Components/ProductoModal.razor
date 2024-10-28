@@ -1,0 +1,47 @@
+﻿
+<div class="modal fade" id="@id" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Producto N° <span class="text-dark-emphasis">@IdProducto</span></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="row d-flex g-3">
+                            <div class="col-md-5 clearfix float-md-start">
+                                <img src="@Imagen" class="img-fluid rounded border border-3 border-dark-subtle" alt="...">
+                                <p class="card-text"><small class="text-body-secondary">Agregado @Fecha</small></p>
+                                <a class="fs-5 mt-1 text-decoration-underline text-primary-emphasis">En subasta N°@IdSubasta</a>
+                            </div>
+                            <div class="col-md-5">
+                                <h2 class="card-title mb-2">@Nombre</h2>
+                                <p class="fs-4 text-primary-emphasis mt-2 mb-2">@Descripcion</p>
+                                <p class="fs-4 text-warning-emphasis mt-2 mb-2">Ofertas: @Ofertas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-3">
+                    <button type="button" class="btn btn-warning">Ofertar</button>
+                    <div class="vr"></div>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string id { get; set; } = "";
+    [Parameter] public int IdProducto { get; set; }
+    [Parameter] public string Nombre { get; set; } = "";
+    [Parameter] public string Descripcion { get; set; } = "";
+    [Parameter] public string Imagen { get; set; } = "";
+    [Parameter] public string Fecha { get; set; } = "";
+    [Parameter] public int IdSubasta { get; set; }
+    [Parameter] public int Ofertas { get; set; }
+}

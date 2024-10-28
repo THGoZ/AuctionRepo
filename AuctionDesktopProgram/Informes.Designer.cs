@@ -156,7 +156,7 @@
             flowLayoutPanel1.Location = new Point(-1, 2);
             flowLayoutPanel1.Margin = new Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(855, 715);
+            flowLayoutPanel1.Size = new Size(855, 750);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // kryptonCheckButton1
@@ -235,7 +235,7 @@
             panel2.Location = new Point(0, 49);
             panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(854, 660);
+            panel2.Size = new Size(854, 701);
             panel2.TabIndex = 5;
             // 
             // cyberGroupBox2
@@ -265,7 +265,7 @@
             cyberGroupBox2.RGB = false;
             cyberGroupBox2.Rounding = true;
             cyberGroupBox2.RoundingInt = 3;
-            cyberGroupBox2.Size = new Size(852, 710);
+            cyberGroupBox2.Size = new Size(852, 750);
             cyberGroupBox2.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox2.TabIndex = 1;
             cyberGroupBox2.Tag = "Cyber";
@@ -277,7 +277,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(872, 731);
+            ClientSize = new Size(872, 761);
             Controls.Add(cyberGroupBox2);
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom2;

@@ -73,7 +73,7 @@ namespace AuctionDesktopProgram
         private void btnBuscar_Click(object sender, EventArgs e)
         {
 
-            string filtroDescripcion = txtFiltroDescripcion.Text.Trim();
+            string filtroDescripcion = txtFiltroDescipcion.Text.Trim();
             CargarSubastas(filtroDescripcion);
         }
 

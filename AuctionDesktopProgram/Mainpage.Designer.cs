@@ -40,11 +40,10 @@ namespace AuctionDesktopProgram
             button5 = new KryptonButton();
             panelSideMenu = new Panel();
             panel1 = new Panel();
-            kryptonPictureBox1 = new KryptonPictureBox();
+            inicioButton = new KryptonButton();
             panel2 = new Panel();
             panelSideMenu.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)kryptonPictureBox1).BeginInit();
             SuspendLayout();
             // 
             // button2
@@ -59,7 +58,14 @@ namespace AuctionDesktopProgram
             button2.PaletteMode = PaletteMode.Custom;
             button2.Size = new Size(282, 45);
             button2.TabIndex = 2;
-            button2.Values.Text = "RESUMEN DE PRODUCTOS";
+            button2.Values.Image = Properties.Resources.boxes_stacked_solid;
+            button2.Values.ImageStates.ImageCheckedNormal = null;
+            button2.Values.ImageStates.ImageCheckedPressed = null;
+            button2.Values.ImageStates.ImageCheckedTracking = null;
+            button2.Values.ImageStates.ImageNormal = Properties.Resources.boxes_stacked_solid;
+            button2.Values.ImageStates.ImagePressed = Properties.Resources.boxes_stacked_solid_pressed;
+            button2.Values.ImageStates.ImageTracking = Properties.Resources.boxes_stacked_solid1;
+            button2.Values.Text = " RESUMEN DE PRODUCTOS";
             button2.Click += button2_Click;
             // 
             // kryptonCustomPaletteBase1
@@ -81,8 +87,12 @@ namespace AuctionDesktopProgram
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Font = new Font("Noto Sans", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color1 = Color.FromArgb(200, 130, 40);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color2 = Color.FromArgb(200, 130, 40);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Content.ShortText.Color1 = Color.Silver;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Content.ShortText.Color2 = Color.Silver;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Back.Color1 = Color.FromArgb(255, 220, 100);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Back.Color2 = Color.FromArgb(255, 220, 100);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Color2 = Color.White;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonForm.StateNormal.Back.Color1 = Color.White;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonForm.StateNormal.Back.Color2 = Color.White;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonForm.StateNormal.Border.DrawBorders = PaletteDrawBorders.Top | PaletteDrawBorders.Bottom | PaletteDrawBorders.Left | PaletteDrawBorders.Right;
@@ -276,8 +286,14 @@ namespace AuctionDesktopProgram
             button3.Palette = kryptonCustomPaletteBase1;
             button3.PaletteMode = PaletteMode.Custom;
             button3.Size = new Size(282, 45);
+            button3.StateCommon.Back.Image = Properties.Resources.gavel_solid_;
+            button3.StateCommon.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button3.StatePressed.Back.Image = Properties.Resources.gavel_solid__hover_click;
+            button3.StatePressed.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button3.StateTracking.Back.Image = Properties.Resources.gavel_solid__hover;
+            button3.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterLeft;
             button3.TabIndex = 3;
-            button3.Values.Text = "CREAR SUBASTA";
+            button3.Values.Text = " CREAR SUBASTA         ";
             button3.Click += button3_Click;
             // 
             // button4
@@ -289,6 +305,12 @@ namespace AuctionDesktopProgram
             button4.Palette = kryptonCustomPaletteBase1;
             button4.PaletteMode = PaletteMode.Custom;
             button4.Size = new Size(282, 45);
+            button4.StateCommon.Back.Image = Properties.Resources.clipboard_solid;
+            button4.StateCommon.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button4.StatePressed.Back.Image = Properties.Resources.clipboard_solid_click;
+            button4.StatePressed.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button4.StateTracking.Back.Image = Properties.Resources.clipboard_solid_hover;
+            button4.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterLeft;
             button4.TabIndex = 4;
             button4.Values.Text = "INFORMES";
             button4.Click += button4_Click;
@@ -302,8 +324,14 @@ namespace AuctionDesktopProgram
             button5.Palette = kryptonCustomPaletteBase1;
             button5.PaletteMode = PaletteMode.Custom;
             button5.Size = new Size(282, 43);
+            button5.StateCommon.Back.Image = Properties.Resources.check_to_slot_solid;
+            button5.StateCommon.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button5.StatePressed.Back.Image = Properties.Resources.check_to_slot_solid_click;
+            button5.StatePressed.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button5.StateTracking.Back.Image = Properties.Resources.check_to_slot_solid_hover;
+            button5.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterLeft;
             button5.TabIndex = 5;
-            button5.Values.Text = "SOLICITUDES DE PRODUCTOS";
+            button5.Values.Text = "SOLICITUDES";
             button5.Click += button5_Click;
             // 
             // panelSideMenu
@@ -325,26 +353,40 @@ namespace AuctionDesktopProgram
             // panel1
             // 
             panel1.BackColor = Color.Transparent;
-            panel1.Controls.Add(kryptonPictureBox1);
+            panel1.Controls.Add(inicioButton);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(282, 92);
+            panel1.Size = new Size(282, 119);
             panel1.TabIndex = 7;
             // 
-            // kryptonPictureBox1
+            // inicioButton
             // 
-            kryptonPictureBox1.Image = (Image)resources.GetObject("kryptonPictureBox1.Image");
-            kryptonPictureBox1.Location = new Point(0, 0);
-            kryptonPictureBox1.Name = "kryptonPictureBox1";
-            kryptonPictureBox1.Size = new Size(282, 92);
-            kryptonPictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            kryptonPictureBox1.TabIndex = 0;
-            kryptonPictureBox1.TabStop = false;
+            inicioButton.ButtonStyle = ButtonStyle.Custom1;
+            inicioButton.Dock = DockStyle.Fill;
+            inicioButton.Location = new Point(0, 0);
+            inicioButton.Margin = new Padding(0);
+            inicioButton.Name = "inicioButton";
+            inicioButton.Palette = kryptonCustomPaletteBase1;
+            inicioButton.PaletteMode = PaletteMode.Custom;
+            inicioButton.Size = new Size(282, 119);
+            inicioButton.StateCommon.Back.Image = Properties.Resources.LOgo_TUP_png2;
+            inicioButton.StateCommon.Back.ImageStyle = PaletteImageStyle.CenterMiddle;
+            inicioButton.StatePressed.Back.Image = Properties.Resources.LOgo_TUP_png4;
+            inicioButton.StatePressed.Back.ImageStyle = PaletteImageStyle.CenterMiddle;
+            inicioButton.StateTracking.Back.Image = Properties.Resources.LOgo_TUP_png3;
+            inicioButton.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterMiddle;
+            inicioButton.TabIndex = 1;
+            inicioButton.ToolTipValues.Description = "Subastas";
+            inicioButton.ToolTipValues.EnableToolTips = true;
+            inicioButton.ToolTipValues.ToolTipStyle = LabelStyle.ToolTip;
+            inicioButton.Values.Text = "";
+            inicioButton.Click += inicioButton_Click;
             // 
             // panel2
             // 
+            panel2.AutoScroll = true;
             panel2.BackColor = Color.FromArgb(26, 26, 26);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(282, 0);
@@ -374,7 +416,6 @@ namespace AuctionDesktopProgram
             UseDropShadow = true;
             panelSideMenu.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)kryptonPictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -388,5 +429,6 @@ namespace AuctionDesktopProgram
         private Panel panel2;
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
         private Krypton.Toolkit.KryptonPictureBox kryptonPictureBox1;
+        private KryptonButton inicioButton;
     }
 }

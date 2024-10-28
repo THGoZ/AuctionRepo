@@ -105,7 +105,6 @@
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Font = new Font("Poppins", 16.75F);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.OverrideDefault.Back.Color1 = Color.FromArgb(240, 173, 78);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.OverrideDefault.Back.Color2 = Color.FromArgb(240, 173, 78);
-            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.OverrideDefault.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCheckedTracking.Back.Color1 = Color.FromArgb(242, 185, 105);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCheckedTracking.Back.Color2 = Color.FromArgb(242, 185, 105);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCommon.Back.Color1 = Color.FromArgb(240, 173, 78);
@@ -201,13 +200,14 @@
             // 
             kryptonButton1.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom2;
             kryptonButton1.Enabled = false;
-            kryptonButton1.Location = new Point(320, 564);
+            kryptonButton1.Location = new Point(320, 540);
             kryptonButton1.Name = "kryptonButton1";
             kryptonButton1.Palette = kryptonCustomPaletteBase1;
             kryptonButton1.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
             kryptonButton1.Size = new Size(191, 47);
             kryptonButton1.TabIndex = 1;
             kryptonButton1.Values.Text = "Descargar informe";
+            kryptonButton1.Click += buttonGenerateReport_Click;
             // 
             // label1
             // 
@@ -458,7 +458,7 @@
             panel1.Controls.Add(cyberGroupBox2);
             panel1.Controls.Add(cyberGroupBox3);
             panel1.Controls.Add(cyberGroupBox4);
-            panel1.Location = new Point(9, 156);
+            panel1.Location = new Point(9, 146);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
             panel1.Size = new Size(824, 386);
@@ -469,7 +469,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(39, 42, 45);
-            ClientSize = new Size(832, 621);
+            ClientSize = new Size(832, 591);
             Controls.Add(panel1);
             Controls.Add(label2);
             Controls.Add(label1);

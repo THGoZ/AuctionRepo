@@ -15,11 +15,16 @@ namespace AuctionDesktopProgram
     public partial class Solicitudes : Form
     {
         private readonly IProductoBusiness _productoBusiness;
+        private IContainer components;
+        private Krypton.Toolkit.KryptonDataGridView SubastaDataGrid;
         private DataGridViewTextBoxColumn ColumnIdProducto;
         private DataGridViewTextBoxColumn ColumnName;
         private DataGridViewTextBoxColumn ColumnBasePrice;
         private DataGridViewTextBoxColumn ColumnDateOfApplication;
         private Krypton.Toolkit.KryptonDataGridViewCheckBoxColumn ColumnApplicationStatus;
+        private ReaLTaiizor.Controls.ForeverGroupBox foreverGroupBox1;
+        private ReaLTaiizor.Controls.ForeverGroupBox foreverGroupBox2;
+        private Label label5;
         private Producto productoSeleccionado;
 
         public Solicitudes(IProductoBusiness productoBusiness)
@@ -33,11 +38,6 @@ namespace AuctionDesktopProgram
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            crownMenuStrip1 = new ReaLTaiizor.Controls.CrownMenuStrip();
-            iNICIOToolStripMenuItem = new ToolStripMenuItem();
-            cREARSUBASTAToolStripMenuItem = new ToolStripMenuItem();
-            sOLICITUDESToolStripMenuItem = new ToolStripMenuItem();
-            iNFORMESToolStripMenuItem = new ToolStripMenuItem();
             groupBox1 = new ReaLTaiizor.Controls.GroupBox();
             kryptonButtonRechazar = new Krypton.Toolkit.KryptonButton();
             kryptonButtonAceptar = new Krypton.Toolkit.KryptonButton();
@@ -49,71 +49,26 @@ namespace AuctionDesktopProgram
             label2 = new Label();
             kryptonMaskedTextBoxName = new Krypton.Toolkit.KryptonMaskedTextBox();
             label1 = new Label();
-            groupBox2 = new ReaLTaiizor.Controls.GroupBox();
             SubastaDataGrid = new Krypton.Toolkit.KryptonDataGridView();
             ColumnIdProducto = new DataGridViewTextBoxColumn();
             ColumnName = new DataGridViewTextBoxColumn();
             ColumnBasePrice = new DataGridViewTextBoxColumn();
             ColumnDateOfApplication = new DataGridViewTextBoxColumn();
             ColumnApplicationStatus = new Krypton.Toolkit.KryptonDataGridViewCheckBoxColumn();
-            crownMenuStrip1.SuspendLayout();
+            foreverGroupBox1 = new ReaLTaiizor.Controls.ForeverGroupBox();
+            foreverGroupBox2 = new ReaLTaiizor.Controls.ForeverGroupBox();
+            label5 = new Label();
             groupBox1.SuspendLayout();
             ((ISupportInitialize)kryptonPictureBoxImagen).BeginInit();
-            groupBox2.SuspendLayout();
             ((ISupportInitialize)SubastaDataGrid).BeginInit();
+            foreverGroupBox1.SuspendLayout();
+            foreverGroupBox2.SuspendLayout();
             SuspendLayout();
-            // 
-            // crownMenuStrip1
-            // 
-            crownMenuStrip1.BackColor = Color.Orange;
-            crownMenuStrip1.ForeColor = Color.FromArgb(220, 220, 220);
-            crownMenuStrip1.ImageScalingSize = new Size(20, 20);
-            crownMenuStrip1.Items.AddRange(new ToolStripItem[] { iNICIOToolStripMenuItem, cREARSUBASTAToolStripMenuItem, sOLICITUDESToolStripMenuItem, iNFORMESToolStripMenuItem });
-            crownMenuStrip1.Location = new Point(0, 0);
-            crownMenuStrip1.Name = "crownMenuStrip1";
-            crownMenuStrip1.Padding = new Padding(3, 2, 0, 2);
-            crownMenuStrip1.Size = new Size(1267, 28);
-            crownMenuStrip1.TabIndex = 0;
-            crownMenuStrip1.Text = "crownMenuStrip1";
-            crownMenuStrip1.ItemClicked += crownMenuStrip1_ItemClicked;
-            // 
-            // iNICIOToolStripMenuItem
-            // 
-            iNICIOToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-            iNICIOToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
-            iNICIOToolStripMenuItem.Name = "iNICIOToolStripMenuItem";
-            iNICIOToolStripMenuItem.Size = new Size(66, 24);
-            iNICIOToolStripMenuItem.Text = "INICIO";
-            // 
-            // cREARSUBASTAToolStripMenuItem
-            // 
-            cREARSUBASTAToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-            cREARSUBASTAToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
-            cREARSUBASTAToolStripMenuItem.Name = "cREARSUBASTAToolStripMenuItem";
-            cREARSUBASTAToolStripMenuItem.Size = new Size(134, 24);
-            cREARSUBASTAToolStripMenuItem.Text = "CREAR SUBASTA";
-            // 
-            // sOLICITUDESToolStripMenuItem
-            // 
-            sOLICITUDESToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-            sOLICITUDESToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
-            sOLICITUDESToolStripMenuItem.Name = "sOLICITUDESToolStripMenuItem";
-            sOLICITUDESToolStripMenuItem.Size = new Size(111, 24);
-            sOLICITUDESToolStripMenuItem.Text = "SOLICITUDES";
-            // 
-            // iNFORMESToolStripMenuItem
-            // 
-            iNFORMESToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-            iNFORMESToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
-            iNFORMESToolStripMenuItem.Name = "iNFORMESToolStripMenuItem";
-            iNFORMESToolStripMenuItem.Size = new Size(94, 24);
-            iNFORMESToolStripMenuItem.Text = "INFORMES";
-            iNFORMESToolStripMenuItem.Click += iNFORMESToolStripMenuItem_Click;
             // 
             // groupBox1
             // 
             groupBox1.BackColor = Color.Transparent;
-            groupBox1.BackGColor = Color.FromArgb(64, 64, 64);
+            groupBox1.BackGColor = Color.FromArgb(39, 42, 45);
             groupBox1.BaseColor = Color.Transparent;
             groupBox1.BorderColorG = Color.FromArgb(159, 159, 161);
             groupBox1.BorderColorH = Color.FromArgb(182, 180, 186);
@@ -127,14 +82,14 @@ namespace AuctionDesktopProgram
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(kryptonMaskedTextBoxName);
             groupBox1.Controls.Add(label1);
-            groupBox1.Font = new Font("Tahoma", 9F);
-            groupBox1.ForeColor = Color.FromArgb(53, 53, 53);
+            groupBox1.Font = new Font("Poppins", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox1.ForeColor = Color.White;
             groupBox1.HeaderColor = Color.Orange;
-            groupBox1.Location = new Point(651, 99);
-            groupBox1.MinimumSize = new Size(775, 747);
+            groupBox1.Location = new Point(594, 70);
+            groupBox1.MinimumSize = new Size(136, 50);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(5, 28, 5, 5);
-            groupBox1.Size = new Size(775, 747);
+            groupBox1.Size = new Size(667, 608);
             groupBox1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             groupBox1.TabIndex = 2;
             groupBox1.Text = "Cargar Producto";
@@ -190,7 +145,7 @@ namespace AuctionDesktopProgram
             label4.ForeColor = Color.White;
             label4.Location = new Point(309, 48);
             label4.Name = "label4";
-            label4.Size = new Size(97, 30);
+            label4.Size = new Size(78, 24);
             label4.TabIndex = 7;
             label4.Text = "Imagen";
             // 
@@ -198,7 +153,7 @@ namespace AuctionDesktopProgram
             // 
             kryptonMaskedTextBoxPrecioBase.Location = new Point(47, 285);
             kryptonMaskedTextBoxPrecioBase.Name = "kryptonMaskedTextBoxPrecioBase";
-            kryptonMaskedTextBoxPrecioBase.Size = new Size(202, 27);
+            kryptonMaskedTextBoxPrecioBase.Size = new Size(202, 23);
             kryptonMaskedTextBoxPrecioBase.TabIndex = 5;
             kryptonMaskedTextBoxPrecioBase.MaskInputRejected += kryptonMaskedTextBoxPrecioBase_MaskInputRejected;
             // 
@@ -210,7 +165,7 @@ namespace AuctionDesktopProgram
             label3.ForeColor = Color.White;
             label3.Location = new Point(48, 252);
             label3.Name = "label3";
-            label3.Size = new Size(141, 30);
+            label3.Size = new Size(113, 24);
             label3.TabIndex = 4;
             label3.Text = "Precio Base";
             label3.Click += label3_Click;
@@ -223,7 +178,7 @@ namespace AuctionDesktopProgram
             label2.ForeColor = Color.White;
             label2.Location = new Point(48, 109);
             label2.Name = "label2";
-            label2.Size = new Size(141, 30);
+            label2.Size = new Size(112, 24);
             label2.TabIndex = 2;
             label2.Text = "Descripcion";
             label2.Click += label2_Click;
@@ -232,7 +187,7 @@ namespace AuctionDesktopProgram
             // 
             kryptonMaskedTextBoxName.Location = new Point(48, 75);
             kryptonMaskedTextBoxName.Name = "kryptonMaskedTextBoxName";
-            kryptonMaskedTextBoxName.Size = new Size(202, 27);
+            kryptonMaskedTextBoxName.Size = new Size(202, 23);
             kryptonMaskedTextBoxName.TabIndex = 1;
             kryptonMaskedTextBoxName.MaskInputRejected += kryptonMaskedTextBoxName_MaskInputRejected;
             // 
@@ -244,29 +199,9 @@ namespace AuctionDesktopProgram
             label1.ForeColor = Color.White;
             label1.Location = new Point(48, 42);
             label1.Name = "label1";
-            label1.Size = new Size(101, 30);
+            label1.Size = new Size(80, 24);
             label1.TabIndex = 0;
             label1.Text = "Nombre";
-            // 
-            // groupBox2
-            // 
-            groupBox2.BackColor = Color.Transparent;
-            groupBox2.BackGColor = Color.FromArgb(64, 64, 64);
-            groupBox2.BaseColor = Color.Transparent;
-            groupBox2.BorderColorG = Color.FromArgb(159, 159, 161);
-            groupBox2.BorderColorH = Color.FromArgb(182, 180, 186);
-            groupBox2.Controls.Add(SubastaDataGrid);
-            groupBox2.Font = new Font("Tahoma", 9F);
-            groupBox2.ForeColor = Color.FromArgb(53, 53, 53);
-            groupBox2.HeaderColor = Color.Orange;
-            groupBox2.Location = new Point(12, 99);
-            groupBox2.MinimumSize = new Size(136, 50);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(5, 28, 5, 5);
-            groupBox2.Size = new Size(604, 401);
-            groupBox2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            groupBox2.TabIndex = 9;
-            groupBox2.Text = "Solicitudes";
             // 
             // SubastaDataGrid
             // 
@@ -280,17 +215,13 @@ namespace AuctionDesktopProgram
             SubastaDataGrid.GridStyles.StyleDataCells = Krypton.Toolkit.GridStyle.Custom1;
             SubastaDataGrid.GridStyles.StyleRow = Krypton.Toolkit.GridStyle.Custom1;
             SubastaDataGrid.HideOuterBorders = true;
-            SubastaDataGrid.Location = new Point(34, 48);
+            SubastaDataGrid.Location = new Point(18, 36);
             SubastaDataGrid.Name = "SubastaDataGrid";
+            SubastaDataGrid.PaletteMode = Krypton.Toolkit.PaletteMode.Office2007Black;
             SubastaDataGrid.RowHeadersVisible = false;
             SubastaDataGrid.RowHeadersWidth = 51;
             SubastaDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            SubastaDataGrid.Size = new Size(530, 313);
-            SubastaDataGrid.StateCommon.Background.Color1 = Color.FromArgb(26, 26, 26);
-            SubastaDataGrid.StateCommon.Background.Color2 = Color.FromArgb(26, 26, 26);
-            SubastaDataGrid.StateCommon.BackStyle = Krypton.Toolkit.PaletteBackStyle.GridBackgroundCustom1;
-            SubastaDataGrid.StateCommon.DataCell.Back.Color1 = SystemColors.GrayText;
-            SubastaDataGrid.StateCommon.HeaderColumn.Back.Color1 = Color.White;
+            SubastaDataGrid.Size = new Size(538, 547);
             SubastaDataGrid.TabIndex = 1;
             SubastaDataGrid.CellContentClick += SubastaDataGrid_CellContentClickAsync;
             // 
@@ -301,7 +232,7 @@ namespace AuctionDesktopProgram
             ColumnIdProducto.HeaderText = "Id";
             ColumnIdProducto.MinimumWidth = 6;
             ColumnIdProducto.Name = "ColumnIdProducto";
-            ColumnIdProducto.Width = 55;
+            ColumnIdProducto.Width = 50;
             // 
             // ColumnName
             // 
@@ -333,41 +264,83 @@ namespace AuctionDesktopProgram
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.NullValue = false;
             ColumnApplicationStatus.DefaultCellStyle = dataGridViewCellStyle2;
-            ColumnApplicationStatus.FalseValue = "Rechazado";
+            ColumnApplicationStatus.FalseValue = "false";
             ColumnApplicationStatus.HeaderText = "Estado de Solicitud";
-            ColumnApplicationStatus.IndeterminateValue = "Pendiente";
+            ColumnApplicationStatus.IndeterminateValue = "null";
             ColumnApplicationStatus.MinimumWidth = 6;
             ColumnApplicationStatus.Name = "ColumnApplicationStatus";
             ColumnApplicationStatus.Resizable = DataGridViewTriState.True;
             ColumnApplicationStatus.SortMode = DataGridViewColumnSortMode.Automatic;
-            ColumnApplicationStatus.TrueValue = "Aprobado";
+            ColumnApplicationStatus.TrueValue = "true";
             ColumnApplicationStatus.Width = 125;
+            // 
+            // foreverGroupBox1
+            // 
+            foreverGroupBox1.ArrowColorF = Color.FromArgb(60, 70, 73);
+            foreverGroupBox1.ArrowColorH = Color.FromArgb(60, 70, 73);
+            foreverGroupBox1.AutoScroll = true;
+            foreverGroupBox1.BackColor = Color.Transparent;
+            foreverGroupBox1.BaseColor = Color.FromArgb(26, 26, 26);
+            foreverGroupBox1.Controls.Add(foreverGroupBox2);
+            foreverGroupBox1.Controls.Add(groupBox1);
+            foreverGroupBox1.Dock = DockStyle.Fill;
+            foreverGroupBox1.Font = new Font("Segoe UI", 10F);
+            foreverGroupBox1.Location = new Point(0, 0);
+            foreverGroupBox1.Name = "foreverGroupBox1";
+            foreverGroupBox1.ShowArrow = false;
+            foreverGroupBox1.ShowText = false;
+            foreverGroupBox1.Size = new Size(872, 761);
+            foreverGroupBox1.TabIndex = 3;
+            foreverGroupBox1.Text = "foreverGroupBox1";
+            foreverGroupBox1.TextColor = Color.FromArgb(35, 168, 109);
+            // 
+            // foreverGroupBox2
+            // 
+            foreverGroupBox2.ArrowColorF = Color.FromArgb(60, 70, 73);
+            foreverGroupBox2.ArrowColorH = Color.FromArgb(60, 70, 73);
+            foreverGroupBox2.BackColor = Color.Transparent;
+            foreverGroupBox2.BaseColor = Color.FromArgb(39, 42, 45);
+            foreverGroupBox2.Controls.Add(label5);
+            foreverGroupBox2.Controls.Add(SubastaDataGrid);
+            foreverGroupBox2.Font = new Font("Segoe UI", 10F);
+            foreverGroupBox2.Location = new Point(12, 78);
+            foreverGroupBox2.Name = "foreverGroupBox2";
+            foreverGroupBox2.ShowArrow = false;
+            foreverGroupBox2.ShowText = false;
+            foreverGroupBox2.Size = new Size(576, 600);
+            foreverGroupBox2.TabIndex = 3;
+            foreverGroupBox2.Text = "foreverGroupBox2";
+            foreverGroupBox2.TextColor = Color.FromArgb(35, 168, 109);
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Poppins", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.FromArgb(224, 224, 224);
+            label5.Location = new Point(18, -9);
+            label5.Name = "label5";
+            label5.Size = new Size(139, 42);
+            label5.TabIndex = 3;
+            label5.Text = "Productos";
             // 
             // Solicitudes
             // 
-            ClientSize = new Size(1267, 624);
-            Controls.Add(groupBox2);
-            Controls.Add(groupBox1);
-            Controls.Add(crownMenuStrip1);
-            MainMenuStrip = crownMenuStrip1;
+            BackColor = Color.FromArgb(26, 26, 26);
+            ClientSize = new Size(872, 761);
+            Controls.Add(foreverGroupBox1);
             Name = "Solicitudes";
             Text = "Jopara Ndeve";
             Load += Solicitudes_Load;
-            crownMenuStrip1.ResumeLayout(false);
-            crownMenuStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((ISupportInitialize)kryptonPictureBoxImagen).EndInit();
-            groupBox2.ResumeLayout(false);
             ((ISupportInitialize)SubastaDataGrid).EndInit();
+            foreverGroupBox1.ResumeLayout(false);
+            foreverGroupBox2.ResumeLayout(false);
+            foreverGroupBox2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
-        private ReaLTaiizor.Controls.CrownMenuStrip crownMenuStrip1;
-        private ToolStripMenuItem cREARSUBASTAToolStripMenuItem;
-        private ToolStripMenuItem sOLICITUDESToolStripMenuItem;
-        private ToolStripMenuItem iNFORMESToolStripMenuItem;
         private ReaLTaiizor.Controls.GroupBox groupBox1;
         private Krypton.Toolkit.KryptonMaskedTextBox kryptonMaskedTextBoxPrecioBase;
         private Label label3;
@@ -375,13 +348,10 @@ namespace AuctionDesktopProgram
         private Krypton.Toolkit.KryptonMaskedTextBox kryptonMaskedTextBoxName;
         private Label label1;
         private Label label4;
-        private ReaLTaiizor.Controls.GroupBox groupBox2;
-        private Krypton.Toolkit.KryptonDataGridView SubastaDataGrid;
         private Krypton.Toolkit.KryptonRichTextBox kryptonRichTextBoxDescripcion;
         private Krypton.Toolkit.KryptonPictureBox kryptonPictureBoxImagen;
         private Krypton.Toolkit.KryptonButton kryptonButtonAceptar;
         private Krypton.Toolkit.KryptonButton kryptonButtonRechazar;
-        private ToolStripMenuItem iNICIOToolStripMenuItem;
         #endregion
 
         private void kryptonGroupBox1_Paint(object sender, PaintEventArgs e)

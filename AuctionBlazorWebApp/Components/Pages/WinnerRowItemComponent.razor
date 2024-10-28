@@ -42,7 +42,7 @@ else if (Productos is not null && Productos.Count != 0)
             </div>
                 @if (producto.HasGanador)
                 {
-                    <div class="col-md">
+                    <div class="col-md align-content-center my-3">
                         <div class="row text-center py-1">
                             <h5 class="fw-semibold">@producto.NombreGanador</h5>
                         </div>
@@ -56,7 +56,7 @@ else if (Productos is not null && Productos.Count != 0)
                 }
                 else
                 {
-                    <div class="col-md align-content-center">
+                    <div class="col-md align-content-center text-center my-3">
                         <h3 class="text-danger text-nowrap fs-5"><span class="px-3 py-2 badge-pill bg-danger-subtle border border-3 border-danger">No fue vendido</span></h3>
                     </div>
                 }

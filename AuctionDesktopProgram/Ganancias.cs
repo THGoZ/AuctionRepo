@@ -1,15 +1,11 @@
 ﻿using Auction.Core.Business.Interfaces;
 using Auction.Core.Entities;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using Krypton.Toolkit;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace AuctionDesktopProgram
 {
@@ -35,7 +31,8 @@ namespace AuctionDesktopProgram
             try
             {
                 var allsubastas = _subastaBusiness.GetSuccessful();
-                if (allsubastas is null || allsubastas.Count == 0) {
+                if (allsubastas is null || allsubastas.Count == 0)
+                {
                     return;
                 }
 
@@ -93,13 +90,115 @@ namespace AuctionDesktopProgram
 
         public decimal CalcularTotalOfertas(Subasta subasta)
         {
+            decimal total = 0;
             if (subasta?.Productos == null)
-                return 0;
+                return total;
 
-            return subasta.Productos
-                .Where(p => p.Ofertas != null)
-                .SelectMany(p => p.Ofertas)
-                .Sum(o => o.Monto);
+            foreach(var producto in subasta.Productos)
+            {
+                if (producto.Ofertas.Any())
+                {
+                    var highestbid = producto.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault();
+                    total += producto.Ofertas.OrderByDescending(o => o.Monto).Select(o=> o.Monto).FirstOrDefault();
+                }
+            }
+            return total;
+        }
+
+        public void GenerateAuctionReportPdf(string filePath, Subasta subasta)
+        {
+            var total = CalcularTotalOfertas(Subasta);
+            try
+            {
+                using (PdfWriter writer = new PdfWriter(filePath))
+                using (PdfDocument pdf = new PdfDocument(writer))
+                using (Document document = new Document(pdf))
+                {
+                    document.Add(new Paragraph($"Reporte de ganancias - Subasta Nº{subasta.IdSubasta}")
+                        .SetFontSize(18)
+                        .SetBold()
+                        .SetTextAlignment(TextAlignment.CENTER));
+
+                    document.Add(new Paragraph(subasta.Descripcion)
+                        .SetFontSize(12)
+                        .SetTextAlignment(TextAlignment.LEFT)
+                        .SetMarginBottom(10));
+
+                    Table productTable = new Table(4);
+                    productTable.AddHeaderCell(new Cell().Add(new Paragraph("#").SetBold()));
+                    productTable.AddHeaderCell(new Cell().Add(new Paragraph("Nombre").SetBold()));
+                    productTable.AddHeaderCell(new Cell().Add(new Paragraph("Precio de venta").SetBold()));
+                    productTable.AddHeaderCell(new Cell().Add(new Paragraph("Fecha de venta").SetBold()));
+
+                    foreach (var product in subasta.Productos)
+                    {
+                        if (product.Ofertas.Any())
+                        {
+                            var highestbid = product.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault();
+                            productTable.AddCell(new Cell().Add(new Paragraph(product.IdProducto.ToString())));
+                            productTable.AddCell(new Cell().Add(new Paragraph(product.Nombre)));
+                            productTable.AddCell(new Cell().Add(new Paragraph("$" + highestbid.Monto.ToString("N2")).SetFontColor(iText.Kernel.Colors.ColorConstants.GREEN)));
+                            productTable.AddCell(new Cell().Add(new Paragraph(highestbid.Fecha.ToString("dd/MM/yyyy"))));
+                        }
+                    }
+
+                    document.Add(new Paragraph("\nProductos vendidos").SetFontSize(14).SetBold().SetMarginTop(20));
+                    document.Add(productTable.SetMarginBottom(10));
+
+                    document.Add(new Paragraph("Recaudacion Total:").SetBold());
+                    document.Add(new Paragraph(total.ToString("C")).SetFontSize(16).SetFontColor(iText.Kernel.Colors.ColorConstants.GREEN));
+
+                    document.Add(new Paragraph("Porcentaje de Empresa:").SetBold());
+                    document.Add(new Paragraph((total * 0.10m).ToString("C")).SetFontSize(16).SetFontColor(iText.Kernel.Colors.ColorConstants.GREEN));
+
+                    document.Add(new Paragraph("Porcentaje de Vendedores:").SetBold());
+                    document.Add(new Paragraph((total * 0.90m).ToString("C")).SetFontSize(16).SetFontColor(iText.Kernel.Colors.ColorConstants.GREEN));
+
+                    document.Add(new Paragraph("Nº de Productos Vendidos:").SetBold());
+                    document.Add(new Paragraph(Subasta.Productos.Where(p => p.Ofertas.Any()).Count().ToString()).SetFontSize(16).SetFontColor(iText.Kernel.Colors.ColorConstants.ORANGE));
+
+
+
+                    document.Add(new Paragraph($"Fecha de cierre de subasta: {subasta.FechaCierre:dd/MM/yyy HH:mm}")
+                        .SetFontSize(10)
+                        .SetTextAlignment(TextAlignment.LEFT)
+                        .SetMarginTop(30));
+
+                    document.Add(new Paragraph($"Creado en: {DateTime.Now}")
+                        .SetFontSize(10)
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetMarginTop(5));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al guardar el archivo\n {ex}");
+            }
+
+            MessageBox.Show("Archivo PDF guardado correctamente!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // Usage
+        private void buttonGenerateReport_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PDF files (*.pdf)|*.pdf",
+                FileName = $"GananciasSubastaN°{Subasta.IdSubasta}.pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    GenerateAuctionReportPdf(saveFileDialog.FileName, Subasta);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error",
+                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
