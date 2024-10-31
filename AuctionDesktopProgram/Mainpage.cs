@@ -60,7 +60,7 @@ namespace AuctionDesktopProgram
             openPanel2(formCrearSubasta);
         }
 
-        private void openPanel2(Form form)
+        public void openPanel2(Form form)
         {
             if (activeForm != null)
             {
@@ -72,6 +72,8 @@ namespace AuctionDesktopProgram
             form.Dock = DockStyle.Fill;
             panel2.Controls.Add(form);
             panel2.Tag = form;
+            panel2.Visible = true;
+            panel2.BringToFront();
             form.Show();
         }
 

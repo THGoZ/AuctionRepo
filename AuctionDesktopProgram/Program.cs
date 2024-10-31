@@ -38,13 +38,13 @@ namespace AuctionDesktopProgram
             .AddScoped<IAuctionRepository, AuctionRepository>()
             .AddScoped<ISubastaBusiness, SubastaBusiness>()
             .AddScoped<IProductoBusiness, ProductoBusiness>()
-            .AddTransient<Mainpage>()
             .AddTransient<FormProductos>()
             .AddTransient<FormHome>()
             .AddTransient<Solicitudes>()
             .AddTransient<CrearSubastaForm>()
             .AddTransient<Informes>()
             .AddTransient<Ganancias>();
+            services.AddSingleton<Mainpage>();
         }
     }
 }

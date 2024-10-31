@@ -426,7 +426,7 @@ namespace AuctionDesktopProgram
         private KryptonButton button5;
         private Panel panelSideMenu;
         private Panel panel1;
-        private Panel panel2;
+        public Panel panel2;
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
         private Krypton.Toolkit.KryptonPictureBox kryptonPictureBox1;
         private KryptonButton inicioButton;
