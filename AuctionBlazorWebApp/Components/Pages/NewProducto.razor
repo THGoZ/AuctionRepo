@@ -1,4 +1,4 @@
-﻿@page "/newProducto/{auction}"
+﻿@page "/newProducto/{auction}/{productoid?}"
 
 @using APIService.Models
 @using AuctionBlazorWebApp.Components.Pages.Components
@@ -17,98 +17,114 @@
     <div class="card shadow">
         <div class="d-flex p-0 card-header">
             <h3 class="p-3 mb-3 pb-md-0 px-md-2">
-                Agregar nuevo producto
+                @(productoid == null ? "Agregar nuevo producto" : "Editar producto")
             </h3>
         </div>
         <div class="card-body">
             <p class="card-title fs-4 my-2 text-primary-emphasis fw-bold">Datos del producto:</p>
-            <EditForm Model="@addProductModel" OnValidSubmit="AddProduct">
-                <DataAnnotationsValidator />
-                <div class="row g-3 align-items-center mt-2 mb-1">
-                    <div class="row">
-                        <label for="inputPassword6" class="col-form-label">Nombre</label>
-                    </div>
-                    <div class="col-auto mt-1 mb-2">
-                        <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Ingrese el nombre..."></InputText>
-                        <div class="mt-2 mx-2">
-                        <ValidationMessage For="() => addProductModel.Nombre"></ValidationMessage>
-                        </div>
-                    </div>
-                    <div class="col-auto mt-1 mb-2">
-                        <span id="passwordHelpInline" class="form-text">
-                            Debe tener por lo menos 3 caracteres.
-                        </span>
-                    </div>
-                    <div class="col-auto mt-1 mb-2">
-                    </div>
+            @if (isInitializing)
+            {
+                <div class="text-center">
+                    <span class="spinner-border fs-4" role="status"></span>
+                    <p>Cargando datos...</p>
                 </div>
-                <div class="row g-3 align-items-center mt-2 mb-1">
-                    <div class="row">
-                        <label for="inputPassword6" class="col-form-label">Descripcion</label>
-                    </div>
-                    <div class="m-0 row text-justify">
-                        <InputTextArea @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Ingrese una descripcion..." rows="3"></InputTextArea>
-                    </div>
-                    <div class="ms-2 mt-2">
-                    <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
-                    <div id="descriptionHelpBlock" class="mb-2 form-text">
-                        Describe las caracteristicas del producto, debe contener por lo menos 6 caracteres.
-                    </div>
-                    </div>
-                </div>
-                <div class="row g-3 mt-2 mb-1 align-items-center">
-                    <div class="col-auto m-2 mb-2">
-                        <label for="inputPassword6" class="col-form-label">Precio base</label>
-                    </div>
-                    <div class="col-auto mt-1 mt-2">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text bg-success">$</span>
-                            <CurrencyInput TValue="decimal" @bind-Value="@addProductModel.PrecioBase" Locale="es-ES" HideCurrencySymbol="true" class="form-control" Placeholder="Precio" />
-                            <span class="input-group-text bg-success">.00</span>
+            }
+            else
+            {
+                <EditForm Model="@addProductModel" OnValidSubmit="AddProduct">
+                    <DataAnnotationsValidator />
+                    <div class="row g-3 align-items-center mt-2 mb-1">
+                        <div class="row">
+                            <label for="inputPassword6" class="col-form-label">Nombre</label>
                         </div>
-                    </div>
-                    <div class="col-auto m-2 mt-2 mb-1">
-                        <ValidationMessage For="() => addProductModel.PrecioBase"></ValidationMessage>
-                    </div>
-                </div>
-                <div class="row g-3 mt-2 mb-1 align-items-center">
-                    <div class="col-sm m-2 mb-2">
-                        @if(ErrorMessage != null)
-                        {
-                            <div class="fw-semibold my-2 mx-2" style="color:red;">@ErrorMessage</div>
-                        }
-                        <div class="my-2 mx-2">
-                        <ValidationMessage For="() => addProductModel.Imagen"></ValidationMessage>
-                        </div>
-                        <div class="input-group mb-3 px-2 py-2 rounded-pill shadow-sm" style="background:#404040;">
-                            <InputFile id="upload" hidden accept=".jpeg, .jpg, .png" OnChange="FileUploaded"></InputFile>
-                            <div class="input-group-append">
-                                <label for="upload" class="btn btn-outline-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2"></i><small class="text-uppercase font-weight-bold ms-1">Elige un archivo</small></label>
-                                <label class="px-2"><small class="text-uppercase font-weight-bold text-body-tertiary fst-italic">@FileName</small></label>
+                        <div class="col-auto mt-1 mb-2">
+                            <InputText @bind-Value="addProductModel.Nombre" class="form-control" placeholder="Ingrese el nombre..."></InputText>
+                            <div class="mt-2 mx-2">
+                                <ValidationMessage For="() => addProductModel.Nombre"></ValidationMessage>
                             </div>
                         </div>
-                        <p class="text-white text-center"><em>La imagen se mostrara abajo.</em></p>
-                        <div class="image-area mt-4"><img id="imageResult" src="@GetPreviewImage()" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                        <div class="col-auto mt-1 mb-2">
+                            <span id="passwordHelpInline" class="form-text">
+                                Debe tener por lo menos 3 caracteres.
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="d-grid gap-4 d-md-flex justify-content-center my-3">
-                    @if (!isLoading)
-                    {
-                        <Confirmation Title="Agregar producto" Body="Esta seguro que quiere agregar este producto?" ButtonText="Confirmar">
-                            <button type="submit" class="p-2 btn btn-warning" data-bs-dismiss="modal"><i class="fa-regular fa-circle-check fa-xl mx-1"></i> Guardar</button>
-                        </Confirmation>
-                        <a href="" class="p-2 btn btn-secondary"><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</a>
-                    }
-                    else
-                    {
-                        <button type="submit" disabled class="p-2 btn btn-warning">
-                            <span class="spinner-border fs-4 spinner-border-sm mx-1" style="width: 1.2rem; height: 1.2rem;" aria-hidden="true"></span>
-                            <span role="status"> Cargando</span>
-                        </button>
-                        <button disabled class="p-2 btn btn-secondary"><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</button>
-                    }
-                </div>
-            </EditForm>
+                    <div class="row g-3 align-items-center mt-2 mb-1">
+                        <div class="row">
+                            <label for="inputPassword6" class="col-form-label">Descripcion</label>
+                        </div>
+                        <div class="m-0 row text-justify">
+                            <InputTextArea @bind-Value="addProductModel.Descripcion" class="form-control" placeholder="Ingrese una descripcion..." rows="3"></InputTextArea>
+                        </div>
+                        <div class="ms-2 mt-2">
+                            <ValidationMessage For="() => addProductModel.Descripcion"></ValidationMessage>
+                            <div id="descriptionHelpBlock" class="mb-2 form-text">
+                                Describe las caracteristicas del producto, debe contener por lo menos 6 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2 mb-1 align-items-center">
+                        <div class="col-auto m-2 mb-2">
+                            <label for="inputPassword6" class="col-form-label">Precio base</label>
+                        </div>
+                        <div class="col-auto mt-1 mt-2">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-success">$</span>
+                                <CurrencyInput TValue="decimal" @bind-Value="@addProductModel.PrecioBase" Locale="es-ES" HideCurrencySymbol="true" class="form-control" Placeholder="Precio" />
+                                <span class="input-group-text bg-success">.00</span>
+                            </div>
+                        </div>
+                        <div class="col-auto m-2 mt-2 mb-1">
+                            <ValidationMessage For="() => addProductModel.PrecioBase"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2 mb-1 align-items-center">
+                        <div class="col-sm m-2 mb-2">
+                            @if (ErrorMessage != null)
+                            {
+                                <div class="fw-semibold my-2 mx-2" style="color:red;">@ErrorMessage</div>
+                            }
+                            <div class="my-2 mx-2">
+                                <ValidationMessage For="() => addProductModel.Imagen"></ValidationMessage>
+                            </div>
+                            <div class="input-group mb-3 px-2 py-2 rounded-pill shadow-sm" style="background:#404040;">
+                                <InputFile id="upload" hidden accept=".jpeg, .jpg, .png" OnChange="FileUploaded"></InputFile>
+                                <div class="input-group-append">
+                                    <label for="upload" class="btn btn-outline-light m-0 rounded-pill px-4">
+                                        <i class="fa fa-cloud-upload mr-2"></i><small class="text-uppercase font-weight-bold ms-1">Elige un archivo</small>
+                                    </label>
+                                    <label class="px-2"><small class="text-uppercase font-weight-bold text-body-tertiary fst-italic">@FileName</small></label>
+                                </div>
+                            </div>
+                            <p class="text-white text-center"><em>La imagen se mostrara abajo.</em></p>
+                            <div class="image-area mt-4">
+                                <img id="imageResult" src="@GetPreviewImage()" alt="" class="img-fluid rounded shadow-sm mx-auto d-block">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-4 d-md-flex justify-content-center my-3">
+                        @if (!isLoading)
+                        {
+                            <Confirmation Title="@(productoid == null ? "Agregar producto" : "Actualizar producto")"
+                                          Body="@(productoid == null ? "Esta seguro que quiere agregar este producto?" : "Esta seguro que quiere actualizar este producto?")"
+                                          ButtonText="Confirmar">
+                                <button type="submit" class="p-2 btn btn-warning" data-bs-dismiss="modal">
+                                    <i class="fa-regular fa-circle-check fa-xl mx-1"></i> @(productoid == null ? "Guardar" : "Actualizar")
+                                </button>
+                            </Confirmation>
+                            <a href="" class="p-2 btn btn-secondary"><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</a>
+                        }
+                        else
+                        {
+                            <button type="submit" disabled class="p-2 btn btn-warning">
+                                <span class="spinner-border fs-4 spinner-border-sm mx-1" style="width: 1.2rem; height: 1.2rem;" aria-hidden="true"></span>
+                                <span role="status"> Cargando</span>
+                            </button>
+                            <button disabled class="p-2 btn btn-secondary"><i class="fa-solid fa-ban fa-xl mx-1"></i> Cancelar</button>
+                        }
+                    </div>
+                </EditForm>
+            }
         </div>
     </div>
 </div>
@@ -116,8 +132,13 @@
 @code {
     [Parameter]
     public string auction { get; set; }
+
+    [Parameter]
+    public string? productoid { get; set; }
+
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
+
     private ProductoViewModel addProductModel = new();
     const int MAX_FILESIZE = 1000 * 1024;
     public string FileName { get; set; } = "Ninguna imagen seleccionada";
@@ -125,7 +146,40 @@
     public byte[] imageData { get; set; } = null;
     public string FileType { get; set; } = "";
     public bool isLoading { get; set; } = false;
+    public bool isInitializing { get; set; } = false;
     [Inject] protected ToastService ToastService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(productoid))
+        {
+            isInitializing = true;
+            try
+            {
+                var producto = await apiClient.GetProducto(int.Parse(productoid));
+                if (producto != null)
+                {
+                    addProductModel.Nombre = producto.Nombre;
+                    addProductModel.Descripcion = producto.Descripcion;
+                    addProductModel.PrecioBase = producto.PrecioBase;
+                    addProductModel.Imagen = producto.Imagen;
+                    addProductModel.ImageExtension = producto.ImageExtension;
+                    imageData = producto.Imagen;
+                    FileType = producto.ImageExtension;
+                    FileName = "Imagen actual";
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Error al cargar los datos del producto";
+                ToastService.Notify(new(ToastType.Danger, $"Error al cargar los datos del producto: {ex.Message}"));
+            }
+            finally
+            {
+                isInitializing = false;
+            }
+        }
+    }
 
     public async Task FileUploaded(InputFileChangeEventArgs e)
     {
@@ -133,7 +187,6 @@
 
         try
         {
-
             if (browserFile != null)
             {
                 using (var memoryStream = new MemoryStream())
@@ -163,7 +216,7 @@
         }
     }
 
-    private string? GetPreviewImage()//para cargar en edicion al subir imagen nueva
+    private string? GetPreviewImage()
     {
         if (imageData != null && FileType != null)
             return $"data:image/{FileType.Trim('.')};base64,{Convert.ToBase64String(imageData)}";
@@ -186,34 +239,50 @@
         }
         int userId = int.Parse(userIdClaim.Value);
 
-        var newproducto = new ProductoAPI
+        try
+        {
+            var newproducto = new ProductoAPI
+                {
+                    IdProducto = !string.IsNullOrEmpty(productoid) ? int.Parse(productoid) : 0,
+                    Nombre = addProductModel.Nombre,
+                    PrecioBase = addProductModel.PrecioBase,
+                    Descripcion = addProductModel.Descripcion,
+                    Imagen = imageData,
+                    ImageExtension = FileType,
+                    FechaSolicitud = DateTime.Now,
+                    EstadoDeSolicitud = false
+                };
+
+            var subastachehck = await apiClient.GetAuction(subastaid);
+
+            if (subastachehck.Estado is not null)
             {
-                Nombre = addProductModel.Nombre,
-                PrecioBase = addProductModel.PrecioBase,
-                Descripcion = addProductModel.Descripcion,
-                Imagen = imageData,
-                ImageExtension = FileType,
-                FechaSolicitud = DateTime.Now,
-                EstadoDeSolicitud = false
-
-
-            };
-        var subastachehck = await apiClient.GetAuction(subastaid);
-        isLoading = false;
-
-        if(subastachehck.Estado is not null)
-        {
-            ToastService.Notify(new(ToastType.Danger, $"Error! la subasta no acepta solicitudes"));
-            await Task.Delay(3000);
-            navManager.NavigateTo("/", true);
+                ToastService.Notify(new(ToastType.Danger, $"Error! la subasta no acepta solicitudes"));
+                await Task.Delay(3000);
+                navManager.NavigateTo("/", true);
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(productoid))
+                {
+                    await apiClient.SaveProduct(newproducto, userId, subastaid);
+                    ToastService.Notify(new(ToastType.Success, $"Se creo la solicitud correctamente!"));
+                }
+                else
+                {
+                    await apiClient.UpdateProducto(newproducto, userId, subastaid);
+                    ToastService.Notify(new(ToastType.Success, $"Se actualizo el producto correctamente!"));
+                }
+                navManager.NavigateTo("/");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            await apiClient.SaveProduct(newproducto, userId, subastaid);
-            ToastService.Notify(new(ToastType.Success, $"Se creo la solicitud correctamente!."));
-            navManager.NavigateTo("/");
-
+            ToastService.Notify(new(ToastType.Danger, $"Error al procesar la solicitud: {ex.Message}"));
         }
-    
+        finally
+        {
+            isLoading = false;
+        }
     }
 }

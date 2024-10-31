@@ -1,11 +1,6 @@
 ﻿using Auction.Core.Data.Interfaces;
 using Auction.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auction.Core.Data
 {

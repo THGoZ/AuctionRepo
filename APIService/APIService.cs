@@ -19,6 +19,12 @@ namespace APIService
             _httpClient.BaseAddress = new System.Uri(APICLientOptions.ApiBaseAddress);
         }
         #region Producto
+
+        public async Task<ProductoAPI?> GetProducto(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<ProductoAPI?>($"/api/Producto/{id}");
+        }
+
         public async Task<List<ProductoAPI>?> GetProducts()
         {
             return await _httpClient.GetFromJsonAsync<List<ProductoAPI>?>("/api/Producto");

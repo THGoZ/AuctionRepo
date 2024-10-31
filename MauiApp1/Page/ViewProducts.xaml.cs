@@ -11,7 +11,7 @@ public partial class ViewProducts : ContentPage
     public string PageTitle { get; set; }
 
     private readonly IAPIMaui _apicaller;
-    private int _IdSubasta;
+    private readonly int _IdSubasta;
     public ObservableCollection<ProductoAPI> ProductoList { get; set; }
     public ViewProducts(IAPIMaui apicaller, int subastaId)
     {
