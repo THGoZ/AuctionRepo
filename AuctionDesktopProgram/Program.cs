@@ -43,7 +43,8 @@ namespace AuctionDesktopProgram
             .AddTransient<Solicitudes>()
             .AddTransient<CrearSubastaForm>()
             .AddTransient<Informes>()
-            .AddTransient<Ganancias>();
+            .AddTransient<Ganancias>()
+            .AddTransient<ProductosNoOfertados>();
             services.AddSingleton<Mainpage>();
         }
     }

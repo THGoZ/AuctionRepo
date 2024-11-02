@@ -48,6 +48,8 @@ namespace AuctionDesktopProgram
         {
             kryptonCheckButton1.Checked = false;
             kryptonCheckButton2.Checked = false;
+            var formProductosNoOfertados = _serviceProvider.GetService<ProductosNoOfertados>();
+            openPanel2(formProductosNoOfertados);
         }
 
         private void openPanel2(Form form)
