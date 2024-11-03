@@ -14,5 +14,6 @@ namespace Auction.Core.Business.Interfaces
 
         public List<Producto> GetProductosSolicitados();
 
+        public List<Producto> GetProductosSinOfertas();
     }
 }

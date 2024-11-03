@@ -30,7 +30,7 @@ namespace AuctionDesktopProgram
         private void CargarProductosNoOfertados()
         {
             // Obtener la lista de productos solicitados (pueden ser aquellos con solicitudes pendientes)
-            var productosSolicitados = _productoBusiness.GetProductosSolicitados();
+            var productosSolicitados = _productoBusiness.GetProductosSinOfertas();
 
             // Verificar si hay productos
             if (productosSolicitados.Count() != 0)

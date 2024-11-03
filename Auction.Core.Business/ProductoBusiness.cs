@@ -24,6 +24,10 @@ namespace Auction.Core.Business
         {
             return _repository.GetProductosSolicitados();
         }
+        public List<Producto> GetProductosSinOfertas()
+        {
+            return _repository.GetProductosSinOfertas();
+        }
 
         public void ActualizarEstadoProducto(Producto productoSeleccionado)
         {

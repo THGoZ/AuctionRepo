@@ -35,6 +35,27 @@ namespace Auction.Core.Data
             return productos;
         }
 
+        public List<Producto> GetProductosSinOfertas()
+        {
+            try
+            {
+                // Obtener todos los productos que no tienen ninguna oferta asociada
+                var productosSinOfertas = _dbContext.Productos
+                    .Include(p => p.Ofertas) // Incluir la relación de ofertas para que podamos verificar si están vacías
+                    .Where(p => !p.Ofertas.Any()) // Filtrar los productos sin ofertas
+                    .ToList();
+
+                return productosSinOfertas;
+            }
+            catch (Exception ex)
+            {
+                // Registrar o manejar el error
+                Console.WriteLine($"Error al obtener productos sin ofertas: {ex.Message}");
+                throw new Exception("Ocurrió un error al obtener los productos sin ofertas.", ex);
+            }
+        }
+
+
         public List<Subasta> GetSubastas()
         {
             return [.. _dbContext.Subastas];

@@ -51,8 +51,11 @@ public partial class ViewWinnerPage : ContentPage, INotifyPropertyChanged
                     // Convertir imagen de byte[] a ImageSource
                     foreach (var winner in winners)
                     {
-                        winner.Image = ConvertByteArrayToImageSource(winner.Imagen);
-                        allWinners.Add(winner);
+                        if (winner.NombreGanador != null)
+                        {
+                            winner.Image = ConvertByteArrayToImageSource(winner.Imagen);
+                            allWinners.Add(winner);
+                        }
                     }
                 }
             }
