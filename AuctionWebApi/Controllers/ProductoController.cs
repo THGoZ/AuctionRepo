@@ -205,6 +205,41 @@ namespace AuctionWebApi.Controllers
             return Ok();
         }
 
+        [HttpGet("paginated/")]
+        public async Task<ActionResult<PaginatedProducts>> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            try
+            {
+                if (page < 1) page = 1;
+                if (pageSize < 1) pageSize = 5;
+                if (pageSize > 50) pageSize = 50;
+
+                var totalCount = await _dbContext.Productos.CountAsync();
+
+                var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+                var items = await _dbContext.Productos.Where(p=> p.Vendido != true)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                var result = new PaginatedProducts()
+                {
+                    TotalCount = totalCount,
+                    PageSize = pageSize,
+                    CurrentPage = page,
+                    TotalPages = totalPages,
+                    Items = items
+                };
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
         private Producto MapProductoObject(ProductoDTO producto)
         {
             var result = new Producto();

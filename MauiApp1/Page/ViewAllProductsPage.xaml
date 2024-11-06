@@ -5,7 +5,9 @@
              Title="Todos los Productos"
              BackgroundColor="#232323">
 
-    <ScrollView>
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+             Command="{Binding RefreshCommand}">
+        <ScrollView>
         <VerticalStackLayout>
             <!-- ActivityIndicator para mostrar mientras se cargan los datos -->
             <ActivityIndicator 
@@ -17,6 +19,8 @@
             <!-- CollectionView con diseño actualizado -->
             <CollectionView ItemsSource="{Binding ProductoList}" 
                         SelectionMode="None"
+                        RemainingItemsThreshold="1"
+                        RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                         BackgroundColor="Transparent"
                         VerticalOptions="FillAndExpand"
                         ItemsLayout="VerticalList">
@@ -82,8 +86,16 @@
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+                    <CollectionView.EmptyView>
+                        <StackLayout VerticalOptions="Center" 
+                        HorizontalOptions="Center">
+                            <Label Text="No hay productos disponibles"
+                       HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
+    </RefreshView>
 </ContentPage>
 

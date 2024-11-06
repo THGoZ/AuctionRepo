@@ -1,5 +1,6 @@
 ﻿using Auction.Core.Entities;
 using AuctionMobileApp.Caller.Interfases;
+using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -45,6 +46,38 @@ namespace AuctionMobileApp.Caller
                 return productos.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
             }
             else return null;
+        }
+
+        public async Task<PaginatedProductsAPI?> GetPaginatedProducts(int page = 1, int pagesize = 5)
+        {
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<PaginatedProductsAPI>($"/api/Producto/paginated?page={page}&pageSize={pagesize}");
+
+                if (response.Items is not null)
+                {
+                    response.Items = response.Items.Where(x => x.EstadoDeSolicitud == true).ToList();
+                    foreach (var producto in response.Items)
+                    {
+                        producto.CantidadDeOfertas = await _httpClient.GetFromJsonAsync<int>($"/api/Producto/ofertas/{producto.IdProducto}");
+                        var respon = await _httpClient.GetStringAsync($"/api/Producto/sold/{producto.IdProducto}");
+                        producto.Status = respon;
+                    }
+                    response.Items = response.Items.Where(p => p.Status != "sold" || p.Status != "notsold").ToList();
+                }
+
+                return response;
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine($"Error al traer productos: {ex.Message}");
+                return null;
+            }
+            catch (JsonException ex)
+            {
+                Debug.WriteLine($"Error al deserializar respuesta: {ex.Message}");
+                return null;
+            }
         }
 
         public async Task<List<ProductoAPI>?> GetProductsOfAuctionWithOferta(int SubastaId)
