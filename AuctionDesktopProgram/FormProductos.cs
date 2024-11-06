@@ -22,6 +22,7 @@ namespace AuctionDesktopProgram
         private readonly ISubastaBusiness _SubastaBusiness;
 
         private readonly IProductoBusiness _productoBusiness;
+        public bool MostrarSoloGanancias { get; set; }
 
 
         public FormProductos(ISubastaBusiness SubastaBusiness, IProductoBusiness productoBusiness)
@@ -41,7 +42,7 @@ namespace AuctionDesktopProgram
             selectedSubastaId = idSubasta;
         }
 
-        private void Productos_Load(object sender, EventArgs e)
+        public void Productos_Load(object sender, EventArgs e)
         {
             if (selectedSubastaId.HasValue)
             {
@@ -148,8 +149,9 @@ namespace AuctionDesktopProgram
 
 
         private void label2_Click(object sender, EventArgs e)
-            {
+        {
 
-            }
-        } 
+        }
+
+    }    
 }

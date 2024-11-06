@@ -39,10 +39,11 @@ namespace AuctionDesktopProgram
         private void kryptonCheckButton2_Click(object sender, EventArgs e)
         {
             kryptonCheckButton1.Checked = false;
-            kryptonCheckButton3.Checked = false;
-            var formCrearSubasta = _serviceProvider.GetService<FormProductos>();
-            openPanel2(formCrearSubasta);
+            kryptonCheckButton2.Checked = false;
+            var formProductosvendidos = _serviceProvider.GetService<FormVendidos>();
+            openPanel2(formProductosvendidos);
         }
+
 
         private void kryptonCheckButton3_Click(object sender, EventArgs e)
         {

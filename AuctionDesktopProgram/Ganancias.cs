@@ -94,12 +94,12 @@ namespace AuctionDesktopProgram
             if (subasta?.Productos == null)
                 return total;
 
-            foreach(var producto in subasta.Productos)
+            foreach (var producto in subasta.Productos)
             {
                 if (producto.Ofertas.Any())
                 {
                     var highestbid = producto.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault();
-                    total += producto.Ofertas.OrderByDescending(o => o.Monto).Select(o=> o.Monto).FirstOrDefault();
+                    total += producto.Ofertas.OrderByDescending(o => o.Monto).Select(o => o.Monto).FirstOrDefault();
                 }
             }
             return total;
@@ -199,6 +199,11 @@ namespace AuctionDesktopProgram
                              MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void Ganancias_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

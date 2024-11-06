@@ -47,11 +47,10 @@
             // 
             ProductosDatagrid.BackgroundColor = SystemColors.ActiveBorder;
             ProductosDatagrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ProductosDatagrid.Location = new Point(10, 46);
-            ProductosDatagrid.Margin = new Padding(3, 2, 3, 2);
+            ProductosDatagrid.Location = new Point(11, 61);
             ProductosDatagrid.Name = "ProductosDatagrid";
             ProductosDatagrid.RowHeadersWidth = 51;
-            ProductosDatagrid.Size = new Size(370, 351);
+            ProductosDatagrid.Size = new Size(423, 468);
             ProductosDatagrid.TabIndex = 0;
             ProductosDatagrid.CellContentClick += ProductosDatagrid_CellContentClick;
             // 
@@ -59,20 +58,19 @@
             // 
             GanadoresdataGrid.BackgroundColor = SystemColors.ActiveBorder;
             GanadoresdataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            GanadoresdataGrid.Location = new Point(400, 46);
-            GanadoresdataGrid.Margin = new Padding(3, 2, 3, 2);
+            GanadoresdataGrid.Location = new Point(457, 61);
             GanadoresdataGrid.Name = "GanadoresdataGrid";
             GanadoresdataGrid.RowHeadersWidth = 51;
-            GanadoresdataGrid.Size = new Size(370, 351);
+            GanadoresdataGrid.Size = new Size(423, 468);
             GanadoresdataGrid.TabIndex = 1;
             // 
             // label1
             // 
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(139, 14);
+            label1.Location = new Point(159, 19);
             label1.Name = "label1";
-            label1.Size = new Size(104, 31);
+            label1.Size = new Size(119, 41);
             label1.TabIndex = 2;
             label1.Text = "Oferentes";
             // 
@@ -80,9 +78,9 @@
             // 
             label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(527, 14);
+            label2.Location = new Point(602, 19);
             label2.Name = "label2";
-            label2.Size = new Size(112, 31);
+            label2.Size = new Size(128, 41);
             label2.TabIndex = 3;
             label2.Text = "Ganancias";
             label2.Click += label2_Click;
@@ -91,20 +89,19 @@
             // 
             ProductosSOdatagrid.BackgroundColor = SystemColors.ActiveBorder;
             ProductosSOdatagrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ProductosSOdatagrid.Location = new Point(794, 46);
-            ProductosSOdatagrid.Margin = new Padding(3, 2, 3, 2);
+            ProductosSOdatagrid.Location = new Point(907, 61);
             ProductosSOdatagrid.Name = "ProductosSOdatagrid";
             ProductosSOdatagrid.RowHeadersWidth = 51;
-            ProductosSOdatagrid.Size = new Size(370, 351);
+            ProductosSOdatagrid.Size = new Size(423, 468);
             ProductosSOdatagrid.TabIndex = 4;
             // 
             // label3
             // 
             label3.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(878, 14);
+            label3.Location = new Point(1003, 19);
             label3.Name = "label3";
-            label3.Size = new Size(215, 31);
+            label3.Size = new Size(246, 41);
             label3.TabIndex = 5;
             label3.Text = "Productos sin Ofertas";
             // 
@@ -119,8 +116,9 @@
             panel1.Controls.Add(GanadoresdataGrid);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(884, 731);
+            panel1.Size = new Size(1287, 1022);
             panel1.TabIndex = 6;
             // 
             // kryptonCustomPaletteBase1
@@ -183,16 +181,15 @@
             // 
             // FormProductos
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(39, 42, 45);
-            ClientSize = new Size(884, 731);
+            ClientSize = new Size(1287, 1022);
             Controls.Add(panel1);
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom1;
             HeaderStyle = Krypton.Toolkit.HeaderStyle.Custom1;
-            Margin = new Padding(3, 2, 3, 2);
-            MinimumSize = new Size(680, 570);
+            MinimumSize = new Size(775, 744);
             Name = "FormProductos";
             Palette = kryptonCustomPaletteBase1;
             PaletteMode = Krypton.Toolkit.PaletteMode.Custom;

@@ -91,7 +91,7 @@
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Color1 = Color.WhiteSmoke;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Color2 = Color.FromArgb(224, 224, 224);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Switch90;
-            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Font = new Font("Poppins", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color1 = Color.FromArgb(200, 130, 40);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color2 = Color.FromArgb(200, 130, 40);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Back.Color1 = Color.FromArgb(255, 220, 100);
@@ -102,7 +102,7 @@
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.Padding = new Padding(10, -1, -1, 10);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Color1 = Color.White;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Color2 = Color.White;
-            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Font = new Font("Poppins", 16.75F);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Font = new Font("Microsoft Sans Serif", 16.75F);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.OverrideDefault.Back.Color1 = Color.FromArgb(240, 173, 78);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.OverrideDefault.Back.Color2 = Color.FromArgb(240, 173, 78);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCheckedTracking.Back.Color1 = Color.FromArgb(242, 185, 105);
@@ -171,10 +171,10 @@
             kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Back.Color2 = Color.FromArgb(39, 42, 45);
             kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.LongText.Color1 = Color.Gray;
             kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.LongText.Color2 = Color.Gray;
-            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.LongText.Font = new Font("Poppins", 10.25F);
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.LongText.Font = new Font("Microsoft Sans Serif", 10.25F);
             kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.ShortText.Color1 = Color.Gray;
             kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.ShortText.Color2 = Color.Gray;
-            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.ShortText.Font = new Font("Poppins", 10.25F);
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.ShortText.Font = new Font("Microsoft Sans Serif", 10.25F);
             kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color1 = Color.FromArgb(255, 192, 192);
             kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.Color2 = Color.Red;
             kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorAngle = 90F;
@@ -187,11 +187,12 @@
             comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
             comboBox1.BackColor = Color.FromArgb(64, 64, 64);
-            comboBox1.Font = new Font("Poppins", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.ForeColor = SystemColors.ButtonFace;
-            comboBox1.Location = new Point(12, 55);
+            comboBox1.Location = new Point(14, 73);
+            comboBox1.Margin = new Padding(3, 4, 3, 4);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(792, 36);
+            comboBox1.Size = new Size(905, 33);
             comboBox1.TabIndex = 0;
             comboBox1.Text = "No hay subastas finalizadas disponibles";
             comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
@@ -200,11 +201,12 @@
             // 
             kryptonButton1.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom2;
             kryptonButton1.Enabled = false;
-            kryptonButton1.Location = new Point(320, 540);
+            kryptonButton1.Location = new Point(366, 720);
+            kryptonButton1.Margin = new Padding(3, 4, 3, 4);
             kryptonButton1.Name = "kryptonButton1";
             kryptonButton1.Palette = kryptonCustomPaletteBase1;
             kryptonButton1.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
-            kryptonButton1.Size = new Size(191, 47);
+            kryptonButton1.Size = new Size(218, 63);
             kryptonButton1.TabIndex = 1;
             kryptonButton1.Values.Text = "Descargar informe";
             kryptonButton1.Click += buttonGenerateReport_Click;
@@ -212,23 +214,23 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Poppins", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(224, 224, 224);
-            label1.Location = new Point(14, 14);
+            label1.Location = new Point(16, 19);
             label1.Name = "label1";
-            label1.Size = new Size(305, 42);
+            label1.Size = new Size(331, 36);
             label1.TabIndex = 2;
             label1.Text = "Seleccione una subasta";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Poppins", 12.25F);
+            label2.Font = new Font("Microsoft Sans Serif", 12.25F);
             label2.ForeColor = Color.Gray;
-            label2.Location = new Point(14, 95);
-            label2.MaximumSize = new Size(500, 60);
+            label2.Location = new Point(16, 127);
+            label2.MaximumSize = new Size(571, 80);
             label2.Name = "label2";
-            label2.Size = new Size(288, 30);
+            label2.Size = new Size(325, 25);
             label2.TabIndex = 3;
             label2.Text = "Ninguna subasta seleccionada...";
             // 
@@ -253,13 +255,14 @@
             cyberGroupBox2.Lighting = false;
             cyberGroupBox2.LinearGradient_Background = false;
             cyberGroupBox2.LinearGradientPen = false;
-            cyberGroupBox2.Location = new Point(419, 10);
+            cyberGroupBox2.Location = new Point(479, 13);
+            cyberGroupBox2.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox2.Name = "cyberGroupBox2";
             cyberGroupBox2.PenWidth = 15;
             cyberGroupBox2.RGB = false;
             cyberGroupBox2.Rounding = true;
             cyberGroupBox2.RoundingInt = 30;
-            cyberGroupBox2.Size = new Size(400, 166);
+            cyberGroupBox2.Size = new Size(457, 221);
             cyberGroupBox2.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox2.TabIndex = 0;
             cyberGroupBox2.Tag = "Cyber";
@@ -269,21 +272,21 @@
             // labelPdeEmpresa
             // 
             labelPdeEmpresa.AutoSize = true;
-            labelPdeEmpresa.Font = new Font("Poppins", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelPdeEmpresa.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelPdeEmpresa.ForeColor = Color.FromArgb(128, 255, 128);
-            labelPdeEmpresa.Location = new Point(55, 79);
+            labelPdeEmpresa.Location = new Point(63, 105);
             labelPdeEmpresa.Name = "labelPdeEmpresa";
-            labelPdeEmpresa.Size = new Size(155, 62);
+            labelPdeEmpresa.Size = new Size(154, 52);
             labelPdeEmpresa.TabIndex = 0;
             labelPdeEmpresa.Text = "- - - - -";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Poppins SemiBold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(31, 13);
+            label7.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(35, 17);
             label7.Name = "label7";
-            label7.Size = new Size(358, 48);
+            label7.Size = new Size(503, 39);
             label7.TabIndex = 0;
             label7.Text = "PORCENTAJE DE EMPRESA";
             // 
@@ -308,13 +311,14 @@
             cyberGroupBox3.Lighting = false;
             cyberGroupBox3.LinearGradient_Background = false;
             cyberGroupBox3.LinearGradientPen = false;
-            cyberGroupBox3.Location = new Point(419, 215);
+            cyberGroupBox3.Location = new Point(479, 287);
+            cyberGroupBox3.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox3.Name = "cyberGroupBox3";
             cyberGroupBox3.PenWidth = 15;
             cyberGroupBox3.RGB = false;
             cyberGroupBox3.Rounding = true;
             cyberGroupBox3.RoundingInt = 30;
-            cyberGroupBox3.Size = new Size(400, 166);
+            cyberGroupBox3.Size = new Size(457, 221);
             cyberGroupBox3.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox3.TabIndex = 9;
             cyberGroupBox3.Tag = "Cyber";
@@ -324,21 +328,21 @@
             // labelProdVendidos
             // 
             labelProdVendidos.AutoSize = true;
-            labelProdVendidos.Font = new Font("Poppins", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelProdVendidos.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelProdVendidos.ForeColor = Color.Gold;
-            labelProdVendidos.Location = new Point(113, 74);
+            labelProdVendidos.Location = new Point(129, 99);
             labelProdVendidos.Name = "labelProdVendidos";
-            labelProdVendidos.Size = new Size(67, 62);
+            labelProdVendidos.Size = new Size(54, 52);
             labelProdVendidos.TabIndex = 0;
             labelProdVendidos.Text = "--";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Poppins SemiBold", 19.25F, FontStyle.Bold);
-            label5.Location = new Point(2, 13);
+            label5.Font = new Font("Microsoft Sans Serif", 19.25F, FontStyle.Bold);
+            label5.Location = new Point(2, 17);
             label5.Name = "label5";
-            label5.Size = new Size(395, 46);
+            label5.Size = new Size(535, 38);
             label5.TabIndex = 0;
             label5.Text = "N° DE PRODUCTOS VENDIDOS";
             // 
@@ -363,13 +367,14 @@
             cyberGroupBox4.Lighting = false;
             cyberGroupBox4.LinearGradient_Background = false;
             cyberGroupBox4.LinearGradientPen = false;
-            cyberGroupBox4.Location = new Point(5, 215);
+            cyberGroupBox4.Location = new Point(6, 287);
+            cyberGroupBox4.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox4.Name = "cyberGroupBox4";
             cyberGroupBox4.PenWidth = 15;
             cyberGroupBox4.RGB = false;
             cyberGroupBox4.Rounding = true;
             cyberGroupBox4.RoundingInt = 30;
-            cyberGroupBox4.Size = new Size(400, 166);
+            cyberGroupBox4.Size = new Size(457, 221);
             cyberGroupBox4.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox4.TabIndex = 8;
             cyberGroupBox4.Tag = "Cyber";
@@ -379,21 +384,21 @@
             // labelPdeVendedores
             // 
             labelPdeVendedores.AutoSize = true;
-            labelPdeVendedores.Font = new Font("Poppins", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelPdeVendedores.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelPdeVendedores.ForeColor = Color.FromArgb(128, 255, 128);
-            labelPdeVendedores.Location = new Point(55, 74);
+            labelPdeVendedores.Location = new Point(63, 99);
             labelPdeVendedores.Name = "labelPdeVendedores";
-            labelPdeVendedores.Size = new Size(155, 62);
+            labelPdeVendedores.Size = new Size(154, 52);
             labelPdeVendedores.TabIndex = 0;
             labelPdeVendedores.Text = "- - - - -";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Poppins SemiBold", 19.25F, FontStyle.Bold);
-            label8.Location = new Point(2, 13);
+            label8.Font = new Font("Microsoft Sans Serif", 19.25F, FontStyle.Bold);
+            label8.Location = new Point(2, 17);
             label8.Name = "label8";
-            label8.Size = new Size(404, 46);
+            label8.Size = new Size(560, 38);
             label8.TabIndex = 0;
             label8.Text = "PORCENTAJE DE VENDEDORES";
             // 
@@ -418,13 +423,14 @@
             cyberGroupBox1.Lighting = false;
             cyberGroupBox1.LinearGradient_Background = false;
             cyberGroupBox1.LinearGradientPen = false;
-            cyberGroupBox1.Location = new Point(5, 10);
+            cyberGroupBox1.Location = new Point(6, 13);
+            cyberGroupBox1.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox1.Name = "cyberGroupBox1";
             cyberGroupBox1.PenWidth = 15;
             cyberGroupBox1.RGB = false;
             cyberGroupBox1.Rounding = true;
             cyberGroupBox1.RoundingInt = 30;
-            cyberGroupBox1.Size = new Size(400, 166);
+            cyberGroupBox1.Size = new Size(457, 221);
             cyberGroupBox1.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             cyberGroupBox1.TabIndex = 6;
             cyberGroupBox1.Tag = "Cyber";
@@ -434,21 +440,21 @@
             // labelTotal
             // 
             labelTotal.AutoSize = true;
-            labelTotal.Font = new Font("Poppins", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTotal.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTotal.ForeColor = Color.FromArgb(128, 255, 128);
-            labelTotal.Location = new Point(55, 79);
+            labelTotal.Location = new Point(63, 105);
             labelTotal.Name = "labelTotal";
-            labelTotal.Size = new Size(155, 62);
+            labelTotal.Size = new Size(154, 52);
             labelTotal.TabIndex = 0;
             labelTotal.Text = "- - - - -";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Poppins SemiBold", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(31, 13);
+            label3.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(35, 17);
             label3.Name = "label3";
-            label3.Size = new Size(308, 48);
+            label3.Size = new Size(408, 39);
             label3.TabIndex = 0;
             label3.Text = "RECAUDACION TOTAL";
             // 
@@ -458,18 +464,18 @@
             panel1.Controls.Add(cyberGroupBox2);
             panel1.Controls.Add(cyberGroupBox3);
             panel1.Controls.Add(cyberGroupBox4);
-            panel1.Location = new Point(9, 146);
+            panel1.Location = new Point(10, 195);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(824, 386);
+            panel1.Size = new Size(942, 515);
             panel1.TabIndex = 10;
             // 
             // Ganancias
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(39, 42, 45);
-            ClientSize = new Size(832, 591);
+            ClientSize = new Size(951, 788);
             Controls.Add(panel1);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -479,11 +485,13 @@
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom1;
             HeaderStyle = Krypton.Toolkit.HeaderStyle.Custom1;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Ganancias";
             Palette = kryptonCustomPaletteBase1;
             PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
             Text = "Ganancias";
             TitleStyle = Krypton.Toolkit.KryptonFormTitleStyle.Classic;
+            Load += Ganancias_Load;
             cyberGroupBox2.ResumeLayout(false);
             cyberGroupBox2.PerformLayout();
             cyberGroupBox3.ResumeLayout(false);
