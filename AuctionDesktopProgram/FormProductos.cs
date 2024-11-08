@@ -9,6 +9,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using iText.Layout.Borders;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -30,6 +35,7 @@ namespace AuctionDesktopProgram
             _SubastaBusiness = SubastaBusiness;
             _productoBusiness = productoBusiness;
             InitializeComponent();
+            kryptonButton1.Enabled = true;
         }
 
         private void ProductosDatagrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -147,11 +153,138 @@ namespace AuctionDesktopProgram
             }
         }
 
+        public void GenerateReportPdf(string filePath)
+        {
+            try
+            {
+                using (PdfWriter writer = new PdfWriter(filePath))
+                using (PdfDocument pdf = new PdfDocument(writer))
+                using (Document document = new Document(pdf))
+                {
+                    // Encabezado general del reporte
+                    document.Add(new Paragraph("Reporte de Subasta")
+                        .SetFontSize(18)
+                        .SetBold()
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetMarginBottom(20));
+
+                    // Sección de Ofertas
+                    document.Add(new Paragraph("Ofertas")
+                        .SetFontSize(16)
+                        .SetBold()
+                        .SetMarginTop(20)
+                        .SetMarginBottom(10));
+
+                    Table ofertasTable = new Table(3);
+                    ofertasTable.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetBold()));
+                    ofertasTable.AddHeaderCell(new Cell().Add(new Paragraph("Oferente").SetBold()));
+                    ofertasTable.AddHeaderCell(new Cell().Add(new Paragraph("Monto Oferta").SetBold()));
+
+                    foreach (DataGridViewRow row in ProductosDatagrid.Rows)
+                    {
+                        ofertasTable.AddCell(new Cell().Add(new Paragraph(row.Cells["NombreProducto"].Value?.ToString() ?? "-")));
+                        ofertasTable.AddCell(new Cell().Add(new Paragraph(row.Cells["NombreOferente"].Value?.ToString() ?? "-")));
+                        ofertasTable.AddCell(new Cell().Add(new Paragraph($"${Convert.ToDecimal(row.Cells["MontoOferta"].Value):N2}")));
+                    }
+
+                    document.Add(ofertasTable.SetMarginBottom(20));
+
+                    // Sección de Ganadores
+                    document.Add(new Paragraph("Ganadores")
+                        .SetFontSize(16)
+                        .SetBold()
+                        .SetMarginTop(20)
+                        .SetMarginBottom(10));
+
+                    Table ganadoresTable = new Table(5);
+                    ganadoresTable.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetBold()));
+                    ganadoresTable.AddHeaderCell(new Cell().Add(new Paragraph("Ganador").SetBold()));
+                    ganadoresTable.AddHeaderCell(new Cell().Add(new Paragraph("Precio Base").SetBold()));
+                    ganadoresTable.AddHeaderCell(new Cell().Add(new Paragraph("Monto Final").SetBold()));
+                    ganadoresTable.AddHeaderCell(new Cell().Add(new Paragraph("Ganancia Empresa").SetBold()));
+
+                    foreach (DataGridViewRow row in GanadoresdataGrid.Rows)
+                    {
+                        ganadoresTable.AddCell(new Cell().Add(new Paragraph(row.Cells["NombreProducto"].Value?.ToString() ?? "-")));
+                        ganadoresTable.AddCell(new Cell().Add(new Paragraph(row.Cells["NombreGanador"].Value?.ToString() ?? "-")));
+                        ganadoresTable.AddCell(new Cell().Add(new Paragraph($"${Convert.ToDecimal(row.Cells["PrecioBase"].Value):N2}")));
+                        ganadoresTable.AddCell(new Cell().Add(new Paragraph($"${Convert.ToDecimal(row.Cells["Monto"].Value):N2}")));
+                        ganadoresTable.AddCell(new Cell().Add(new Paragraph($"${Convert.ToDecimal(row.Cells["GananciaEmpresa"].Value):N2}")));
+                    }
+
+                    document.Add(ganadoresTable.SetMarginBottom(20));
+
+                    // Sección de Productos sin Ofertas
+                    document.Add(new Paragraph("Productos sin Ofertas")
+                        .SetFontSize(16)
+                        .SetBold()
+                        .SetMarginTop(20)
+                        .SetMarginBottom(10));
+
+                    Table sinOfertasTable = new Table(3);
+                    sinOfertasTable.AddHeaderCell(new Cell().Add(new Paragraph("Producto").SetBold()));
+                    sinOfertasTable.AddHeaderCell(new Cell().Add(new Paragraph("Descripción").SetBold()));
+                    sinOfertasTable.AddHeaderCell(new Cell().Add(new Paragraph("Precio Base").SetBold()));
+
+                    foreach (DataGridViewRow row in ProductosSOdatagrid.Rows)
+                    {
+                        sinOfertasTable.AddCell(new Cell().Add(new Paragraph(row.Cells["NombreProducto"].Value?.ToString() ?? "-")));
+                        sinOfertasTable.AddCell(new Cell().Add(new Paragraph(row.Cells["Descripcion"].Value?.ToString() ?? "-")));
+                        sinOfertasTable.AddCell(new Cell().Add(new Paragraph($"${Convert.ToDecimal(row.Cells["Monto"].Value):N2}")));
+                    }
+
+                    document.Add(sinOfertasTable.SetMarginBottom(20));
+
+                    // Agregar fecha de generación del reporte
+                    document.Add(new Paragraph($"Fecha de generación del reporte: {DateTime.Now:dd/MM/yyyy HH:mm}")
+                        .SetFontSize(10)
+                        .SetTextAlignment(TextAlignment.RIGHT)
+                        .SetMarginTop(30));
+                }
+
+                MessageBox.Show("Archivo PDF guardado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al generar el reporte: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void label2_Click(object sender, EventArgs e)
         {
 
         }
 
-    }    
+        private void kryptonButton1_Click(object sender, EventArgs e)
+        {
+            // Crear un cuadro de diálogo para guardar el archivo PDF
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PDF files (*.pdf)|*.pdf",
+                FileName = "ReporteSubasta.pdf" // Nombre sugerido para el archivo PDF
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string filePath = saveFileDialog.FileName;
+                    // Verificar si la ruta es válida
+                    if (string.IsNullOrWhiteSpace(filePath))
+                    {
+                        MessageBox.Show("Ruta de archivo no válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Llamar al método para generar el reporte PDF en la ruta seleccionada
+                    GenerateReportPdf(filePath);
+                }
+                catch (Exception ex)
+                {
+                    // Mostrar el error si ocurre algún problema al generar el PDF
+                    MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+    }
 }

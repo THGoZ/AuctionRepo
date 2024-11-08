@@ -37,6 +37,7 @@
             label3 = new Label();
             panel1 = new Panel();
             kryptonCustomPaletteBase1 = new Krypton.Toolkit.KryptonCustomPaletteBase(components);
+            kryptonButton1 = new Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)ProductosDatagrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GanadoresdataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProductosSOdatagrid).BeginInit();
@@ -108,6 +109,7 @@
             // panel1
             // 
             panel1.AutoScroll = true;
+            panel1.Controls.Add(kryptonButton1);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(ProductosSOdatagrid);
             panel1.Controls.Add(label2);
@@ -179,6 +181,18 @@
             kryptonCustomPaletteBase1.ThemeName = "";
             kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
             // 
+            // kryptonButton1
+            // 
+            kryptonButton1.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom2;
+            kryptonButton1.Enabled = false;
+            kryptonButton1.Location = new Point(574, 560);
+            kryptonButton1.Margin = new Padding(3, 4, 3, 4);
+            kryptonButton1.Name = "kryptonButton1";
+            kryptonButton1.Size = new Size(218, 63);
+            kryptonButton1.TabIndex = 15;
+            kryptonButton1.Values.Text = "Descargar informe";
+            kryptonButton1.Click += kryptonButton1_Click;
+            // 
             // FormProductos
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -212,5 +226,6 @@
         private Label label3;
         private Panel panel1;
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
+        private Krypton.Toolkit.KryptonButton kryptonButton1;
     }
 }
