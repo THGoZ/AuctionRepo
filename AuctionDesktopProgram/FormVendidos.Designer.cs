@@ -51,6 +51,7 @@
             kryptonDataGridView1.RowHeadersWidth = 51;
             kryptonDataGridView1.Size = new Size(600, 500);
             kryptonDataGridView1.TabIndex = 1;
+            kryptonDataGridView1.CellContentClick += kryptonDataGridView1_CellContentClick;
             // 
             // kryptonButton1
             // 

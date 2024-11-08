@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             kryptonDataGridView1 = new Krypton.Toolkit.KryptonDataGridView();
             label1 = new Label();
             comboBox1 = new ComboBox();
@@ -56,15 +56,18 @@
             // 
             // kryptonDataGridView1
             // 
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = Color.Transparent;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Transparent;
-            kryptonDataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = Color.Transparent;
+            kryptonDataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             kryptonDataGridView1.BorderStyle = BorderStyle.None;
-            kryptonDataGridView1.Location = new Point(55, 207);
+            kryptonDataGridView1.ColumnHeadersHeight = 36;
+            kryptonDataGridView1.Location = new Point(63, 276);
+            kryptonDataGridView1.Margin = new Padding(3, 4, 3, 4);
             kryptonDataGridView1.Name = "kryptonDataGridView1";
-            kryptonDataGridView1.Size = new Size(675, 241);
+            kryptonDataGridView1.RowHeadersWidth = 51;
+            kryptonDataGridView1.Size = new Size(771, 321);
             kryptonDataGridView1.TabIndex = 0;
             kryptonDataGridView1.CellContentClick += kryptonDataGridView1_CellContentClick;
             // 
@@ -73,9 +76,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(224, 224, 224);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(14, 12);
             label1.Name = "label1";
-            label1.Size = new Size(268, 29);
+            label1.Size = new Size(331, 36);
             label1.TabIndex = 3;
             label1.Text = "Seleccione una subasta";
             // 
@@ -86,9 +89,10 @@
             comboBox1.BackColor = Color.FromArgb(64, 64, 64);
             comboBox1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.ForeColor = SystemColors.ButtonFace;
-            comboBox1.Location = new Point(12, 41);
+            comboBox1.Location = new Point(14, 55);
+            comboBox1.Margin = new Padding(3, 4, 3, 4);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(776, 28);
+            comboBox1.Size = new Size(886, 33);
             comboBox1.TabIndex = 4;
             comboBox1.Text = "No hay subastas finalizadas disponibles";
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
@@ -98,10 +102,10 @@
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 12.25F);
             label2.ForeColor = Color.Gray;
-            label2.Location = new Point(12, 72);
-            label2.MaximumSize = new Size(500, 60);
+            label2.Location = new Point(14, 96);
+            label2.MaximumSize = new Size(571, 80);
             label2.Name = "label2";
-            label2.Size = new Size(249, 20);
+            label2.Size = new Size(325, 25);
             label2.TabIndex = 5;
             label2.Text = "Ninguna subasta seleccionada...";
             // 
@@ -126,13 +130,14 @@
             cyberGroupBox3.Lighting = false;
             cyberGroupBox3.LinearGradient_Background = false;
             cyberGroupBox3.LinearGradientPen = false;
-            cyberGroupBox3.Location = new Point(27, 95);
+            cyberGroupBox3.Location = new Point(31, 127);
+            cyberGroupBox3.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox3.Name = "cyberGroupBox3";
             cyberGroupBox3.PenWidth = 15;
             cyberGroupBox3.RGB = false;
             cyberGroupBox3.Rounding = true;
             cyberGroupBox3.RoundingInt = 30;
-            cyberGroupBox3.Size = new Size(351, 44);
+            cyberGroupBox3.Size = new Size(401, 59);
             cyberGroupBox3.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox3.TabIndex = 10;
             cyberGroupBox3.Tag = "Cyber";
@@ -144,9 +149,9 @@
             labelProdNoVendidos.AutoSize = true;
             labelProdNoVendidos.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelProdNoVendidos.ForeColor = Color.Gold;
-            labelProdNoVendidos.Location = new Point(305, 0);
+            labelProdNoVendidos.Location = new Point(349, 0);
             labelProdNoVendidos.Name = "labelProdNoVendidos";
-            labelProdNoVendidos.Size = new Size(39, 37);
+            labelProdNoVendidos.Size = new Size(48, 46);
             labelProdNoVendidos.TabIndex = 0;
             labelProdNoVendidos.Text = "--";
             // 
@@ -154,9 +159,9 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(2, 13);
+            label5.Location = new Point(2, 17);
             label5.Name = "label5";
-            label5.Size = new Size(300, 20);
+            label5.Size = new Size(370, 25);
             label5.TabIndex = 0;
             label5.Text = "N° DE PRODUCTOS NO VENDIDOS";
             // 
@@ -181,27 +186,29 @@
             cyberGroupBox1.Lighting = false;
             cyberGroupBox1.LinearGradient_Background = false;
             cyberGroupBox1.LinearGradientPen = false;
-            cyberGroupBox1.Location = new Point(398, 95);
+            cyberGroupBox1.Location = new Point(455, 127);
+            cyberGroupBox1.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox1.Name = "cyberGroupBox1";
             cyberGroupBox1.PenWidth = 15;
             cyberGroupBox1.RGB = false;
             cyberGroupBox1.Rounding = true;
             cyberGroupBox1.RoundingInt = 30;
-            cyberGroupBox1.Size = new Size(343, 44);
+            cyberGroupBox1.Size = new Size(392, 59);
             cyberGroupBox1.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox1.TabIndex = 11;
             cyberGroupBox1.Tag = "Cyber";
             cyberGroupBox1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             cyberGroupBox1.Timer_RGB = 300;
+            cyberGroupBox1.Load += cyberGroupBox1_Load;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.Gold;
-            label3.Location = new Point(278, 0);
+            label3.Location = new Point(318, 0);
             label3.Name = "label3";
-            label3.Size = new Size(39, 37);
+            label3.Size = new Size(48, 46);
             label3.TabIndex = 0;
             label3.Text = "--";
             // 
@@ -209,9 +216,9 @@
             // 
             labelProdVendidos.AutoSize = true;
             labelProdVendidos.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelProdVendidos.Location = new Point(2, 13);
+            labelProdVendidos.Location = new Point(2, 17);
             labelProdVendidos.Name = "labelProdVendidos";
-            labelProdVendidos.Size = new Size(270, 20);
+            labelProdVendidos.Size = new Size(332, 25);
             labelProdVendidos.TabIndex = 0;
             labelProdVendidos.Text = "N° DE PRODUCTOS VENDIDOS";
             // 
@@ -236,13 +243,14 @@
             cyberGroupBox2.Lighting = false;
             cyberGroupBox2.LinearGradient_Background = false;
             cyberGroupBox2.LinearGradientPen = false;
-            cyberGroupBox2.Location = new Point(400, 147);
+            cyberGroupBox2.Location = new Point(457, 196);
+            cyberGroupBox2.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox2.Name = "cyberGroupBox2";
             cyberGroupBox2.PenWidth = 15;
             cyberGroupBox2.RGB = false;
             cyberGroupBox2.Rounding = true;
             cyberGroupBox2.RoundingInt = 30;
-            cyberGroupBox2.Size = new Size(341, 44);
+            cyberGroupBox2.Size = new Size(390, 59);
             cyberGroupBox2.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox2.TabIndex = 13;
             cyberGroupBox2.Tag = "Cyber";
@@ -254,9 +262,9 @@
             labelProdVendidosPorcentual.AutoSize = true;
             labelProdVendidosPorcentual.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelProdVendidosPorcentual.ForeColor = Color.Gold;
-            labelProdVendidosPorcentual.Location = new Point(278, 0);
+            labelProdVendidosPorcentual.Location = new Point(318, 0);
             labelProdVendidosPorcentual.Name = "labelProdVendidosPorcentual";
-            labelProdVendidosPorcentual.Size = new Size(39, 37);
+            labelProdVendidosPorcentual.Size = new Size(48, 46);
             labelProdVendidosPorcentual.TabIndex = 0;
             labelProdVendidosPorcentual.Text = "--";
             // 
@@ -264,9 +272,9 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(2, 13);
+            label7.Location = new Point(2, 17);
             label7.Name = "label7";
-            label7.Size = new Size(237, 20);
+            label7.Size = new Size(292, 25);
             label7.TabIndex = 0;
             label7.Text = "PRODUCTOS VENDIDOS %";
             // 
@@ -292,13 +300,14 @@
             cyberGroupBox4.Lighting = false;
             cyberGroupBox4.LinearGradient_Background = false;
             cyberGroupBox4.LinearGradientPen = false;
-            cyberGroupBox4.Location = new Point(29, 147);
+            cyberGroupBox4.Location = new Point(33, 196);
+            cyberGroupBox4.Margin = new Padding(3, 4, 3, 4);
             cyberGroupBox4.Name = "cyberGroupBox4";
             cyberGroupBox4.PenWidth = 15;
             cyberGroupBox4.RGB = false;
             cyberGroupBox4.Rounding = true;
             cyberGroupBox4.RoundingInt = 30;
-            cyberGroupBox4.Size = new Size(351, 44);
+            cyberGroupBox4.Size = new Size(401, 59);
             cyberGroupBox4.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox4.TabIndex = 12;
             cyberGroupBox4.Tag = "Cyber";
@@ -310,9 +319,9 @@
             label4.AutoSize = true;
             label4.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.Gold;
-            label4.Location = new Point(303, 0);
+            label4.Location = new Point(346, 0);
             label4.Name = "label4";
-            label4.Size = new Size(39, 37);
+            label4.Size = new Size(48, 46);
             label4.TabIndex = 1;
             label4.Text = "--";
             // 
@@ -321,9 +330,9 @@
             labelProdNoVendidosPorcentual.AutoSize = true;
             labelProdNoVendidosPorcentual.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelProdNoVendidosPorcentual.ForeColor = Color.Gold;
-            labelProdNoVendidosPorcentual.Location = new Point(26, 42);
+            labelProdNoVendidosPorcentual.Location = new Point(30, 56);
             labelProdNoVendidosPorcentual.Name = "labelProdNoVendidosPorcentual";
-            labelProdNoVendidosPorcentual.Size = new Size(17, 15);
+            labelProdNoVendidosPorcentual.Size = new Size(20, 18);
             labelProdNoVendidosPorcentual.TabIndex = 0;
             labelProdNoVendidosPorcentual.Text = "--";
             // 
@@ -331,27 +340,28 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(2, 13);
+            label9.Location = new Point(2, 17);
             label9.Name = "label9";
-            label9.Size = new Size(267, 20);
+            label9.Size = new Size(330, 25);
             label9.TabIndex = 0;
             label9.Text = "PRODUCTOS NO VENDIDOS %";
             // 
             // kryptonButton2
             // 
-            kryptonButton2.Location = new Point(302, 478);
+            kryptonButton2.Location = new Point(345, 637);
+            kryptonButton2.Margin = new Padding(3, 4, 3, 4);
             kryptonButton2.Name = "kryptonButton2";
-            kryptonButton2.Size = new Size(177, 45);
+            kryptonButton2.Size = new Size(202, 60);
             kryptonButton2.TabIndex = 14;
             kryptonButton2.Values.Text = "Descargar Informe";
             kryptonButton2.Click += kryptonButton2_Click;
             // 
             // ProductosNoOfertados
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(39, 42, 45);
-            ClientSize = new Size(800, 535);
+            ClientSize = new Size(914, 713);
             Controls.Add(kryptonButton2);
             Controls.Add(cyberGroupBox2);
             Controls.Add(cyberGroupBox4);
@@ -361,8 +371,10 @@
             Controls.Add(comboBox1);
             Controls.Add(label1);
             Controls.Add(kryptonDataGridView1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "ProductosNoOfertados";
             Text = "ProductosNoOfertados";
+            Load += ProductosNoOfertados_Load;
             ((System.ComponentModel.ISupportInitialize)kryptonDataGridView1).EndInit();
             cyberGroupBox3.ResumeLayout(false);
             cyberGroupBox3.PerformLayout();

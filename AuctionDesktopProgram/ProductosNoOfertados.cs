@@ -319,5 +319,15 @@ namespace AuctionDesktopProgram
                 }
             }
         }
+
+        private void ProductosNoOfertados_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cyberGroupBox1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

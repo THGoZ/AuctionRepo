@@ -79,7 +79,7 @@
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Color1 = Color.WhiteSmoke;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Color2 = Color.FromArgb(224, 224, 224);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Switch90;
-            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Font = new Font("Poppins", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color1 = Color.FromArgb(200, 130, 40);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color2 = Color.FromArgb(200, 130, 40);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Back.Color1 = Color.FromArgb(255, 220, 100);
@@ -90,7 +90,7 @@
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.Padding = new Padding(10, -1, -1, 10);
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Color1 = Color.White;
             kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Color2 = Color.White;
-            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Font = new Font("Poppins", 16.75F);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Content.ShortText.Font = new Font("Microsoft Sans Serif", 16.75F);
             kryptonCustomPaletteBase1.Common.StateCommon.Content.ShortText.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateActive.Back.Color1 = Color.FromArgb(26, 26, 26);
             kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateActive.Back.Color2 = Color.Gray;
@@ -153,10 +153,10 @@
             flowLayoutPanel1.Controls.Add(kryptonCheckButton4);
             flowLayoutPanel1.Controls.Add(kryptonCheckButton5);
             flowLayoutPanel1.Controls.Add(panel2);
-            flowLayoutPanel1.Location = new Point(-1, 2);
+            flowLayoutPanel1.Location = new Point(-1, 3);
             flowLayoutPanel1.Margin = new Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(855, 750);
+            flowLayoutPanel1.Size = new Size(977, 1000);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // kryptonCheckButton1
@@ -168,7 +168,7 @@
             kryptonCheckButton1.Name = "kryptonCheckButton1";
             kryptonCheckButton1.Palette = kryptonCustomPaletteBase1;
             kryptonCheckButton1.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
-            kryptonCheckButton1.Size = new Size(171, 49);
+            kryptonCheckButton1.Size = new Size(195, 65);
             kryptonCheckButton1.TabIndex = 0;
             kryptonCheckButton1.Values.Text = "Ganancias";
             kryptonCheckButton1.Click += kryptonCheckButton1_Click;
@@ -177,12 +177,12 @@
             // 
             kryptonCheckButton2.AllowUncheck = false;
             kryptonCheckButton2.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
-            kryptonCheckButton2.Location = new Point(171, 0);
+            kryptonCheckButton2.Location = new Point(195, 0);
             kryptonCheckButton2.Margin = new Padding(0);
             kryptonCheckButton2.Name = "kryptonCheckButton2";
             kryptonCheckButton2.Palette = kryptonCustomPaletteBase1;
             kryptonCheckButton2.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
-            kryptonCheckButton2.Size = new Size(171, 49);
+            kryptonCheckButton2.Size = new Size(195, 65);
             kryptonCheckButton2.TabIndex = 1;
             kryptonCheckButton2.Values.Text = "Ventas";
             kryptonCheckButton2.Click += kryptonCheckButton2_Click;
@@ -191,12 +191,12 @@
             // 
             kryptonCheckButton3.AllowUncheck = false;
             kryptonCheckButton3.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
-            kryptonCheckButton3.Location = new Point(342, 0);
+            kryptonCheckButton3.Location = new Point(390, 0);
             kryptonCheckButton3.Margin = new Padding(0);
             kryptonCheckButton3.Name = "kryptonCheckButton3";
             kryptonCheckButton3.Palette = kryptonCustomPaletteBase1;
             kryptonCheckButton3.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
-            kryptonCheckButton3.Size = new Size(171, 49);
+            kryptonCheckButton3.Size = new Size(195, 65);
             kryptonCheckButton3.TabIndex = 2;
             kryptonCheckButton3.Values.Text = "No ofertados";
             kryptonCheckButton3.Click += kryptonCheckButton3_Click;
@@ -206,36 +206,38 @@
             kryptonCheckButton4.AllowUncheck = false;
             kryptonCheckButton4.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
             kryptonCheckButton4.Enabled = false;
-            kryptonCheckButton4.Location = new Point(513, 0);
+            kryptonCheckButton4.Location = new Point(585, 0);
             kryptonCheckButton4.Margin = new Padding(0);
             kryptonCheckButton4.Name = "kryptonCheckButton4";
             kryptonCheckButton4.Palette = kryptonCustomPaletteBase1;
             kryptonCheckButton4.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
-            kryptonCheckButton4.Size = new Size(171, 49);
+            kryptonCheckButton4.Size = new Size(195, 65);
             kryptonCheckButton4.TabIndex = 3;
-            kryptonCheckButton4.Values.Text = "Otro1";
+            kryptonCheckButton4.TabStop = false;
+            kryptonCheckButton4.Values.Text = "Mas Vendidos";
+            kryptonCheckButton4.Click += kryptonCheckButton4_Click;
             // 
             // kryptonCheckButton5
             // 
             kryptonCheckButton5.AllowUncheck = false;
             kryptonCheckButton5.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
             kryptonCheckButton5.Enabled = false;
-            kryptonCheckButton5.Location = new Point(684, 0);
+            kryptonCheckButton5.Location = new Point(780, 0);
             kryptonCheckButton5.Margin = new Padding(0);
             kryptonCheckButton5.Name = "kryptonCheckButton5";
             kryptonCheckButton5.Palette = kryptonCustomPaletteBase1;
             kryptonCheckButton5.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
-            kryptonCheckButton5.Size = new Size(171, 49);
+            kryptonCheckButton5.Size = new Size(195, 65);
             kryptonCheckButton5.TabIndex = 4;
             kryptonCheckButton5.Values.Text = "Otro2";
             // 
             // panel2
             // 
             panel2.AutoScroll = true;
-            panel2.Location = new Point(0, 49);
+            panel2.Location = new Point(0, 65);
             panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(854, 701);
+            panel2.Size = new Size(976, 935);
             panel2.TabIndex = 5;
             // 
             // cyberGroupBox2
@@ -258,14 +260,14 @@
             cyberGroupBox2.Lighting = false;
             cyberGroupBox2.LinearGradient_Background = false;
             cyberGroupBox2.LinearGradientPen = false;
-            cyberGroupBox2.Location = new Point(13, 9);
+            cyberGroupBox2.Location = new Point(15, 12);
             cyberGroupBox2.Margin = new Padding(0);
             cyberGroupBox2.Name = "cyberGroupBox2";
             cyberGroupBox2.PenWidth = 15;
             cyberGroupBox2.RGB = false;
             cyberGroupBox2.Rounding = true;
             cyberGroupBox2.RoundingInt = 3;
-            cyberGroupBox2.Size = new Size(852, 750);
+            cyberGroupBox2.Size = new Size(974, 1000);
             cyberGroupBox2.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             cyberGroupBox2.TabIndex = 1;
             cyberGroupBox2.Tag = "Cyber";
@@ -274,18 +276,20 @@
             // 
             // Informes
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(872, 761);
+            ClientSize = new Size(1015, 1062);
             Controls.Add(cyberGroupBox2);
             GroupBackStyle = Krypton.Toolkit.PaletteBackStyle.FormCustom1;
             GroupBorderStyle = Krypton.Toolkit.PaletteBorderStyle.FormCustom2;
             HeaderStyle = Krypton.Toolkit.HeaderStyle.Custom1;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Informes";
             Palette = kryptonCustomPaletteBase1;
             PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
             Text = "Informes";
+            Load += Informes_Load;
             flowLayoutPanel1.ResumeLayout(false);
             cyberGroupBox2.ResumeLayout(false);
             ResumeLayout(false);

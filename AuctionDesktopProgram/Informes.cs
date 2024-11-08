@@ -26,7 +26,8 @@ namespace AuctionDesktopProgram
             var formGanacias = _serviceProvider.GetService<Ganancias>();
             openPanel2(formGanacias);
             kryptonCheckButton1.Checked = true;
-        }
+            kryptonCheckButton4.Enabled = true;
+        } 
 
         private void kryptonCheckButton1_Click(object sender, EventArgs e)
         {
@@ -66,6 +67,21 @@ namespace AuctionDesktopProgram
             panel2.Controls.Add(form);
             panel2.Tag = form;
             form.Show();
+        }
+
+        private void kryptonCheckButton4_Click(object sender, EventArgs e)
+        {
+            kryptonCheckButton1.Checked = false;
+            kryptonCheckButton2.Checked = false;
+            kryptonCheckButton3.Checked = false;
+            kryptonCheckButton4.Checked = true;
+            var formMasVendidos = _serviceProvider.GetService<FormMasVendidos>();
+            openPanel2(formMasVendidos);
+        }
+
+        private void Informes_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
