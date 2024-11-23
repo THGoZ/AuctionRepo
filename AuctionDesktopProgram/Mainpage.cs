@@ -70,6 +70,7 @@ namespace AuctionDesktopProgram
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
+            panel2.Controls.Clear();
             panel2.Controls.Add(form);
             panel2.Tag = form;
             panel2.Visible = true;

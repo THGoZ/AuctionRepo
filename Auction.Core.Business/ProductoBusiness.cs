@@ -34,5 +34,30 @@ namespace Auction.Core.Business
             _repository.ActualizarEstadoProducto(productoSeleccionado);
         }
 
+        public List<ProductoWinner> GetProductoWinnersOfSubasta(int IdSubasta)
+        {
+            var productos = _repository.GetProductoWinnerOfSubasta(IdSubasta);
+
+            return productos;
+        }
+
+        public void UpdateProducto(int id, bool estado)
+        {
+            try
+            {
+                var producto = _repository.GetProducto(id);
+                producto.EstadoDeSolicitud = estado;
+                _repository.ActualizarEstadoProducto(producto);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al actualizar el producto {ex.Message}");
+            }
+        }
+        public List<Oferta> GetOfertasOfProducto(int id)
+        {
+            var ofertas = _repository.GetOfertasOfProducto(id);
+            return ofertas;
+        }
     }
 }

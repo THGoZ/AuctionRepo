@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace AuctionDesktopProgram
 {
-    public partial class FormProductos : KryptonForm
+    public partial class FormProductos : Form
 
     {
         private int? selectedSubastaId;
@@ -28,6 +28,7 @@ namespace AuctionDesktopProgram
 
         private readonly IProductoBusiness _productoBusiness;
         public bool MostrarSoloGanancias { get; set; }
+        private readonly Loading loadingForm = new();
 
 
         public FormProductos(ISubastaBusiness SubastaBusiness, IProductoBusiness productoBusiness)
@@ -38,9 +39,27 @@ namespace AuctionDesktopProgram
             kryptonButton1.Enabled = true;
         }
 
-        private void ProductosDatagrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private AutoCompleteStringCollection PopulateComboBox()
         {
+            AutoCompleteStringCollection subastas = [];
+            subastas.Add("Todas");
+            try
+            {
+                var allsubastas = _SubastaBusiness.GetAll();
+                if (allsubastas is null || allsubastas.Count == 0)
+                {
+                    return subastas;
+                }
 
+                subastas.AddRange(allsubastas.Select(s => ($"Subasta N°{s.IdSubasta}")).ToArray());
+                return subastas;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return subastas;
+            }
         }
 
         public void SetSubastaId(int idSubasta)
@@ -49,6 +68,13 @@ namespace AuctionDesktopProgram
         }
 
         public void Productos_Load(object sender, EventArgs e)
+        {
+            LoadStuff();
+            ShowLoading();
+            this.LoadingProcess.RunWorkerAsync();
+        }
+
+        private void LoadStuff()
         {
             if (selectedSubastaId.HasValue)
             {
@@ -284,6 +310,66 @@ namespace AuctionDesktopProgram
                     // Mostrar el error si ocurre algún problema al generar el PDF
                     MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void LoadingProcess_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var subastasAutocomplete = PopulateComboBox();
+
+            var results = new Dictionary<string, object>
+            {
+                {"ComboboxItems", subastasAutocomplete },
+            };
+
+            e.Result = results;
+        }
+
+        private void LoadingProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Result is Dictionary<string, object> results)
+            {
+                var subastas = (AutoCompleteStringCollection)results["ComboboxItems"];
+                comboBox1.AutoCompleteCustomSource = subastas;
+                comboBox1.DataSource = subastas;
+                comboBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                LoadingPanel.Dispose();
+                loadingForm.Close();
+            }
+        }
+
+        private void ShowLoading()
+        {
+            loadingForm.TopLevel = false;
+            loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Dock = DockStyle.Fill;
+            LoadingPanel.Controls.Add(loadingForm);
+            LoadingPanel.Tag = loadingForm;
+            LoadingPanel.BringToFront();
+            LoadingPanel.Visible = true;
+            loadingForm.Show();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(comboBox1.SelectedIndex < 1)
+            {
+
+                selectedSubastaId = null;
+                LoadStuff();
+                label5.Text = "Viendo resumen de todas las subastas";
+            }
+            else
+            {
+                if (!int.TryParse(comboBox1.SelectedItem.ToString().Replace("Subasta N°", ""), out int subastaId))
+                {
+                    MessageBox.Show("Por favor ingrese un ID válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                selectedSubastaId = subastaId;
+                LoadStuff();
+                label5.Text = $"Viendo resumen de la subasta N°{subastaId}";
             }
         }
     }

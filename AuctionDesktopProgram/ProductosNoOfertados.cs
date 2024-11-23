@@ -4,7 +4,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using Krypton.Toolkit;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Data;
 
 namespace AuctionDesktopProgram
@@ -13,6 +13,7 @@ namespace AuctionDesktopProgram
     {
         private readonly IProductoBusiness _productoBusiness;
         private readonly ISubastaBusiness _subastaBusiness;
+        private readonly Loading loadingForm = new();
         private Subasta Subastas;
         public ProductosNoOfertados(IProductoBusiness productoBusiness, ISubastaBusiness subastaBusiness)
         {
@@ -20,44 +21,33 @@ namespace AuctionDesktopProgram
             _productoBusiness = productoBusiness;
             InitializeComponent();
 
-            CargarProductosNoOfertados();
-            PopulateComboBox();
-
         }
 
-        private void kryptonDataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void PopulateComboBox()
+        private AutoCompleteStringCollection PopulateComboBox()
         {
             AutoCompleteStringCollection subastas = [];
-            comboBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            subastas.Add("Todas");
             try
             {
                 var allsubastas = _subastaBusiness.GetSuccessful();
                 if (allsubastas is null || allsubastas.Count == 0)
                 {
-                    return;
+                    return subastas;
                 }
 
                 subastas.AddRange(allsubastas.Select(s => ($"Subasta N°{s.IdSubasta}")).ToArray());
-                comboBox1.AutoCompleteCustomSource = subastas;
-                comboBox1.DataSource = subastas;
-                comboBox1.SelectedItem = comboBox1.SelectedIndex = -1;
+                return subastas;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return subastas;
             }
         }
 
         private void MostrarValoresGlobales()
         {
-            // Obtener datos globales de todas las subastas
             var productosSinOfertas = _productoBusiness.GetProductosSinOfertas();
             int totalSinOfertas = productosSinOfertas.Count;
 
@@ -121,54 +111,42 @@ namespace AuctionDesktopProgram
             }
         }
 
-        private void CargarProductosNoOfertados()
+        private SortableBindingList<Producto> CargarProductosNoOfertados()
         {
-            // Obtener la lista de productos solicitados (pueden ser aquellos con solicitudes pendientes)
             var productosSolicitados = _productoBusiness.GetProductosSinOfertas();
 
-            // Verificar si hay productos
             if (productosSolicitados.Count() != 0)
             {
-                kryptonDataGridView1.DataSource = productosSolicitados;
-
-                kryptonDataGridView1.Columns["Imagen"].Visible = false;
-                kryptonDataGridView1.Columns["ImageExtension"].Visible = false;
-                kryptonDataGridView1.Columns["IdSubasta"].Visible = false;
-                kryptonDataGridView1.Columns["IdUsuario"].Visible = false;
-                kryptonDataGridView1.Columns["EstadoDeSolicitud"].Visible = false;
-                kryptonDataGridView1.Columns["Ofertas"].Visible = false;
-                kryptonDataGridView1.Columns["Vendido"].Visible = false;
+                return  new SortableBindingList<Producto>(productosSolicitados);
             }
             else
             {
                 MessageBox.Show("No se encontraron productos solicitados pendientes.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                return new SortableBindingList<Producto>(new List<Producto>());
             }
-        }
-
-        private void labelProdVendidos_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                if (comboBox1.SelectedIndex == -1)
+                if (comboBox1.SelectedIndex < 1)
                 {
                     MostrarValoresGlobales();
                     return;
                 }
-
-                if (!int.TryParse(comboBox1.SelectedItem.ToString().Replace("Subasta N°", ""), out int subastaId))
+                else
                 {
-                    MessageBox.Show("Por favor ingrese un ID válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
 
-                Subastas = _subastaBusiness.GetById(subastaId);
-                UpdateDescription();
+                    if (!int.TryParse(comboBox1.SelectedItem.ToString().Replace("Subasta N°", ""), out int subastaId))
+                    {
+                        MessageBox.Show("Por favor ingrese un ID válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    Subastas = _subastaBusiness.GetById(subastaId);
+                    UpdateDescription();
+                }
             }
             catch (KeyNotFoundException ex)
             {
@@ -322,12 +300,53 @@ namespace AuctionDesktopProgram
 
         private void ProductosNoOfertados_Load(object sender, EventArgs e)
         {
+            ShowLoading();
+            this.LoadingProcess.RunWorkerAsync();
 
         }
 
-        private void cyberGroupBox1_Load(object sender, EventArgs e)
+        private void LoadingProcess_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            var subastasAutocomplete = PopulateComboBox();
+            var ProductosNoOfertados = CargarProductosNoOfertados();
 
+            var results = new Dictionary<string, object>
+            {
+                {"ComboboxItems", subastasAutocomplete },
+                {"DataGridSource", ProductosNoOfertados},
+            };
+
+            e.Result = results;
+
+        }
+
+        private void LoadingProcess_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (e.Result is Dictionary<string, object> results)
+            {
+                var subastas = (AutoCompleteStringCollection)results["ComboboxItems"];
+                var sortableprods = (SortableBindingList<Producto>)results["DataGridSource"];
+
+                comboBox1.AutoCompleteCustomSource = subastas;
+                comboBox1.DataSource = subastas;
+                comboBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                ProductosDataGrid.DataSource = sortableprods;
+                LoadinPanel.Dispose();
+                loadingForm.Close();
+            }
+        }
+
+        private void ShowLoading()
+        {
+            loadingForm.TopLevel = false;
+            loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Dock = DockStyle.Fill;
+            LoadinPanel.Controls.Add(loadingForm);
+            LoadinPanel.Tag = loadingForm;
+            LoadinPanel.BringToFront();
+            LoadinPanel.Visible = true;
+            loadingForm.Show();
         }
     }
 }

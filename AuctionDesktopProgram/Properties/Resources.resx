@@ -121,8 +121,17 @@
   <data name="clipboard-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clipboard-solid3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="placeholder-image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\placeholder-image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gavel-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gavel-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="clipboard-solid-hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clipboard-solid-hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LOgo TUP png2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logotup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -130,17 +139,20 @@
   <data name="check-to-slot-solid-hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check-to-slot-solid-hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gavel-solid+-hover1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gavel-solid+-hover2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="LOgo TUP png3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logotup-hover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boxes-stacked-solid-pressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boxes-stacked-solid-pressed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gavel-solid1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gavel-solid1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gavel-solid+-hover-click" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gavel-solid+-hover-click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="check-to-slot-solid-click" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\check-to-slot-solid-click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boxes-stacked-solid1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boxes-stacked-solid3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,23 +160,29 @@
   <data name="LOgo TUP png4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logotup-click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="magnifying-glass-solid1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\magnifying-glass-solid1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="gavel-solid+-hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gavel-solid+-hover1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="magnifying-glass-solid2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\magnifying-glass-solid2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="check-to-slot-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check-to-slot-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="boxes-stacked-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\boxes-stacked-solid1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="check-to-slot-solid-click" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\check-to-slot-solid-click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logotup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logotup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="magnifying-glass-solid1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\magnifying-glass-solid1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gavel-solid+" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gavel-solid+1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gavel-solid+-hover" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gavel-solid+-hover1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="boxes-stacked-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boxes-stacked-solid1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="magnifying-glass-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\magnifying-glass-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,7 +190,7 @@
   <data name="clipboard-solid-click" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clipboard-solid-click.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="magnifying-glass-solid2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\magnifying-glass-solid2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="gavel-solid2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gavel-solid2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

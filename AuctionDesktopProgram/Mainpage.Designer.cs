@@ -33,40 +33,17 @@ namespace AuctionDesktopProgram
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainpage));
-            button2 = new KryptonButton();
             kryptonCustomPaletteBase1 = new KryptonCustomPaletteBase(components);
-            button3 = new KryptonButton();
             button4 = new KryptonButton();
             button5 = new KryptonButton();
             panelSideMenu = new Panel();
             panel1 = new Panel();
             inicioButton = new KryptonButton();
+            button3 = new KryptonButton();
             panel2 = new Panel();
             panelSideMenu.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // button2
-            // 
-            button2.ButtonStyle = ButtonStyle.Custom1;
-            button2.Font = new Font("Noto Sans", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.WhiteSmoke;
-            button2.Location = new Point(0, 119);
-            button2.Margin = new Padding(0);
-            button2.Name = "button2";
-            button2.Palette = kryptonCustomPaletteBase1;
-            button2.PaletteMode = PaletteMode.Custom;
-            button2.Size = new Size(282, 45);
-            button2.TabIndex = 2;
-            button2.Values.Image = Properties.Resources.boxes_stacked_solid;
-            button2.Values.ImageStates.ImageCheckedNormal = null;
-            button2.Values.ImageStates.ImageCheckedPressed = null;
-            button2.Values.ImageStates.ImageCheckedTracking = null;
-            button2.Values.ImageStates.ImageNormal = Properties.Resources.boxes_stacked_solid;
-            button2.Values.ImageStates.ImagePressed = Properties.Resources.boxes_stacked_solid_pressed;
-            button2.Values.ImageStates.ImageTracking = Properties.Resources.boxes_stacked_solid1;
-            button2.Values.Text = " RESUMEN DE PRODUCTOS";
-            button2.Click += button2_Click;
             // 
             // kryptonCustomPaletteBase1
             // 
@@ -276,31 +253,11 @@ namespace AuctionDesktopProgram
             kryptonCustomPaletteBase1.ThemeName = "";
             kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
             // 
-            // button3
-            // 
-            button3.ButtonStyle = ButtonStyle.Custom1;
-            button3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.WhiteSmoke;
-            button3.Location = new Point(0, 164);
-            button3.Name = "button3";
-            button3.Palette = kryptonCustomPaletteBase1;
-            button3.PaletteMode = PaletteMode.Custom;
-            button3.Size = new Size(282, 45);
-            button3.StateCommon.Back.Image = Properties.Resources.gavel_solid_;
-            button3.StateCommon.Back.ImageStyle = PaletteImageStyle.CenterLeft;
-            button3.StatePressed.Back.Image = Properties.Resources.gavel_solid__hover_click;
-            button3.StatePressed.Back.ImageStyle = PaletteImageStyle.CenterLeft;
-            button3.StateTracking.Back.Image = Properties.Resources.gavel_solid__hover;
-            button3.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterLeft;
-            button3.TabIndex = 3;
-            button3.Values.Text = " CREAR SUBASTA         ";
-            button3.Click += button3_Click;
-            // 
             // button4
             // 
             button4.ButtonStyle = ButtonStyle.Custom1;
             button4.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.Location = new Point(0, 208);
+            button4.Location = new Point(0, 166);
             button4.Name = "button4";
             button4.Palette = kryptonCustomPaletteBase1;
             button4.PaletteMode = PaletteMode.Custom;
@@ -319,7 +276,7 @@ namespace AuctionDesktopProgram
             // 
             button5.ButtonStyle = ButtonStyle.Custom1;
             button5.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button5.Location = new Point(0, 252);
+            button5.Location = new Point(0, 210);
             button5.Name = "button5";
             button5.Palette = kryptonCustomPaletteBase1;
             button5.PaletteMode = PaletteMode.Custom;
@@ -341,13 +298,12 @@ namespace AuctionDesktopProgram
             panelSideMenu.Controls.Add(panel1);
             panelSideMenu.Controls.Add(button5);
             panelSideMenu.Controls.Add(button4);
-            panelSideMenu.Controls.Add(button2);
             panelSideMenu.Controls.Add(button3);
             panelSideMenu.Dock = DockStyle.Left;
             panelSideMenu.Location = new Point(0, 0);
             panelSideMenu.Margin = new Padding(0);
             panelSideMenu.Name = "panelSideMenu";
-            panelSideMenu.Size = new Size(282, 780);
+            panelSideMenu.Size = new Size(282, 762);
             panelSideMenu.TabIndex = 6;
             // 
             // panel1
@@ -365,6 +321,7 @@ namespace AuctionDesktopProgram
             // 
             inicioButton.ButtonStyle = ButtonStyle.Custom1;
             inicioButton.Dock = DockStyle.Fill;
+            inicioButton.Enabled = false;
             inicioButton.Location = new Point(0, 0);
             inicioButton.Margin = new Padding(0);
             inicioButton.Name = "inicioButton";
@@ -384,14 +341,36 @@ namespace AuctionDesktopProgram
             inicioButton.Values.Text = "";
             inicioButton.Click += inicioButton_Click;
             // 
+            // button3
+            // 
+            button3.ButtonStyle = ButtonStyle.Custom1;
+            button3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.WhiteSmoke;
+            button3.Location = new Point(0, 122);
+            button3.Name = "button3";
+            button3.Palette = kryptonCustomPaletteBase1;
+            button3.PaletteMode = PaletteMode.Custom;
+            button3.Size = new Size(282, 45);
+            button3.StateCommon.Back.Image = Properties.Resources.gavel_solid;
+            button3.StateCommon.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button3.StatePressed.Back.Image = Properties.Resources.gavel_solid2;
+            button3.StatePressed.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button3.StateTracking.Back.Image = Properties.Resources.gavel_solid1;
+            button3.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterLeft;
+            button3.TabIndex = 3;
+            button3.Values.Text = "SUBASTAS      ";
+            button3.Click += inicioButton_Click;
+            // 
             // panel2
             // 
             panel2.AutoScroll = true;
-            panel2.BackColor = Color.FromArgb(26, 26, 26);
+            panel2.AutoSize = true;
+            panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel2.BackColor = Color.FromArgb(39, 42, 45);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(282, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(903, 780);
+            panel2.Size = new Size(982, 762);
             panel2.TabIndex = 7;
             // 
             // Mainpage
@@ -399,13 +378,12 @@ namespace AuctionDesktopProgram
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(1185, 780);
+            BackColor = Color.FromArgb(39, 42, 45);
+            ClientSize = new Size(1264, 762);
             Controls.Add(panel2);
             Controls.Add(panelSideMenu);
             Font = new Font("Segoe UI", 10F);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximizeBox = false;
             MinimumSize = new Size(950, 600);
             Name = "Mainpage";
             Palette = kryptonCustomPaletteBase1;
@@ -417,18 +395,18 @@ namespace AuctionDesktopProgram
             panelSideMenu.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-        private KryptonButton button2;
-        private KryptonButton button3;
         private KryptonButton button4;
         private KryptonButton button5;
         private Panel panelSideMenu;
         private Panel panel1;
-        public Panel panel2;
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
         private Krypton.Toolkit.KryptonPictureBox kryptonPictureBox1;
         private KryptonButton inicioButton;
+        public Panel panel2;
+        private KryptonButton button3;
     }
 }

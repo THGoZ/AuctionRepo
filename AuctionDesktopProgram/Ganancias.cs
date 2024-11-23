@@ -9,42 +9,39 @@ using System.Data;
 
 namespace AuctionDesktopProgram
 {
-    public partial class Ganancias : KryptonForm
+    public partial class Ganancias : Form
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly ISubastaBusiness _subastaBusiness;
         private Subasta Subasta;
+        private readonly Loading loadingForm = new Loading();
         public Ganancias(IServiceProvider serviceProvider, ISubastaBusiness subastaBusiness)
         {
             _serviceProvider = serviceProvider;
             _subastaBusiness = subastaBusiness;
             InitializeComponent();
-            PopulateComboBox();
-
+            //PopulateComboBox();
         }
 
-        private void PopulateComboBox()
+        private AutoCompleteStringCollection PopulateComboBox()
         {
             AutoCompleteStringCollection subastas = [];
-            comboBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             try
             {
                 var allsubastas = _subastaBusiness.GetSuccessful();
                 if (allsubastas is null || allsubastas.Count == 0)
                 {
-                    return;
+                    return subastas;
                 }
 
                 subastas.AddRange(allsubastas.Select(s => ($"Subasta N°{s.IdSubasta}")).ToArray());
-                comboBox1.AutoCompleteCustomSource = subastas;
-                comboBox1.DataSource = subastas;
-                comboBox1.SelectedItem = comboBox1.SelectedIndex = 0;
+                return subastas;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return subastas;
             }
         }
 
@@ -203,7 +200,39 @@ namespace AuctionDesktopProgram
 
         private void Ganancias_Load(object sender, EventArgs e)
         {
+            comboBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            this.LoadingProcess.RunWorkerAsync();
+            ShowLoading();
+        }
 
+        private void LoadingProcess_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            e.Result = PopulateComboBox();
+        }
+
+        private void LoadingProcess_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                var subastas = e.Result as AutoCompleteStringCollection;
+                comboBox1.AutoCompleteCustomSource = subastas;
+                comboBox1.DataSource = subastas;
+                //comboBox1.SelectedItem = comboBox1.SelectedIndex = 0;
+            }
+            ct.Dispose();
+            loadingForm.Close();
+        }
+
+        private void ShowLoading() 
+        {
+            loadingForm.TopLevel = false;
+            loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Dock = DockStyle.Fill;
+            ct.Controls.Add(loadingForm);
+            ct.Tag = loadingForm;
+            ct.BringToFront();
+            loadingForm.Show();
         }
     }
 }

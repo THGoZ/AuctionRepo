@@ -159,6 +159,12 @@
                 var producto = await apiClient.GetProducto(int.Parse(productoid));
                 if (producto != null)
                 {
+                    if (producto.EstadoDeSolicitud != null)
+                    {
+                        ToastService.Notify(new(ToastType.Danger, "Error, el producto ya ha sido aceptado y no puede ser editado"));
+                        navManager.NavigateTo("/userProducts");
+                    }
+
                     addProductModel.Nombre = producto.Nombre;
                     addProductModel.Descripcion = producto.Descripcion;
                     addProductModel.PrecioBase = producto.PrecioBase;
@@ -241,39 +247,50 @@
 
         try
         {
-            var newproducto = new ProductoAPI
-                {
-                    IdProducto = !string.IsNullOrEmpty(productoid) ? int.Parse(productoid) : 0,
-                    Nombre = addProductModel.Nombre,
-                    PrecioBase = addProductModel.PrecioBase,
-                    Descripcion = addProductModel.Descripcion,
-                    Imagen = imageData,
-                    ImageExtension = FileType,
-                    FechaSolicitud = DateTime.Now,
-                    EstadoDeSolicitud = false
-                };
-
-            var subastachehck = await apiClient.GetAuction(subastaid);
-
-            if (subastachehck.Estado is not null)
+            if (addProductModel != null && !string.IsNullOrEmpty(productoid))
             {
-                ToastService.Notify(new(ToastType.Danger, $"Error! la subasta no acepta solicitudes"));
-                await Task.Delay(3000);
-                navManager.NavigateTo("/", true);
+                var updateProducto = new ProductoAPI
+                    {
+                        Nombre = addProductModel.Nombre,
+                        PrecioBase = addProductModel.PrecioBase,
+                        Descripcion = addProductModel.Descripcion,
+                        Imagen = imageData,
+                        ImageExtension = FileType,
+                        FechaSolicitud = DateTime.Now,
+                        EstadoDeSolicitud = false
+                    };
+                await apiClient.UpdateProducto(updateProducto, int.Parse(productoid), subastaid);
+                ToastService.Notify(new(ToastType.Success, $"Se actualizo el producto correctamente!"));
+                navManager.NavigateTo("/userProducts");
             }
             else
             {
-                if (string.IsNullOrEmpty(productoid))
+                var newproducto = new ProductoAPI
+                    {
+                        Nombre = addProductModel.Nombre,
+                        PrecioBase = addProductModel.PrecioBase,
+                        Descripcion = addProductModel.Descripcion,
+                        Imagen = imageData,
+                        ImageExtension = FileType,
+                        FechaSolicitud = DateTime.Now,
+                        EstadoDeSolicitud = false
+                    };
+
+
+                var subastachehck = await apiClient.GetAuction(subastaid);
+
+                if (subastachehck.Estado is not null)
                 {
-                    await apiClient.SaveProduct(newproducto, userId, subastaid);
-                    ToastService.Notify(new(ToastType.Success, $"Se creo la solicitud correctamente!"));
+                    ToastService.Notify(new(ToastType.Danger, $"Error! la subasta no acepta solicitudes"));
+                    await Task.Delay(3000);
+                    navManager.NavigateTo("/", true);
                 }
                 else
                 {
-                    await apiClient.UpdateProducto(newproducto, userId, subastaid);
-                    ToastService.Notify(new(ToastType.Success, $"Se actualizo el producto correctamente!"));
+                    await apiClient.SaveProduct(newproducto, userId, subastaid);
+                    ToastService.Notify(new(ToastType.Success, $"Se creo la solicitud correctamente!"));
+                    navManager.NavigateTo("/");
                 }
-                navManager.NavigateTo("/");
             }
         }
         catch (Exception ex)

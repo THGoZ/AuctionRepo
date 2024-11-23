@@ -153,6 +153,16 @@ namespace AuctionDesktopProgram.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gavel_solid {
+            get {
+                object obj = ResourceManager.GetObject("gavel-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gavel_solid_ {
             get {
                 object obj = ResourceManager.GetObject("gavel-solid+", resourceCulture);
@@ -176,6 +186,46 @@ namespace AuctionDesktopProgram.Properties {
         internal static System.Drawing.Bitmap gavel_solid__hover_click {
             get {
                 object obj = ResourceManager.GetObject("gavel-solid+-hover-click", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gavel_solid__hover1 {
+            get {
+                object obj = ResourceManager.GetObject("gavel-solid+-hover1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gavel_solid1 {
+            get {
+                object obj = ResourceManager.GetObject("gavel-solid1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gavel_solid2 {
+            get {
+                object obj = ResourceManager.GetObject("gavel-solid2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon {
+            get {
+                object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -246,6 +296,16 @@ namespace AuctionDesktopProgram.Properties {
         internal static System.Drawing.Bitmap magnifying_glass_solid2 {
             get {
                 object obj = ResourceManager.GetObject("magnifying-glass-solid2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap placeholder_image {
+            get {
+                object obj = ResourceManager.GetObject("placeholder-image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

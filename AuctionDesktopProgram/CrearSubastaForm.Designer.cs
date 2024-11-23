@@ -28,166 +28,425 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Cancelar = new Button();
-            Guardar = new Button();
-            txtModoEntrega = new TextBox();
-            label5 = new Label();
-            label4 = new Label();
-            txtFormaPago = new TextBox();
+            components = new System.ComponentModel.Container();
+            tableLayoutPanel2 = new TableLayoutPanel();
             label3 = new Label();
-            txtDescripcion = new TextBox();
-            label2 = new Label();
-            dtpFechaCierre = new DateTimePicker();
+            txtDescripcion = new Krypton.Toolkit.KryptonTextBox();
+            kryptonCustomPaletteBase1 = new Krypton.Toolkit.KryptonCustomPaletteBase(components);
+            Guardar = new Krypton.Toolkit.KryptonButton();
+            Cancelar = new Krypton.Toolkit.KryptonButton();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            txtModoEntrega = new Krypton.Toolkit.KryptonTextBox();
+            txtFormaPago = new Krypton.Toolkit.KryptonTextBox();
             label1 = new Label();
-            dtpFechaInicio = new DateTimePicker();
+            dtpFechaCierre = new Krypton.Toolkit.KryptonDateTimePicker();
+            label2 = new Label();
+            label7 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            label6 = new Label();
+            dtpFechaInicio = new Krypton.Toolkit.KryptonDateTimePicker();
+            tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
-            // Cancelar
+            // tableLayoutPanel2
             // 
-            Cancelar.BackColor = Color.FromArgb(255, 192, 128);
-            Cancelar.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Cancelar.ForeColor = Color.Black;
-            Cancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            Cancelar.Location = new Point(568, 253);
-            Cancelar.Name = "Cancelar";
-            Cancelar.Size = new Size(111, 36);
-            Cancelar.TabIndex = 23;
-            Cancelar.Text = "Cancelar";
-            Cancelar.UseVisualStyleBackColor = false;
-            // 
-            // Guardar
-            // 
-            Guardar.BackColor = Color.FromArgb(255, 192, 128);
-            Guardar.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Guardar.ForeColor = Color.Black;
-            Guardar.ImageAlign = ContentAlignment.MiddleLeft;
-            Guardar.Location = new Point(568, 151);
-            Guardar.Name = "Guardar";
-            Guardar.Size = new Size(111, 36);
-            Guardar.TabIndex = 22;
-            Guardar.Text = "Guardar";
-            Guardar.UseVisualStyleBackColor = false;
-            Guardar.Click += Guardar_Click;
-            // 
-            // txtModoEntrega
-            // 
-            txtModoEntrega.Location = new Point(122, 371);
-            txtModoEntrega.Name = "txtModoEntrega";
-            txtModoEntrega.Size = new Size(250, 27);
-            txtModoEntrega.TabIndex = 21;
-            // 
-            // label5
-            // 
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(122, 329);
-            label5.Name = "label5";
-            label5.Size = new Size(155, 39);
-            label5.TabIndex = 20;
-            label5.Text = "Modo Entrega";
-            label5.TextAlign = ContentAlignment.TopCenter;
-            // 
-            // label4
-            // 
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(122, 257);
-            label4.Name = "label4";
-            label4.Size = new Size(155, 39);
-            label4.TabIndex = 19;
-            label4.Text = "Forma de Pago";
-            // 
-            // txtFormaPago
-            // 
-            txtFormaPago.Location = new Point(122, 299);
-            txtFormaPago.Name = "txtFormaPago";
-            txtFormaPago.Size = new Size(250, 27);
-            txtFormaPago.TabIndex = 18;
+            tableLayoutPanel2.AutoSize = true;
+            tableLayoutPanel2.ColumnCount = 1;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Controls.Add(label3, 0, 0);
+            tableLayoutPanel2.Controls.Add(txtDescripcion, 0, 1);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 235);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.Padding = new Padding(30, 0, 30, 15);
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(788, 215);
+            tableLayoutPanel2.TabIndex = 19;
             // 
             // label3
             // 
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(122, 188);
+            label3.AutoSize = true;
+            label3.BackColor = Color.Transparent;
+            label3.Font = new Font("Microsoft Sans Serif", 18F);
+            label3.ForeColor = Color.Silver;
+            label3.Location = new Point(33, 10);
+            label3.Margin = new Padding(3, 10, 3, 0);
             label3.Name = "label3";
-            label3.Size = new Size(155, 36);
-            label3.TabIndex = 17;
+            label3.Size = new Size(141, 29);
+            label3.TabIndex = 18;
             label3.Text = "Descripcion";
             // 
             // txtDescripcion
             // 
-            txtDescripcion.Location = new Point(122, 227);
+            txtDescripcion.CornerRoundingRadius = 5F;
+            txtDescripcion.CueHint.Color1 = Color.Gray;
+            txtDescripcion.CueHint.CueHintText = "Ingrese la descripcion de la subasta...";
+            txtDescripcion.CueHint.Font = new Font("Roboto Light", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDescripcion.CueHint.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
+            txtDescripcion.CueHint.TextV = Krypton.Toolkit.PaletteRelativeAlign.Near;
+            txtDescripcion.Dock = DockStyle.Fill;
+            txtDescripcion.InputControlStyle = Krypton.Toolkit.InputControlStyle.Custom1;
+            txtDescripcion.Location = new Point(33, 54);
+            txtDescripcion.Margin = new Padding(3, 15, 3, 15);
+            txtDescripcion.Multiline = true;
             txtDescripcion.Name = "txtDescripcion";
-            txtDescripcion.Size = new Size(250, 27);
-            txtDescripcion.TabIndex = 16;
+            txtDescripcion.Palette = kryptonCustomPaletteBase1;
+            txtDescripcion.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
+            txtDescripcion.Size = new Size(722, 131);
+            txtDescripcion.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            txtDescripcion.StateCommon.Border.Rounding = 5F;
+            txtDescripcion.TabIndex = 19;
             // 
-            // label2
+            // kryptonCustomPaletteBase1
             // 
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(122, 121);
-            label2.Name = "label2";
-            label2.Size = new Size(155, 36);
-            label2.TabIndex = 15;
-            label2.Text = "Fecha de Fin";
+            kryptonCustomPaletteBase1.BaseFont = new Font("Segoe UI", 9F);
+            kryptonCustomPaletteBase1.BaseFontSize = 9F;
+            kryptonCustomPaletteBase1.BasePaletteMode = Krypton.Toolkit.PaletteMode.Office2010BlackDarkMode;
+            kryptonCustomPaletteBase1.BasePaletteType = Krypton.Toolkit.BasePaletteType.Custom;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCalendarDay.StateCommon.Back.Color1 = Color.Yellow;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCalendarDay.StateTracking.Back.Color1 = Color.Red;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCalendarDay.StateTracking.Back.Color2 = Color.Red;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.OverrideDefault.Back.Color1 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.OverrideDefault.Back.Color2 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.OverrideDefault.Border.Color1 = Color.FromArgb(255, 210, 90);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.OverrideDefault.Border.Color2 = Color.FromArgb(255, 210, 90);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.OverrideDefault.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.OverrideFocus.Back.Color1 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.OverrideFocus.Back.Color2 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCheckedTracking.Back.Color1 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCheckedTracking.Back.Color2 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Back.Color1 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Back.Color2 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Border.Color1 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Border.Color2 = Color.FromArgb(255, 190, 67);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Border.Rounding = 5F;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Color2 = Color.White;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateCommon.Content.ShortText.Font = new Font("Poppins SemiBold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color1 = Color.FromArgb(242, 185, 105);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StatePressed.Back.Color2 = Color.FromArgb(242, 185, 105);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Back.Color1 = Color.FromArgb(242, 185, 105);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom1.StateTracking.Back.Color2 = Color.FromArgb(242, 185, 105);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCheckedTracking.Back.Color1 = Color.FromArgb(242, 185, 105);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCheckedTracking.Back.Color2 = Color.FromArgb(242, 185, 105);
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCheckedTracking.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.ButtonStyles.ButtonCustom2.StateCheckedTracking.Border.Rounding = 5F;
+            kryptonCustomPaletteBase1.CalendarDay.OverrideFocus.Back.Color1 = Color.FromArgb(255, 200, 100);
+            kryptonCustomPaletteBase1.CalendarDay.OverrideFocus.Border.Color1 = Color.FromArgb(255, 220, 150);
+            kryptonCustomPaletteBase1.CalendarDay.OverrideFocus.Border.Color2 = Color.FromArgb(255, 220, 150);
+            kryptonCustomPaletteBase1.CalendarDay.OverrideFocus.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.CalendarDay.OverrideFocus.Content.DrawFocus = Krypton.Toolkit.InheritBool.False;
+            kryptonCustomPaletteBase1.CalendarDay.OverrideFocus.Content.ShortText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.CalendarDay.OverrideFocus.Content.ShortText.Color2 = Color.White;
+            kryptonCustomPaletteBase1.CalendarDay.OverrideToday.Border.Color1 = Color.FromArgb(240, 173, 78);
+            kryptonCustomPaletteBase1.CalendarDay.OverrideToday.Border.Color2 = Color.FromArgb(240, 173, 78);
+            kryptonCustomPaletteBase1.CalendarDay.OverrideToday.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.CalendarDay.OverrideToday.Border.Rounding = 5F;
+            kryptonCustomPaletteBase1.CalendarDay.StateCommon.Back.Color1 = Color.FromArgb(240, 173, 78);
+            kryptonCustomPaletteBase1.CalendarDay.StateCommon.Back.Color2 = Color.FromArgb(240, 173, 78);
+            kryptonCustomPaletteBase1.CalendarDay.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.CalendarDay.StateCommon.Border.Rounding = 5F;
+            kryptonCustomPaletteBase1.CalendarDay.StateCommon.Content.ShortText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.CalendarDay.StateCommon.Content.ShortText.Color2 = Color.White;
+            kryptonCustomPaletteBase1.CalendarDay.StateCommon.Content.ShortText.Font = new Font("Roboto", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            kryptonCustomPaletteBase1.CalendarDay.StateDisabled.Content.ShortText.Color1 = Color.Gray;
+            kryptonCustomPaletteBase1.CalendarDay.StateDisabled.Content.ShortText.Color2 = Color.Gray;
+            kryptonCustomPaletteBase1.CalendarDay.StateNormal.Content.ShortText.Color1 = Color.FromArgb(224, 224, 224);
+            kryptonCustomPaletteBase1.CalendarDay.StateNormal.Content.ShortText.Color2 = Color.FromArgb(224, 224, 224);
+            kryptonCustomPaletteBase1.CalendarDay.StateTracking.Border.Color1 = Color.FromArgb(255, 220, 150);
+            kryptonCustomPaletteBase1.CalendarDay.StateTracking.Border.Color2 = Color.FromArgb(255, 220, 150);
+            kryptonCustomPaletteBase1.CalendarDay.StateTracking.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.ControlStyles.ControlCustom1.StateCommon.Back.Color1 = Color.FromArgb(39, 42, 45);
+            kryptonCustomPaletteBase1.ControlStyles.ControlCustom1.StateCommon.Back.Color2 = Color.FromArgb(39, 42, 45);
+            kryptonCustomPaletteBase1.ControlStyles.ControlCustom2.StateCommon.Border.Color1 = Color.FromArgb(64, 64, 64);
+            kryptonCustomPaletteBase1.ControlStyles.ControlCustom2.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.ControlStyles.ControlCustom2.StateCommon.Border.Rounding = 10F;
+            kryptonCustomPaletteBase1.ControlStyles.ControlCustom2.StateCommon.Border.Width = 2;
+            kryptonCustomPaletteBase1.ControlStyles.ControlGroupBox.StateCommon.Back.Color1 = Color.Silver;
+            kryptonCustomPaletteBase1.ControlStyles.ControlGroupBox.StateCommon.Back.Color2 = Color.Silver;
+            kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateCommon.Back.Color1 = Color.FromArgb(26, 26, 26);
+            kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateCommon.Back.Color2 = Color.FromArgb(26, 26, 26);
+            kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.FormStyles.FormCustom1.StateCommon.Border.Rounding = 15F;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Back.Color1 = Color.Black;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Back.Color2 = Color.Black;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Border.Color1 = Color.Black;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Content.LongText.Color1 = Color.Silver;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Content.LongText.Color2 = Color.Silver;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Content.ShortText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateCommon.Content.ShortText.Color2 = Color.Gray;
+            kryptonCustomPaletteBase1.HeaderStyles.HeaderCustom1.StateNormal.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Back.Color1 = Color.FromArgb(41, 41, 41);
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Back.Color2 = Color.FromArgb(41, 41, 41);
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Border.Color1 = Color.FromArgb(55, 55, 55);
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Border.Color2 = Color.FromArgb(41, 41, 41);
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Border.Rounding = 15F;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Border.Width = 2;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.LongText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.LongText.Color2 = Color.White;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.LongText.Font = new Font("Roboto", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.ShortText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.ShortText.Color2 = Color.White;
+            kryptonCustomPaletteBase1.InputControlStyles.InputControlCustom1.StateCommon.Content.ShortText.Font = new Font("Roboto", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            kryptonCustomPaletteBase1.LabelStyles.LabelSuperTip.StateCommon.LongText.Color1 = Color.White;
+            kryptonCustomPaletteBase1.LabelStyles.LabelSuperTip.StateCommon.LongText.Color2 = Color.White;
+            kryptonCustomPaletteBase1.LabelStyles.LabelSuperTip.StateCommon.ShortText.Color1 = Color.Gainsboro;
+            kryptonCustomPaletteBase1.LabelStyles.LabelSuperTip.StateCommon.ShortText.Color2 = Color.Gainsboro;
+            kryptonCustomPaletteBase1.ThemeName = "";
+            kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
             // 
-            // dtpFechaCierre
+            // Guardar
             // 
-            dtpFechaCierre.Location = new Point(122, 160);
-            dtpFechaCierre.Name = "dtpFechaCierre";
-            dtpFechaCierre.Size = new Size(250, 27);
-            dtpFechaCierre.TabIndex = 14;
+            Guardar.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
+            Guardar.Dock = DockStyle.Fill;
+            Guardar.Location = new Point(272, 10);
+            Guardar.Margin = new Padding(10, 10, 10, 30);
+            Guardar.Name = "Guardar";
+            Guardar.Palette = kryptonCustomPaletteBase1;
+            Guardar.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
+            Guardar.Size = new Size(111, 56);
+            Guardar.TabIndex = 13;
+            Guardar.Values.Text = "Guardar";
+            Guardar.Click += Guardar_Click;
+            // 
+            // Cancelar
+            // 
+            Cancelar.ButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
+            Cancelar.Dock = DockStyle.Fill;
+            Cancelar.Location = new Point(403, 10);
+            Cancelar.Margin = new Padding(10, 10, 10, 30);
+            Cancelar.Name = "Cancelar";
+            Cancelar.Palette = kryptonCustomPaletteBase1;
+            Cancelar.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
+            Cancelar.Size = new Size(111, 56);
+            Cancelar.TabIndex = 14;
+            Cancelar.Values.Text = "Cancelar";
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 6;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.Controls.Add(Guardar, 2, 0);
+            tableLayoutPanel3.Controls.Add(Cancelar, 3, 0);
+            tableLayoutPanel3.Dock = DockStyle.Bottom;
+            tableLayoutPanel3.Location = new Point(0, 450);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Size = new Size(788, 96);
+            tableLayoutPanel3.TabIndex = 20;
+            // 
+            // txtModoEntrega
+            // 
+            txtModoEntrega.AcceptsReturn = true;
+            txtModoEntrega.AcceptsTab = true;
+            txtModoEntrega.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtModoEntrega.CueHint.Color1 = Color.Gray;
+            txtModoEntrega.CueHint.CueHintText = "Ingrese la forma/s de entrega";
+            txtModoEntrega.CueHint.Font = new Font("Roboto Light", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtModoEntrega.CueHint.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
+            txtModoEntrega.InputControlStyle = Krypton.Toolkit.InputControlStyle.Custom1;
+            txtModoEntrega.Location = new Point(404, 170);
+            txtModoEntrega.Margin = new Padding(10, 3, 3, 3);
+            txtModoEntrega.Name = "txtModoEntrega";
+            txtModoEntrega.Palette = kryptonCustomPaletteBase1;
+            txtModoEntrega.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
+            txtModoEntrega.ScrollBars = ScrollBars.Both;
+            txtModoEntrega.Size = new Size(351, 39);
+            txtModoEntrega.TabIndex = 20;
+            // 
+            // txtFormaPago
+            // 
+            txtFormaPago.AcceptsReturn = true;
+            txtFormaPago.AcceptsTab = true;
+            txtFormaPago.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtFormaPago.CueHint.Color1 = Color.Gray;
+            txtFormaPago.CueHint.CueHintText = "Ingrese la forma/s de pago";
+            txtFormaPago.CueHint.Font = new Font("Roboto Light", 9.75F);
+            txtFormaPago.CueHint.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
+            txtFormaPago.InputControlStyle = Krypton.Toolkit.InputControlStyle.Custom1;
+            txtFormaPago.Location = new Point(33, 170);
+            txtFormaPago.Margin = new Padding(3, 3, 10, 3);
+            txtFormaPago.Name = "txtFormaPago";
+            txtFormaPago.Palette = kryptonCustomPaletteBase1;
+            txtFormaPago.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
+            txtFormaPago.ScrollBars = ScrollBars.Both;
+            txtFormaPago.Size = new Size(351, 39);
+            txtFormaPago.TabIndex = 16;
             // 
             // label1
             // 
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(122, 52);
+            label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.Silver;
+            label1.Location = new Point(33, 135);
+            label1.Margin = new Padding(3, 20, 3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(155, 36);
-            label1.TabIndex = 13;
-            label1.Text = "Fecha de Inicio";
+            label1.Size = new Size(178, 29);
+            label1.TabIndex = 16;
+            label1.Text = "Forma de pago";
+            // 
+            // dtpFechaCierre
+            // 
+            dtpFechaCierre.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            dtpFechaCierre.CalendarHeaderStyle = Krypton.Toolkit.HeaderStyle.Custom1;
+            dtpFechaCierre.CustomFormat = "dd/MM/yyyy HH:mm";
+            dtpFechaCierre.DropButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
+            dtpFechaCierre.Format = DateTimePickerFormat.Custom;
+            dtpFechaCierre.InputControlStyle = Krypton.Toolkit.InputControlStyle.Custom1;
+            dtpFechaCierre.Location = new Point(404, 68);
+            dtpFechaCierre.Margin = new Padding(10, 3, 3, 10);
+            dtpFechaCierre.Name = "dtpFechaCierre";
+            dtpFechaCierre.Palette = kryptonCustomPaletteBase1;
+            dtpFechaCierre.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
+            dtpFechaCierre.Size = new Size(351, 37);
+            dtpFechaCierre.TabIndex = 15;
+            dtpFechaCierre.UpDownButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
+            // 
+            // label2
+            // 
+            label2.Font = new Font("Microsoft Sans Serif", 18F);
+            label2.ForeColor = Color.Silver;
+            label2.Location = new Point(404, 15);
+            label2.Margin = new Padding(10, 0, 3, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(191, 27);
+            label2.TabIndex = 3;
+            label2.Text = "Fecha de Fin";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.BackColor = Color.Transparent;
+            label7.Font = new Font("Microsoft Sans Serif", 18F);
+            label7.ForeColor = Color.Silver;
+            label7.Location = new Point(404, 135);
+            label7.Margin = new Padding(10, 20, 3, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(197, 29);
+            label7.TabIndex = 17;
+            label7.Text = "Modo de entrega";
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.AutoSize = true;
+            tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(txtModoEntrega, 1, 3);
+            tableLayoutPanel1.Controls.Add(txtFormaPago, 0, 3);
+            tableLayoutPanel1.Controls.Add(label1, 0, 2);
+            tableLayoutPanel1.Controls.Add(dtpFechaCierre, 1, 1);
+            tableLayoutPanel1.Controls.Add(label6, 0, 0);
+            tableLayoutPanel1.Controls.Add(dtpFechaInicio, 0, 1);
+            tableLayoutPanel1.Controls.Add(label2, 1, 0);
+            tableLayoutPanel1.Controls.Add(label7, 1, 2);
+            tableLayoutPanel1.Dock = DockStyle.Top;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new Padding(30, 15, 30, 0);
+            tableLayoutPanel1.RowCount = 5;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(788, 235);
+            tableLayoutPanel1.TabIndex = 18;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.Silver;
+            label6.Location = new Point(33, 15);
+            label6.Name = "label6";
+            label6.Size = new Size(177, 29);
+            label6.TabIndex = 14;
+            label6.Text = "Fecha de Inicio";
             // 
             // dtpFechaInicio
             // 
-            dtpFechaInicio.Location = new Point(122, 91);
+            dtpFechaInicio.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            dtpFechaInicio.CalendarHeaderStyle = Krypton.Toolkit.HeaderStyle.Custom1;
+            dtpFechaInicio.CustomFormat = "dd/MM/yyyy HH:mm";
+            dtpFechaInicio.DropButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
+            dtpFechaInicio.Format = DateTimePickerFormat.Custom;
+            dtpFechaInicio.InputControlStyle = Krypton.Toolkit.InputControlStyle.Custom1;
+            dtpFechaInicio.Location = new Point(33, 71);
+            dtpFechaInicio.Margin = new Padding(3, 3, 10, 3);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.Size = new Size(250, 27);
-            dtpFechaInicio.TabIndex = 12;
+            dtpFechaInicio.Palette = kryptonCustomPaletteBase1;
+            dtpFechaInicio.PaletteMode = Krypton.Toolkit.PaletteMode.Custom;
+            dtpFechaInicio.Size = new Size(351, 37);
+            dtpFechaInicio.TabIndex = 13;
+            dtpFechaInicio.UpDownButtonStyle = Krypton.Toolkit.ButtonStyle.Custom1;
             // 
             // CrearSubastaForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AcceptButton = Guardar;
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(255, 128, 0);
-            ClientSize = new Size(800, 450);
-            Controls.Add(Cancelar);
-            Controls.Add(Guardar);
-            Controls.Add(txtModoEntrega);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(txtFormaPago);
-            Controls.Add(label3);
-            Controls.Add(txtDescripcion);
-            Controls.Add(label2);
-            Controls.Add(dtpFechaCierre);
-            Controls.Add(label1);
-            Controls.Add(dtpFechaInicio);
+            BackColor = Color.FromArgb(26, 26, 26);
+            CancelButton = Cancelar;
+            ClientSize = new Size(788, 546);
+            Controls.Add(tableLayoutPanel2);
+            Controls.Add(tableLayoutPanel3);
+            Controls.Add(tableLayoutPanel1);
+            CornerRoundingRadius = 15F;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "CrearSubastaForm";
-            Text = "CrearSubastaForm";
+            StartPosition = FormStartPosition.CenterParent;
+            StateCommon.Back.Color1 = Color.FromArgb(26, 26, 26);
+            StateCommon.Back.Color2 = Color.FromArgb(26, 26, 26);
+            StateCommon.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Top | Krypton.Toolkit.PaletteDrawBorders.Bottom | Krypton.Toolkit.PaletteDrawBorders.Left | Krypton.Toolkit.PaletteDrawBorders.Right;
+            StateCommon.Border.Rounding = 15F;
+            StateCommon.Header.Back.Color1 = Color.Black;
+            StateCommon.Header.Back.Color2 = Color.Black;
+            StateCommon.Header.Content.ShortText.Color1 = Color.White;
+            Text = "Crear Subasta";
             Load += CrearSubastaForm_Load;
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Button Cancelar;
-        private Button Guardar;
-        private TextBox txtModoEntrega;
-        private Label label5;
-        private Label label4;
-        private TextBox txtFormaPago;
+        private TableLayoutPanel tableLayoutPanel2;
         private Label label3;
-        private TextBox txtDescripcion;
-        private Label label2;
-        private DateTimePicker dtpFechaCierre;
+        private Krypton.Toolkit.KryptonTextBox txtDescripcion;
+        private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
+        private Krypton.Toolkit.KryptonButton Guardar;
+        private Krypton.Toolkit.KryptonButton Cancelar;
+        private TableLayoutPanel tableLayoutPanel3;
+        private Krypton.Toolkit.KryptonTextBox txtModoEntrega;
+        private Krypton.Toolkit.KryptonTextBox txtFormaPago;
         private Label label1;
-        private DateTimePicker dtpFechaInicio;
+        private Krypton.Toolkit.KryptonDateTimePicker dtpFechaCierre;
+        private Label label2;
+        private Label label7;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label label6;
+        private Krypton.Toolkit.KryptonDateTimePicker dtpFechaInicio;
     }
 }

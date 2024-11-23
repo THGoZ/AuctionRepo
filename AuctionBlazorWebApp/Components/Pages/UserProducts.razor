@@ -123,11 +123,15 @@
                         <ChildContent>
                             @if (context.EstadoDeSolicitud is null)
                             {
-                                <h4><span class="p-2 badge rounded-2 border border-3 border-info text-info">Pendiente</span></h4>
-                                <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Todavia no fue aceptado en la subasta">
+                            <div class="d-flex flex-column align-items-center justify-content-center">
+                                <h4>
+                                    <span class="p-2 badge rounded-2 border border-3 border-info text-info">Pendiente</span>
+                                </h4>
+                                <span class="d-inline-block mb-2" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Todavia no fue aceptado en la subasta">
                                     <button class="btn btn-outline-warning btn-sm" disabled>Ver en subasta N°@context.IdSubasta</button>
                                 </span>
-                            <a href="@($"/newProducto/{context.IdSubasta}/{context.IdProducto}")">Editar</a>
+                                    <a class="btn btn-warning p-2 rounded-2" href="@($"/newProducto/{context.IdSubasta}/{context.IdProducto}")">Editar</a>
+                            </div>
                             }
                             else if (!(bool)context.EstadoDeSolicitud)
                             {

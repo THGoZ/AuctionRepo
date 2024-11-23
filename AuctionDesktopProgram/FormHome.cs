@@ -1,7 +1,9 @@
 using Auction.Core.Business;
 using Auction.Core.Business.Interfaces;
 using Auction.Core.Entities;
+using AuctionDesktopProgram.Helper;
 using Krypton.Toolkit;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AuctionDesktopProgram
@@ -81,7 +83,7 @@ namespace AuctionDesktopProgram
             }
 
 
-            var listaSubastas = subastas.Select(s => new
+            var listaSubastas = subastas.Select(s => new SubastaDisplay
             {
                 IdSubasta = s.IdSubasta,
                 FechaInicio = s.FechaInicio.ToString("dd/MM/yyyy"),
@@ -92,41 +94,37 @@ namespace AuctionDesktopProgram
                 Estado = s.Estado.HasValue ? (s.Estado.Value ? "Activa" : "Finalizada") : "Próxima"
             }).ToList();
 
-            SubastaDataGrid.DataSource = listaSubastas;
-            if (!SubastaDataGrid.Columns.Contains("Editar") && !SubastaDataGrid.Columns.Contains("VerResumen"))
-            {
-                var editarButtonColumn = new DataGridViewButtonColumn
-                {
-                    Name = "Editar",
-                    HeaderText = "Editar",
-                    Text = "Editar",
-                    UseColumnTextForButtonValue = true
-                };
-                SubastaDataGrid.Columns.Add(editarButtonColumn);
+            var sortableListSubasta = new SortableBindingList<SubastaDisplay>(listaSubastas);
 
-                var verResumenButtonColumn = new DataGridViewButtonColumn
-                {
-                    Name = "VerResumen",
-                    HeaderText = "Ver Resumen",
-                    Text = "Ver resumen",
-                    UseColumnTextForButtonValue = true,
-                };
-                SubastaDataGrid.Columns.Add(verResumenButtonColumn);
-            }
+
+            SubastaDataGrid.DataSource = sortableListSubasta;
+            //if (!SubastaDataGrid.Columns.Contains("Editar") && !SubastaDataGrid.Columns.Contains("VerResumen"))
+            //{
+            //    var editarButtonColumn = new KryptonDataGridViewButtonColumn
+            //    {
+            //        Name = "Editar",
+            //        HeaderText = "Editar",
+            //        Text = "Editar",
+            //        UseColumnTextForButtonValue = true
+            //    };
+            //    SubastaDataGrid.Columns.Add(editarButtonColumn);
+
+            //    var verResumenButtonColumn = new KryptonDataGridViewButtonColumn
+            //    {
+            //        Name = "VerResumen",
+            //        HeaderText = "Ver Resumen",
+            //        Text = "Ver resumen",
+            //        UseColumnTextForButtonValue = true,
+            //    };
+            //    SubastaDataGrid.Columns.Add(verResumenButtonColumn);
+            //}
         }
-
-
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
 
             string filtroDescripcion = txtFiltroDescipcion.Text.Trim();
             CargarSubastas(filtroDescripcion);
-        }
-
-        private void btnBuscar_Click_1(object sender, EventArgs e)
-        {
-
         }
 
         private void EditarSubasta(int idSubasta)
@@ -144,53 +142,65 @@ namespace AuctionDesktopProgram
 
         private void VerResumenSubasta(int idSubasta)
         {
-            // Obtener las instancias
-            var formProductos = _serviceProvider.GetService<FormProductos>();
-            var mainpag = _serviceProvider.GetService<Mainpage>();
-            var idsubasta = idSubasta;
+            var subastaSeleccionada = _subastaBusiness.GetAll().FirstOrDefault(s => s.IdSubasta == idSubasta);
 
-            // Verificar instancias
-            if (formProductos == null)
+
+            if (subastaSeleccionada != null)
             {
-                MessageBox.Show("No se pudo obtener la instancia de FormProductos.");
-                return;
+                Resumen resumenForm = new Resumen(_subastaBusiness, _productoBusiness, idSubasta);
+                resumenForm.ShowDialog();
+
+                CargarSubastas();
             }
 
-            if (mainpag == null)
-            {
-                MessageBox.Show("No se pudo obtener la instancia de Mainpage.");
-                return;
-            }
+            //var formProductos = _serviceProvider.GetService<FormProductos>();
+            //var mainpag = _serviceProvider.GetService<Mainpage>();
+            //var idsubasta = idSubasta;
 
-            // Intentar mostrar el formulario
-            try
-            {
-                formProductos.TopLevel = false;
-                formProductos.Dock = DockStyle.Fill;
 
-                formProductos.SetSubastaId(idsubasta);
+            //if (formProductos == null)
+            //{
+            //    MessageBox.Show("No se pudo obtener la instancia de FormProductos.");
+            //    return;
+            //}
 
-                mainpag.openPanel2(formProductos);
+            //if (mainpag == null)
+            //{
+            //    MessageBox.Show("No se pudo obtener la instancia de Mainpage.");
+            //    return;
+            //}
 
-                // Forzar visibilidad y enviar al frente
-                formProductos.Visible = true;
-                formProductos.BringToFront();
 
-                // Comprobar visibilidad de nuevo
-                if (!formProductos.Visible)
-                {
-                    MessageBox.Show("FormProductos no se mostró correctamente.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al intentar abrir FormProductos: " + ex.Message);
-            }
+            //try
+            //{
+            //    formProductos.TopLevel = false;
+            //    formProductos.Dock = DockStyle.Fill;
+
+            //    formProductos.SetSubastaId(idsubasta);
+
+            //    mainpag.openPanel2(formProductos);
+
+
+            //    formProductos.Visible = true;
+            //    formProductos.BringToFront();
+
+
+            //    if (!formProductos.Visible)
+            //    {
+            //        MessageBox.Show("FormProductos no se mostró correctamente.");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error al intentar abrir FormProductos: " + ex.Message);
+            //}
         }
 
-
-
-
-
+        private void btnCrearSubasta_Click(object sender, EventArgs e)
+        {
+            CrearSubastaForm crearSubastaForm = new CrearSubastaForm(_subastaBusiness);
+            crearSubastaForm.ShowDialog();
+            CargarSubastas();
+        }
     }
 }

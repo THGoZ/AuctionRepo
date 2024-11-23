@@ -1,6 +1,7 @@
 ﻿using Auction.Core.Business;
 using Auction.Core.Business.Interfaces;
 using Auction.Core.Entities;
+using Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 
 namespace AuctionDesktopProgram
 {
-    public partial class EditarSubastaForm : Form
+    public partial class EditarSubastaForm : KryptonForm
     {
         private Subasta _subasta;
         private readonly ISubastaBusiness _subastaBusiness;
@@ -24,24 +25,14 @@ namespace AuctionDesktopProgram
             _subasta = subasta;
             _subastaBusiness = subastaBusiness;
 
-            dtpFechaInicio.Text = _subasta.FechaInicio.ToString();
-            dtpFechaCierre.Text = _subasta.FechaCierre.ToString();
+            dtpFechaInicio.Value = _subasta.FechaInicio;
+            dtpFechaCierre.Value = _subasta.FechaCierre;
             txtFormaPago.Text = string.Join(", ", subasta.FormaDePago);
             txtModoEntrega.Text = string.Join(", ", subasta.ModoEntrega);
             txtDescripcion.Text = _subasta.Descripcion.ToString();
         }
 
         private void EditarSubastaForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -55,11 +46,32 @@ namespace AuctionDesktopProgram
 
             _subasta.FormaDePago = txtFormaPago.Text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             _subasta.ModoEntrega = txtModoEntrega.Text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var errors = ValidateInput();
+            if (errors.Count > 0)
+            {
+                var feedback = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    feedback.AppendLine($"*{error.ToString()}");
+                }
 
-            _subastaBusiness.EditarSubasta(_subasta);
+                MessageBox.Show($"Datos invalidos:\n{feedback}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
 
+                try
+                {
+                    _subastaBusiness.EditarSubasta(_subasta);
+                    MessageBox.Show($"Subasta N°{_subasta.IdSubasta} actualizada correctamente!", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            this.Close();
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al actualizar los datos\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void Cancelar_Click(object sender, EventArgs e)
@@ -85,6 +97,42 @@ namespace AuctionDesktopProgram
 
                 this.Close(); // Cerrar el formulario
             }
+        }
+
+        private List<string> ValidateInput()
+        {
+            var validationErrors = new List<string>();
+
+            DateTime startDate = dtpFechaInicio.Value;
+            DateTime endDate = dtpFechaCierre.Value;
+
+            if (startDate >= endDate)
+            {
+                validationErrors.Add("La fecha de cierre no puede ser menor o igual a la de inicio");
+            }
+
+
+            const int maxDescriptionLength = 255; 
+            if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
+            {
+                validationErrors.Add("La descripción no puede estar vacía");
+            }
+            else if (txtDescripcion.Text.Length > maxDescriptionLength)
+            {
+                validationErrors.Add($"La descripción no puede exceder {maxDescriptionLength} caracteres");
+            }
+
+            if (string.IsNullOrWhiteSpace(txtFormaPago.Text))
+            {
+                validationErrors.Add("Debe ingresar una forma de pago");
+            }
+
+            if (string.IsNullOrWhiteSpace(txtModoEntrega.Text))
+            {
+                validationErrors.Add("Debe ingresar un modo de entrega");
+            }
+
+            return validationErrors;
         }
     }
 }

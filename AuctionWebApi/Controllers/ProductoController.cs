@@ -124,6 +124,7 @@ namespace AuctionWebApi.Controllers
             {
                 var Winner = new ProductoWinner()
                 {
+                    Id = producto.IdProducto,
                     Nombre = producto.Nombre,
                     Descripcion = producto.Descripcion,
                     PrecioBase = producto.PrecioBase,

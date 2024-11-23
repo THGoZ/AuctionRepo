@@ -85,6 +85,7 @@ namespace Auction.Core.Data
            .Where(p => p.Ofertas.Any())
            .Select(p => new ProductoWinner
            {
+               Id = p.IdProducto,
                Nombre = p.Nombre,
                Descripcion = p.Descripcion,
                PrecioBase = p.PrecioBase,
@@ -113,7 +114,8 @@ namespace Auction.Core.Data
         {
             // Obtener todos los productos que han sido solicitados
             var productosSolicitados = _dbContext.Productos
-                .Where(p => p.EstadoDeSolicitud == null) // Filtro por productos solicitados
+                .Where(p => p.EstadoDeSolicitud == null)
+                .Include(u => u.Usuario)
                 .ToList();
 
             return productosSolicitados;
@@ -192,5 +194,41 @@ namespace Auction.Core.Data
             }
         }
 
+
+        public List<ProductoWinner> GetProductoWinnerOfSubasta(int IdSubasta) 
+        {
+
+            var productosConGanadores = _dbContext.Productos
+                .Include(p => p.Ofertas)
+                .Where(p => p.IdSubasta == IdSubasta && p.EstadoDeSolicitud == true)
+                .Select(p => new ProductoWinner
+                {
+                    Id = p.IdProducto,
+                    Nombre = p.Nombre,
+                    Descripcion = p.Descripcion,
+                    PrecioBase = p.PrecioBase,
+                    Imagen = p.Imagen,
+                    ImageExtension = p.ImageExtension,
+                    Monto = p.Ofertas.Any() ? p.Ofertas.OrderByDescending(o => o.Monto).FirstOrDefault().Monto : 0,
+                    TotalDeOfertas = p.Ofertas.Count(),
+                    Fecha = p.FechaSolicitud
+                })
+                .ToList();
+
+
+            return productosConGanadores;
+        }
+
+        public Producto GetProducto(int id)
+        {
+            return _dbContext.Productos.Where(p => p.IdProducto == id).FirstOrDefault();
+        }
+
+        public List<Oferta> GetOfertasOfProducto(int id)
+        {
+            return _dbContext.Ofertas.Where(o=> o.IdProducto == id)
+                                     .Include(u=> u.Usuario)
+                                     .ToList();
+        }
     }
 }

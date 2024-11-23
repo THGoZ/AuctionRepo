@@ -26,5 +26,8 @@ namespace Auction.Core.Data.Interfaces
 
         public Subasta GetSubastaById(int id);
         public List<Subasta> GetSuccessfulSubastas();
+        public List<ProductoWinner> GetProductoWinnerOfSubasta(int IdSubasta);
+        public Producto GetProducto(int id);
+        public List<Oferta> GetOfertasOfProducto(int id);
     }
 }

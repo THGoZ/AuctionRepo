@@ -15,5 +15,8 @@ namespace Auction.Core.Business.Interfaces
         public List<Producto> GetProductosSolicitados();
 
         public List<Producto> GetProductosSinOfertas();
+        public List<ProductoWinner> GetProductoWinnersOfSubasta(int IdSubasta);
+        public void UpdateProducto(int id, bool estado);
+        public List<Oferta> GetOfertasOfProducto(int id);
     }
 }

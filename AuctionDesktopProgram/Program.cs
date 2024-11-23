@@ -46,7 +46,8 @@ namespace AuctionDesktopProgram
             .AddTransient<Ganancias>()
             .AddTransient<FormVendidos>()
             .AddTransient<FormMasVendidos>()
-            .AddTransient<ProductosNoOfertados>();
+            .AddTransient<ProductosNoOfertados>()
+            .AddTransient<Resumen>();
             services.AddSingleton<Mainpage>();
         }
     }

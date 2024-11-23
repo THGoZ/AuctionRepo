@@ -1,21 +1,21 @@
 ﻿using Auction.Core.Business.Interfaces;
 using Auction.Core.Entities;
-using iText.Kernel.Pdf;
-using Auction.Core.Business.Interfaces;
-using Auction.Core.Entities;
+using AuctionDesktopProgram.Helper;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Krypton.Toolkit;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Data;
 
 namespace AuctionDesktopProgram
 {
-    public partial class FormVendidos : KryptonForm
+    public partial class FormVendidos : Form
     {
         private readonly ISubastaBusiness _subastaBusiness;
         private readonly IProductoBusiness _productoBusiness;
+        private readonly Loading loadingForm = new Loading();
 
         public FormVendidos(ISubastaBusiness subastaBusiness, IProductoBusiness productoBusiness)
         {
@@ -27,26 +27,29 @@ namespace AuctionDesktopProgram
 
         private void FormVendidos_Load(object sender, EventArgs e)
         {
-            // Obtener productos vendidos y mostrarlos en el DataGridView
-            var productosVendidos = _subastaBusiness.GetProductoWinners()
-                .Select(winner => new
-                {
-                    NombreProducto = winner.Nombre ?? "-",
-                    NombreGanador = winner.NombreGanador ?? "-",
-                    PrecioBase = winner.PrecioBase,
-                    MontoFinal = winner.Monto,
-                    GananciaVendedor = winner.Monto - (winner.Monto * 0.10m),
-                    GananciaEmpresa = winner.Monto * 0.10m
-                }).ToList();
+            this.LoadingProcess.RunWorkerAsync();
+            ShowLoading();
+            //var productosVendidos = _subastaBusiness.GetProductoWinners()
+            //    .Select(winner => new ProductoVendidoDisplay
+            //    {
+            //        NombreProducto = winner.Nombre ?? "-",
+            //        NombreGanador = winner.NombreGanador ?? "-",
+            //        PrecioBase = winner.PrecioBase,
+            //        MontoFinal = winner.Monto,
+            //        GananciaVendedor = winner.Monto - (winner.Monto * 0.10m),
+            //        GananciaEmpresa = winner.Monto * 0.10m
+            //    }).ToList();
 
-            if (productosVendidos.Any())
-            {
-                kryptonDataGridView1.DataSource = productosVendidos;
-            }
-            else
-            {
-                MessageBox.Show("No hay productos vendidos.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //var sortableProductos = new SortableBindingList<ProductoVendidoDisplay>(productosVendidos);
+
+            //if (sortableProductos.Any())
+            //{
+            //    ProductoDataGrid.DataSource = sortableProductos;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("No hay productos vendidos.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
         }
 
         public void GenerateVendidosReportPdf(string filePath)
@@ -150,10 +153,60 @@ namespace AuctionDesktopProgram
                 }
             }
         }
-
-        private void kryptonDataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void LoadingProcess_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            var productosVendidos = _subastaBusiness.GetProductoWinners()
+            .Select(winner => new ProductoVendidoDisplay
+            {
+                NombreProducto = winner.Nombre ?? "-",
+                NombreGanador = winner.NombreGanador ?? "-",
+                ApellidoGanador = winner.ApellidoGanador ?? "-",
+                PrecioBase = winner.PrecioBase,
+                MontoFinal = winner.Monto,
+                GananciaVendedor = winner.Monto - (winner.Monto * 0.10m),
+                GananciaEmpresa = winner.Monto * 0.10m
+            }).ToList();
 
+            e.Result = new SortableBindingList<ProductoVendidoDisplay>(productosVendidos);
+        }
+
+        private void LoadingProcess_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                var sortableProductos = e.Result as SortableBindingList<ProductoVendidoDisplay>;
+
+                if (sortableProductos.Any())
+                {
+                    ProductoDataGrid.DataSource = sortableProductos;
+                    panel2.Dispose();
+                    loadingForm.Close();
+                }
+                else
+                {
+                    MessageBox.Show("No hay productos vendidos.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    panel2.Dispose();
+                    loadingForm.Close();
+                }
+            }
+            else
+            {
+                panel2.Dispose();
+                loadingForm.Close();
+                MessageBox.Show("Error al traer productos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ShowLoading()
+        {
+            loadingForm.TopLevel = false;
+            loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Dock = DockStyle.Fill;
+            panel2.Controls.Add(loadingForm);
+            panel2.Tag = loadingForm;
+            panel2.BringToFront();
+            panel2.Visible = true;
+            loadingForm.Show();
         }
     }
 }
