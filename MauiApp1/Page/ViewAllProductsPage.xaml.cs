@@ -44,7 +44,7 @@ public partial class ViewAllProductsPage : ContentPage, INotifyPropertyChanged
             {
                 producto.Image = ConvertByteArrayToImageSource(producto.Imagen);
                 ProductoList.Add(producto);
-                await Task.Delay(50); // Esperar 200 ms antes de cargar el siguiente producto
+                await Task.Delay(50); 
             }
         }
         IsBusy = false; // Finalizar el indicador de carga
@@ -54,8 +54,7 @@ public partial class ViewAllProductsPage : ContentPage, INotifyPropertyChanged
         if (imageBytes == null || imageBytes.Length == 0)
             return null;
 
-        MemoryStream stream = new MemoryStream(imageBytes);
-        return ImageSource.FromStream(() => stream);
+        return ImageSource.FromStream(() => new MemoryStream(imageBytes));
     }
 
     protected override void OnDisappearing()
