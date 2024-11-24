@@ -62,14 +62,14 @@ namespace AuctionDesktopProgram
         private void InitializeComponent()
         {
             components = new Container();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             MainPanel = new Panel();
             tableLayoutPanel3 = new TableLayoutPanel();
             panel1 = new Panel();
@@ -85,6 +85,9 @@ namespace AuctionDesktopProgram
             kryptonMaskedTextBoxName = new Label();
             kryptonMaskedTextBoxPrecioBase = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            txtFiltroDescipcion = new KryptonTextBox();
+            btnBuscar = new KryptonButton();
             SubastaDataGrid = new KryptonDataGridView();
             Id = new KryptonDataGridViewTextBoxColumn();
             Nombre = new KryptonDataGridViewTextBoxColumn();
@@ -96,9 +99,6 @@ namespace AuctionDesktopProgram
             LoadingPanel = new Panel();
             kryptonRichTextBoxDescripcion = new KryptonRichTextBox();
             LoadingProcess = new BackgroundWorker();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            txtFiltroDescipcion = new KryptonTextBox();
-            btnBuscar = new KryptonButton();
             MainPanel.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             panel1.SuspendLayout();
@@ -106,8 +106,8 @@ namespace AuctionDesktopProgram
             tableLayoutPanel1.SuspendLayout();
             ((ISupportInitialize)kryptonPictureBoxImagen).BeginInit();
             tableLayoutPanel2.SuspendLayout();
-            ((ISupportInitialize)SubastaDataGrid).BeginInit();
             flowLayoutPanel1.SuspendLayout();
+            ((ISupportInitialize)SubastaDataGrid).BeginInit();
             SuspendLayout();
             // 
             // MainPanel
@@ -249,7 +249,7 @@ namespace AuctionDesktopProgram
             kryptonPictureBoxImagen.Location = new Point(13, 13);
             kryptonPictureBoxImagen.Name = "kryptonPictureBoxImagen";
             kryptonPictureBoxImagen.Size = new Size(316, 280);
-            kryptonPictureBoxImagen.SizeMode = PictureBoxSizeMode.StretchImage;
+            kryptonPictureBoxImagen.SizeMode = PictureBoxSizeMode.Zoom;
             kryptonPictureBoxImagen.TabIndex = 9;
             kryptonPictureBoxImagen.TabStop = false;
             // 
@@ -380,138 +380,6 @@ namespace AuctionDesktopProgram
             tableLayoutPanel2.Size = new Size(688, 494);
             tableLayoutPanel2.TabIndex = 5;
             // 
-            // SubastaDataGrid
-            // 
-            SubastaDataGrid.AllowUserToAddRows = false;
-            SubastaDataGrid.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(38, 38, 38);
-            dataGridViewCellStyle9.ForeColor = Color.WhiteSmoke;
-            dataGridViewCellStyle9.SelectionBackColor = Color.Gray;
-            dataGridViewCellStyle9.SelectionForeColor = Color.White;
-            SubastaDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
-            SubastaDataGrid.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            SubastaDataGrid.AutoGenerateColumns = false;
-            SubastaDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            SubastaDataGrid.BorderStyle = BorderStyle.None;
-            SubastaDataGrid.ColumnHeadersHeight = 40;
-            SubastaDataGrid.Columns.AddRange(new DataGridViewColumn[] { Id, Nombre, Descripcion, FechaSolicitud, PrecioBase, Usuario, subasta });
-            SubastaDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
-            SubastaDataGrid.GridStyles.Style = DataGridViewStyle.Custom1;
-            SubastaDataGrid.GridStyles.StyleBackground = PaletteBackStyle.GridBackgroundCustom1;
-            SubastaDataGrid.GridStyles.StyleColumn = GridStyle.Custom1;
-            SubastaDataGrid.GridStyles.StyleDataCells = GridStyle.Custom1;
-            SubastaDataGrid.GridStyles.StyleRow = GridStyle.Custom1;
-            SubastaDataGrid.Location = new Point(3, 77);
-            SubastaDataGrid.MultiSelect = false;
-            SubastaDataGrid.Name = "SubastaDataGrid";
-            SubastaDataGrid.Palette = kryptonCustomPaletteBase1;
-            SubastaDataGrid.PaletteMode = PaletteMode.Custom;
-            SubastaDataGrid.RowHeadersVisible = false;
-            dataGridViewCellStyle16.BackColor = Color.FromArgb(26, 26, 26);
-            dataGridViewCellStyle16.ForeColor = SystemColors.ButtonFace;
-            dataGridViewCellStyle16.SelectionBackColor = Color.Gray;
-            dataGridViewCellStyle16.SelectionForeColor = Color.White;
-            SubastaDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle16;
-            SubastaDataGrid.RowTemplate.Height = 30;
-            SubastaDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            SubastaDataGrid.Size = new Size(682, 414);
-            SubastaDataGrid.TabIndex = 4;
-            SubastaDataGrid.CurrentCellChanged += SubastaDataGrid_CurrentCellChanged;
-            // 
-            // Id
-            // 
-            Id.DataPropertyName = "IdProducto";
-            Id.DefaultCellStyle = dataGridViewCellStyle10;
-            Id.FillWeight = 40F;
-            Id.HeaderText = "#";
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            Id.Width = 43;
-            // 
-            // Nombre
-            // 
-            Nombre.DataPropertyName = "Nombre";
-            Nombre.DefaultCellStyle = dataGridViewCellStyle11;
-            Nombre.HeaderText = "Nombre";
-            Nombre.Name = "Nombre";
-            Nombre.ReadOnly = true;
-            Nombre.Width = 108;
-            // 
-            // Descripcion
-            // 
-            Descripcion.DataPropertyName = "Descripcion";
-            Descripcion.DefaultCellStyle = dataGridViewCellStyle12;
-            Descripcion.HeaderText = "Descripcion";
-            Descripcion.Name = "Descripcion";
-            Descripcion.ReadOnly = true;
-            Descripcion.Width = 108;
-            // 
-            // FechaSolicitud
-            // 
-            FechaSolicitud.Checked = false;
-            FechaSolicitud.DataPropertyName = "FechaDeSolicitud";
-            FechaSolicitud.FillWeight = 130F;
-            FechaSolicitud.HeaderText = "Fecha de solicitud";
-            FechaSolicitud.Name = "FechaSolicitud";
-            FechaSolicitud.ReadOnly = true;
-            FechaSolicitud.Width = 141;
-            // 
-            // PrecioBase
-            // 
-            PrecioBase.DataPropertyName = "PrecioBase";
-            PrecioBase.DefaultCellStyle = dataGridViewCellStyle13;
-            PrecioBase.HeaderText = "Precio base";
-            PrecioBase.Name = "PrecioBase";
-            PrecioBase.ReadOnly = true;
-            PrecioBase.Width = 108;
-            // 
-            // Usuario
-            // 
-            Usuario.DataPropertyName = "Usuario";
-            Usuario.DefaultCellStyle = dataGridViewCellStyle14;
-            Usuario.FillWeight = 120F;
-            Usuario.HeaderText = "Usuario";
-            Usuario.Name = "Usuario";
-            Usuario.ReadOnly = true;
-            Usuario.Width = 130;
-            // 
-            // subasta
-            // 
-            subasta.DataPropertyName = "IdSubasta";
-            subasta.DefaultCellStyle = dataGridViewCellStyle15;
-            subasta.FillWeight = 40F;
-            subasta.HeaderText = "Subasta N°";
-            subasta.Name = "subasta";
-            subasta.ReadOnly = true;
-            subasta.Width = 43;
-            // 
-            // LoadingPanel
-            // 
-            LoadingPanel.AutoScroll = true;
-            LoadingPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            LoadingPanel.Dock = DockStyle.Fill;
-            LoadingPanel.Location = new Point(0, 0);
-            LoadingPanel.Name = "LoadingPanel";
-            LoadingPanel.Size = new Size(1128, 749);
-            LoadingPanel.TabIndex = 0;
-            // 
-            // kryptonRichTextBoxDescripcion
-            // 
-            kryptonRichTextBoxDescripcion.CueHint.CueHintText = "Descripcion del producto...";
-            kryptonRichTextBoxDescripcion.CueHint.TextH = PaletteRelativeAlign.Near;
-            kryptonRichTextBoxDescripcion.CueHint.TextV = PaletteRelativeAlign.Near;
-            kryptonRichTextBoxDescripcion.Dock = DockStyle.Fill;
-            kryptonRichTextBoxDescripcion.Location = new Point(13, 317);
-            kryptonRichTextBoxDescripcion.Name = "kryptonRichTextBoxDescripcion";
-            kryptonRichTextBoxDescripcion.Size = new Size(316, 94);
-            kryptonRichTextBoxDescripcion.TabIndex = 10;
-            kryptonRichTextBoxDescripcion.Text = "";
-            // 
-            // LoadingProcess
-            // 
-            LoadingProcess.DoWork += LoadingProcess_DoWork;
-            LoadingProcess.RunWorkerCompleted += LoadingProcess_RunWorkerCompleted;
-            // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.Right;
@@ -569,6 +437,133 @@ namespace AuctionDesktopProgram
             btnBuscar.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterMiddle;
             btnBuscar.TabIndex = 1;
             btnBuscar.Values.Text = "";
+            // 
+            // SubastaDataGrid
+            // 
+            SubastaDataGrid.AllowUserToAddRows = false;
+            SubastaDataGrid.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(38, 38, 38);
+            dataGridViewCellStyle1.ForeColor = Color.WhiteSmoke;
+            dataGridViewCellStyle1.SelectionBackColor = Color.Gray;
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            SubastaDataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            SubastaDataGrid.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            SubastaDataGrid.AutoGenerateColumns = false;
+            SubastaDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            SubastaDataGrid.BorderStyle = BorderStyle.None;
+            SubastaDataGrid.ColumnHeadersHeight = 40;
+            SubastaDataGrid.Columns.AddRange(new DataGridViewColumn[] { Id, Nombre, Descripcion, FechaSolicitud, PrecioBase, Usuario, subasta });
+            SubastaDataGrid.EditMode = DataGridViewEditMode.EditProgrammatically;
+            SubastaDataGrid.GridStyles.Style = DataGridViewStyle.Custom1;
+            SubastaDataGrid.GridStyles.StyleBackground = PaletteBackStyle.GridBackgroundCustom1;
+            SubastaDataGrid.GridStyles.StyleColumn = GridStyle.Custom1;
+            SubastaDataGrid.GridStyles.StyleDataCells = GridStyle.Custom1;
+            SubastaDataGrid.GridStyles.StyleRow = GridStyle.Custom1;
+            SubastaDataGrid.Location = new Point(3, 77);
+            SubastaDataGrid.MultiSelect = false;
+            SubastaDataGrid.Name = "SubastaDataGrid";
+            SubastaDataGrid.Palette = kryptonCustomPaletteBase1;
+            SubastaDataGrid.PaletteMode = PaletteMode.Custom;
+            SubastaDataGrid.RowHeadersVisible = false;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(26, 26, 26);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ButtonFace;
+            dataGridViewCellStyle8.SelectionBackColor = Color.Gray;
+            dataGridViewCellStyle8.SelectionForeColor = Color.White;
+            SubastaDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            SubastaDataGrid.RowTemplate.Height = 30;
+            SubastaDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            SubastaDataGrid.Size = new Size(682, 414);
+            SubastaDataGrid.TabIndex = 4;
+            SubastaDataGrid.CurrentCellChanged += SubastaDataGrid_CurrentCellChanged;
+            // 
+            // Id
+            // 
+            Id.DataPropertyName = "IdProducto";
+            Id.DefaultCellStyle = dataGridViewCellStyle2;
+            Id.FillWeight = 40F;
+            Id.HeaderText = "#";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Width = 43;
+            // 
+            // Nombre
+            // 
+            Nombre.DataPropertyName = "Nombre";
+            Nombre.DefaultCellStyle = dataGridViewCellStyle3;
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            Nombre.ReadOnly = true;
+            Nombre.Width = 108;
+            // 
+            // Descripcion
+            // 
+            Descripcion.DataPropertyName = "Descripcion";
+            Descripcion.DefaultCellStyle = dataGridViewCellStyle4;
+            Descripcion.HeaderText = "Descripcion";
+            Descripcion.Name = "Descripcion";
+            Descripcion.ReadOnly = true;
+            Descripcion.Width = 108;
+            // 
+            // FechaSolicitud
+            // 
+            FechaSolicitud.Checked = false;
+            FechaSolicitud.DataPropertyName = "FechaDeSolicitud";
+            FechaSolicitud.FillWeight = 130F;
+            FechaSolicitud.HeaderText = "Fecha de solicitud";
+            FechaSolicitud.Name = "FechaSolicitud";
+            FechaSolicitud.ReadOnly = true;
+            FechaSolicitud.Width = 141;
+            // 
+            // PrecioBase
+            // 
+            PrecioBase.DataPropertyName = "PrecioBase";
+            PrecioBase.DefaultCellStyle = dataGridViewCellStyle5;
+            PrecioBase.HeaderText = "Precio base";
+            PrecioBase.Name = "PrecioBase";
+            PrecioBase.ReadOnly = true;
+            PrecioBase.Width = 108;
+            // 
+            // Usuario
+            // 
+            Usuario.DataPropertyName = "Usuario";
+            Usuario.DefaultCellStyle = dataGridViewCellStyle6;
+            Usuario.FillWeight = 120F;
+            Usuario.HeaderText = "Usuario";
+            Usuario.Name = "Usuario";
+            Usuario.ReadOnly = true;
+            Usuario.Width = 130;
+            // 
+            // subasta
+            // 
+            subasta.DataPropertyName = "IdSubasta";
+            subasta.DefaultCellStyle = dataGridViewCellStyle7;
+            subasta.FillWeight = 40F;
+            subasta.HeaderText = "Subasta N°";
+            subasta.Name = "subasta";
+            subasta.ReadOnly = true;
+            subasta.Width = 43;
+            // 
+            // LoadingPanel
+            // 
+            LoadingPanel.AutoScroll = true;
+            LoadingPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            LoadingPanel.Dock = DockStyle.Fill;
+            LoadingPanel.Location = new Point(0, 0);
+            LoadingPanel.Name = "LoadingPanel";
+            LoadingPanel.Size = new Size(1128, 749);
+            LoadingPanel.TabIndex = 0;
+            // 
+            // kryptonRichTextBoxDescripcion
+            // 
+            kryptonRichTextBoxDescripcion.CueHint.CueHintText = "Descripcion del producto...";
+            kryptonRichTextBoxDescripcion.CueHint.TextH = PaletteRelativeAlign.Near;
+            kryptonRichTextBoxDescripcion.CueHint.TextV = PaletteRelativeAlign.Near;
+            kryptonRichTextBoxDescripcion.Dock = DockStyle.Fill;
+            kryptonRichTextBoxDescripcion.Location = new Point(13, 317);
+            kryptonRichTextBoxDescripcion.Name = "kryptonRichTextBoxDescripcion";
+            kryptonRichTextBoxDescripcion.Size = new Size(316, 94);
+            kryptonRichTextBoxDescripcion.TabIndex = 10;
+            kryptonRichTextBoxDescripcion.Text = "";
             // 
             // kryptonCustomPaletteBase1
             // 
@@ -739,6 +734,11 @@ namespace AuctionDesktopProgram
             kryptonCustomPaletteBase1.ThemeName = "";
             kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
             // 
+            // LoadingProcess
+            // 
+            LoadingProcess.DoWork += LoadingProcess_DoWork;
+            LoadingProcess.RunWorkerCompleted += LoadingProcess_RunWorkerCompleted;
+            // 
             // Solicitudes
             // 
             BackColor = Color.FromArgb(39, 42, 45);
@@ -759,9 +759,9 @@ namespace AuctionDesktopProgram
             tableLayoutPanel1.PerformLayout();
             ((ISupportInitialize)kryptonPictureBoxImagen).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
-            ((ISupportInitialize)SubastaDataGrid).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
+            ((ISupportInitialize)SubastaDataGrid).EndInit();
             ResumeLayout(false);
         }
         #endregion
