@@ -38,11 +38,12 @@ namespace AuctionDesktopProgram
             button5 = new KryptonButton();
             panelSideMenu = new Panel();
             panel1 = new Panel();
-            inicioButton = new KryptonButton();
             button3 = new KryptonButton();
             panel2 = new Panel();
+            pictureBox1 = new PictureBox();
             panelSideMenu.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // kryptonCustomPaletteBase1
@@ -309,37 +310,13 @@ namespace AuctionDesktopProgram
             // panel1
             // 
             panel1.BackColor = Color.Transparent;
-            panel1.Controls.Add(inicioButton);
+            panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
             panel1.Size = new Size(282, 119);
             panel1.TabIndex = 7;
-            // 
-            // inicioButton
-            // 
-            inicioButton.ButtonStyle = ButtonStyle.Custom1;
-            inicioButton.Dock = DockStyle.Fill;
-            inicioButton.Enabled = false;
-            inicioButton.Location = new Point(0, 0);
-            inicioButton.Margin = new Padding(0);
-            inicioButton.Name = "inicioButton";
-            inicioButton.Palette = kryptonCustomPaletteBase1;
-            inicioButton.PaletteMode = PaletteMode.Custom;
-            inicioButton.Size = new Size(282, 119);
-            inicioButton.StateCommon.Back.Image = Properties.Resources.LOgo_TUP_png2;
-            inicioButton.StateCommon.Back.ImageStyle = PaletteImageStyle.CenterMiddle;
-            inicioButton.StatePressed.Back.Image = Properties.Resources.LOgo_TUP_png4;
-            inicioButton.StatePressed.Back.ImageStyle = PaletteImageStyle.CenterMiddle;
-            inicioButton.StateTracking.Back.Image = Properties.Resources.LOgo_TUP_png3;
-            inicioButton.StateTracking.Back.ImageStyle = PaletteImageStyle.CenterMiddle;
-            inicioButton.TabIndex = 1;
-            inicioButton.ToolTipValues.Description = "Subastas";
-            inicioButton.ToolTipValues.EnableToolTips = true;
-            inicioButton.ToolTipValues.ToolTipStyle = LabelStyle.ToolTip;
-            inicioButton.Values.Text = "";
-            inicioButton.Click += inicioButton_Click;
             // 
             // button3
             // 
@@ -373,6 +350,19 @@ namespace AuctionDesktopProgram
             panel2.Size = new Size(982, 762);
             panel2.TabIndex = 7;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.MaximumSize = new Size(500, 400);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(282, 119);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
+            // 
             // Mainpage
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -394,6 +384,7 @@ namespace AuctionDesktopProgram
             UseDropShadow = true;
             panelSideMenu.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -405,8 +396,8 @@ namespace AuctionDesktopProgram
         private Panel panel1;
         private Krypton.Toolkit.KryptonCustomPaletteBase kryptonCustomPaletteBase1;
         private Krypton.Toolkit.KryptonPictureBox kryptonPictureBox1;
-        private KryptonButton inicioButton;
         public Panel panel2;
         private KryptonButton button3;
+        private PictureBox pictureBox1;
     }
 }

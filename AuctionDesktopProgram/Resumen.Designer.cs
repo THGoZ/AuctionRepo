@@ -163,249 +163,6 @@ namespace AuctionDesktopProgram
             btnBuscar.TabIndex = 1;
             btnBuscar.Values.Text = "";
             // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            tableLayoutPanel1.Controls.Add(Ok, 1, 0);
-            tableLayoutPanel1.Dock = DockStyle.Bottom;
-            tableLayoutPanel1.Location = new Point(0, 591);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1113, 53);
-            tableLayoutPanel1.TabIndex = 9;
-            // 
-            // Ok
-            // 
-            Ok.ButtonStyle = ButtonStyle.Custom2;
-            Ok.Dock = DockStyle.Fill;
-            Ok.Location = new Point(467, 10);
-            Ok.Margin = new Padding(100, 10, 100, 10);
-            Ok.Name = "Ok";
-            Ok.Palette = kryptonCustomPaletteBase1;
-            Ok.PaletteMode = PaletteMode.Custom;
-            Ok.Size = new Size(178, 33);
-            Ok.TabIndex = 0;
-            Ok.Values.Text = "Ok";
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.AutoScroll = true;
-            tableLayoutPanel2.AutoSize = true;
-            tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 370F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Controls.Add(lblPrecio, 0, 3);
-            tableLayoutPanel2.Controls.Add(lblNombre, 0, 1);
-            tableLayoutPanel2.Controls.Add(lblDescripcion, 0, 2);
-            tableLayoutPanel2.Controls.Add(cyberGroupBox1, 0, 0);
-            tableLayoutPanel2.Controls.Add(btnOfertas, 0, 4);
-            tableLayoutPanel2.Controls.Add(kryptonDataGridView1, 1, 0);
-            tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(0, 100);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.Padding = new Padding(30, 0, 15, 0);
-            tableLayoutPanel2.RowCount = 5;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle());
-            tableLayoutPanel2.RowStyles.Add(new RowStyle());
-            tableLayoutPanel2.RowStyles.Add(new RowStyle());
-            tableLayoutPanel2.RowStyles.Add(new RowStyle());
-            tableLayoutPanel2.Size = new Size(1113, 491);
-            tableLayoutPanel2.TabIndex = 10;
-            // 
-            // lblPrecio
-            // 
-            lblPrecio.AutoSize = true;
-            lblPrecio.Dock = DockStyle.Bottom;
-            lblPrecio.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPrecio.ForeColor = Color.FromArgb(128, 255, 128);
-            lblPrecio.Location = new Point(33, 382);
-            lblPrecio.Name = "lblPrecio";
-            lblPrecio.Padding = new Padding(30, 0, 0, 30);
-            lblPrecio.Size = new Size(364, 69);
-            lblPrecio.TabIndex = 10;
-            lblPrecio.Text = "- - - - -";
-            // 
-            // lblNombre
-            // 
-            lblNombre.AutoSize = true;
-            lblNombre.Dock = DockStyle.Fill;
-            lblNombre.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNombre.ForeColor = Color.Silver;
-            lblNombre.Location = new Point(33, 338);
-            lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(364, 24);
-            lblNombre.TabIndex = 9;
-            lblNombre.Text = "------";
-            // 
-            // lblDescripcion
-            // 
-            lblDescripcion.AutoEllipsis = true;
-            lblDescripcion.AutoSize = true;
-            lblDescripcion.Dock = DockStyle.Fill;
-            lblDescripcion.Font = new Font("Microsoft Sans Serif", 12.25F);
-            lblDescripcion.ForeColor = Color.Gray;
-            lblDescripcion.Location = new Point(33, 362);
-            lblDescripcion.MaximumSize = new Size(500, 60);
-            lblDescripcion.Name = "lblDescripcion";
-            lblDescripcion.Size = new Size(364, 20);
-            lblDescripcion.TabIndex = 9;
-            lblDescripcion.Text = "Seleccione un producto para ver los detalles";
-            // 
-            // cyberGroupBox1
-            // 
-            cyberGroupBox1.Alpha = 20;
-            cyberGroupBox1.Anchor = AnchorStyles.None;
-            cyberGroupBox1.BackColor = Color.Transparent;
-            cyberGroupBox1.Background = false;
-            cyberGroupBox1.Background_WidthPen = 3F;
-            cyberGroupBox1.BackgroundPen = false;
-            cyberGroupBox1.ColorBackground = Color.FromArgb(37, 52, 68);
-            cyberGroupBox1.ColorBackground_1 = Color.FromArgb(37, 52, 68);
-            cyberGroupBox1.ColorBackground_2 = Color.FromArgb(41, 63, 86);
-            cyberGroupBox1.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
-            cyberGroupBox1.ColorLighting = Color.FromArgb(64, 64, 64);
-            cyberGroupBox1.ColorPen_1 = Color.FromArgb(37, 52, 68);
-            cyberGroupBox1.ColorPen_2 = Color.FromArgb(41, 63, 86);
-            cyberGroupBox1.Controls.Add(pictureBox1);
-            cyberGroupBox1.CyberGroupBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
-            cyberGroupBox1.ForeColor = Color.FromArgb(245, 245, 245);
-            cyberGroupBox1.Lighting = true;
-            cyberGroupBox1.LinearGradient_Background = false;
-            cyberGroupBox1.LinearGradientPen = false;
-            cyberGroupBox1.Location = new Point(53, 13);
-            cyberGroupBox1.Name = "cyberGroupBox1";
-            cyberGroupBox1.PenWidth = 5;
-            cyberGroupBox1.RGB = false;
-            cyberGroupBox1.Rounding = true;
-            cyberGroupBox1.RoundingInt = 15;
-            cyberGroupBox1.Size = new Size(324, 312);
-            cyberGroupBox1.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            cyberGroupBox1.TabIndex = 11;
-            cyberGroupBox1.Tag = "Cyber";
-            cyberGroupBox1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-            cyberGroupBox1.Timer_RGB = 300;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.MaximumSize = new Size(500, 400);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(324, 312);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            // 
-            // btnOfertas
-            // 
-            btnOfertas.Anchor = AnchorStyles.None;
-            btnOfertas.ButtonStyle = ButtonStyle.Custom2;
-            btnOfertas.Enabled = false;
-            btnOfertas.Location = new Point(150, 454);
-            btnOfertas.Name = "btnOfertas";
-            btnOfertas.Palette = kryptonCustomPaletteBase1;
-            btnOfertas.PaletteMode = PaletteMode.Custom;
-            btnOfertas.Size = new Size(129, 34);
-            btnOfertas.TabIndex = 12;
-            btnOfertas.Values.Text = "Ver ofertas";
-            btnOfertas.Click += btnOfertas_Click;
-            // 
-            // kryptonDataGridView1
-            // 
-            kryptonDataGridView1.AllowUserToAddRows = false;
-            kryptonDataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            kryptonDataGridView1.AutoGenerateColumns = false;
-            kryptonDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            kryptonDataGridView1.BorderStyle = BorderStyle.None;
-            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { idProducto, Nombre, PrecioBase, CantidadOfertas, MaxOferta, fechaSolicitud });
-            kryptonDataGridView1.GridStyles.Style = DataGridViewStyle.Custom1;
-            kryptonDataGridView1.GridStyles.StyleBackground = PaletteBackStyle.GridBackgroundCustom1;
-            kryptonDataGridView1.GridStyles.StyleColumn = GridStyle.Custom1;
-            kryptonDataGridView1.GridStyles.StyleDataCells = GridStyle.Custom1;
-            kryptonDataGridView1.GridStyles.StyleRow = GridStyle.Custom1;
-            kryptonDataGridView1.Location = new Point(403, 3);
-            kryptonDataGridView1.MultiSelect = false;
-            kryptonDataGridView1.Name = "kryptonDataGridView1";
-            kryptonDataGridView1.Palette = kryptonCustomPaletteBase1;
-            kryptonDataGridView1.PaletteMode = PaletteMode.Custom;
-            kryptonDataGridView1.RowHeadersVisible = false;
-            tableLayoutPanel2.SetRowSpan(kryptonDataGridView1, 5);
-            kryptonDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            kryptonDataGridView1.Size = new Size(692, 485);
-            kryptonDataGridView1.TabIndex = 0;
-            kryptonDataGridView1.CurrentCellChanged += kryptonDataGridView1_CurrentCellChanged;
-            // 
-            // idProducto
-            // 
-            idProducto.DataPropertyName = "Id";
-            idProducto.DefaultCellStyle = dataGridViewCellStyle1;
-            idProducto.HeaderText = "#";
-            idProducto.Name = "idProducto";
-            idProducto.ReadOnly = true;
-            idProducto.Width = 115;
-            // 
-            // Nombre
-            // 
-            Nombre.DataPropertyName = "Nombre";
-            Nombre.DefaultCellStyle = dataGridViewCellStyle2;
-            Nombre.HeaderText = "Producto";
-            Nombre.Name = "Nombre";
-            Nombre.ReadOnly = true;
-            Nombre.Width = 115;
-            // 
-            // PrecioBase
-            // 
-            PrecioBase.DataPropertyName = "PrecioBase";
-            dataGridViewCellStyle3.Format = "C2";
-            dataGridViewCellStyle3.NullValue = "0";
-            PrecioBase.DefaultCellStyle = dataGridViewCellStyle3;
-            PrecioBase.HeaderText = "Precio base";
-            PrecioBase.Name = "PrecioBase";
-            PrecioBase.ReadOnly = true;
-            PrecioBase.Width = 115;
-            // 
-            // CantidadOfertas
-            // 
-            CantidadOfertas.DataPropertyName = "TotalDeOfertas";
-            CantidadOfertas.DefaultCellStyle = dataGridViewCellStyle4;
-            CantidadOfertas.HeaderText = "Cantidad de ofertas";
-            CantidadOfertas.Name = "CantidadOfertas";
-            CantidadOfertas.ReadOnly = true;
-            CantidadOfertas.Width = 116;
-            // 
-            // MaxOferta
-            // 
-            MaxOferta.DataPropertyName = "Monto";
-            dataGridViewCellStyle5.Format = "C2";
-            dataGridViewCellStyle5.NullValue = "0";
-            MaxOferta.DefaultCellStyle = dataGridViewCellStyle5;
-            MaxOferta.HeaderText = "Maxima Oferta";
-            MaxOferta.Name = "MaxOferta";
-            MaxOferta.ReadOnly = true;
-            MaxOferta.Width = 115;
-            // 
-            // fechaSolicitud
-            // 
-            fechaSolicitud.Checked = false;
-            fechaSolicitud.DataPropertyName = "Fecha";
-            fechaSolicitud.Format = DateTimePickerFormat.Short;
-            fechaSolicitud.HeaderText = "Fecha de solicitud";
-            fechaSolicitud.Name = "fechaSolicitud";
-            fechaSolicitud.ReadOnly = true;
-            fechaSolicitud.SortMode = DataGridViewColumnSortMode.Automatic;
-            fechaSolicitud.Width = 115;
-            // 
-            // LoadingProcess
-            // 
-            LoadingProcess.DoWork += backgroundWorker1_DoWork;
-            LoadingProcess.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
-            // 
             // kryptonCustomPaletteBase1
             // 
             kryptonCustomPaletteBase1.BaseFont = new Font("Segoe UI", 9F);
@@ -588,6 +345,249 @@ namespace AuctionDesktopProgram
             kryptonCustomPaletteBase1.PanelStyles.PanelCustom1.StateCommon.ColorStyle = PaletteColorStyle.Dashed;
             kryptonCustomPaletteBase1.ThemeName = "";
             kryptonCustomPaletteBase1.UseKryptonFileDialogs = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tableLayoutPanel1.Controls.Add(Ok, 1, 0);
+            tableLayoutPanel1.Dock = DockStyle.Bottom;
+            tableLayoutPanel1.Location = new Point(0, 591);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(1113, 53);
+            tableLayoutPanel1.TabIndex = 9;
+            // 
+            // Ok
+            // 
+            Ok.ButtonStyle = ButtonStyle.Custom2;
+            Ok.Dock = DockStyle.Fill;
+            Ok.Location = new Point(467, 10);
+            Ok.Margin = new Padding(100, 10, 100, 10);
+            Ok.Name = "Ok";
+            Ok.Palette = kryptonCustomPaletteBase1;
+            Ok.PaletteMode = PaletteMode.Custom;
+            Ok.Size = new Size(178, 33);
+            Ok.TabIndex = 0;
+            Ok.Values.Text = "Ok";
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.AutoScroll = true;
+            tableLayoutPanel2.AutoSize = true;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 370F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Controls.Add(lblPrecio, 0, 3);
+            tableLayoutPanel2.Controls.Add(lblNombre, 0, 1);
+            tableLayoutPanel2.Controls.Add(lblDescripcion, 0, 2);
+            tableLayoutPanel2.Controls.Add(cyberGroupBox1, 0, 0);
+            tableLayoutPanel2.Controls.Add(btnOfertas, 0, 4);
+            tableLayoutPanel2.Controls.Add(kryptonDataGridView1, 1, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 100);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.Padding = new Padding(30, 0, 15, 0);
+            tableLayoutPanel2.RowCount = 5;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.Size = new Size(1113, 491);
+            tableLayoutPanel2.TabIndex = 10;
+            // 
+            // lblPrecio
+            // 
+            lblPrecio.AutoSize = true;
+            lblPrecio.Dock = DockStyle.Bottom;
+            lblPrecio.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPrecio.ForeColor = Color.FromArgb(128, 255, 128);
+            lblPrecio.Location = new Point(33, 382);
+            lblPrecio.Name = "lblPrecio";
+            lblPrecio.Padding = new Padding(30, 0, 0, 30);
+            lblPrecio.Size = new Size(364, 69);
+            lblPrecio.TabIndex = 10;
+            lblPrecio.Text = "- - - - -";
+            // 
+            // lblNombre
+            // 
+            lblNombre.AutoSize = true;
+            lblNombre.Dock = DockStyle.Fill;
+            lblNombre.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblNombre.ForeColor = Color.Silver;
+            lblNombre.Location = new Point(33, 338);
+            lblNombre.Name = "lblNombre";
+            lblNombre.Size = new Size(364, 24);
+            lblNombre.TabIndex = 9;
+            lblNombre.Text = "------";
+            // 
+            // lblDescripcion
+            // 
+            lblDescripcion.AutoEllipsis = true;
+            lblDescripcion.AutoSize = true;
+            lblDescripcion.Dock = DockStyle.Fill;
+            lblDescripcion.Font = new Font("Microsoft Sans Serif", 12.25F);
+            lblDescripcion.ForeColor = Color.Gray;
+            lblDescripcion.Location = new Point(33, 362);
+            lblDescripcion.MaximumSize = new Size(500, 60);
+            lblDescripcion.Name = "lblDescripcion";
+            lblDescripcion.Size = new Size(364, 20);
+            lblDescripcion.TabIndex = 9;
+            lblDescripcion.Text = "Seleccione un producto para ver los detalles";
+            // 
+            // cyberGroupBox1
+            // 
+            cyberGroupBox1.Alpha = 20;
+            cyberGroupBox1.Anchor = AnchorStyles.None;
+            cyberGroupBox1.BackColor = Color.Transparent;
+            cyberGroupBox1.Background = false;
+            cyberGroupBox1.Background_WidthPen = 3F;
+            cyberGroupBox1.BackgroundPen = false;
+            cyberGroupBox1.ColorBackground = Color.FromArgb(37, 52, 68);
+            cyberGroupBox1.ColorBackground_1 = Color.FromArgb(37, 52, 68);
+            cyberGroupBox1.ColorBackground_2 = Color.FromArgb(41, 63, 86);
+            cyberGroupBox1.ColorBackground_Pen = Color.FromArgb(29, 200, 238);
+            cyberGroupBox1.ColorLighting = Color.FromArgb(64, 64, 64);
+            cyberGroupBox1.ColorPen_1 = Color.FromArgb(37, 52, 68);
+            cyberGroupBox1.ColorPen_2 = Color.FromArgb(41, 63, 86);
+            cyberGroupBox1.Controls.Add(pictureBox1);
+            cyberGroupBox1.CyberGroupBoxStyle = ReaLTaiizor.Enum.Cyber.StateStyle.Custom;
+            cyberGroupBox1.ForeColor = Color.FromArgb(245, 245, 245);
+            cyberGroupBox1.Lighting = true;
+            cyberGroupBox1.LinearGradient_Background = false;
+            cyberGroupBox1.LinearGradientPen = false;
+            cyberGroupBox1.Location = new Point(53, 13);
+            cyberGroupBox1.Name = "cyberGroupBox1";
+            cyberGroupBox1.PenWidth = 5;
+            cyberGroupBox1.RGB = false;
+            cyberGroupBox1.Rounding = true;
+            cyberGroupBox1.RoundingInt = 15;
+            cyberGroupBox1.Size = new Size(324, 312);
+            cyberGroupBox1.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            cyberGroupBox1.TabIndex = 11;
+            cyberGroupBox1.Tag = "Cyber";
+            cyberGroupBox1.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            cyberGroupBox1.Timer_RGB = 300;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.MaximumSize = new Size(500, 400);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(324, 312);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            // 
+            // btnOfertas
+            // 
+            btnOfertas.Anchor = AnchorStyles.None;
+            btnOfertas.ButtonStyle = ButtonStyle.Custom2;
+            btnOfertas.Enabled = false;
+            btnOfertas.Location = new Point(150, 454);
+            btnOfertas.Name = "btnOfertas";
+            btnOfertas.Palette = kryptonCustomPaletteBase1;
+            btnOfertas.PaletteMode = PaletteMode.Custom;
+            btnOfertas.Size = new Size(129, 34);
+            btnOfertas.TabIndex = 12;
+            btnOfertas.Values.Text = "Ver ofertas";
+            btnOfertas.Click += btnOfertas_Click;
+            // 
+            // kryptonDataGridView1
+            // 
+            kryptonDataGridView1.AllowUserToAddRows = false;
+            kryptonDataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            kryptonDataGridView1.AutoGenerateColumns = false;
+            kryptonDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            kryptonDataGridView1.BorderStyle = BorderStyle.None;
+            kryptonDataGridView1.Columns.AddRange(new DataGridViewColumn[] { idProducto, Nombre, PrecioBase, CantidadOfertas, MaxOferta, fechaSolicitud });
+            kryptonDataGridView1.GridStyles.Style = DataGridViewStyle.Custom1;
+            kryptonDataGridView1.GridStyles.StyleBackground = PaletteBackStyle.GridBackgroundCustom1;
+            kryptonDataGridView1.GridStyles.StyleColumn = GridStyle.Custom1;
+            kryptonDataGridView1.GridStyles.StyleDataCells = GridStyle.Custom1;
+            kryptonDataGridView1.GridStyles.StyleRow = GridStyle.Custom1;
+            kryptonDataGridView1.Location = new Point(403, 3);
+            kryptonDataGridView1.MultiSelect = false;
+            kryptonDataGridView1.Name = "kryptonDataGridView1";
+            kryptonDataGridView1.Palette = kryptonCustomPaletteBase1;
+            kryptonDataGridView1.PaletteMode = PaletteMode.Custom;
+            kryptonDataGridView1.RowHeadersVisible = false;
+            tableLayoutPanel2.SetRowSpan(kryptonDataGridView1, 5);
+            kryptonDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            kryptonDataGridView1.Size = new Size(692, 485);
+            kryptonDataGridView1.TabIndex = 0;
+            kryptonDataGridView1.CurrentCellChanged += kryptonDataGridView1_CurrentCellChanged;
+            // 
+            // idProducto
+            // 
+            idProducto.DataPropertyName = "Id";
+            idProducto.DefaultCellStyle = dataGridViewCellStyle1;
+            idProducto.HeaderText = "#";
+            idProducto.Name = "idProducto";
+            idProducto.ReadOnly = true;
+            idProducto.Width = 115;
+            // 
+            // Nombre
+            // 
+            Nombre.DataPropertyName = "Nombre";
+            Nombre.DefaultCellStyle = dataGridViewCellStyle2;
+            Nombre.HeaderText = "Producto";
+            Nombre.Name = "Nombre";
+            Nombre.ReadOnly = true;
+            Nombre.Width = 115;
+            // 
+            // PrecioBase
+            // 
+            PrecioBase.DataPropertyName = "PrecioBase";
+            dataGridViewCellStyle3.Format = "C2";
+            dataGridViewCellStyle3.NullValue = "0";
+            PrecioBase.DefaultCellStyle = dataGridViewCellStyle3;
+            PrecioBase.HeaderText = "Precio base";
+            PrecioBase.Name = "PrecioBase";
+            PrecioBase.ReadOnly = true;
+            PrecioBase.Width = 115;
+            // 
+            // CantidadOfertas
+            // 
+            CantidadOfertas.DataPropertyName = "TotalDeOfertas";
+            CantidadOfertas.DefaultCellStyle = dataGridViewCellStyle4;
+            CantidadOfertas.HeaderText = "Cantidad de ofertas";
+            CantidadOfertas.Name = "CantidadOfertas";
+            CantidadOfertas.ReadOnly = true;
+            CantidadOfertas.Width = 116;
+            // 
+            // MaxOferta
+            // 
+            MaxOferta.DataPropertyName = "Monto";
+            dataGridViewCellStyle5.Format = "C2";
+            dataGridViewCellStyle5.NullValue = "0";
+            MaxOferta.DefaultCellStyle = dataGridViewCellStyle5;
+            MaxOferta.HeaderText = "Maxima Oferta";
+            MaxOferta.Name = "MaxOferta";
+            MaxOferta.ReadOnly = true;
+            MaxOferta.Width = 115;
+            // 
+            // fechaSolicitud
+            // 
+            fechaSolicitud.Checked = false;
+            fechaSolicitud.DataPropertyName = "Fecha";
+            fechaSolicitud.Format = DateTimePickerFormat.Short;
+            fechaSolicitud.HeaderText = "Fecha de solicitud";
+            fechaSolicitud.Name = "fechaSolicitud";
+            fechaSolicitud.ReadOnly = true;
+            fechaSolicitud.SortMode = DataGridViewColumnSortMode.Automatic;
+            fechaSolicitud.Width = 115;
+            // 
+            // LoadingProcess
+            // 
+            LoadingProcess.DoWork += backgroundWorker1_DoWork;
+            LoadingProcess.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
             // 
             // Resumen
             // 

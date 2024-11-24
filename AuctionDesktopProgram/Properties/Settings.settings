@@ -5,9 +5,9 @@
     <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;ConnectionString&gt;Persist Security Info=True;Initial Catalog=Subasta-DB;Data Source=.; Application Name=DemoApp; Integrated Security=True;MultipleActiveResultSets=True;TrustServerCertificate=True;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Server=tcp:remates-server.database.windows.net,1433;Initial Catalog=SubastaSQL;Persist Security Info=False;User ID=tup-2024-goya;Password=NBZwprqcZLAE!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Persist Security Info=True;Initial Catalog=Subasta-DB;Data Source=.; Application Name=DemoApp; Integrated Security=True;MultipleActiveResultSets=True;TrustServerCertificate=True;</Value>
+      <Value Profile="(Default)">Server=tcp:remates-server.database.windows.net,1433;Initial Catalog=SubastaSQL;Persist Security Info=False;User ID=tup-2024-goya;Password=NBZwprqcZLAE!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
