@@ -5,6 +5,17 @@
              Title="Todos los Productos"
              BackgroundColor="#232323">
 
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout>
             <!-- ActivityIndicator para mostrar mientras se cargan los datos -->
@@ -66,8 +77,10 @@
                                         <!-- Cantidad de ofertas -->
                                         <VerticalStackLayout Grid.Column="0">
                                             <Label Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}" 
-                                               FontAttributes="Italic" 
-                                               TextColor="White"/>
+                                                   FontAttributes="Bold" 
+                                                   TextColor="White"
+                                                   Padding="10,0,0,0"
+                                                   FontSize="16"/>
                                         </VerticalStackLayout>
 
                                     </Grid>
@@ -75,7 +88,8 @@
                                     <HorizontalStackLayout Padding="10,0,0,0" VerticalOptions="EndAndExpand">
                                         <Label Text="{Binding PrecioBase, StringFormat='Precio base: {0:C}'}" 
                                                FontAttributes="Bold" 
-                                               TextColor="White" />
+                                               TextColor="White" 
+                                               FontSize="16"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                             </VerticalStackLayout>

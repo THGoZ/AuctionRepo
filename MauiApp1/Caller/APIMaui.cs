@@ -62,6 +62,34 @@ namespace AuctionMobileApp.Caller
             }
             else return null;
         }
+        public async Task<List<ProductoAPI>?> GetOpenAuctionsProducts()
+        {
+            // Obtén todas las subastas
+            var subastas = await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta");
+
+            if (subastas is not null)
+            {
+                var subastasAbiertas = subastas.Where(s => s.FechaCierre > DateTime.Now).ToList();
+
+                var todosLosProductos = new List<ProductoAPI>();
+
+                // Obtén los productos para cada subasta abierta
+                foreach (var subasta in subastasAbiertas)
+                {
+                    var productosDeSubasta = await GetProductsOfAuctionWithOferta(subasta.IdSubasta);
+                    if (productosDeSubasta != null)
+                    {
+                        todosLosProductos.AddRange(productosDeSubasta);
+                    }
+                }
+
+                return todosLosProductos;
+            }
+            else
+            {
+                return null;
+            }
+        }
         #endregion
 
         #region Subasta

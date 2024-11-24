@@ -14,5 +14,6 @@ namespace AuctionMobileApp.Caller.Interfases
         Task<List<ProductoAPI>?> GetProductsWithOfertas();
         Task<List<ProductoWinner>?> GetWinners(int subastaId);
         Task<List<SubastaAPI>?> GetClosedSubastas();
+        Task<List<ProductoAPI>?> GetOpenAuctionsProducts();
     }
 }

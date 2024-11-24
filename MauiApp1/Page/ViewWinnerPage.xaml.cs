@@ -1,4 +1,5 @@
 using AuctionMobileApp.Caller.Interfases;
+using AuctionMobileApp.Service;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -21,56 +22,72 @@ public partial class ViewWinnerPage : ContentPage, INotifyPropertyChanged
     }
 
     public ObservableCollection<ProductoWinner> GanadoresList { get; set; }
-    // Constructor recibe el apicaller y el Id de la subasta
+
     public ViewWinnerPage(IAPIMaui apicaller)
     {
-        InitializeComponent();
         _apicaller = apicaller;
+        InitializeComponent();
         GanadoresList = new ObservableCollection<ProductoWinner>();
         BindingContext = this;
-        // Llama al método para cargar los ganadores
-        LoadWinners();
     }
 
     private async void LoadWinners()
     {
         IsBusy = true; // Iniciar el indicador de carga
-        // Obtener las subastas cerradas
-        var closedSubastas = await _apicaller.GetClosedSubastas();
 
-        if (closedSubastas != null)
+        // Intentar obtener los datos desde la caché
+        var cachedWinners = CacheService.Get<List<ProductoWinner>>("WinnersCache");
+
+        if (cachedWinners != null && cachedWinners.Count > 0)
         {
-            var allWinners = new List<ProductoWinner>();
-
-            // Por cada subasta cerrada, obtener los ganadores
-            foreach (var subasta in closedSubastas)
-            {
-                var winners = await _apicaller.GetWinners(subasta.IdSubasta);
-                if (winners != null)
-                {
-                    // Convertir imagen de byte[] a ImageSource
-                    foreach (var winner in winners)
-                    {
-                        if (winner.NombreGanador != null)
-                        {
-                            winner.Image = ConvertByteArrayToImageSource(winner.Imagen);
-                            allWinners.Add(winner);
-                        }
-                    }
-                }
-            }
-
-            // Actualizar la colección de ganadores
+            // Usar los datos de la caché
             GanadoresList.Clear();
-            foreach (var winner in allWinners)
+            foreach (var winner in cachedWinners)
             {
                 GanadoresList.Add(winner);
             }
         }
         else
         {
-            await DisplayAlert("Error", "No se pudieron cargar las subastas cerradas.", "OK");
+            // Llamar a la API para obtener los datos
+            var closedSubastas = await _apicaller.GetClosedSubastas();
+
+            if (closedSubastas != null)
+            {
+                var allWinners = new List<ProductoWinner>();
+
+                foreach (var subasta in closedSubastas)
+                {
+                    var winners = await _apicaller.GetWinners(subasta.IdSubasta);
+                    if (winners != null)
+                    {
+                        foreach (var winner in winners)
+                        {
+                            if (winner.NombreGanador != null)
+                            {
+                                winner.Image = ConvertByteArrayToImageSource(winner.Imagen);
+                                allWinners.Add(winner);
+                            }
+                        }
+                    }
+                }
+
+                // Guardar los resultados en la caché
+                CacheService.AddOrUpdate("WinnersCache", allWinners);
+
+                // Actualizar la lista con los ganadores
+                GanadoresList.Clear();
+                foreach (var winner in allWinners)
+                {
+                    GanadoresList.Add(winner);
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se pudieron cargar las subastas cerradas.", "OK");
+            }
         }
+
         IsBusy = false; // Finalizar el indicador de carga
     }
 
@@ -79,24 +96,19 @@ public partial class ViewWinnerPage : ContentPage, INotifyPropertyChanged
         if (imageBytes == null || imageBytes.Length == 0)
             return null;
 
-        MemoryStream stream = new MemoryStream(imageBytes);
-        return ImageSource.FromStream(() => stream);
+        return ImageSource.FromStream(() => new MemoryStream(imageBytes));
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        // Lógica adicional para manejar la limpieza o navegación si es necesario
-
-        GanadoresList.Clear();
+        // No limpiar la lista para permitir el uso de la caché
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
-        // Volver a cargar los productos de la API cuando la página aparezca
-        LoadWinners();
+        LoadWinners(); // Cargar ganadores desde la caché o API
     }
 
     // Implementación del INotifyPropertyChanged para actualizar la UI

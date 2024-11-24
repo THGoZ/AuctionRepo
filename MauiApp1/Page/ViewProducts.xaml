@@ -1,10 +1,19 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AuctionMobileApp.Page.ViewProducts"
              Title="{Binding PageTitle}"
              BackgroundColor="#232323"
              Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout>
@@ -28,52 +37,29 @@
 
                                     <!-- Título del producto a la izquierda -->
                                     <VerticalStackLayout Padding="10" Grid.Column="0" BackgroundColor="#FFB32E">
-                                        <Label Text="{Binding Nombre}" 
-                                               VerticalOptions="Center" 
-                                               FontAttributes="Bold" 
-                                               FontSize="Medium" 
-                                               TextColor="Black"/>
-
-                                        <!-- Descripción del producto -->
-                                        <Label Text="{Binding Descripcion}" 
-                                           FontAttributes="Italic" 
-                                           HorizontalOptions="FillAndExpand" 
-                                           TextColor="Black"/>
+                                        <Label Text="{Binding Nombre}" VerticalOptions="Center" FontSize="Medium" TextColor="Black"/>
+                                        <Label Text="{Binding Descripcion}" FontAttributes="Bold" HorizontalOptions="FillAndExpand" TextColor="Black"/>
                                     </VerticalStackLayout>
 
                                     <!-- Imagen del producto a la derecha con esquinas redondeadas -->
                                     <Frame Grid.Column="1" Padding="0" CornerRadius="0" IsClippedToBounds="True" BackgroundColor="Transparent" Margin="0">
-                                        <Image Source="{Binding Image}" 
-                                               WidthRequest="120" 
-                                               HeightRequest="120" 
-                                               Aspect="AspectFill" />
+                                        <Image Source="{Binding Image}" WidthRequest="120" HeightRequest="120" Aspect="AspectFill" />
                                     </Frame>
                                 </Grid>
 
                                 <!-- Parte inferior con otros detalles -->
                                 <VerticalStackLayout Padding="10" BackgroundColor="#4B4B4B">
-
-                                    <!-- Detalles de cantidad de ofertas y productos -->
                                     <Grid ColumnSpacing="10">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-
-                                        <!-- Cantidad de ofertas -->
                                         <VerticalStackLayout Grid.Column="0">
-                                            <Label Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}" 
-                                                   FontAttributes="Italic" 
-                                                   TextColor="White"/>
+                                            <Label Text="{Binding CantidadDeOfertas, StringFormat='Ofertas: {0}'}" FontAttributes="Bold" TextColor="White" Padding="10,0,0,0" FontSize="16"/>
                                         </VerticalStackLayout>
-
                                     </Grid>
-                                    
-                                    <!-- Precio base del producto -->
                                     <HorizontalStackLayout Padding="10,0,0,0" VerticalOptions="EndAndExpand">
-                                        <Label Text="{Binding PrecioBase, StringFormat='Precio base: {0:C}'}" 
-                                               FontAttributes="Bold" 
-                                               TextColor="White" />
+                                        <Label Text="{Binding PrecioBase, StringFormat='Precio base: {0:C}'}" TextColor="White" FontSize="16"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                             </VerticalStackLayout>

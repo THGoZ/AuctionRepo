@@ -1,5 +1,4 @@
-﻿
-using AuctionMobileApp.Caller;
+﻿using AuctionMobileApp.Caller;
 using AuctionMobileApp.Caller.Interfases;
 using AuctionMobileApp.Page;
 using System.ComponentModel;

@@ -1,5 +1,6 @@
 using AuctionMobileApp.Caller;
 using AuctionMobileApp.Caller.Interfases;
+using AuctionMobileApp.Service;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -17,7 +18,7 @@ public partial class ViewAllProductsPage : ContentPage, INotifyPropertyChanged
         set
         {
             _isBusy = value;
-            OnPropertyChanged(); // Notificar cambios para que el binding funcione
+            OnPropertyChanged();
         }
     }
 
@@ -28,27 +29,43 @@ public partial class ViewAllProductsPage : ContentPage, INotifyPropertyChanged
         _apicaller = apicaller;
         InitializeComponent();
         ProductoList = new ObservableCollection<ProductoAPI>();
-        BindingContext = this; // Make sure to set BindingContext
-        //LoadProductos(); // Load the products when the page is initialized
+        BindingContext = this;
     }
 
     private async void LoadProductos()
     {
-        IsBusy = true; // Iniciar el indicador de carga
-        ProductoList.Clear();
-        var productos = await _apicaller.GetProductsWithOfertas();
+        IsBusy = true;
 
-        if (productos != null)
+        var cachedProductos = CacheService.Get<List<ProductoAPI>>("ProductosCache");
+
+        if (cachedProductos != null && cachedProductos.Count > 0)
         {
-            foreach (var producto in productos)
+            ProductoList.Clear();
+            foreach (var producto in cachedProductos)
             {
-                producto.Image = ConvertByteArrayToImageSource(producto.Imagen);
+                producto.Image = await Task.Run(() => ConvertByteArrayToImageSource(producto.Imagen));
                 ProductoList.Add(producto);
-                await Task.Delay(50); 
             }
         }
-        IsBusy = false; // Finalizar el indicador de carga
+        else
+        {
+            var productos = await _apicaller.GetOpenAuctionsProducts();
+            if (productos != null)
+            {
+                ProductoList.Clear();
+                foreach (var producto in productos)
+                {
+                    producto.Image = await Task.Run(() => ConvertByteArrayToImageSource(producto.Imagen));
+                    ProductoList.Add(producto);
+                }
+                CacheService.AddOrUpdate("ProductosCache", productos);
+            }
+        }
+
+        IsBusy = false;
     }
+
+
     public ImageSource ConvertByteArrayToImageSource(byte[] imageBytes)
     {
         if (imageBytes == null || imageBytes.Length == 0)
@@ -60,20 +77,15 @@ public partial class ViewAllProductsPage : ContentPage, INotifyPropertyChanged
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        // Lógica adicional para manejar la limpieza o navegación si es necesario
-
-        ProductoList.Clear();
+        // No limpiar la lista para permitir el uso de la caché
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
-        // Volver a cargar los productos de la API cuando la página aparezca
-        LoadProductos();
+        LoadProductos(); // Cargar productos desde la caché o API
     }
 
-    // Implementación del INotifyPropertyChanged para actualizar la UI
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
