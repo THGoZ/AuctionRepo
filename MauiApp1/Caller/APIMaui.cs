@@ -65,11 +65,11 @@ namespace AuctionMobileApp.Caller
         public async Task<List<ProductoAPI>?> GetOpenAuctionsProducts()
         {
             // Obtén todas las subastas
-            var subastas = await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta");
+            var subastas = await _httpClient.GetFromJsonAsync<List<SubastaAPI>?>("/api/Subasta/Open");
 
             if (subastas is not null)
             {
-                var subastasAbiertas = subastas.Where(s => s.FechaCierre > DateTime.Now).ToList();
+                var subastasAbiertas = subastas;
 
                 var todosLosProductos = new List<ProductoAPI>();
 

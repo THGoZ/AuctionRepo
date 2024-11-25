@@ -281,6 +281,7 @@
             // 
             // labelPdeEmpresa
             // 
+            labelPdeEmpresa.AutoEllipsis = true;
             labelPdeEmpresa.AutoSize = true;
             labelPdeEmpresa.Dock = DockStyle.Bottom;
             labelPdeEmpresa.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -341,6 +342,7 @@
             // 
             // labelProdVendidos
             // 
+            labelProdVendidos.AutoEllipsis = true;
             labelProdVendidos.AutoSize = true;
             labelProdVendidos.Dock = DockStyle.Bottom;
             labelProdVendidos.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -401,6 +403,7 @@
             // 
             // labelPdeVendedores
             // 
+            labelPdeVendedores.AutoEllipsis = true;
             labelPdeVendedores.AutoSize = true;
             labelPdeVendedores.Dock = DockStyle.Bottom;
             labelPdeVendedores.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -414,6 +417,7 @@
             // 
             // label8
             // 
+            label8.AutoEllipsis = true;
             label8.AutoSize = true;
             label8.Dock = DockStyle.Top;
             label8.Font = new Font("Microsoft Sans Serif", 19.25F, FontStyle.Bold);
@@ -426,6 +430,7 @@
             // 
             // labelTotal
             // 
+            labelTotal.AutoEllipsis = true;
             labelTotal.AutoSize = true;
             labelTotal.Dock = DockStyle.Bottom;
             labelTotal.Font = new Font("Microsoft Sans Serif", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
