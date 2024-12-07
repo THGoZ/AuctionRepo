@@ -266,7 +266,7 @@
             cyberGroupBox2.Lighting = false;
             cyberGroupBox2.LinearGradient_Background = false;
             cyberGroupBox2.LinearGradientPen = false;
-            cyberGroupBox2.Location = new Point(31, 244);
+            cyberGroupBox2.Location = new Point(31, 226);
             cyberGroupBox2.Name = "cyberGroupBox2";
             cyberGroupBox2.PenWidth = 15;
             cyberGroupBox2.RGB = false;
@@ -327,7 +327,7 @@
             cyberGroupBox3.Lighting = false;
             cyberGroupBox3.LinearGradient_Background = false;
             cyberGroupBox3.LinearGradientPen = false;
-            cyberGroupBox3.Location = new Point(511, 47);
+            cyberGroupBox3.Location = new Point(511, 33);
             cyberGroupBox3.Name = "cyberGroupBox3";
             cyberGroupBox3.PenWidth = 15;
             cyberGroupBox3.RGB = false;
@@ -370,6 +370,7 @@
             // 
             cyberGroupBox4.Alpha = 20;
             cyberGroupBox4.Anchor = AnchorStyles.None;
+            cyberGroupBox4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             cyberGroupBox4.BackColor = Color.Transparent;
             cyberGroupBox4.Background = true;
             cyberGroupBox4.Background_WidthPen = 3F;
@@ -388,7 +389,7 @@
             cyberGroupBox4.Lighting = false;
             cyberGroupBox4.LinearGradient_Background = false;
             cyberGroupBox4.LinearGradientPen = false;
-            cyberGroupBox4.Location = new Point(510, 244);
+            cyberGroupBox4.Location = new Point(510, 226);
             cyberGroupBox4.Name = "cyberGroupBox4";
             cyberGroupBox4.PenWidth = 15;
             cyberGroupBox4.RGB = false;
@@ -482,13 +483,12 @@
             tableLayoutPanel1.Controls.Add(cyberGroupBox1, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 103);
-            tableLayoutPanel1.MinimumSize = new Size(985, 433);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(0, 20, 0, 20);
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(985, 433);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(985, 426);
             tableLayoutPanel1.TabIndex = 4;
             // 
             // cyberGroupBox1
@@ -513,7 +513,7 @@
             cyberGroupBox1.Lighting = false;
             cyberGroupBox1.LinearGradient_Background = false;
             cyberGroupBox1.LinearGradientPen = false;
-            cyberGroupBox1.Location = new Point(31, 47);
+            cyberGroupBox1.Location = new Point(31, 33);
             cyberGroupBox1.Name = "cyberGroupBox1";
             cyberGroupBox1.PenWidth = 15;
             cyberGroupBox1.RGB = false;
@@ -536,13 +536,13 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.Controls.Add(kryptonButton1, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Bottom;
-            tableLayoutPanel2.Location = new Point(0, 536);
+            tableLayoutPanel2.Location = new Point(0, 529);
             tableLayoutPanel2.Margin = new Padding(3, 3, 3, 10);
             tableLayoutPanel2.MinimumSize = new Size(985, 117);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.Padding = new Padding(0, 0, 0, 15);
             tableLayoutPanel2.RowCount = 1;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle());
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.Size = new Size(985, 117);
             tableLayoutPanel2.TabIndex = 11;
             // 
@@ -556,7 +556,7 @@
             ct.Dock = DockStyle.Fill;
             ct.Location = new Point(0, 0);
             ct.Name = "ct";
-            ct.Size = new Size(985, 653);
+            ct.Size = new Size(985, 646);
             ct.TabIndex = 2;
             // 
             // MainPanel
@@ -569,7 +569,7 @@
             MainPanel.Location = new Point(0, 0);
             MainPanel.Margin = new Padding(0);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(985, 653);
+            MainPanel.Size = new Size(985, 646);
             MainPanel.TabIndex = 2;
             // 
             // Ganancias
@@ -579,7 +579,7 @@
             AutoScroll = true;
             AutoSize = true;
             BackColor = Color.FromArgb(39, 42, 45);
-            ClientSize = new Size(985, 653);
+            ClientSize = new Size(985, 646);
             Controls.Add(MainPanel);
             Controls.Add(ct);
             ForeColor = Color.FromArgb(39, 42, 45);

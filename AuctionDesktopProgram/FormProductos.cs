@@ -69,9 +69,9 @@ namespace AuctionDesktopProgram
 
         public void Productos_Load(object sender, EventArgs e)
         {
-            LoadStuff();
-            ShowLoading();
             this.LoadingProcess.RunWorkerAsync();
+            ShowLoading();
+            LoadStuff();
         }
 
         private void LoadStuff()
@@ -341,14 +341,14 @@ namespace AuctionDesktopProgram
 
         private void ShowLoading()
         {
-            loadingForm.TopLevel = false;
             loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Size = this.Size / 2;
             loadingForm.Dock = DockStyle.Fill;
-            LoadingPanel.Controls.Add(loadingForm);
+            loadingForm.StartPosition = FormStartPosition.CenterParent;
             LoadingPanel.Tag = loadingForm;
             LoadingPanel.BringToFront();
             LoadingPanel.Visible = true;
-            loadingForm.Show();
+            loadingForm.ShowDialog();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

@@ -29,7 +29,7 @@ namespace AuctionDesktopProgram
             var connectionString = Properties.Settings.Default.ConnectionString;
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
-            services.AddScoped<AuctionDBContext>(x =>
+            services.AddSingleton<AuctionDBContext>(x =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder<AuctionDBContext>();
                 optionsBuilder.UseSqlServer(connectionString);

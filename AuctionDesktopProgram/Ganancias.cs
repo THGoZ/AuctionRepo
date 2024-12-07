@@ -218,7 +218,6 @@ namespace AuctionDesktopProgram
                 var subastas = e.Result as AutoCompleteStringCollection;
                 comboBox1.AutoCompleteCustomSource = subastas;
                 comboBox1.DataSource = subastas;
-                //comboBox1.SelectedItem = comboBox1.SelectedIndex = 0;
             }
             ct.Dispose();
             loadingForm.Close();
@@ -226,13 +225,14 @@ namespace AuctionDesktopProgram
 
         private void ShowLoading() 
         {
-            loadingForm.TopLevel = false;
             loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Size = this.Size / 2;
             loadingForm.Dock = DockStyle.Fill;
-            ct.Controls.Add(loadingForm);
+            loadingForm.StartPosition = FormStartPosition.CenterParent;
             ct.Tag = loadingForm;
             ct.BringToFront();
-            loadingForm.Show();
+            ct.Visible = true;
+            loadingForm.ShowDialog();
         }
     }
 }

@@ -51,5 +51,17 @@ namespace Auction.Core.Business
             return _repository.GetSuccessfulSubastas();
         }
 
+
+        public async Task<List<Subasta>> GetSuccessfulAsync()
+        {
+            try
+            {
+                return await _repository.GetSucessfulSubastasAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
     }
 }

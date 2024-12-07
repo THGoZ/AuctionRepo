@@ -73,51 +73,56 @@ namespace AuctionDesktopProgram
 
         private void CargarSubastas(string filtroDescripcion = "")
         {
-
-            var subastas = _subastaBusiness.GetAll();
-
-
-            if (!string.IsNullOrEmpty(filtroDescripcion))
+            try
             {
-                subastas = subastas.Where(s => s.Descripcion.Contains(filtroDescripcion, StringComparison.OrdinalIgnoreCase)).ToList();
+                var subastas = _subastaBusiness.GetAll();
+
+
+                if (!string.IsNullOrEmpty(filtroDescripcion))
+                {
+                    subastas = subastas.Where(s => s.Descripcion.Contains(filtroDescripcion, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+
+                var listaSubastas = subastas.Select(s => new SubastaDisplay
+                {
+                    IdSubasta = s.IdSubasta,
+                    FechaInicio = s.FechaInicio.ToString("dd/MM/yyyy"),
+                    FechaCierre = s.FechaCierre.ToString("dd/MM/yyyy"),
+                    Descripcion = s.Descripcion,
+                    ModoEntrega = string.Join(", ", s.ModoEntrega),
+                    FormaDePago = string.Join(", ", s.FormaDePago),
+                    Estado = s.Estado.HasValue ? (s.Estado.Value ? "Activa" : "Finalizada") : "Próxima"
+                }).ToList();
+
+                var sortableListSubasta = new SortableBindingList<SubastaDisplay>(listaSubastas);
+
+
+                SubastaDataGrid.DataSource = sortableListSubasta;
+                //if (!SubastaDataGrid.Columns.Contains("Editar") && !SubastaDataGrid.Columns.Contains("VerResumen"))
+                //{
+                //    var editarButtonColumn = new KryptonDataGridViewButtonColumn
+                //    {
+                //        Name = "Editar",
+                //        HeaderText = "Editar",
+                //        Text = "Editar",
+                //        UseColumnTextForButtonValue = true
+                //    };
+                //    SubastaDataGrid.Columns.Add(editarButtonColumn);
+
+                //    var verResumenButtonColumn = new KryptonDataGridViewButtonColumn
+                //    {
+                //        Name = "VerResumen",
+                //        HeaderText = "Ver Resumen",
+                //        Text = "Ver resumen",
+                //        UseColumnTextForButtonValue = true,
+                //    };
+                //    SubastaDataGrid.Columns.Add(verResumenButtonColumn);
+                //}
             }
-
-
-            var listaSubastas = subastas.Select(s => new SubastaDisplay
-            {
-                IdSubasta = s.IdSubasta,
-                FechaInicio = s.FechaInicio.ToString("dd/MM/yyyy"),
-                FechaCierre = s.FechaCierre.ToString("dd/MM/yyyy"),
-                Descripcion = s.Descripcion,
-                ModoEntrega = string.Join(", ", s.ModoEntrega),
-                FormaDePago = string.Join(", ", s.FormaDePago),
-                Estado = s.Estado.HasValue ? (s.Estado.Value ? "Activa" : "Finalizada") : "Próxima"
-            }).ToList();
-
-            var sortableListSubasta = new SortableBindingList<SubastaDisplay>(listaSubastas);
-
-
-            SubastaDataGrid.DataSource = sortableListSubasta;
-            //if (!SubastaDataGrid.Columns.Contains("Editar") && !SubastaDataGrid.Columns.Contains("VerResumen"))
-            //{
-            //    var editarButtonColumn = new KryptonDataGridViewButtonColumn
-            //    {
-            //        Name = "Editar",
-            //        HeaderText = "Editar",
-            //        Text = "Editar",
-            //        UseColumnTextForButtonValue = true
-            //    };
-            //    SubastaDataGrid.Columns.Add(editarButtonColumn);
-
-            //    var verResumenButtonColumn = new KryptonDataGridViewButtonColumn
-            //    {
-            //        Name = "VerResumen",
-            //        HeaderText = "Ver Resumen",
-            //        Text = "Ver resumen",
-            //        UseColumnTextForButtonValue = true,
-            //    };
-            //    SubastaDataGrid.Columns.Add(verResumenButtonColumn);
-            //}
+            catch (Exception ex) {
+                var result = MessageBox.Show($"Error {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)

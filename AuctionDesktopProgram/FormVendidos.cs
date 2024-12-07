@@ -199,14 +199,14 @@ namespace AuctionDesktopProgram
 
         private void ShowLoading()
         {
-            loadingForm.TopLevel = false;
             loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Size = this.Size / 2;
             loadingForm.Dock = DockStyle.Fill;
-            panel2.Controls.Add(loadingForm);
+            loadingForm.StartPosition = FormStartPosition.CenterParent;
             panel2.Tag = loadingForm;
             panel2.BringToFront();
             panel2.Visible = true;
-            loadingForm.Show();
+            loadingForm.ShowDialog();
         }
     }
 }

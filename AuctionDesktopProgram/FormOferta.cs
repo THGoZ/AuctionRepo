@@ -1,19 +1,10 @@
 ﻿using Auction.Core.Business.Interfaces;
 using Auction.Core.Entities;
 using AuctionDesktopProgram.Helper;
-using BlazorBootstrap;
 using Krypton.Toolkit;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace AuctionDesktopProgram
 {
@@ -21,7 +12,7 @@ namespace AuctionDesktopProgram
     {
         private readonly ProductoWinner _producto;
         private readonly IProductoBusiness _productoBusiness;
-        private readonly Loading loadingForm = new Loading();
+        private readonly Loading loadingForm = new();
         public FormOferta(IProductoBusiness productoBusiness, ProductoWinner producto)
         {
             _productoBusiness = productoBusiness;
@@ -67,7 +58,7 @@ namespace AuctionDesktopProgram
         private void LoadingProcess_DoWork(object sender, DoWorkEventArgs e)
         {
             lblTitle.Text = $"Ofertas del producto N°{_producto.Id}";
-            lblDescription.Text = $"Viendo ofertas del producto N° con precio base de {_producto.PrecioBase.ToString("C")}";
+            lblDescription.Text = $"Viendo ofertas del producto N° con precio base de {_producto.PrecioBase:C}";
             e.Result = GridDataGet();
         }
 

@@ -58,7 +58,14 @@ namespace Auction.Core.Data
 
         public List<Subasta> GetSubastas()
         {
-            return [.. _dbContext.Subastas];
+            try
+            {
+                return [.. _dbContext.Subastas];
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al conectar a la base de datos {ex.Message}");
+            }
         }
 
         public List<Oferta> GetOfertas()
@@ -191,6 +198,26 @@ namespace Auction.Core.Data
             catch (Exception ex)
             {
                 throw new Exception("Error retrieving subastas", ex);
+            }
+        }
+
+        public async Task<List<Subasta>> GetSucessfulSubastasAsync()
+        {
+            try
+            {
+                var subastas = await _dbContext.Subastas
+                                                .Include(s => s.Productos)
+                                                .Where(s => s.FechaCierre < DateTime.Now &&
+                                                                                            s.Productos != null &&
+                                                                                            s.Productos.Any(p => p != null &&
+                                                                                            p.Ofertas != null &&
+                                                                                            p.Ofertas.Count != 0))
+                                                .ToListAsync();
+                return subastas;
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new Exception($"Error al traer datos {ex.Message}");
             }
         }
 

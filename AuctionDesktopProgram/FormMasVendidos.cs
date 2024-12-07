@@ -37,8 +37,8 @@ namespace AuctionDesktopProgram
 
         private void FormMasVendidos_Load(object sender, EventArgs e)
         {
-            ShowLoading();
             this.LoadingProcess.RunWorkerAsync();
+            ShowLoading();
             // Obtener productos vendidos, calcular las ganancias, y ordenarlos por ganancia
             //var productosVendidos = _subastaBusiness.GetProductoWinners()
             //    .Select(winner => new ProductoVendidoDisplay
@@ -237,14 +237,14 @@ namespace AuctionDesktopProgram
 
         private void ShowLoading()
         {
-            loadingForm.TopLevel = false;
             loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Size = this.Size / 2;
             loadingForm.Dock = DockStyle.Fill;
-            LoadingPanel.Controls.Add(loadingForm);
+            loadingForm.StartPosition = FormStartPosition.CenterParent;
             LoadingPanel.Tag = loadingForm;
             LoadingPanel.BringToFront();
             LoadingPanel.Visible = true;
-            loadingForm.Show();
+            loadingForm.ShowDialog();
         }
     }
 }

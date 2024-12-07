@@ -64,7 +64,7 @@ namespace AuctionDesktopProgram
         {
             if (activeForm != null)
             {
-                activeForm.Close();
+                activeForm.Dispose();
             }
             activeForm = form;
             form.TopLevel = false;

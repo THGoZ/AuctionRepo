@@ -23,6 +23,6 @@ namespace Auction.Core.Business.Interfaces
 
         public Subasta GetById(int id);
         public List<Subasta> GetSuccessful();
-
+        public Task<List<Subasta>> GetSuccessfulAsync();
     }
 }

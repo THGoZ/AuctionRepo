@@ -300,8 +300,8 @@ namespace AuctionDesktopProgram
 
         private void ProductosNoOfertados_Load(object sender, EventArgs e)
         {
-            ShowLoading();
             this.LoadingProcess.RunWorkerAsync();
+            ShowLoading();
 
         }
 
@@ -339,14 +339,15 @@ namespace AuctionDesktopProgram
 
         private void ShowLoading()
         {
-            loadingForm.TopLevel = false;
             loadingForm.FormBorderStyle = FormBorderStyle.None;
+            loadingForm.Size = this.Size / 2;
             loadingForm.Dock = DockStyle.Fill;
-            LoadinPanel.Controls.Add(loadingForm);
+            loadingForm.StartPosition = FormStartPosition.CenterParent;
             LoadinPanel.Tag = loadingForm;
             LoadinPanel.BringToFront();
             LoadinPanel.Visible = true;
-            loadingForm.Show();
+            LoadinPanel.Visible = true;
+            loadingForm.ShowDialog();
         }
     }
 }
